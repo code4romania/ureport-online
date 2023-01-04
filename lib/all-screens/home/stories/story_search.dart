@@ -19,7 +19,7 @@ import 'model/searchbar.dart';
 
 FloatingSearchBarController _floatingSearchBarController =
     FloatingSearchBarController();
-List<StorySearchList> filteredCategoryList = [];
+List<StorySearchList> categoryList = [];
 List<StorySearchList> categoryListFull = [];
 
 var isLoaded = true;
@@ -42,7 +42,7 @@ class _StorySearchState extends State<StorySearch> {
     // TODO: implement initState
     super.initState();
     isExpanded = false;
-    filteredCategoryList.clear();
+    categoryList.clear();
     categoryListFull.clear();
     isLoaded = true;
   }
@@ -50,7 +50,7 @@ class _StorySearchState extends State<StorySearch> {
   @override
   Widget build(BuildContext context) {
     _future = Provider.of<StoryController>(context, listen: false)
-        .getCategories(sp.getValue(SPUtil.PROGRAMKEY));
+        .getCategories(sp.getValue(SPUtil.PROGRAMKEY)!);
 
     return Consumer<StoryController>(builder: (context, provider, snapshot) {
       return Scaffold(
@@ -87,7 +87,7 @@ class _StorySearchState extends State<StorySearch> {
                   Container(
                       margin: EdgeInsets.only(left: 11, right: 12, top: 80),
                       child: searchBarUI(
-                          provider, sp.getValue(SPUtil.PROGRAMKEY))),
+                          provider, sp.getValue(SPUtil.PROGRAMKEY)!)),
                   Container(
                     margin: EdgeInsets.only(top: 136),
                     padding: EdgeInsets.only(left: 20, right: 20),
@@ -95,19 +95,18 @@ class _StorySearchState extends State<StorySearch> {
                         future: _future,
                         builder: (context, snapshot) {
                           if (snapshot.hasData && isLoaded) {
-                            filteredCategoryList = snapshot.data!;
+                            categoryList = snapshot.data!;
                             categoryListFull.addAll(snapshot.data!);
                             isLoaded = false;
                           }
-                          return filteredCategoryList.length != 0
+                          return categoryList.length != 0
                               ? Container(
                                   color: AppColors.white,
                                   child: ListView.builder(
-                                    itemBuilder:
-                                        (BuildContext context, int index) =>
-                                            getItem(filteredCategoryList[index],
-                                                provider),
-                                    itemCount: filteredCategoryList.length,
+                                    itemBuilder: (BuildContext context,
+                                            int index) =>
+                                        getItem(categoryList[index], provider),
+                                    itemCount: categoryList.length,
                                   ),
                                 )
                               : !provider.noResultFound
@@ -168,11 +167,11 @@ class _StorySearchState extends State<StorySearch> {
               scrollPadding: EdgeInsets.only(bottom: 10, top: 5),
               physics: BouncingScrollPhysics(),
               onQueryChanged: (value) {
-                filteredCategoryList.clear();
+                categoryList.clear();
 
                 for (int i = 0; i < categoryListFull.length; i++) {
                   StorySearchList category =
-                      StorySearchList(categoryListFull[i].title, []);
+                      StorySearchList(categoryListFull[i].title, "", []);
                   for (int j = 0;
                       j < categoryListFull[i].children.length;
                       j++) {
@@ -185,7 +184,7 @@ class _StorySearchState extends State<StorySearch> {
                     }
                   }
                   if (category.children.length > 0) {
-                    filteredCategoryList.add(category);
+                    categoryList.add(category);
                     setState(() {});
                   }
                 }
@@ -195,7 +194,7 @@ class _StorySearchState extends State<StorySearch> {
                 } else {
                   isExpanded = true;
                 }
-                if (filteredCategoryList.isEmpty) {
+                if (categoryList.isEmpty) {
                   provider.noResultFound = true;
                 } else {
                   provider.noResultFound = false;
@@ -212,12 +211,14 @@ class _StorySearchState extends State<StorySearch> {
               transition: CircularFloatingSearchBarTransition(),
               debounceDelay: Duration(milliseconds: 100),
               actions: [
-                isExpanded?GestureDetector(
-                    onTap: () {
-                      ClickSound.soundClose();
-                      _floatingSearchBarController.clear();
-                    },
-                    child: Icon(Icons.clear)):SizedBox()
+                isExpanded
+                    ? GestureDetector(
+                        onTap: () {
+                          ClickSound.soundClose();
+                          _floatingSearchBarController.clear();
+                        },
+                        child: Icon(Icons.clear))
+                    : SizedBox()
               ],
               builder: (context, transition) {
                 return Container();
@@ -252,13 +253,14 @@ class _StorySearchState extends State<StorySearch> {
                   children: [
                     Text(
                       popup.title,
-                      style: TextStyle(fontSize:18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
                 children: list,
                 initiallyExpanded: isExpanded,
-                onExpansionChanged: (value){
+                onExpansionChanged: (value) {
                   ClickSound.soundDropdown();
                 },
               ),

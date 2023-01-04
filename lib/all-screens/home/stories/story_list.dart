@@ -20,6 +20,10 @@ import 'model/ResponseStoryLocal.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StoryList extends StatefulWidget {
+  const StoryList({
+    Key? key,
+  }) : super(key: key);
+
   @override
   _StoryListState createState() => _StoryListState();
 }
@@ -41,14 +45,15 @@ class _StoryListState extends State<StoryList>
 
     if (Provider.of<StoryController>(context, listen: false).isLoaded) {
       Provider.of<StoryController>(context, listen: false).getRecentStory(
-          RemoteConfigData.getStoryUrl(sp.getValue(SPUtil.PROGRAMKEY)),
-          sp.getValue(SPUtil.PROGRAMKEY));
+        RemoteConfigData.getStoryUrl(sp.getValue(SPUtil.PROGRAMKEY)),
+        sp.getValue(SPUtil.PROGRAMKEY)!,
+      );
       Provider.of<StoryController>(context, listen: false).isLoaded = false;
     }
 
     return Consumer<StoryController>(builder: (context, provider, snapshot) {
       var _futureStory =
-          provider.getStoriesFromLocal(sp.getValue(SPUtil.PROGRAMKEY));
+          provider.getStoriesFromLocal(sp.getValue(SPUtil.PROGRAMKEY)!);
       return Scaffold(
           body: Container(
         child: Column(
@@ -157,12 +162,10 @@ class _StoryListState extends State<StoryList>
                                           child: index < provider.itemCount &&
                                                   index < stories!.length
                                               ? getItem(
-                                                  stories![index] != null
-                                                      ? stories![index].images
-                                                      : "",
-                                                  stories![index].featured,
-                                                  stories![index].title,
-                                                  stories![index].summary,
+                                                  stories![index].images,
+                                                  stories![index].featured!,
+                                                  stories![index].title!,
+                                                  stories![index].summary!,
                                                   context)
                                               : !provider.nextLoading
                                                   ? Container(
@@ -177,7 +180,7 @@ class _StoryListState extends State<StoryList>
                                                                 .isOnline) {
                                                               provider.checkForNextStories(
                                                                   sp.getValue(SPUtil
-                                                                      .PROGRAMKEY));
+                                                                      .PROGRAMKEY)!);
                                                             } else {
                                                               ShowSnackBar
                                                                   .showNoInternetMessage(
@@ -230,8 +233,9 @@ class _StoryListState extends State<StoryList>
       Provider.of<StoryController>(context, listen: false).setSyncing();
       return Provider.of<StoryController>(context, listen: false)
           .getRecentStory(
-              RemoteConfigData.getStoryUrl(sp.getValue(SPUtil.PROGRAMKEY)),
-              sp.getValue(SPUtil.PROGRAMKEY));
+        RemoteConfigData.getStoryUrl(sp.getValue(SPUtil.PROGRAMKEY)),
+        sp.getValue(SPUtil.PROGRAMKEY)!,
+      );
     } else {
       return ShowSnackBar.showNoInternetMessage(context);
     }
@@ -240,7 +244,7 @@ class _StoryListState extends State<StoryList>
   @override
   bool get wantKeepAlive => true;
 
-  getItem(String image_url, String featured, String title, String summery,
+  getItem(String? image_url, String featured, String title, String summery,
       BuildContext context) {
     return Card(
       elevation: 2,
@@ -262,7 +266,7 @@ class _StoryListState extends State<StoryList>
 
 //test
 
-  getItemTitleImage(String image_url) {
+  getItemTitleImage(String? image_url) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10), topRight: Radius.circular(10)),

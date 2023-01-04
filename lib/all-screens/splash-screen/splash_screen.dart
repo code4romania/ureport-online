@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ureport_ecaro/all-screens/chooser/language_chooser.dart';
+import 'package:ureport_ecaro/all-screens/account/login-register/login.dart';
 import 'package:ureport_ecaro/all-screens/home/chat/Chat.dart';
 import 'package:ureport_ecaro/all-screens/home/chat/chat-controller.dart';
 import 'package:ureport_ecaro/all-screens/home/navigation-screen.dart';
 import 'package:ureport_ecaro/all-screens/intro/intro_page_first.dart';
-import 'package:ureport_ecaro/database/database_helper.dart';
 import 'package:ureport_ecaro/firebase-remote-config/remote-config-controller.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/network_operation/firebase/firebase_icoming_message_handling.dart';
@@ -19,8 +18,8 @@ import 'package:ureport_ecaro/network_operation/utils/connectivity_controller.da
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/nav_utils.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
+import 'package:ureport_ecaro/utils/sp_constant.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -28,6 +27,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  var _sp = locator<SPUtil>();
+
   @override
   void initState() {
     Provider.of<ConnectivityController>(context, listen: false)
@@ -48,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
           body: Container(
             child: Center(
               child: Container(
-                  width: MediaQuery.of(context).size.width/1.5,
+                  width: MediaQuery.of(context).size.width / 1.5,
                   child: Image(
                     fit: BoxFit.fill,
                     image: AssetImage("assets/images/v2_logo_1.png"),
@@ -80,10 +81,12 @@ class _SplashScreenState extends State<SplashScreen> {
             quicktypest: quicktypest,
             time: formattedDate);
 
-        locator<SPUtil>().setValue(SPUtil.PROGRAMKEY, remotemessage.notification!.title!);
+        locator<SPUtil>()
+            .setValue(SPUtil.PROGRAMKEY, remotemessage.notification!.title!);
 
         Provider.of<ChatController>(context, listen: false)
-            .addMessageFromPushNotification(notificationmessage_terminatestate,remotemessage.notification!.title!);
+            .addMessageFromPushNotification(notificationmessage_terminatestate,
+                remotemessage.notification!.title!);
         Provider.of<ChatController>(context, listen: false).isMessageCome =
             false;
         print("Remote message : $remotemessage");
@@ -96,10 +99,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   getfirebaseonApp(context) {
-
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? remoteMessage) {
       print("Navigation screen called");
-      if(remoteMessage != null){
+      if (remoteMessage != null) {
         NavUtils.pushReplacement(context, Chat("notification"));
       }
     });
@@ -110,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Duration(seconds: 2),
       () {
         var spset = locator<SPUtil>();
-        String isSigned = spset.getValue(SPUtil.PROGRAMKEY);
+        String? isSigned = spset.getValue(SPUtil.PROGRAMKEY);
         if (isSigned != null) {
           NavUtils.pushAndRemoveUntil(context, Chat("notification"));
         } else {
@@ -125,13 +127,22 @@ class _SplashScreenState extends State<SplashScreen> {
       Duration(seconds: 2),
       () {
         var spset = locator<SPUtil>();
-        String isSigned = spset.getValue(SPUtil.PROGRAMKEY);
+        String? isSigned = spset.getValue(SPUtil.PROGRAMKEY);
+        final user = FirebaseAuth.instance.currentUser;
+
         if (isSigned != null) {
-            NavUtils.pushAndRemoveUntil(context, NavigationScreen(0));
+          if (isSigned.toLowerCase().startsWith('ro') && user == null) {
+            //Login screen only for Romanian program
+            NavUtils.pushAndRemoveUntil(context, LoginScreen());
+          } else {
+            NavUtils.pushAndRemoveUntil(context,
+                NavigationScreen(0, spset.getValue(SPUtil.PROGRAMKEY)));
+          }
         } else {
-          if (Provider.of<ConnectivityController>(context, listen: false).isOnline) {
+          if (Provider.of<ConnectivityController>(context, listen: false)
+              .isOnline) {
             NavUtils.pushAndRemoveUntil(context, IntroPageFirst());
-          }else{
+          } else {
             noInternetDialog();
           }
         }
@@ -144,7 +155,10 @@ class _SplashScreenState extends State<SplashScreen> {
       content: Text("No internet connection is available"),
       actions: [
         TextButton(
-          child: Text("EXIT",style: TextStyle(color: Colors.red),),
+          child: Text(
+            "EXIT",
+            style: TextStyle(color: Colors.red),
+          ),
           onPressed: () {
             ClickSound.soundClick();
             Navigator.of(context).pop();

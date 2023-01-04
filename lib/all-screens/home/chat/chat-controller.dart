@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -7,7 +6,6 @@ import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
 import 'package:ureport_ecaro/all-screens/home/chat/Chat.dart';
 import 'package:ureport_ecaro/all-screens/home/chat/model/messagehandler.dart';
-import 'package:ureport_ecaro/all-screens/home/navigation-screen.dart';
 import 'package:ureport_ecaro/database/database_helper.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/network_operation/apicall_responsedata/response_contact_creation.dart';
@@ -42,7 +40,6 @@ class ChatController extends ConnectivityController {
   String messagestatus = "sending";
 
   late ResponseContactCreation responseContactCreation;
-  var _urn = "";
   String _token = "";
 
   bool isLoaded = true;
@@ -88,7 +85,6 @@ class ChatController extends ConnectivityController {
   //done
 
   deleteMessage() async {
-
     for (int i = 0; i < individualselect.length; i++) {
       MessageModelLocal msgl = MessageModelLocal(
           message: "This Message was Deleted",
@@ -149,18 +145,11 @@ class ChatController extends ConnectivityController {
   }
 
   addQuickType() async {
-    List<dynamic> repdata = [];
     var data = RemoteConfigData.getDefaultAction();
     // repdata.add(data);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
 
-    MessageModel messageModel = MessageModel(
-        message: "",
-        sender: "self",
-        status: "Received",
-        quicktypest: data,
-        time: formattedDate);
     MessageModelLocal messageModelLocal = MessageModelLocal(
         message: "",
         sender: "self",
@@ -177,18 +166,11 @@ class ChatController extends ConnectivityController {
   }
 
   addQuickTypeCaseManagement() async {
-    List<dynamic> repdata = [];
     var data = RemoteConfigData.getOneToOneAction();
     // repdata.add(data);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
 
-    MessageModel messageModel = MessageModel(
-        message: "",
-        sender: "self",
-        status: "Received",
-        quicktypest: data,
-        time: formattedDate);
     MessageModelLocal messageModelLocal = MessageModelLocal(
         message: "",
         sender: "self",
@@ -226,17 +208,14 @@ class ChatController extends ConnectivityController {
     // print("this is firebase fcm token ==  ${_token}");
   }
 
-
-
   bool firstmessageStatus() {
-
-    String firstvalue = _spservice.getValue("${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}");
+    String? firstvalue = _spservice.getValue(
+        "${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}");
     if (firstvalue == "SENT") {
       return true;
     } else {
       return false;
     }
-
   }
 
   Random _rnd = Random();
@@ -245,13 +224,20 @@ class ChatController extends ConnectivityController {
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   addMessage(MessageModel messageModel) async {
-    _spservice.setValue("${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}", "SENT");
+    _spservice.setValue(
+        "${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}",
+        "SENT");
     messagearray.clear();
     ordered.clear();
 
     messagearray.add(messageModel);
-    await _databaseHelper.insertConversation(messagearray,locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)).then((value) async {
-      await _databaseHelper.getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)).then((valuereal) {
+    await _databaseHelper
+        .insertConversation(
+            messagearray, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!)
+        .then((value) async {
+      await _databaseHelper
+          .getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!)
+          .then((valuereal) {
         ordered.addAll(valuereal);
         localmessage = ordered.reversed.toList();
       });
@@ -260,14 +246,21 @@ class ChatController extends ConnectivityController {
     notifyListeners();
   }
 
-  addMessageFromPushNotification(MessageModel messageModel, String program) async {
-    _spservice.setValue("${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}", "SENT");
+  addMessageFromPushNotification(
+      MessageModel messageModel, String program) async {
+    _spservice.setValue(
+        "${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}",
+        "SENT");
     messagearray.clear();
     ordered.clear();
 
     messagearray.add(messageModel);
-    await _databaseHelper.insertConversation(messagearray,program).then((value) async {
-      await _databaseHelper.getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)).then((valuereal) {
+    await _databaseHelper
+        .insertConversation(messagearray, program)
+        .then((value) async {
+      await _databaseHelper
+          .getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!)
+          .then((valuereal) {
         ordered.addAll(valuereal);
         localmessage = ordered.reversed.toList();
       });
@@ -279,7 +272,7 @@ class ChatController extends ConnectivityController {
   List<dynamic> quicdata(String ss) {
     List<dynamic> data = [];
 
-    if (ss != "null" && ss.isNotEmpty && ss != "" && !ss.isEmpty) {
+    if (ss != "null" && ss.isNotEmpty && ss != "" && ss.isNotEmpty) {
       data = json.decode(ss);
 
       return data;
@@ -289,11 +282,13 @@ class ChatController extends ConnectivityController {
   }
 
   deleteSingleMessage(time) async {
-    await _databaseHelper.deleteSingelMessage(time,locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+    await _databaseHelper.deleteSingelMessage(
+        time, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!);
   }
 
   delteAllMessage() async {
-    await _databaseHelper.deleteConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+    await _databaseHelper
+        .deleteConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!);
     ordered.clear();
     localmessage.clear();
     notifyListeners();
@@ -303,31 +298,36 @@ class ChatController extends ConnectivityController {
     _spservice.setValue(SPUtil.USER_ROLE, "regular");
     await getToken();
     if (_token.isNotEmpty) {
-      String _urn = _spservice.getValue(SPUtil.CONTACT_URN);
+      String? _urn = _spservice.getValue(SPUtil.CONTACT_URN);
       if (_urn == null) {
         String contact_urn = getRandomString(15);
-        var apiResponse = await _rapidproservice.createContact(
-            contact_urn, _token, "User", onSuccess: (uuid) {
+        var apiResponse = await _rapidproservice
+            .createContact(contact_urn, _token, "User", onSuccess: (uuid) {
           contatct = uuid;
-        });
+        }, onError: (Exception error) {});
         if (apiResponse.httpCode == 200) {
           responseContactCreation = apiResponse.data;
           _spservice.setValue(SPUtil.CONTACT_URN, contact_urn);
-          if (_spservice.getValue("${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}") != "true") {
+          if (_spservice.getValue(
+                  "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}") !=
+              "true") {
             print("Create contact called 1");
             sendmessage(RemoteConfigData.getRegistrationFlowKeyword());
-            _spservice.setValue("${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}", "true");
+            _spservice.setValue(
+                "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}",
+                "true");
           }
-
         }
-      }
-      else if (_urn != null) {
-        if (_spservice.getValue("${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}") != "true") {
+      } else if (_urn != null) {
+        if (_spservice.getValue(
+                "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}") !=
+            "true") {
           print("Create contact called 3");
           sendmessage(RemoteConfigData.getRegistrationFlowKeyword());
-          _spservice.setValue("${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}", "true");
+          _spservice.setValue(
+              "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}",
+              "true");
         }
-
       }
     }
   }
@@ -335,7 +335,7 @@ class ChatController extends ConnectivityController {
   createIndividualCaseManagement(messagekeyword) async {
     await getToken();
     if (_token.isNotEmpty) {
-      String _urn = _spservice.getValue(SPUtil.CONTACT_URN_INDIVIDUAL_CASE);
+      String _urn = _spservice.getValue(SPUtil.CONTACT_URN_INDIVIDUAL_CASE)!;
       //print("l============================== casemanegement ${_urn}");
       if (_urn == null) {
         String contact_urn = getRandomString(15);
@@ -343,7 +343,7 @@ class ChatController extends ConnectivityController {
         var apiResponse = await _rapidproservice
             .createContact(contact_urn, _token, "Unknown", onSuccess: (uuid) {
           contatct = uuid;
-        });
+        }, onError: (Exception error) {});
         // getfirebase();
         if (apiResponse.httpCode == 200) {
           responseContactCreation = apiResponse.data;
@@ -363,7 +363,8 @@ class ChatController extends ConnectivityController {
           // addMessage(messageModel);
           List<MessageModel> list = [];
           list.add(messageModel);
-          _databaseHelper.insertConversation(list,locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+          _databaseHelper.insertConversation(
+              list, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!);
           sendmessage(messagekeyword);
           messageModel.status = messagestatus;
 
@@ -382,7 +383,8 @@ class ChatController extends ConnectivityController {
         // addMessage(messageModel);
         List<MessageModel> list = [];
         list.add(messageModel);
-        _databaseHelper.insertConversation(list,locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+        _databaseHelper.insertConversation(
+            list, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!);
         sendmessage(messagekeyword);
         messageModel.status = messagestatus;
 
@@ -394,8 +396,12 @@ class ChatController extends ConnectivityController {
   List<String> detectedlink = [];
 
   deletemsgAfterfiveDays() async {
-    if (_spservice.getValue("${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.DELETE5DAYS}") == "true") {
-      await _databaseHelper.getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)).then((valuereal) {
+    if (_spservice.getValue(
+            "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.DELETE5DAYS}") ==
+        "true") {
+      await _databaseHelper
+          .getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!)
+          .then((valuereal) {
         //get curreent date
         DateTime now = DateTime.now();
         //compare c_date with valuereal.date
@@ -434,7 +440,9 @@ class ChatController extends ConnectivityController {
   loaddefaultmessage() async {
     ordered.clear();
     localmessage.clear();
-    await _databaseHelper.getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)).then((valuereal) {
+    await _databaseHelper
+        .getConversation(locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!)
+        .then((valuereal) {
       ordered.addAll(valuereal);
       localmessage = ordered.reversed.toList();
       notifyListeners();
@@ -442,15 +450,14 @@ class ChatController extends ConnectivityController {
   }
 
   sendmessage(String message) async {
-
     isMessageCome = true;
     String urn = "";
-    String userRole = _spservice.getValue(SPUtil.USER_ROLE);
+    String userRole = _spservice.getValue(SPUtil.USER_ROLE)!;
 
     if (userRole == "regular") {
-      urn = _spservice.getValue(SPUtil.CONTACT_URN);
+      urn = _spservice.getValue(SPUtil.CONTACT_URN)!;
     } else {
-      urn = _spservice.getValue(SPUtil.CONTACT_URN_INDIVIDUAL_CASE);
+      urn = _spservice.getValue(SPUtil.CONTACT_URN_INDIVIDUAL_CASE)!;
     }
 
     await _rapidproservice.sendMessage(
@@ -491,10 +498,12 @@ class ChatController extends ConnectivityController {
           quicktypest: quicktypest,
           time: formattedDate);
 
-      if(remotemessage.data["title"] == _spservice.getValue(SPUtil.PROGRAMKEY)){
+      if (remotemessage.data["title"] ==
+          _spservice.getValue(SPUtil.PROGRAMKEY)) {
         addMessage(serverMessage);
-      }else{
-        addMessageFromPushNotification(serverMessage,remotemessage.data["title"]);
+      } else {
+        addMessageFromPushNotification(
+            serverMessage, remotemessage.data["title"]);
       }
 
       isMessageCome = false;
@@ -505,7 +514,6 @@ class ChatController extends ConnectivityController {
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage? remotemessage) {
-
       print("controller init called");
 
       if (remotemessage != null) {
@@ -532,9 +540,7 @@ class ChatController extends ConnectivityController {
 
 // app background notification
   getfirebaseonApp(context) {
-
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remotemessage) {
-
       print("controller on App called");
 
       DateTime now = DateTime.now();

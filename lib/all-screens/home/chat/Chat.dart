@@ -17,6 +17,7 @@ import 'package:ureport_ecaro/utils/nav_utils.dart';
 import 'package:ureport_ecaro/utils/remote-config-data.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
 import 'package:ureport_ecaro/utils/snackbar.dart';
+import 'package:ureport_ecaro/utils/sp_constant.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/top_bar_background.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -55,9 +56,10 @@ class _ChatState extends State<Chat> {
 
   bool isKeyboardOpen = false;
 
+  var _sp = locator<SPUtil>();
+
   @override
   void initState() {
-
     disableOnScreenPopUp();
 
     Provider.of<ChatController>(context, listen: false).startMonitoring();
@@ -83,15 +85,15 @@ class _ChatState extends State<Chat> {
       Provider.of<ChatController>(context, listen: false)
           .deletemsgAfterfiveDays();
       Provider.of<ChatController>(context, listen: false).isLoaded = false;
-      if(from != "notification") {
+      if (from != "notification") {
         Provider.of<ChatController>(context, listen: false).createContact();
       }
     }
-
   }
 
   disableOnScreenPopUp() async {
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: false,
       badge: false,
       sound: false,
@@ -102,7 +104,6 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-
     String deletedMessageText = "This Message was Deleted";
 
     return WillPopScope(
@@ -113,7 +114,8 @@ class _ChatState extends State<Chat> {
         if (widget.from == "Home") {
           Navigator.pop(context);
         } else {
-          NavUtils.pushAndRemoveUntil(context, NavigationScreen(0));
+          NavUtils.pushAndRemoveUntil(context,
+              NavigationScreen(0, _sp.getValue(SPConstant.SELECTED_LANGUAGE)));
         }
         return false;
       },
@@ -130,8 +132,11 @@ class _ChatState extends State<Chat> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    TopBar.getChatTopBar(AppLocalizations.of(context)!.chat,
-                        context, widget.from),
+                    TopBar.getChatTopBar(
+                        AppLocalizations.of(context)!.chat,
+                        context,
+                        widget.from,
+                        _sp.getValue(SPConstant.SELECTED_LANGUAGE)!),
                     Container(
                       child: Divider(
                         height: 1,
@@ -194,8 +199,7 @@ class _ChatState extends State<Chat> {
                                                   children: [
                                                     GestureDetector(
                                                       onTap: () {
-                                                        ClickSound
-                                                            .soundClick();
+                                                        ClickSound.soundClick();
                                                         if (provider
                                                             .individualselect
                                                             .contains(index)) {
@@ -438,7 +442,9 @@ class _ChatState extends State<Chat> {
                                                                                 quicktypest: [""],
                                                                                 time: formattedDate);
                                                                             provider.addMessage(messageModel);
-                                                                            provider.sendmessage(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString(),);
+                                                                            provider.sendmessage(
+                                                                              provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString(),
+                                                                            );
                                                                             messageModel.status =
                                                                                 provider.messagestatus;
                                                                           },
@@ -500,7 +506,8 @@ class _ChatState extends State<Chat> {
                                                 onLongPress: () {
                                                   ClickSound.soundClick();
                                                   provider.selectall = true;
-                                                  provider.individualselect.clear();
+                                                  provider.individualselect
+                                                      .clear();
                                                   // provider.deleteSingleMessage(localmessage.time);
                                                 },
                                                 child: Column(
@@ -619,7 +626,7 @@ class _ChatState extends State<Chat> {
                                                                                 )
                                                                               : Text(
                                                                                   provider.localmessage[index].message! == deletedMessageText ? AppLocalizations.of(context)!.this_message_deleted : provider.localmessage[index].message!,
-                                                                                  style: TextStyle(color: Colors.black, fontSize: 16 ,fontWeight: FontWeight.w400),
+                                                                                  style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400),
                                                                                   textAlign: TextAlign.left,
                                                                                 ))
                                                                   : provider.localmessage[index]
@@ -703,7 +710,7 @@ class _ChatState extends State<Chat> {
                                                                                   provider.sendmessage(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString());
                                                                                   List<MessageModel> datalist = [];
                                                                                   datalist.add(messageModel);
-                                                                                  await _databaseHelper.insertConversation(datalist,locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+                                                                                  await _databaseHelper.insertConversation(datalist, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!);
                                                                                 } else if (listCaseManagement.contains(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString())) {
                                                                                   locator<SPUtil>().setValue(SPUtil.USER_ROLE, "caseManagement");
                                                                                   provider.createIndividualCaseManagement(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString());
@@ -711,7 +718,7 @@ class _ChatState extends State<Chat> {
                                                                                   provider.sendmessage(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString());
                                                                                   List<MessageModel> datalist = [];
                                                                                   datalist.add(messageModel);
-                                                                                  await _databaseHelper.insertConversation(datalist,locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+                                                                                  await _databaseHelper.insertConversation(datalist, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)!);
                                                                                 }
 
                                                                                 messageModel.status = provider.messagestatus;
@@ -819,7 +826,7 @@ class _ChatState extends State<Chat> {
                                                   //     ),
                                                   //   ],
                                                   // ),
-                                                )
+                                                  )
                                               : SizedBox(),
                                           SizedBox(
                                             height: 20,
@@ -852,24 +859,30 @@ class _ChatState extends State<Chat> {
                           SizedBox(
                             height: 10,
                           ),
-                          !provider.isOnline?Container(
-                            height: 40,
-                            padding: EdgeInsets.only(left: 25),
-                            width: double.infinity,
-                            color: Colors.black87,
-                            child: Row(
-                              children: [
-                                Text(AppLocalizations.of(context)!.no_internet_text, style: TextStyle(color: Colors.white, fontSize: 16),),
-                              ],
-                            ),
-                          ):Container(),
+                          !provider.isOnline
+                              ? Container(
+                                  height: 40,
+                                  padding: EdgeInsets.only(left: 25),
+                                  width: double.infinity,
+                                  color: Colors.black87,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .no_internet_text,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
                           Container(
                             width: double.infinity,
                             height: 64,
                             decoration: BoxDecoration(
                               color: Colors.white,
                             ),
-
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -895,26 +908,37 @@ class _ChatState extends State<Chat> {
                                                 SizedBox(
                                                   width: 3,
                                                 ),
-                                                provider.individualselect.length> 0 ?GestureDetector(
-                                                  onTap: () {
-                                                    ClickSound.soundClick();
-                                                    deleteMessageDialog(provider);
-                                                  },
-                                                  child: Container(
-                                                    width: 70,
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        Image.asset(
-                                                          "assets/images/ic_delete.png",
-                                                          height: 35,
-                                                          width: 35,
-                                                          color: Colors.red,
+                                                provider.individualselect
+                                                            .length >
+                                                        0
+                                                    ? GestureDetector(
+                                                        onTap: () {
+                                                          ClickSound
+                                                              .soundClick();
+                                                          deleteMessageDialog(
+                                                              provider);
+                                                        },
+                                                        child: Container(
+                                                          width: 70,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Image.asset(
+                                                                "assets/images/ic_delete.png",
+                                                                height: 35,
+                                                                width: 35,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ):SizedBox(width: 70,),
+                                                      )
+                                                    : SizedBox(
+                                                        width: 70,
+                                                      ),
                                                 Spacer(),
                                                 Text(
                                                   "${provider.individualselect.length} ${AppLocalizations.of(context)!.selected}",
@@ -925,8 +949,7 @@ class _ChatState extends State<Chat> {
                                                 Spacer(),
                                                 GestureDetector(
                                                     onTap: () {
-                                                      ClickSound
-                                                          .soundClick();
+                                                      ClickSound.soundClick();
                                                       provider.selectall =
                                                           false;
                                                       provider.selectedMessage
@@ -975,21 +998,22 @@ class _ChatState extends State<Chat> {
       content: Text(AppLocalizations.of(context)!.delete_message),
       actions: [
         TextButton(
-          child: Text(AppLocalizations.of(context)!.delete,style: TextStyle(color: Colors.red),),
+          child: Text(
+            AppLocalizations.of(context)!.delete,
+            style: TextStyle(color: Colors.red),
+          ),
           onPressed: () {
-            ClickSound
-                .soundClick();
-            provider
-                .deleteMessage();
-            Navigator.pop(
-                context);
+            ClickSound.soundClick();
+            provider.deleteMessage();
+            Navigator.pop(context);
           },
         ),
         TextButton(
           child: Text(AppLocalizations.of(context)!.cancel),
           onPressed: () {
             ClickSound.soundClick();
-            Provider.of<ChatController>(context, listen: false).selectall = false;
+            Provider.of<ChatController>(context, listen: false).selectall =
+                false;
             Navigator.pop(context);
           },
         )
@@ -1035,14 +1059,15 @@ class _ChatState extends State<Chat> {
                           RemoteConfigData.getDefaultActionVisibility() == true
                               ? GestureDetector(
                                   onTap: () {
-                                    if(provider.isOnline){
+                                    if (provider.isOnline) {
                                       ClickSound.soundMsgSend();
                                       provider.addQuickType();
                                       provider.isExpanded = false;
                                       _scrollController.animateTo(0.0,
-                                          duration: const Duration(milliseconds: 300),
+                                          duration:
+                                              const Duration(milliseconds: 300),
                                           curve: Curves.easeOut);
-                                    }else{
+                                    } else {
                                       // ShowSnackBar.showNoInternetMessageChat(context);
                                     }
                                   },
@@ -1061,18 +1086,20 @@ class _ChatState extends State<Chat> {
                                   width: 10,
                                 )
                               : SizedBox(),
-                          RemoteConfigData.getIndividualCaseManagementVisibility() ==
+                          RemoteConfigData
+                                      .getIndividualCaseManagementVisibility() ==
                                   true
                               ? GestureDetector(
                                   onTap: () {
-                                    if(provider.isOnline){
+                                    if (provider.isOnline) {
                                       ClickSound.soundMsgSend();
                                       provider.addQuickTypeCaseManagement();
                                       provider.isExpanded = false;
                                       _scrollController.animateTo(0.0,
-                                          duration: const Duration(milliseconds: 300),
+                                          duration:
+                                              const Duration(milliseconds: 300),
                                           curve: Curves.easeOut);
-                                    }else{
+                                    } else {
                                       // ShowSnackBar.showNoInternetMessageChat(context);
                                     }
                                   },
@@ -1088,21 +1115,22 @@ class _ChatState extends State<Chat> {
                               : SizedBox(),
                         ],
                       )
-                    :
-                RemoteConfigData.getDefaultActionVisibility() == true?GestureDetector(
-                        onTap: () {
-                          provider.isExpanded = true;
-                          // provider.addQuickType();
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          padding: EdgeInsets.all(4),
-                          child: Image.asset(
-                            "assets/images/ic_arrow_chat.png",
-                          ),
-                        ),
-                      ):Container() /*:SizedBox()*/,
+                    : RemoteConfigData.getDefaultActionVisibility() == true
+                        ? GestureDetector(
+                            onTap: () {
+                              provider.isExpanded = true;
+                              // provider.addQuickType();
+                            },
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              padding: EdgeInsets.all(4),
+                              child: Image.asset(
+                                "assets/images/ic_arrow_chat.png",
+                              ),
+                            ),
+                          )
+                        : Container() /*:SizedBox()*/,
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -1116,7 +1144,8 @@ class _ChatState extends State<Chat> {
                         myFocusNode.requestFocus();
                       },
                       decoration: InputDecoration.collapsed(
-                          hintText: "${AppLocalizations.of(context)!.enter_message}",
+                          hintText:
+                              "${AppLocalizations.of(context)!.enter_message}",
                           hintStyle: TextStyle(fontSize: 14)),
                     ),
                   ),
@@ -1126,11 +1155,11 @@ class _ChatState extends State<Chat> {
                     IconButton(
                       icon: Image.asset("assets/images/ic_sand.png"),
                       onPressed: () {
-                        if(provider.isOnline){
+                        if (provider.isOnline) {
                           ClickSound.soundMsgSend();
                           DateTime now = DateTime.now();
                           String formattedDate =
-                          DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
+                              DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
                           sendMessageKey.currentState!.save();
                           if (message == "") return;
                           final messageModel = MessageModel(
@@ -1141,12 +1170,13 @@ class _ChatState extends State<Chat> {
                               time: formattedDate);
                           provider.addMessage(messageModel);
                           List<String> listDefault =
-                          RemoteConfigData.getDefaultAction();
+                              RemoteConfigData.getDefaultAction();
                           List<String> listCaseManagement =
-                          RemoteConfigData.getOneToOneAction();
+                              RemoteConfigData.getOneToOneAction();
 
                           if (listDefault.contains(message)) {
-                            locator<SPUtil>().setValue(SPUtil.USER_ROLE, "regular");
+                            locator<SPUtil>()
+                                .setValue(SPUtil.USER_ROLE, "regular");
                           } else if (listCaseManagement.contains(message)) {
                             locator<SPUtil>()
                                 .setValue(SPUtil.USER_ROLE, "caseManagement");
@@ -1161,7 +1191,7 @@ class _ChatState extends State<Chat> {
                           setState(() {
                             myFocusNode.requestFocus();
                           });
-                        }else{
+                        } else {
                           // ShowSnackBar.showNoInternetMessageChat(context);
                         }
                       },
@@ -1176,16 +1206,11 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  showNoInternetDialog(){
-    Timer(
-      Duration(seconds: 1),
-        (){
-          if(!Provider.of<ChatController>(context, listen: false).isOnline){
-            ShowSnackBar.showNoInternetMessageChat(context);
-          }
-        }
-    );
-
+  showNoInternetDialog() {
+    Timer(Duration(seconds: 1), () {
+      if (!Provider.of<ChatController>(context, listen: false).isOnline) {
+        ShowSnackBar.showNoInternetMessageChat(context);
+      }
+    });
   }
-
 }
