@@ -13,6 +13,7 @@ All packages have been updated to the latest version (nov 2022)
 - Custom navigation menu for region Romania
 - Custom onboarding for region Romania
 - Login-Register-Forgot password feature only when region is Romania
+- Updated packages
 
   
 ## Current Flutter Version

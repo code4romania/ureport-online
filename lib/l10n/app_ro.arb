@@ -1,36 +1,40 @@
 {
+    "onopenapp": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  "@onopenapp": {
+    "description": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+  },
   "stories": "Articole",
   "@stories": {
     "description": "Articole"
   },
-  "skip": "Sări",
+  "skip": "Sări peste intro",
   "@skip": {
-    "description": "Sări"
+    "description": "Sări peste intro"
   },
   "next": "Următorul",
   "@next": {
     "description": "Următorul"
   },
-  "intro_text1": "Citiți cele mai recente postări U-Report și rămâneți la curent.",
+  "intro_text1": "Stai la curent cu informații utile!",
   "@intro_text1": {
-    "description": "Citiți cele mai recente postări U-Report și rămâneți la curent."
+    "description": "Stai la curent cu informații utile!"
   },
   "chat": "Chat",
   "@chat": {
     "description": "Chat"
   },
 
-  "intro_text2": "Participate in polls and access to interactive chatbots about topics you care about.",
+  "intro_text2": "Câștigă puncte și descoperă noi materiale în aplicație!",
   "@intro_text2": {
-    "description": "Participate in polls and access to interactive chatbots about topics you care about"
+    "description": "Câștigă puncte și descoperă noi materiale în aplicație!"
   },
   "opinions": "Opinii",
   "@opinions": {
     "description": "Opinii"
   },
-  "intro_text3": "Vizualizați rezultatele sondajelor și împărtășiți rezultatele.",
+  "intro_text3": "Distribuie pe social media rezultatele și medaliile tale!",
   "@intro_text3": {
-    "description": "View polls results and share the findings"
+    "description": "Distribuie pe social media rezultatele și medaliile tale!"
   },
   "welcome": "Bun venit",
   "@welcome": {
