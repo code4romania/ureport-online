@@ -11,6 +11,18 @@
   "@skip": {
     "description": "Sări peste intro"
   },
+    "categories": "Categorii",
+  "@categories": {
+    "description": "Categorii"
+  },
+    "category_info": "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! ",
+  "@category_info": {
+    "description": "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! "
+  },
+      "article_list_info": "Aici vei găsi articole din domeniul Sănătate. Află mai multe despre prevenția bolilor, sănătatea mintală și multe altele.",
+  "@article_list_info": {
+    "description": "Aici vei găsi articole din domeniul Sănătate. Află mai multe despre prevenția bolilor, sănătatea mintală și multe altele."
+  },
   "next": "Următorul",
   "@next": {
     "description": "Următorul"

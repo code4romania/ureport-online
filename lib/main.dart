@@ -8,6 +8,7 @@ import 'package:ureport_ecaro/l10n/l10n.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/view_model/state_store.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ureport_ecaro/view_model/story_state.dart';
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
   'high_importance_channel', // id
@@ -42,6 +43,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppRouter _appRouter;
   late StateStore _stateStore;
+  late StoryStore _storyStore;
 
   @override
   void initState() {
@@ -54,15 +56,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           Provider(create: (context) => _stateStore),
+          Provider(create: (context) => _storyStore)
         ],
         builder: (context, child) {
-          print(_stateStore.locale?.countryCode);
           return MaterialApp.router(
-            title: "Ureport Ecaro",
+            title: "Ureport Romania",
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: Colors.pink,
-              fontFamily: "Montserrat",
+              fontFamily: "Inter",
               backgroundColor: Colors.white,
               splashColor: Color.fromRGBO(167, 45, 111, 1),
             ),

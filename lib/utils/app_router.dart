@@ -8,6 +8,9 @@ import 'package:ureport_ecaro/view/screens/account/profile/change_pw_view.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/language_screen.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/menu_view.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/profile_view.dart';
+import 'package:ureport_ecaro/view/screens/articles/article/article_screen.dart';
+import 'package:ureport_ecaro/view/screens/articles/article/articles_list_screen.dart';
+import 'package:ureport_ecaro/view/screens/articles/categories/category_list.dart';
 import 'package:ureport_ecaro/view/screens/onboarding/onboarding_screen.dart';
 import 'package:ureport_ecaro/view/screens/open_app/open_app_screen.dart';
 
@@ -26,6 +29,9 @@ import '../view/screens/splash_screen/splash_screen.dart';
     AdaptiveRoute(page: ProfileScreen),
     AdaptiveRoute(page: OpenAppScreen),
     AdaptiveRoute(page: OnboardingScreen),
+    AdaptiveRoute(page: CategoryListScreen),
+    AdaptiveRoute(page: ArticlesListScreen),
+    AdaptiveRoute(page: ArticleScreen),
   ],
 )
 class $AppRouter {}

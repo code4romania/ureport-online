@@ -4,20 +4,20 @@ import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
 
 part 'story_state.g.dart';
 
-class UserStore = _UserStore with _$UserStore;
+class StoryStore = _StoryStore with _$StoryStore;
 
-abstract class _UserStore with Store {
+abstract class _StoryStore with Store {
   final NetworkService httpClient = NetworkService();
 
   @observable
-  ObservableFuture<List<StoryModel>>? storiesList;
+  ObservableFuture<StoryModel>? storiesList;
 
   @action
-  Future fetchUsers() => storiesList = ObservableFuture(httpClient
+  Future fetchStories() => storiesList = ObservableFuture(httpClient
       .getStories('https://ureport.heroesof.tech/api/v1/stories/org/1/')
-      .then((users) => users));
+      .then((stories) => stories));
 
-  void getTheUsers() {
-    fetchUsers();
+  void getStories() {
+    fetchStories();
   }
 }

@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
+import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
 import 'package:ureport_ecaro/view/screens/articles/categories/components/search_bar_widget.dart';
-import 'package:ureport_ecaro/view/screens/articles/categories/models/category.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/title_description_widget.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
 
@@ -25,7 +25,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
       List<Result> tempList = [];
       for (int i = 0; i < initCategoryList.length; i++) {
         if (initCategoryList[i]
-            .title
+            .title!
             .toLowerCase()
             .startsWith(value.toLowerCase())) {
           tempList.add(initCategoryList[i]);
@@ -138,7 +138,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
       child: Stack(
         alignment: AlignmentDirectional.centerStart,
         children: [
-          getItemTitleImage(item.category.imageUrl),
+          getItemTitleImage(item.category!.imageUrl),
           Container(
             margin:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),

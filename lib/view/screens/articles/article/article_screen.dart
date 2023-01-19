@@ -1,15 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ureport_ecaro/view/screens/articles/article/model/article.dart';
+import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
 
-class ArticleView extends StatelessWidget {
-  ArticleView({
+class ArticleScreen extends StatelessWidget {
+  ArticleScreen({
     Key? key,
     required this.article,
   }) : super(key: key);
 
-  final Article article;
+  final Result article;
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
   @override
@@ -19,11 +20,15 @@ class ArticleView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: [
             TopHeaderWidget(title: "Categorii"),
-            Image.network(
-              article.img,
+            CachedNetworkImage(
+              imageUrl: article.images![0],
               width: MediaQuery.of(context).size.width,
               height: 100,
               fit: BoxFit.cover,
+              errorWidget: (context, url, error) => Image.asset(
+                "assets/images/image_placeholder.jpg",
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(
               height: 20,
@@ -40,7 +45,7 @@ class ArticleView extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    article.type,
+                    article.category!.name!.split('/')[1].trim(),
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ],
@@ -50,7 +55,7 @@ class ArticleView extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(top: 10, left: 20, right: 20),
               child: Text(
-                article.title,
+                article.title!,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
@@ -66,15 +71,15 @@ class ArticleView extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      Text(article.author)
+                      Text("UNICEF România")
                     ],
                   ),
                   Column(
                     children: [
-                      Text("Data",
+                      Text("Date",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16)),
-                      Text(formatter.format(article.createdAt))
+                      Text(formatter.format(article.createdOn!))
                     ],
                   ),
                 ],
@@ -88,7 +93,7 @@ class ArticleView extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    article.content,
+                    article.content!,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -97,19 +102,6 @@ class ArticleView extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 10,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 4),
-                        spreadRadius: -8,
-                        blurRadius: 4,
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                      )
-                    ]),
-                    child: Image.network(article.img),
                   ),
                 ],
               ),

@@ -86,16 +86,6 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/images/temp/
-    - assets/images/drawable-ldpi/
-    - assets/images/drawable-xxhdpi/
-    - assets/storypage/
-    - assets/storypage/css/
-    - assets/storypage/font-my/
-    - assets/storypage/images/
-    - assets/storypage/js/
-    - assets/storypage/pages/
-    - assets/storypage/tts_anim/
     - assets/audio/
     - assets/local-json/
 
@@ -111,26 +101,23 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Dosis
+    - family: Inter
       fonts:
-        - asset: assets/font/Dosis.ttf
-        - asset: assets/font/Regular.ttf
-          weight: 500
-        - asset: assets/font/Dosis-Bold.ttf
+        - asset: assets/font/Inter-Regular.ttf
+        - asset: assets/font/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/font/Inter-Bold.ttf
           weight: 700
-    - family: Poppins
-      fonts:
-        - asset: assets/font/Poppins-Regular.ttf
-        - asset: assets/font/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/font/Poppins-Bold.ttf
+        - asset: assets/font/Inter-ExtraBold.ttf
           weight: 800
-    - family: Montserrat
-      fonts:
-        - asset: assets/font/Montserrat-Regular.ttf
-        - asset: assets/font/Montserrat-SemiBold.ttf
-          weight: 600
-        - asset: assets/font/Montserrat-Bold.ttf
-          weight: 800
-        - asset: assets/font/Montserrat-Light.ttf
+        - asset: assets/font/Inter-Thin.ttf
+          weight: 100
+        - asset: assets/font/Inter-ExtraLight.ttf
+          weight: 200
+        - asset: assets/font/Inter-Light.ttf
           weight: 300
+        - asset: assets/font/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/font/Inter-Black.ttf
+          weight: 900
+    

@@ -1,5 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/view/screens/articles/article/model/article.dart';
+import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
 
 class ArticleItemWidget extends StatelessWidget {
   ArticleItemWidget({
@@ -7,7 +8,7 @@ class ArticleItemWidget extends StatelessWidget {
     required this.article,
   }) : super(key: key);
 
-  final Article article;
+  final Result article;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +48,13 @@ class ArticleItemWidget extends StatelessWidget {
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(20)),
                   ),
-                  child: Image.network(
-                    article.img,
+                  child: CachedNetworkImage(
+                    imageUrl: article.images![0],
                     fit: BoxFit.fitWidth,
+                    errorWidget: (context, url, error) => Image.asset(
+                      "assets/images/image_placeholder.jpg",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -65,7 +70,7 @@ class ArticleItemWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      "Articol",
+                      article.category!.name!.split('/')[1].trim(),
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                     ),
@@ -76,7 +81,7 @@ class ArticleItemWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                 child: Text(
-                  article.title,
+                  article.title!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),

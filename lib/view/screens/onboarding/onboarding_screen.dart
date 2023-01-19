@@ -61,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ? "assets/images/drawable-xxhdpi/v2_about_1_ro.png"
         : page == 1
             ? "assets/images/drawable-xxhdpi/v2_about_2_ro.png"
-            : "assets/images/into_page_3_ro.png";
+            : "assets/images/drawable-xxhdpi/v2_about_3_ro.png";
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
