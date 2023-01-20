@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/data/secure_storage.dart';
+import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
@@ -137,8 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           height: 30,
         ),
         GestureDetector(
-          //TODO: GOTO LOGINSCREEN
-          // onTap: () => NavUtils.pushAndRemoveUntil(context, LoginScreen()),
+          onTap: () => context.router.replace(LoginScreenRoute()),
           child: RichText(
             text: TextSpan(
               style: TextStyle(
@@ -225,11 +227,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
       showPopup(
         context: context,
         type: 'register',
-        onPressed: () {}, //TODO: GOTO HOME
+        onPressed: () {
+          //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
+          StorageUtil.setString("token", "############");
+
+          context.router.replace(ArticlesListScreenRoute(
+            categoryImg: "https://i.ytimg.com/vi/2QvOxa_7wEw/maxresdefault.jpg",
+            categoryTitle: "Test",
+            key: Key("test"),
+          ));
+        },
       );
-      // onPressed: () {
-      //   NavUtils.pushAndRemoveUntil(context, NavigationScreen(0, 'ro'));
-      // });
     } else if (registerResult == RegisterStatus.EMAIL_EXISTS) {
       toggleIsLoading();
       showPopup(

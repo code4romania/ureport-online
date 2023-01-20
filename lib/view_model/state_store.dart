@@ -8,6 +8,14 @@ abstract class _StateStoreBase with Store {
   @observable
   Locale? locale;
 
+  List<String> languages = [
+    'Română',
+    'Ucraineană',
+  ];
+
+  @observable
+  String? selectedLanguage = "Română";
+
   @action
   void setLocale(Locale locale) => locale = locale;
 

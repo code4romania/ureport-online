@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/data/secure_storage.dart';
+import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
@@ -122,17 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 10,
         ),
         GestureDetector(
-            // onTap: () =>
-
-            //TODO: PUSH ROUTE TO FORGOT PW SCREEN
-            //   NavUtils.pushAndRemoveUntil(context, ForgotPasswordScreen()),
+            onTap: () => context.router.replace(ForgotPasswordScreenRoute()),
             child: Text("Ai uitat parola?")),
         SizedBox(
           height: 30,
         ),
         GestureDetector(
-          //TODO: PUSH TO REGISTER
-          //    onTap: () => NavUtils.pushAndRemoveUntil(context, RegisterScreen()),
+          onTap: () => context.router.replace(RegisterScreenRoute()),
           child: RichText(
             text: TextSpan(
               style: TextStyle(
@@ -151,15 +150,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         SizedBox(
           height: 10,
-        ),
-        GestureDetector(
-          // onTap: () {
-          //   ClickSound.soundClick();
-          //   NavUtils.push(context, ProgramChooser("login"));
-          // },
-          child: Text("${AppLocalizations.of(context)!.change_ureport_program}",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
         ),
         SizedBox(
           height: 30,
@@ -206,11 +196,15 @@ class _LoginScreenState extends State<LoginScreen> {
     if (signInResult == LoginStatus.SUCCESS) {
       toggleIsLoading();
 
-      showPopup(context: context, type: 'login', onPressed: () {});
-      //TODO: GOTO HOME
-      // onPressed: () {
-      //   NavUtils.pushAndRemoveUntil(context, NavigationScreen(0, 'ro'));
-      // });
+      showPopup(
+        context: context,
+        type: 'login',
+        onPressed: () {
+          //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
+          StorageUtil.setString("token", "############");
+          context.router.replaceAll([CategoryListScreenRoute()]);
+        },
+      );
     } else if (signInResult == LoginStatus.NOT_FOUND) {
       toggleIsLoading();
 

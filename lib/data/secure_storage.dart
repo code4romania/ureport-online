@@ -25,7 +25,7 @@ class StorageUtil {
     return _preferences?.getString(key);
   }
 
-  static Future<bool>? putString(String key, String value) {
+  static Future<bool>? setString(String key, String value) {
     return _preferences?.setString(key, value);
   }
 }

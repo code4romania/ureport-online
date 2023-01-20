@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
+import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
 
 import 'package:validators/validators.dart' as validator;
 
@@ -33,10 +36,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             children: [
               Container(
                 width: double.infinity,
-                child: Image.asset(
-                  'assets/images/top_header_ro.png',
-                  fit: BoxFit.fitWidth,
-                ),
+                child: TopHeaderWidget(title: "RECUPERARE"),
               ),
               Container(
                 margin: EdgeInsets.only(top: 80, left: 10),
@@ -114,9 +114,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 height: 30,
               ),
               GestureDetector(
-                // onTap: () =>
-                //TODO: PUSH TO LOGIN SCREEN
-                //     NavUtils.pushAndRemoveUntil(context, LoginScreen()),
+                onTap: () => context.router.replace(LoginScreenRoute()),
                 child: RichText(
                   text: TextSpan(
                     style: TextStyle(
@@ -190,8 +188,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         context: context,
         type: 'pwrecover',
         onPressed: () {
-          //TODO: GO TO LOGIN
-          //NavUtils.pushAndRemoveUntil(context, LoginScreen());
+          onTap:
+          () => context.router.replace(LoginScreenRoute());
         });
   }
 }

@@ -233,7 +233,7 @@ mixin _$Result {
   dynamic? get audioLink => throw _privateConstructorUsedError;
   String? get tags => throw _privateConstructorUsedError;
   int? get org => throw _privateConstructorUsedError;
-  List<dynamic>? get images => throw _privateConstructorUsedError;
+  List<String>? get images => throw _privateConstructorUsedError;
   Category? get category => throw _privateConstructorUsedError;
   DateTime? get createdOn => throw _privateConstructorUsedError;
 
@@ -257,7 +257,7 @@ abstract class $ResultCopyWith<$Res> {
       dynamic? audioLink,
       String? tags,
       int? org,
-      List<dynamic>? images,
+      List<String>? images,
       Category? category,
       DateTime? createdOn});
 
@@ -330,7 +330,7 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
       images: freezed == images
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<String>?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -371,7 +371,7 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
       dynamic? audioLink,
       String? tags,
       int? org,
-      List<dynamic>? images,
+      List<String>? images,
       Category? category,
       DateTime? createdOn});
 
@@ -442,7 +442,7 @@ class __$$_ResultCopyWithImpl<$Res>
       images: freezed == images
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<String>?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -468,7 +468,7 @@ class _$_Result implements _Result {
       this.audioLink,
       this.tags,
       this.org,
-      final List<dynamic>? images,
+      final List<String>? images,
       this.category,
       this.createdOn})
       : _images = images;
@@ -494,9 +494,9 @@ class _$_Result implements _Result {
   final String? tags;
   @override
   final int? org;
-  final List<dynamic>? _images;
+  final List<String>? _images;
   @override
-  List<dynamic>? get images {
+  List<String>? get images {
     final value = _images;
     if (value == null) return null;
     if (_images is EqualUnmodifiableListView) return _images;
@@ -578,7 +578,7 @@ abstract class _Result implements Result {
       final dynamic? audioLink,
       final String? tags,
       final int? org,
-      final List<dynamic>? images,
+      final List<String>? images,
       final Category? category,
       final DateTime? createdOn}) = _$_Result;
 
@@ -603,7 +603,7 @@ abstract class _Result implements Result {
   @override
   int? get org;
   @override
-  List<dynamic>? get images;
+  List<String>? get images;
   @override
   Category? get category;
   @override

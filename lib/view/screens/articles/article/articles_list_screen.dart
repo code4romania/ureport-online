@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/view/screens/articles/article/components/article_item.dart';
 import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
-import 'package:ureport_ecaro/view/screens/articles/categories/components/search_bar_widget.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/title_description_widget.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/view/shared/general_button_component.dart';
@@ -21,7 +19,10 @@ class ArticlesListScreen extends StatelessWidget {
       : super(key: key) {
     _storyStore.getStories();
   }
-  Future _refresh() => _storyStore.fetchStories();
+  Future _refresh() {
+    print("refresh");
+    return _storyStore.fetchStories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,11 @@ class ArticlesListScreen extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
+                  TitleDescriptionWidget(
+                    title: "Articole",
+                    description:
+                        "Aici vei găsi articole din domeniul $categoryTitle. Află mai multe despre prevenția bolilor, sănătatea mintală și multe altele.",
+                  ),
                   Observer(builder: (_) {
                     if (future == null) {
                       return Text(
@@ -90,14 +96,75 @@ class ArticlesListScreen extends StatelessWidget {
                         );
                       case FutureStatus.fulfilled:
                         final List<Result> stories = future.result.results;
+                        final Map<String, List<Result>> map = {};
+                        stories.forEach((element) {
+                          map.addEntries({
+                            MapEntry(
+                                element.category!.name!.split("/").last.trim(),
+                                map[element.category!.name!] == null
+                                    ? [element]
+                                    : [
+                                        ...map[element.category!.name!]!,
+                                        element
+                                      ])
+                          });
+                        });
                         return ListView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: stories.length,
+                            itemCount: map.length,
                             itemBuilder: (context, index) {
-                              return ArticleItemWidget(
-                                article: stories[index],
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      map.keys.elementAt(index),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Stack(
+                                      alignment: Alignment.centerRight,
+                                      children: [
+                                        Container(
+                                          height: 1,
+                                          width: 200,
+                                          color:
+                                              Color.fromRGBO(167, 45, 111, 1),
+                                        ),
+                                        Container(
+                                          height: 8,
+                                          width: 8,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color.fromRGBO(
+                                                  167, 45, 111, 1)),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 350,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context, articleIndex) {
+                                          return ArticleItemWidget(
+                                            article: map.values
+                                                .elementAt(index)[articleIndex],
+                                          );
+                                        },
+                                        itemCount:
+                                            map.values.elementAt(index).length,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               );
+                              // return ArticleItemWidget(
+                              //   article: stories[index],
+                              // );
                             });
                     }
                   }),

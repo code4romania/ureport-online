@@ -153,6 +153,9 @@ class AppRouter extends _i15.RootStackRouter {
         child: _i14.ArticleScreen(
           key: args.key,
           article: args.article,
+          title: args.title,
+          image: args.image,
+          date: args.date,
         ),
         opaque: true,
       );
@@ -410,12 +413,18 @@ class ArticleScreenRoute extends _i15.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i16.Key? key,
     required _i17.Result article,
+    required String title,
+    required String image,
+    required String date,
   }) : super(
           ArticleScreenRoute.name,
           path: '/article-screen',
           args: ArticleScreenRouteArgs(
             key: key,
             article: article,
+            title: title,
+            image: image,
+            date: date,
           ),
         );
 
@@ -426,14 +435,23 @@ class ArticleScreenRouteArgs {
   const ArticleScreenRouteArgs({
     this.key,
     required this.article,
+    required this.title,
+    required this.image,
+    required this.date,
   });
 
   final _i16.Key? key;
 
   final _i17.Result article;
 
+  final String title;
+
+  final String image;
+
+  final String date;
+
   @override
   String toString() {
-    return 'ArticleScreenRouteArgs{key: $key, article: $article}';
+    return 'ArticleScreenRouteArgs{key: $key, article: $article, title: $title, image: $image, date: $date}';
   }
 }

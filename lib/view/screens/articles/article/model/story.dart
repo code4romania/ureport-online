@@ -38,7 +38,7 @@ class Result with _$Result {
     dynamic? audioLink,
     String? tags,
     int? org,
-    List<dynamic>? images,
+    List<String>? images,
     Category? category,
     DateTime? createdOn,
   }) = _Result;

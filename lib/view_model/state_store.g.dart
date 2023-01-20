@@ -25,6 +25,22 @@ mixin _$StateStore on _StateStoreBase, Store {
     });
   }
 
+  late final _$selectedLanguageAtom =
+      Atom(name: '_StateStoreBase.selectedLanguage', context: context);
+
+  @override
+  String? get selectedLanguage {
+    _$selectedLanguageAtom.reportRead();
+    return super.selectedLanguage;
+  }
+
+  @override
+  set selectedLanguage(String? value) {
+    _$selectedLanguageAtom.reportWrite(value, super.selectedLanguage, () {
+      super.selectedLanguage = value;
+    });
+  }
+
   late final _$loggedInAtom =
       Atom(name: '_StateStoreBase.loggedIn', context: context);
 
@@ -59,6 +75,7 @@ mixin _$StateStore on _StateStoreBase, Store {
   String toString() {
     return '''
 locale: ${locale},
+selectedLanguage: ${selectedLanguage},
 loggedIn: ${loggedIn}
     ''';
   }

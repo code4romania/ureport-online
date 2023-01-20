@@ -99,13 +99,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.3"
-  autocomplete_textfield:
-    dependency: "direct main"
-    description:
-      name: autocomplete_textfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -232,34 +225,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-  connectivity:
-    dependency: "direct main"
-    description:
-      name: connectivity
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.6"
-  connectivity_for_web:
-    dependency: transitive
-    description:
-      name: connectivity_for_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0+1"
-  connectivity_macos:
-    dependency: transitive
-    description:
-      name: connectivity_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1+2"
-  connectivity_platform_interface:
-    dependency: transitive
-    description:
-      name: connectivity_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   convert:
     dependency: transitive
     description:
@@ -342,48 +307,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_keyboard_visibility:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.4.0"
-  flutter_keyboard_visibility_linux:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_linux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  flutter_keyboard_visibility_macos:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  flutter_keyboard_visibility_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
-  flutter_keyboard_visibility_web:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
-  flutter_keyboard_visibility_windows:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -436,13 +359,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_typeahead:
-    dependency: "direct main"
-    description:
-      name: flutter_typeahead
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -511,13 +427,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.2"
-  infinite_scroll_pagination:
-    dependency: "direct main"
-    description:
-      name: infinite_scroll_pagination
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
   intl:
     dependency: "direct main"
     description:
@@ -693,13 +602,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
-  percent_indicator:
-    dependency: "direct main"
-    description:
-      name: percent_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.2"
   permission_handler:
     dependency: "direct main"
     description:
@@ -887,13 +789,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  sliver_tools:
-    dependency: transitive
-    description:
-      name: sliver_tools
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.8"
   source_gen:
     dependency: transitive
     description:

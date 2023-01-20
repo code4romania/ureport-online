@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/utils/app_router.gr.dart';
+import 'package:ureport_ecaro/view/screens/account/login-register/login.dart';
 import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,7 +25,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Column(children: [
         TextNavigatorComponent(
           title: AppLocalizations.of(context)!.skip,
-          onPressed: () {},
+          onPressed: () => context.router.push(LoginScreenRoute()),
           rightEdge: true,
         ),
         SizedBox(
@@ -41,6 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             onPressed: () {
               if (pageViewController.page == 2) {
                 //goto register
+                context.router.push(LoginScreenRoute());
               } else {
                 pageViewController.nextPage(
                     duration: Duration(milliseconds: 400),
@@ -58,13 +62,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ? AppLocalizations.of(context)!.intro_text2
             : AppLocalizations.of(context)!.intro_text3;
     final String imagePath = page == 0
-        ? "assets/images/drawable-xxhdpi/v2_about_1_ro.png"
+        ? "assets/images/v2_about_1_ro.png"
         : page == 1
-            ? "assets/images/drawable-xxhdpi/v2_about_2_ro.png"
-            : "assets/images/drawable-xxhdpi/v2_about_3_ro.png";
+            ? "assets/images/v2_about_2_ro.png"
+            : "assets/images/v2_about_3_ro.png";
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             text,

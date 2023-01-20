@@ -33,7 +33,8 @@ _$_Result _$$_ResultFromJson(Map json) => _$_Result(
       audioLink: json['audioLink'],
       tags: json['tags'] as String?,
       org: json['org'] as int?,
-      images: json['images'] as List<dynamic>?,
+      images:
+          (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
       category: json['category'] == null
           ? null
           : Category.fromJson(

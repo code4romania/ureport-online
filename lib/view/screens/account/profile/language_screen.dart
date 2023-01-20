@@ -227,7 +227,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         onTap: () {
                           ClickSound.soundClick();
 
-                          StorageUtil.putString(
+                          StorageUtil.setString(
                               "SELECTED_LANGUAGE", _state.locale!.languageCode);
 
                           //TODO: GOTO INTRO SCREEN

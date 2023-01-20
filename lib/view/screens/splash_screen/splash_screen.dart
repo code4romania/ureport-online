@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/data/secure_storage.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
-import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
 import 'package:ureport_ecaro/view_model/state_store.dart';
 
@@ -26,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _state = context.read<StateStore>();
     setInitialLocal();
-    initializeApp();
   }
 
   void setInitialLocal() {
@@ -38,29 +34,6 @@ class _SplashScreenState extends State<SplashScreen> {
       _state.setLocale(Locale('ro'));
     } else if (localeLanguage == "ua") {
       _state.setLocale(Locale('ua'));
-    }
-  }
-
-  Future<void> initializeApp() async {
-    String? token = StorageUtil.getString("token");
-    String? firstOpenApp = StorageUtil.getString("first_open_app");
-
-    //check internet connection
-    //check if it's first time on app
-    //check if logged in
-
-    checkInternetConnection();
-
-    if (firstOpenApp == null || firstOpenApp.isEmpty) {
-      context.router.replaceAll([OpenAppScreenRoute()]);
-    } else {
-      if (token == null || token.isEmpty) {
-        context.router.replaceAll([LoginScreenRoute()]);
-      } else {
-        Timer(Duration(seconds: 3), () {
-          context.router.replaceAll([ProfileScreenRoute()]);
-        });
-      }
     }
   }
 
@@ -76,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return false;
   }
 
-  void checkInternetConnection() async {
+  Future<void> checkInternetConnection() async {
     bool isConnected = await checkConnection();
 
     if (!isConnected) {
@@ -84,8 +57,11 @@ class _SplashScreenState extends State<SplashScreen> {
         isConnected = await checkConnection();
         if (isConnected) {
           timer.cancel();
+          hasInternetConnection();
         }
       });
+    } else {
+      hasInternetConnection();
     }
 
     if (!isConnected) {
@@ -107,19 +83,38 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void hasInternetConnection() {
+    String? token = StorageUtil.getString("token");
+
+    if (token == null || token.isEmpty) {
+      context.router.replaceAll([OpenAppScreenRoute()]);
+    } else {
+      context.router.replaceAll([
+        ArticlesListScreenRoute(
+          categoryImg: "https://i.ytimg.com/vi/2QvOxa_7wEw/maxresdefault.jpg",
+          categoryTitle: "Test",
+          key: Key("test"),
+        )
+      ]);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.mainBgColor,
-      body: Container(
-        child: Center(
-          child: Container(
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Image(
-                fit: BoxFit.fill,
-                image: AssetImage("assets/images/v2_logo_1.png"),
-              )),
-        ),
+      body: FutureBuilder(
+        future: checkInternetConnection(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
