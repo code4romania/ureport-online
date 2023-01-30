@@ -26,7 +26,7 @@ class ArticleScreen extends StatefulWidget {
 class _ArticleScreenState extends State<ArticleScreen> {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   late WebViewPlusController webViewController;
-  double? articleHeight;
+  double webViewHeight = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -111,15 +111,10 @@ class _ArticleScreenState extends State<ArticleScreen> {
               height: 20,
             ),
             Container(
+              margin: EdgeInsets.only(top: 71.5),
               width: double.infinity,
-              height: articleHeight ?? MediaQuery.of(context).size.height * 0.6,
-              //height: MediaQuery.of(context).size.height * 0.6,
-              child: loadLocalHTML(
-                widget.article.content!,
-                widget.title,
-                widget.image,
-                widget.date,
-              ),
+              child: loadLocalHTML(widget.article.content!, widget.title,
+                  "widget.image", "widget.date"),
             ),
           ]),
         ),
@@ -130,41 +125,45 @@ class _ArticleScreenState extends State<ArticleScreen> {
   loadLocalHTML(String content, String title, String image, String date) {
     return content == ""
         ? Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.6,
             margin: EdgeInsets.only(top: 30),
-            height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
                 CircularProgressIndicator(),
               ],
             ),
           )
-        : WebViewPlus(
-            backgroundColor: Colors.white,
-
-            onWebViewCreated: (controller) {
-              webViewController = controller;
-              controller.webViewController.clearCache();
-              // loadData();
-              loadDataRaw(content, title, image, date);
-            },
-            // javascriptChannels: Set.from([
-            //   JavascriptChannel(
-            //       name: 'Print',
-            //       onMessageReceived: (JavascriptMessage message) {
-            //         doShare();
-            //       })
-            // ]),
-            onPageFinished: (url) {
-              webViewController.getHeight().then((double height) {
-                setState(() {
-                  articleHeight = height;
+        : Container(
+            width: MediaQuery.of(context).size.width,
+            height: webViewHeight,
+            child: WebViewPlus(
+              onWebViewCreated: (controller) {
+                webViewController = controller;
+                controller.webViewController.clearCache();
+                // loadData();
+                loadDataRaw(content, title, image, date);
+              },
+              // javascriptChannels: Set.from([
+              //   JavascriptChannel(
+              //       name: 'Print',
+              //       onMessageReceived: (JavascriptMessage message) {
+              //         doShare();
+              //       })
+              // ]),
+              onPageFinished: (url) {
+                webViewController.webViewController
+                    .evaluateJavascript("document.body.scrollHeight")
+                    .then((value) {
+                  setState(() {
+                    webViewHeight = double.parse(value);
+                  });
                 });
-              });
-
-              content = content.replaceAll("\"", "\'");
-              content = content.replaceAll("\\", "");
-            },
-            javascriptMode: JavascriptMode.unrestricted,
+                content = content.replaceAll("\"", "\'");
+                content = content.replaceAll("\\", "");
+              },
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
           );
   }
 
@@ -175,7 +174,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
       if (contentEx.length > 2097152) {
         contentEx = contentEx.replaceFirst(RegExp('>.*?gmi<'), '');
         loadHtml(contentEx.split('').reversed.join(), title, image, date);
-        // loadHtml(contentEx);
       } else {
         loadHtml(contentEx.split('').reversed.join(), title, image, date);
       }
@@ -187,29 +185,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
   loadHtml(String content, String title, String image, String date) {
     final dateTime = DateTime.tryParse(date);
     final format = DateFormat('dd MMMM, yyyy');
-    final clockString = dateTime != null ? format.format(dateTime) : "";
-    content = content.replaceAll(
-        "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>",
-        "<br><br>");
-    content = content.replaceAll(
-        "<br><br><br><br><br><br><br><br><br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll(
-        "<br><br><br><br><br><br><br><br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll(
-        "<br><br><br><br><br><br><br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll(
-        "<br><br><br><br><br><br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll(
-        "<br><br><br><br><br><br><br><br><br><br>", "<br><br>");
-    content =
-        content.replaceAll("<br><br><br><br><br><br><br><br><br>", "<br><br>");
-    content =
-        content.replaceAll("<br><br><br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll("<br><br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll("<br><br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll("<br><br><br><br><br>", "<br><br>");
-    content = content.replaceAll("<br><br><br><br>", "<br><br>");
-    content = content.replaceAll("<br><br><br>", "<br><br>");
+    final clockString = dateTime == null ? "" : format.format(dateTime);
+
     content = content.replaceAll("src=\"//", "src=\"https:");
 
     String final_content = '''
@@ -270,7 +247,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
     </style> 
     <head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
     <body> 
-    <div class="header_time">$clockString</div>
     <div style="font-weight: bold; margin-top:10px; margin-bottom: 10px; font-size: 20px "><h2>$title</h2></div>
     <div  >$content</div> 
     </body> 
