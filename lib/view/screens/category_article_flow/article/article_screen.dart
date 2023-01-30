@@ -1,8 +1,16 @@
 import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/constants.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/article/components/article_item.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/searchbar_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/title_description_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class ArticleScreen extends StatefulWidget {
@@ -24,17 +32,55 @@ class ArticleScreen extends StatefulWidget {
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final DateFormat formatter = DateFormat('dd/MM/yyyy');
   late WebViewPlusController webViewController;
+  late ScrollController _scrollController;
   double webViewHeight = 0;
+  bool _showScrollToTop = true;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+
+    super.initState();
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(0,
+        duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // dispose the controller
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: _showScrollToTop
+          ? GestureDetector(
+              onTap: _scrollToTop,
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                ),
+                child: Icon(
+                  Icons.arrow_circle_up,
+                  size: 50,
+                ),
+              ),
+            )
+          : SizedBox(),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(children: [
-            TopHeaderWidget(title: "Categorii"),
+            TopHeaderWidget(title: "Articol"),
             SizedBox(
               height: 20,
             ),
@@ -107,11 +153,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
             Container(
-              margin: EdgeInsets.only(top: 71.5),
               width: double.infinity,
               child: loadLocalHTML(widget.article.content!, widget.title,
                   "widget.image", "widget.date"),
@@ -144,13 +186,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 // loadData();
                 loadDataRaw(content, title, image, date);
               },
-              // javascriptChannels: Set.from([
-              //   JavascriptChannel(
-              //       name: 'Print',
-              //       onMessageReceived: (JavascriptMessage message) {
-              //         doShare();
-              //       })
-              // ]),
               onPageFinished: (url) {
                 webViewController.webViewController
                     .evaluateJavascript("document.body.scrollHeight")

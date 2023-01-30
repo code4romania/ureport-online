@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
       context.router.replaceAll([OpenAppScreenRoute()]);
     } else {
       context.router.replaceAll([
-        ArticlesListScreenRoute(
+        ArticlesCategoryScreenRoute(
           categoryImg: "https://i.ytimg.com/vi/2QvOxa_7wEw/maxresdefault.jpg",
           categoryTitle: "Test",
           key: Key("test"),

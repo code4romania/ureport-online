@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -33,7 +33,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopHeaderWidget(title: "Parolă"),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -3,20 +3,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
-import 'package:ureport_ecaro/view/screens/articles/article/article_screen.dart';
-import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
 
 class ArticleItemWidget extends StatelessWidget {
   ArticleItemWidget({
     Key? key,
     required this.article,
+    this.width,
   }) : super(key: key);
 
   final Result article;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
-    double width = 160;
+    double widgetWidth = width ?? 190;
 
     return GestureDetector(
       // onTap: () => NavUtils.push(
@@ -31,8 +32,12 @@ class ArticleItemWidget extends StatelessWidget {
               : "",
           date: article.createdOn.toString())),
       child: Container(
-          width: 180,
-          margin: EdgeInsets.only(top: 20, left: 10),
+          width: widgetWidth,
+          margin: EdgeInsets.only(
+            top: 20,
+            left: 10,
+            bottom: 20,
+          ),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
@@ -54,7 +59,7 @@ class ArticleItemWidget extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
                 child: Container(
-                    width: width,
+                    width: widgetWidth,
                     height: 180,
                     decoration: BoxDecoration(
                       borderRadius:
@@ -74,32 +79,31 @@ class ArticleItemWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           )),
               ),
-              Container(
-                width: width,
-                margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 4,
-                      backgroundColor: Color.fromRGBO(201, 13, 182, 1),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  CircleAvatar(
+                    radius: 4,
+                    backgroundColor: Color.fromRGBO(201, 13, 182, 1),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    width: widgetWidth - 60,
+                    child: Text(
+                      article.category!.name!.split('/')[1].trim(),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.clip,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      width: width - 40,
-                      child: Text(
-                        article.category!.name!.split('/')[1].trim(),
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                        overflow: TextOverflow.clip,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Container(
-                width: width,
+                width: widgetWidth,
                 margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                 child: Text(
                   article.title!,
@@ -110,7 +114,7 @@ class ArticleItemWidget extends StatelessWidget {
                 ),
               ),
               Container(
-                width: width,
+                width: widgetWidth,
                 margin: EdgeInsets.only(
                   top: 10,
                   left: 20,

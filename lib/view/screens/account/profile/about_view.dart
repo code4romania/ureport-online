@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);

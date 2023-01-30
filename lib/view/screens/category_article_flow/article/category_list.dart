@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
-import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
-import 'package:ureport_ecaro/view/screens/articles/categories/components/search_bar_widget.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/title_description_widget.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/searchbar_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/title_description_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 
 class CategoryListScreen extends StatefulWidget {
   //This screen is only for Romania region

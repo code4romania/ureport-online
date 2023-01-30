@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:ureport_ecaro/view/screens/articles/article/model/story.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
 
 class NetworkService {
   Future<StoryModel> getStories(String url) async {

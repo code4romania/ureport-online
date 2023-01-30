@@ -4,7 +4,7 @@ import 'package:ureport_ecaro/view/screens/account/profile/components/medal_widg
 import 'package:ureport_ecaro/view/screens/account/profile/components/profile_header_component.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/model/history.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/model/medal.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -106,11 +106,11 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopHeaderWidget(title: "Profil"),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(children: [
+            TopHeaderWidget(title: "Profil"),
             ProfileHeaderComponent(),
             Container(
               width: 400,

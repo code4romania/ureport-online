@@ -1,10 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
-import 'package:ureport_ecaro/view/screens/account/login-register/login.dart';
-import 'package:ureport_ecaro/view/screens/articles/shared/top_header_widget.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/view/shared/general_button_component.dart';
 import 'package:ureport_ecaro/view/shared/text_navigator_component.dart';
 
