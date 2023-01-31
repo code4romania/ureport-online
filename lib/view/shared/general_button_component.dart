@@ -15,7 +15,10 @@ class MainAppButtonComponent extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.only(
+          top: 20,
+          bottom: 20,
+        ),
         width: double.infinity,
         height: 45,
         decoration: BoxDecoration(

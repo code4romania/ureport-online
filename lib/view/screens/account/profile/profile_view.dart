@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/components/history_widget.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/components/medal_widget.dart';
@@ -5,6 +6,7 @@ import 'package:ureport_ecaro/view/screens/account/profile/components/profile_he
 import 'package:ureport_ecaro/view/screens/account/profile/model/history.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/model/medal.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/shared/text_navigator_component.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -111,6 +113,11 @@ class _ProfileScreenState extends State<ProfileScreen>
           physics: BouncingScrollPhysics(),
           child: Column(children: [
             TopHeaderWidget(title: "Profil"),
+            TextNavigatorComponent(
+              title: "ÎNAPOI",
+              onPressed: () => context.router.pop(),
+              rightEdge: false,
+            ),
             ProfileHeaderComponent(),
             Container(
               width: 400,

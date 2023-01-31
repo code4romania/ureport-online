@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/shared/text_navigator_component.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -13,6 +15,11 @@ class AboutScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              TextNavigatorComponent(
+                title: "ÎNAPOI",
+                onPressed: () => context.router.pop(),
+                rightEdge: false,
+              ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: Text(

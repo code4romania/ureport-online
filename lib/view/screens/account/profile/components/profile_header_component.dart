@@ -57,16 +57,6 @@ class ProfileHeaderComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    //TODO: GOTO MENU SCREEN
-                    //NavUtils.push(context, MenuScreen());
-                  },
-                  child: Icon(
-                    Icons.settings,
-                    color: Color.fromRGBO(68, 151, 223, 1),
-                  ),
-                ),
               ],
             ),
             SizedBox(

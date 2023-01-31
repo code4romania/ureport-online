@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 
 import 'package:ureport_ecaro/view/screens/account/profile/components/profile_header_component.dart';
@@ -21,20 +23,32 @@ class MenuScreen extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: [
-                  menuItem(context, "Despre",
-                      () => {}), //NavUtils.push(context, AboutScreen())),
-                  menuItem(context, "Profilul tau",
-                      () => {}), //NavUtils.push(context, ProfileScreen())),
-                  menuItem(context, "Schimba programul",
-                      () => {}), //NavUtils.push(context, ProgramChooser())),
-                  menuItem(context, "Schimba limba",
-                      () => {}), // NavUtils.push(context, LanguageChooser())),
                   menuItem(
                       context,
-                      "Schimba parola",
-                      () =>
-                          {}), //NavUtils.push(context, ChangePasswordScreen())),
-                  menuItem(context, "Părăsește cont", () {
+                      "Despre",
+                      () => context.router.push(
+                          AboutScreenRoute())), //NavUtils.push(context, AboutScreen())),
+                  menuItem(
+                      context,
+                      "Profilul tau",
+                      () => context.router.push(
+                          ProfileScreenRoute())), //NavUtils.push(context, ProfileScreen())),
+                  menuItem(
+                      context,
+                      "Trimite feedback",
+                      () => context.router.push(
+                          FeedbackScreenRoute())), //NavUtils.push(context, ProgramChooser())),
+                  menuItem(
+                      context,
+                      "Schimba limba",
+                      () => context.router.push(
+                          LanguageScreenRoute())), // NavUtils.push(context, LanguageChooser())),
+                  menuItem(
+                      context,
+                      "Setări cont",
+                      () => context.router.push(
+                          ProfileSettingsScreenRoute())), //NavUtils.push(context, ChangePasswordScreen())),
+                  menuItem(context, "Notificari", () {
                     // var spset = locator<SPUtil>();
 
                     // ClickSound.soundClick();

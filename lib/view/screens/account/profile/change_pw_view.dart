@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
 
-class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({Key? key}) : super(key: key);
+class ProfileSettingsScreen extends StatefulWidget {
+  const ProfileSettingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+  State<ProfileSettingsScreen> createState() => _ProfileSettingsScreenState();
 }
 
-class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
   final currentPwController = TextEditingController();
   final newPwController = TextEditingController();
   final confirmNewPwController = TextEditingController();

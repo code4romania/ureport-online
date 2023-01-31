@@ -202,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () {
           //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
           StorageUtil.setString("token", "############");
-          context.router.replaceAll([CategoryListScreenRoute()]);
+          context.router.replaceAll([RootPageRoute()]);
         },
       );
     } else if (signInResult == LoginStatus.NOT_FOUND) {

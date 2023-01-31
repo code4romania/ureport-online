@@ -14,25 +14,31 @@ class TextNavigatorComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        children: [
-          rightEdge ? const Spacer() : Container(),
-          Container(
-            child: GestureDetector(
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            rightEdge ? const Spacer() : Container(),
+            Icon(
+              Icons.keyboard_double_arrow_left_outlined,
+              color: Color.fromRGBO(28, 171, 226, 1),
+            ),
+            Container(
               child: Text(
                 title.toUpperCase(),
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.2,
+                  color: Color.fromRGBO(28, 171, 226, 1),
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
