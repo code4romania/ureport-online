@@ -5,7 +5,7 @@ import 'package:ureport_ecaro/view/screens/account/profile/components/medal_widg
 import 'package:ureport_ecaro/view/screens/account/profile/components/profile_header_component.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/model/history.dart';
 import 'package:ureport_ecaro/view/screens/account/profile/model/medal.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/view/shared/text_navigator_component.dart';
 
 class ProfileScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/repository/network_service.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
 
 part 'story_state.g.dart';
 

@@ -5,11 +5,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/components/article_category_section_component.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/components/article_item.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/title_description_widget.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/components/article_category_section_component.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/components/article_item.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/components/title_description_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
+import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/view/shared/general_button_component.dart';
 import 'package:ureport_ecaro/view_model/story_state.dart';
 

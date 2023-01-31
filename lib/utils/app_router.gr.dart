@@ -32,15 +32,15 @@ import 'package:ureport_ecaro/view/screens/account/profile/menu_view.dart'
     as _i16;
 import 'package:ureport_ecaro/view/screens/account/profile/profile_view.dart'
     as _i7;
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/article_list_screen.dart'
+import 'package:ureport_ecaro/view/screens/category_article_flow/article_list_screen.dart'
     as _i15;
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/article_screen.dart'
+import 'package:ureport_ecaro/view/screens/category_article_flow/article_screen.dart'
     as _i14;
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/articles_category_screen.dart'
+import 'package:ureport_ecaro/view/screens/category_article_flow/articles_category_screen.dart'
     as _i13;
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/category_list.dart'
+import 'package:ureport_ecaro/view/screens/category_article_flow/category_list.dart'
     as _i18;
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart'
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart'
     as _i23;
 import 'package:ureport_ecaro/view/screens/chat/chat_screen.dart' as _i17;
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart' as _i19;

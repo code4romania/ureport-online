@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/data/secure_storage.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
-import 'package:ureport_ecaro/utils/resources.dart';
 import 'package:ureport_ecaro/view_model/state_store.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:ureport_ecaro/data/secure_storage.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
 import 'package:validators/validators.dart' as validator;
 
 class RegisterScreen extends StatefulWidget {

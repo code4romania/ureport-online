@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
 
 class ArticleItemWidget extends StatelessWidget {
   ArticleItemWidget({

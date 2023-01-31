@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/data/secure_storage.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
 import 'package:ureport_ecaro/view_model/state_store.dart';
 

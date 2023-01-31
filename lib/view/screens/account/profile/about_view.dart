@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/view/shared/text_navigator_component.dart';
 
 class AboutScreen extends StatelessWidget {

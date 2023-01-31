@@ -1,13 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/constants.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/components/article_item.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/article/model/story.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/searchbar_widget.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/title_description_widget.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/components/article_item.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/components/searchbar_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/components/title_description_widget.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
+
+import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
 
 class ArticleListScreen extends StatefulWidget {
   const ArticleListScreen({

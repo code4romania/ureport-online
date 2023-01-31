@@ -17,8 +17,8 @@ String storyModelToJson(StoryModel data) => json.encode(data.toJson());
 class StoryModel with _$StoryModel {
   const factory StoryModel({
     int? count,
-    dynamic? next,
-    dynamic? previous,
+    dynamic next,
+    dynamic previous,
     List<Result>? results,
   }) = _StoryModel;
 
@@ -35,7 +35,7 @@ class Result with _$Result {
     String? summary,
     String? content,
     String? videoId,
-    dynamic? audioLink,
+    dynamic audioLink,
     String? tags,
     int? org,
     List<String>? images,
@@ -49,7 +49,7 @@ class Result with _$Result {
 @freezed
 class Category with _$Category {
   const factory Category({
-    dynamic? imageUrl,
+    dynamic imageUrl,
     String? name,
   }) = _Category;
 
