@@ -8,9 +8,9 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(context) {
     return AutoTabsScaffold(
-      routes: const [
+      routes: [
         CategoryListScreenRoute(),
-        ChatScreenRoute(),
+        ChatRoute(from: "Home"),
         HomeScreenRoute(),
         OpinionScreenRoute(),
         MenuScreenRoute(),

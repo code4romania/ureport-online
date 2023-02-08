@@ -42,7 +42,7 @@ import 'package:ureport_ecaro/view/screens/category_article_flow/category_list.d
     as _i18;
 import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart'
     as _i23;
-import 'package:ureport_ecaro/view/screens/chat/chat_screen.dart' as _i17;
+import 'package:ureport_ecaro/view/screens/chat/Chat.dart' as _i17;
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart' as _i19;
 import 'package:ureport_ecaro/view/screens/open_app/onboarding_screen.dart'
     as _i12;
@@ -188,10 +188,11 @@ class AppRouter extends _i21.RootStackRouter {
         opaque: true,
       );
     },
-    ChatScreenRoute.name: (routeData) {
+    ChatRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatRouteArgs>();
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i17.ChatScreen(),
+        child: _i17.Chat(args.from),
         opaque: true,
       );
     },
@@ -230,8 +231,8 @@ class AppRouter extends _i21.RootStackRouter {
               parent: RootPageRoute.name,
             ),
             _i21.RouteConfig(
-              ChatScreenRoute.name,
-              path: 'chat-screen',
+              ChatRoute.name,
+              path: 'Chat',
               parent: RootPageRoute.name,
             ),
             _i21.RouteConfig(
@@ -602,15 +603,27 @@ class MenuScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.ChatScreen]
-class ChatScreenRoute extends _i21.PageRouteInfo<void> {
-  const ChatScreenRoute()
+/// [_i17.Chat]
+class ChatRoute extends _i21.PageRouteInfo<ChatRouteArgs> {
+  ChatRoute({required String from})
       : super(
-          ChatScreenRoute.name,
-          path: 'chat-screen',
+          ChatRoute.name,
+          path: 'Chat',
+          args: ChatRouteArgs(from: from),
         );
 
-  static const String name = 'ChatScreenRoute';
+  static const String name = 'ChatRoute';
+}
+
+class ChatRouteArgs {
+  const ChatRouteArgs({required this.from});
+
+  final String from;
+
+  @override
+  String toString() {
+    return 'ChatRouteArgs{from: $from}';
+  }
 }
 
 /// generated route for

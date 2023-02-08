@@ -13,7 +13,7 @@ import 'package:ureport_ecaro/view/screens/category_article_flow/article_list_sc
 import 'package:ureport_ecaro/view/screens/category_article_flow/article_screen.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/articles_category_screen.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/category_list.dart';
-import 'package:ureport_ecaro/view/screens/chat/chat_screen.dart';
+import 'package:ureport_ecaro/view/screens/chat/Chat.dart';
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart';
 import 'package:ureport_ecaro/view/screens/open_app/onboarding_screen.dart';
 import 'package:ureport_ecaro/view/screens/open_app/open_app_screen.dart';
@@ -25,7 +25,7 @@ import 'package:ureport_ecaro/view/screens/opinions/opinion_screen.dart';
     // Root
     AdaptiveRoute(page: RootPage, children: [
       AdaptiveRoute(page: MenuScreen),
-      AdaptiveRoute(page: ChatScreen),
+      AdaptiveRoute(page: Chat),
       AdaptiveRoute(page: CategoryListScreen),
       AdaptiveRoute(page: HomeScreen),
       AdaptiveRoute(page: OpinionScreen),
