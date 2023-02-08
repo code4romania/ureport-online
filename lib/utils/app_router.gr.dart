@@ -44,14 +44,13 @@ import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dar
     as _i23;
 import 'package:ureport_ecaro/view/screens/chat/chat_screen.dart' as _i17;
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart' as _i19;
-import 'package:ureport_ecaro/view/screens/onboarding/onboarding_screen.dart'
+import 'package:ureport_ecaro/view/screens/open_app/onboarding_screen.dart'
     as _i12;
 import 'package:ureport_ecaro/view/screens/open_app/open_app_screen.dart'
     as _i11;
+import 'package:ureport_ecaro/view/screens/open_app/splash_screen.dart' as _i6;
 import 'package:ureport_ecaro/view/screens/opinions/opinion_screen.dart'
     as _i20;
-import 'package:ureport_ecaro/view/screens/splash_screen/splash_screen.dart'
-    as _i6;
 
 class AppRouter extends _i21.RootStackRouter {
   AppRouter([_i22.GlobalKey<_i22.NavigatorState>? navigatorKey])

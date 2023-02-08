@@ -15,10 +15,10 @@ import 'package:ureport_ecaro/view/screens/category_article_flow/articles_catego
 import 'package:ureport_ecaro/view/screens/category_article_flow/category_list.dart';
 import 'package:ureport_ecaro/view/screens/chat/chat_screen.dart';
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart';
-import 'package:ureport_ecaro/view/screens/onboarding/onboarding_screen.dart';
+import 'package:ureport_ecaro/view/screens/open_app/onboarding_screen.dart';
 import 'package:ureport_ecaro/view/screens/open_app/open_app_screen.dart';
+import 'package:ureport_ecaro/view/screens/open_app/splash_screen.dart';
 import 'package:ureport_ecaro/view/screens/opinions/opinion_screen.dart';
-import 'package:ureport_ecaro/view/screens/splash_screen/splash_screen.dart';
 
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
