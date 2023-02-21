@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/data/secure_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/sp_utils.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
-
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
+import 'package:ureport_ecaro/view/shared/general_button_component.dart';
 import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 import 'package:validators/validators.dart' as validator;
 
 class LoginScreen extends StatefulWidget {
@@ -21,6 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
   var _emailError;
   var _passwordError;
 
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
+
   bool _isLoading = false;
 
   @override
@@ -31,21 +37,112 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void initState() {
+    _stateStore = context.read<StateStore>();
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["login_screen"]!;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
       child: Column(children: [
-        TopHeaderWidget(title: "AUTENTIFICARE"),
+        TopHeaderWidget(title: _translation["header"]!),
         Container(
-            margin: EdgeInsets.only(top: 80, left: 10),
+            margin: EdgeInsets.only(top: 80, left: 10, right: 10),
             width: double.infinity,
             child: Text(
-              "AUTENTIFICĂ-TE",
+              _translation["title"]!,
               style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 28,
                   fontFamily: 'Heebo'),
+              textAlign: TextAlign.center,
+            )),
+        SizedBox(
+          height: 10,
+        ),
+        GestureDetector(
+          onTap: () => context.router.replace(RegisterScreenRoute()),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+              text: _translation["no_account"]! + " ",
+              children: <TextSpan>[
+                TextSpan(
+                    text: _translation['no_account2']!,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(167, 45, 111, 1),
+                    )),
+              ],
+            ),
+          ),
+        ),
+        textField(
+          label: _translation["email"]!,
+          textInputAction: TextInputAction.next,
+          obscureText: false,
+          keyboardType: TextInputType.emailAddress,
+          controller: _emailController,
+          errorText: _emailError,
+        ),
+        textField(
+          label: _translation["password"]!,
+          textInputAction: TextInputAction.done,
+          obscureText: true,
+          keyboardType: TextInputType.visiblePassword,
+          controller: _passwdController,
+          errorText: _passwordError,
+        ),
+        _isLoading
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              )
+            : MainAppButtonComponent(
+                title: _translation["submit"]!,
+                onPressed: () async => await login(),
+              ),
+        SizedBox(
+          height: 10,
+        ),
+        GestureDetector(
+          onTap: () => context.router.replace(ForgotPasswordScreenRoute()),
+          child: Text(
+            _translation["forgot_pw"]!,
+            style: TextStyle(
+              color: Color.fromRGBO(167, 45, 111, 1),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+            margin: EdgeInsets.only(top: 30),
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 100,
+                    child: Divider(
+                      color: Colors.black,
+                    )),
+                Text(_translation['separator_text']!),
+                Container(
+                    width: 100,
+                    child: Divider(
+                      color: Colors.black,
+                    )),
+              ],
             )),
         Container(
           width: double.infinity,
@@ -71,82 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
-        Container(
-            margin: EdgeInsets.only(top: 30),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 100,
-                    child: Divider(
-                      color: Colors.black,
-                    )),
-                Text("SAU"),
-                Container(
-                    width: 100,
-                    child: Divider(
-                      color: Colors.black,
-                    )),
-              ],
-            )),
-        textField(
-          label: "Email",
-          textInputAction: TextInputAction.next,
-          obscureText: false,
-          keyboardType: TextInputType.emailAddress,
-          controller: _emailController,
-          errorText: _emailError,
-        ),
-        textField(
-          label: "Password",
-          textInputAction: TextInputAction.done,
-          obscureText: true,
-          keyboardType: TextInputType.visiblePassword,
-          controller: _passwdController,
-          errorText: _passwordError,
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(right: 16, left: 16, top: 20),
-          height: 44,
-          child: _isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                )
-              : submitButton(
-                  type: 'login',
-                  onPressed: () async => await login(),
-                ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        GestureDetector(
-            onTap: () => context.router.replace(ForgotPasswordScreenRoute()),
-            child: Text("Ai uitat parola?")),
-        SizedBox(
-          height: 30,
-        ),
-        GestureDetector(
-          onTap: () => context.router.replace(RegisterScreenRoute()),
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-              text: 'Nu ai cont? ',
-              children: const <TextSpan>[
-                TextSpan(
-                    text: 'Înregistrează-te',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
-              ],
-            ),
-          ),
-        ),
         SizedBox(
           height: 10,
         ),
@@ -166,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login() async {
     if (!validator.isEmail(_emailController.text)) {
       setState(() {
-        _emailError = "Email invalid";
+        _emailError = _translation['invalid_email']!;
       });
       return;
     } else {
@@ -177,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (_passwdController.text.length < 6) {
       setState(() {
-        _passwordError = "Parola este prea scurtă";
+        _passwordError = _translation['short_pw']!;
       });
       return;
     } else {
@@ -200,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
         type: 'login',
         onPressed: () {
           //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
-          StorageUtil.setString("token", "############");
+          SPUtil().setValue("token", "############");
           context.router.replaceAll([RootPageRoute()]);
         },
       );
@@ -210,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showPopup(
           context: context,
           type: 'error',
-          message: "Acest cont nu exista!",
+          message: _translation["no_existing_acc"],
           onPressed: () => Navigator.pop(context));
     } else if (signInResult == LoginStatus.WRONG_DETAILS) {
       toggleIsLoading();
@@ -218,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showPopup(
           context: context,
           type: 'error',
-          message: "Detaliile introduse nu sunt corecte!",
+          message: _translation["failed_login"]!,
           onPressed: () => Navigator.pop(context));
     } else {
       toggleIsLoading();
@@ -226,7 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showPopup(
           context: context,
           type: 'error',
-          message: "S-a produs o eroare!",
+          message: _translation["error"],
           onPressed: () => Navigator.pop(context));
     }
   }

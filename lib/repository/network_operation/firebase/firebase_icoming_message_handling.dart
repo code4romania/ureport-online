@@ -7,7 +7,6 @@ class MessageModel {
   List<dynamic> quicktypest;
   String time;
 
-
   MessageModel({
     required this.message,
     required this.sender,
@@ -16,11 +15,7 @@ class MessageModel {
     required this.time,
   });
 
-
-
-
-  factory MessageModel.fromJson(Map<String, dynamic> json) =>
-      MessageModel(
+  factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
         message: json["message"],
         sender: json["sender"],
         status: json["status"],

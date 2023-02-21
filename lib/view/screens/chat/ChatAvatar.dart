@@ -17,7 +17,7 @@ class ChatAvatar extends StatelessWidget {
             width: 30,
             child: user
                 ? Image.asset(image, height: 25, width: 25)
-                : Image.asset(image, height: 25, width: 25, color: Colors.red),
+                : Image.asset(image, height: 25, width: 25, color: Colors.blue),
           ),
           !user
               ? Center(
@@ -26,7 +26,7 @@ class ChatAvatar extends StatelessWidget {
                     height: 12,
                     width: 12,
                     child: Image.asset("assets/images/ic_u.png",
-                        color: Colors.red),
+                        color: Color.fromRGBO(167, 45, 111, 1)),
                   ),
                 )
               : Container(),

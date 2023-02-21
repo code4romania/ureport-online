@@ -3,17 +3,19 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
-import 'package:ureport_ecaro/repository/network_operation/http_service.dart';
 
 import 'api_response.dart';
 
-import 'network_operation/apicall_responsedata/response_contact_creation.dart';
-import 'network_operation/apicall_responsedata/response_single_contact.dart';
-import 'network_operation/apicall_responsedata/response_startflow.dart';
+import 'apicall_responsedata/response_contact_creation.dart';
+import 'apicall_responsedata/response_single_contact.dart';
+import 'http_service.dart';
 import 'package:http/http.dart' as http;
 
 class RapidProService {
   var _httpService = locator<HttpService>();
+
+  final String _rapidProUrl = "app.rapidpro.io";
+  final String _channelId = "604e94cd-fcd1-42ec-93d8-a77696dd18ac";
 
   Future<ApiResponse<ResponseContactCreation>> createContact(
     String urn,
@@ -23,7 +25,7 @@ class RapidProService {
     @required onError(Exception error)?,
   }) async {
     var apiResponse = await _httpService.postRequesturlencoded(
-        "https://app.rapidpro.io/c/fcm/604e94cd-fcd1-42ec-93d8-a77696dd18ac/receive",
+        "https://$_rapidProUrl/c/fcm/$_channelId/register",
         data: {
           "urn": urn,
           "fcm_token": fcmtoken,
@@ -42,12 +44,10 @@ class RapidProService {
       @required onError(Exception value)?,
       urn,
       fcmToken}) async {
-    //TODO: CHANGE CHANNEL ID LINE 49
     await _httpService.postRequesturlencoded(
-      "https://app.rapidpro.io/c/fcm/604e94cd-fcd1-42ec-93d8-a77696dd18ac/receive",
+      "https://$_rapidProUrl/c/fcm/$_channelId/receive",
       data: {"from": urn, "fcm_token": fcmToken, "msg": message},
     ).then((value) {
-      print("success: ${value.data}");
       onSuccess!(value.data);
     });
   }

@@ -52,12 +52,4 @@ class SPUtil {
       return 0;
     }
   }
-
-  String getValueNoNull(String key) {
-    if (GetStorage().hasData(key)) {
-      return GetStorage().read(key);
-    } else {
-      return "";
-    }
-  }
 }

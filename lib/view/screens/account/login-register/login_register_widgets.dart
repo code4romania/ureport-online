@@ -13,7 +13,7 @@ Widget submitButton({
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: type == 'google'
-            ? Colors.red
+            ? Color.fromRGBO(167, 45, 111, 1)
             : type == 'facebook'
                 ? Color(0xff3B5998)
                 : type == 'apple'
@@ -120,7 +120,8 @@ Widget textField({
                 borderRadius: BorderRadius.circular(25.0),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
+                borderSide:
+                    const BorderSide(color: Color.fromRGBO(167, 45, 111, 1)),
                 borderRadius: BorderRadius.circular(25.0),
               ),
             ),

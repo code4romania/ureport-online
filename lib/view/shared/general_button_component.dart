@@ -19,8 +19,8 @@ class MainAppButtonComponent extends StatelessWidget {
           top: 20,
           bottom: 20,
         ),
-        width: double.infinity,
-        height: 45,
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Color.fromRGBO(167, 45, 111, 1),

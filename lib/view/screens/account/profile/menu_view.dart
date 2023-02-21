@@ -36,11 +36,11 @@ class MenuScreen extends StatelessWidget {
                       "Trimite feedback",
                       () => context.router.push(
                           FeedbackScreenRoute())), //NavUtils.push(context, ProgramChooser())),
-                  menuItem(
-                      context,
-                      "Schimba limba",
-                      () => context.router.push(
-                          LanguageScreenRoute())), // NavUtils.push(context, LanguageChooser())),
+                  // menuItem(
+                  //     context,
+                  //     "Schimba limba",
+                  //     () => context.router.push(
+                  //         LanguageScreenRoute())), // NavUtils.push(context, LanguageChooser())),
                   menuItem(
                       context,
                       "Setări cont",

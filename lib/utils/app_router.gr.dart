@@ -15,42 +15,41 @@ import 'package:auto_route/auto_route.dart' as _i21;
 import 'package:flutter/material.dart' as _i22;
 import 'package:ureport_ecaro/view/root_page.dart' as _i1;
 import 'package:ureport_ecaro/view/screens/account/login-register/forgot_password.dart'
-    as _i10;
-import 'package:ureport_ecaro/view/screens/account/login-register/login.dart'
-    as _i9;
-import 'package:ureport_ecaro/view/screens/account/login-register/register.dart'
     as _i8;
+import 'package:ureport_ecaro/view/screens/account/login-register/login.dart'
+    as _i7;
+import 'package:ureport_ecaro/view/screens/account/login-register/register.dart'
+    as _i6;
 import 'package:ureport_ecaro/view/screens/account/profile/about_view.dart'
     as _i2;
 import 'package:ureport_ecaro/view/screens/account/profile/change_pw_view.dart'
     as _i3;
 import 'package:ureport_ecaro/view/screens/account/profile/feedback_screen.dart'
-    as _i5;
-import 'package:ureport_ecaro/view/screens/account/profile/language_screen.dart'
     as _i4;
 import 'package:ureport_ecaro/view/screens/account/profile/menu_view.dart'
-    as _i16;
-import 'package:ureport_ecaro/view/screens/account/profile/profile_view.dart'
-    as _i7;
-import 'package:ureport_ecaro/view/screens/category_article_flow/article_list_screen.dart'
     as _i15;
+import 'package:ureport_ecaro/view/screens/account/profile/profile_view.dart'
+    as _i5;
+import 'package:ureport_ecaro/view/screens/category_article_flow/article_list_screen.dart'
+    as _i12;
 import 'package:ureport_ecaro/view/screens/category_article_flow/article_screen.dart'
-    as _i14;
+    as _i11;
 import 'package:ureport_ecaro/view/screens/category_article_flow/articles_category_screen.dart'
-    as _i13;
-import 'package:ureport_ecaro/view/screens/category_article_flow/category_list.dart'
     as _i18;
+import 'package:ureport_ecaro/view/screens/category_article_flow/category_list_screen.dart'
+    as _i17;
 import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart'
     as _i23;
-import 'package:ureport_ecaro/view/screens/chat/Chat.dart' as _i17;
+import 'package:ureport_ecaro/view/screens/chat/Chat.dart' as _i16;
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart' as _i19;
 import 'package:ureport_ecaro/view/screens/open_app/onboarding_screen.dart'
-    as _i12;
+    as _i10;
 import 'package:ureport_ecaro/view/screens/open_app/open_app_screen.dart'
-    as _i11;
-import 'package:ureport_ecaro/view/screens/open_app/splash_screen.dart' as _i6;
-import 'package:ureport_ecaro/view/screens/opinions/opinion_screen.dart'
-    as _i20;
+    as _i9;
+import 'package:ureport_ecaro/view/screens/opinion/opinion_screen.dart' as _i20;
+import 'package:ureport_ecaro/view/screens/opinion/opinion_screen_from_search.dart'
+    as _i14;
+import 'package:ureport_ecaro/view/screens/opinion/opinion_search.dart' as _i13;
 
 class AppRouter extends _i21.RootStackRouter {
   AppRouter([_i22.GlobalKey<_i22.NavigatorState>? navigatorKey])
@@ -59,9 +58,11 @@ class AppRouter extends _i21.RootStackRouter {
   @override
   final Map<String, _i21.PageFactory> pagesMap = {
     RootPageRoute.name: (routeData) {
+      final args = routeData.argsAs<RootPageRouteArgs>(
+          orElse: () => const RootPageRouteArgs());
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i1.RootPage(),
+        child: _i1.RootPage(key: args.key),
         opaque: true,
       );
     },
@@ -79,78 +80,52 @@ class AppRouter extends _i21.RootStackRouter {
         opaque: true,
       );
     },
-    LanguageScreenRoute.name: (routeData) {
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.LanguageScreen(),
-        opaque: true,
-      );
-    },
     FeedbackScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i5.FeedbackScreen(),
-        opaque: true,
-      );
-    },
-    SplashScreenRoute.name: (routeData) {
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.SplashScreen(),
+        child: const _i4.FeedbackScreen(),
         opaque: true,
       );
     },
     ProfileScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i7.ProfileScreen(),
+        child: const _i5.ProfileScreen(),
         opaque: true,
       );
     },
     RegisterScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i8.RegisterScreen(),
+        child: const _i6.RegisterScreen(),
         opaque: true,
       );
     },
     LoginScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i9.LoginScreen(),
+        child: const _i7.LoginScreen(),
         opaque: true,
       );
     },
     ForgotPasswordScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i10.ForgotPasswordScreen(),
+        child: const _i8.ForgotPasswordScreen(),
         opaque: true,
       );
     },
     OpenAppScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i11.OpenAppScreen(),
+        child: const _i9.OpenAppScreen(),
         opaque: true,
       );
     },
     OnboardingScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i12.OnboardingScreen(),
-        opaque: true,
-      );
-    },
-    ArticlesCategoryScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<ArticlesCategoryScreenRouteArgs>();
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: _i13.ArticlesCategoryScreen(
-          args.key,
-          args.categoryImg,
-          args.categoryTitle,
-        ),
+        child: const _i10.OnboardingScreen(),
         opaque: true,
       );
     },
@@ -158,7 +133,7 @@ class AppRouter extends _i21.RootStackRouter {
       final args = routeData.argsAs<ArticleScreenRouteArgs>();
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i14.ArticleScreen(
+        child: _i11.ArticleScreen(
           key: args.key,
           article: args.article,
           title: args.title,
@@ -172,7 +147,7 @@ class AppRouter extends _i21.RootStackRouter {
       final args = routeData.argsAs<ArticleListScreenRouteArgs>();
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i15.ArticleListScreen(
+        child: _i12.ArticleListScreen(
           key: args.key,
           articles: args.articles,
           categoryTitle: args.categoryTitle,
@@ -181,10 +156,24 @@ class AppRouter extends _i21.RootStackRouter {
         opaque: true,
       );
     },
+    OpinionSearchRoute.name: (routeData) {
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i13.OpinionSearch(),
+        opaque: true,
+      );
+    },
+    OpinionScreenFromSearchRoute.name: (routeData) {
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i14.OpinionScreenFromSearch(),
+        opaque: true,
+      );
+    },
     MenuScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i16.MenuScreen(),
+        child: const _i15.MenuScreen(),
         opaque: true,
       );
     },
@@ -192,14 +181,26 @@ class AppRouter extends _i21.RootStackRouter {
       final args = routeData.argsAs<ChatRouteArgs>();
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i17.Chat(args.from),
+        child: _i16.Chat(args.from),
         opaque: true,
       );
     },
     CategoryListScreenRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i18.CategoryListScreen(),
+        child: _i17.CategoryListScreen(),
+        opaque: true,
+      );
+    },
+    ArticlesCategoryScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticlesCategoryScreenRouteArgs>();
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: _i18.ArticlesCategoryScreen(
+          key: args.key,
+          categoryImg: args.categoryImg,
+          categoryTitle: args.categoryTitle,
+        ),
         opaque: true,
       );
     },
@@ -210,10 +211,10 @@ class AppRouter extends _i21.RootStackRouter {
         opaque: true,
       );
     },
-    OpinionScreenRoute.name: (routeData) {
+    OpinionRoute.name: (routeData) {
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i20.OpinionScreen(),
+        child: const _i20.Opinion(),
         opaque: true,
       );
     },
@@ -223,7 +224,7 @@ class AppRouter extends _i21.RootStackRouter {
   List<_i21.RouteConfig> get routes => [
         _i21.RouteConfig(
           RootPageRoute.name,
-          path: '/root-page',
+          path: '/',
           children: [
             _i21.RouteConfig(
               MenuScreenRoute.name,
@@ -241,13 +242,18 @@ class AppRouter extends _i21.RootStackRouter {
               parent: RootPageRoute.name,
             ),
             _i21.RouteConfig(
+              ArticlesCategoryScreenRoute.name,
+              path: 'articles-category-screen',
+              parent: RootPageRoute.name,
+            ),
+            _i21.RouteConfig(
               HomeScreenRoute.name,
               path: 'home-screen',
               parent: RootPageRoute.name,
             ),
             _i21.RouteConfig(
-              OpinionScreenRoute.name,
-              path: 'opinion-screen',
+              OpinionRoute.name,
+              path: 'Opinion',
               parent: RootPageRoute.name,
             ),
           ],
@@ -261,16 +267,8 @@ class AppRouter extends _i21.RootStackRouter {
           path: '/profile-settings-screen',
         ),
         _i21.RouteConfig(
-          LanguageScreenRoute.name,
-          path: '/language-screen',
-        ),
-        _i21.RouteConfig(
           FeedbackScreenRoute.name,
           path: '/feedback-screen',
-        ),
-        _i21.RouteConfig(
-          SplashScreenRoute.name,
-          path: '/',
         ),
         _i21.RouteConfig(
           ProfileScreenRoute.name,
@@ -297,10 +295,6 @@ class AppRouter extends _i21.RootStackRouter {
           path: '/onboarding-screen',
         ),
         _i21.RouteConfig(
-          ArticlesCategoryScreenRoute.name,
-          path: '/articles-category-screen',
-        ),
-        _i21.RouteConfig(
           ArticleScreenRoute.name,
           path: '/article-screen',
         ),
@@ -308,20 +302,42 @@ class AppRouter extends _i21.RootStackRouter {
           ArticleListScreenRoute.name,
           path: '/article-list-screen',
         ),
+        _i21.RouteConfig(
+          OpinionSearchRoute.name,
+          path: '/opinion-search',
+        ),
+        _i21.RouteConfig(
+          OpinionScreenFromSearchRoute.name,
+          path: '/opinion-screen-from-search',
+        ),
       ];
 }
 
 /// generated route for
 /// [_i1.RootPage]
-class RootPageRoute extends _i21.PageRouteInfo<void> {
-  const RootPageRoute({List<_i21.PageRouteInfo>? children})
-      : super(
+class RootPageRoute extends _i21.PageRouteInfo<RootPageRouteArgs> {
+  RootPageRoute({
+    _i22.Key? key,
+    List<_i21.PageRouteInfo>? children,
+  }) : super(
           RootPageRoute.name,
-          path: '/root-page',
+          path: '/',
+          args: RootPageRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'RootPageRoute';
+}
+
+class RootPageRouteArgs {
+  const RootPageRouteArgs({this.key});
+
+  final _i22.Key? key;
+
+  @override
+  String toString() {
+    return 'RootPageRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -349,19 +365,7 @@ class ProfileSettingsScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.LanguageScreen]
-class LanguageScreenRoute extends _i21.PageRouteInfo<void> {
-  const LanguageScreenRoute()
-      : super(
-          LanguageScreenRoute.name,
-          path: '/language-screen',
-        );
-
-  static const String name = 'LanguageScreenRoute';
-}
-
-/// generated route for
-/// [_i5.FeedbackScreen]
+/// [_i4.FeedbackScreen]
 class FeedbackScreenRoute extends _i21.PageRouteInfo<void> {
   const FeedbackScreenRoute()
       : super(
@@ -373,19 +377,7 @@ class FeedbackScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.SplashScreen]
-class SplashScreenRoute extends _i21.PageRouteInfo<void> {
-  const SplashScreenRoute()
-      : super(
-          SplashScreenRoute.name,
-          path: '/',
-        );
-
-  static const String name = 'SplashScreenRoute';
-}
-
-/// generated route for
-/// [_i7.ProfileScreen]
+/// [_i5.ProfileScreen]
 class ProfileScreenRoute extends _i21.PageRouteInfo<void> {
   const ProfileScreenRoute()
       : super(
@@ -397,7 +389,7 @@ class ProfileScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.RegisterScreen]
+/// [_i6.RegisterScreen]
 class RegisterScreenRoute extends _i21.PageRouteInfo<void> {
   const RegisterScreenRoute()
       : super(
@@ -409,7 +401,7 @@ class RegisterScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.LoginScreen]
+/// [_i7.LoginScreen]
 class LoginScreenRoute extends _i21.PageRouteInfo<void> {
   const LoginScreenRoute()
       : super(
@@ -421,7 +413,7 @@ class LoginScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.ForgotPasswordScreen]
+/// [_i8.ForgotPasswordScreen]
 class ForgotPasswordScreenRoute extends _i21.PageRouteInfo<void> {
   const ForgotPasswordScreenRoute()
       : super(
@@ -433,7 +425,7 @@ class ForgotPasswordScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.OpenAppScreen]
+/// [_i9.OpenAppScreen]
 class OpenAppScreenRoute extends _i21.PageRouteInfo<void> {
   const OpenAppScreenRoute()
       : super(
@@ -445,7 +437,7 @@ class OpenAppScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.OnboardingScreen]
+/// [_i10.OnboardingScreen]
 class OnboardingScreenRoute extends _i21.PageRouteInfo<void> {
   const OnboardingScreenRoute()
       : super(
@@ -457,47 +449,7 @@ class OnboardingScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.ArticlesCategoryScreen]
-class ArticlesCategoryScreenRoute
-    extends _i21.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
-  ArticlesCategoryScreenRoute({
-    required _i22.Key? key,
-    required String categoryImg,
-    required String categoryTitle,
-  }) : super(
-          ArticlesCategoryScreenRoute.name,
-          path: '/articles-category-screen',
-          args: ArticlesCategoryScreenRouteArgs(
-            key: key,
-            categoryImg: categoryImg,
-            categoryTitle: categoryTitle,
-          ),
-        );
-
-  static const String name = 'ArticlesCategoryScreenRoute';
-}
-
-class ArticlesCategoryScreenRouteArgs {
-  const ArticlesCategoryScreenRouteArgs({
-    required this.key,
-    required this.categoryImg,
-    required this.categoryTitle,
-  });
-
-  final _i22.Key? key;
-
-  final String categoryImg;
-
-  final String categoryTitle;
-
-  @override
-  String toString() {
-    return 'ArticlesCategoryScreenRouteArgs{key: $key, categoryImg: $categoryImg, categoryTitle: $categoryTitle}';
-  }
-}
-
-/// generated route for
-/// [_i14.ArticleScreen]
+/// [_i11.ArticleScreen]
 class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i22.Key? key,
@@ -546,7 +498,7 @@ class ArticleScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i15.ArticleListScreen]
+/// [_i12.ArticleListScreen]
 class ArticleListScreenRoute
     extends _i21.PageRouteInfo<ArticleListScreenRouteArgs> {
   ArticleListScreenRoute({
@@ -591,7 +543,31 @@ class ArticleListScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i16.MenuScreen]
+/// [_i13.OpinionSearch]
+class OpinionSearchRoute extends _i21.PageRouteInfo<void> {
+  const OpinionSearchRoute()
+      : super(
+          OpinionSearchRoute.name,
+          path: '/opinion-search',
+        );
+
+  static const String name = 'OpinionSearchRoute';
+}
+
+/// generated route for
+/// [_i14.OpinionScreenFromSearch]
+class OpinionScreenFromSearchRoute extends _i21.PageRouteInfo<void> {
+  const OpinionScreenFromSearchRoute()
+      : super(
+          OpinionScreenFromSearchRoute.name,
+          path: '/opinion-screen-from-search',
+        );
+
+  static const String name = 'OpinionScreenFromSearchRoute';
+}
+
+/// generated route for
+/// [_i15.MenuScreen]
 class MenuScreenRoute extends _i21.PageRouteInfo<void> {
   const MenuScreenRoute()
       : super(
@@ -603,7 +579,7 @@ class MenuScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i17.Chat]
+/// [_i16.Chat]
 class ChatRoute extends _i21.PageRouteInfo<ChatRouteArgs> {
   ChatRoute({required String from})
       : super(
@@ -627,7 +603,7 @@ class ChatRouteArgs {
 }
 
 /// generated route for
-/// [_i18.CategoryListScreen]
+/// [_i17.CategoryListScreen]
 class CategoryListScreenRoute extends _i21.PageRouteInfo<void> {
   const CategoryListScreenRoute()
       : super(
@@ -636,6 +612,46 @@ class CategoryListScreenRoute extends _i21.PageRouteInfo<void> {
         );
 
   static const String name = 'CategoryListScreenRoute';
+}
+
+/// generated route for
+/// [_i18.ArticlesCategoryScreen]
+class ArticlesCategoryScreenRoute
+    extends _i21.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
+  ArticlesCategoryScreenRoute({
+    _i22.Key? key,
+    required String categoryImg,
+    required String categoryTitle,
+  }) : super(
+          ArticlesCategoryScreenRoute.name,
+          path: 'articles-category-screen',
+          args: ArticlesCategoryScreenRouteArgs(
+            key: key,
+            categoryImg: categoryImg,
+            categoryTitle: categoryTitle,
+          ),
+        );
+
+  static const String name = 'ArticlesCategoryScreenRoute';
+}
+
+class ArticlesCategoryScreenRouteArgs {
+  const ArticlesCategoryScreenRouteArgs({
+    this.key,
+    required this.categoryImg,
+    required this.categoryTitle,
+  });
+
+  final _i22.Key? key;
+
+  final String categoryImg;
+
+  final String categoryTitle;
+
+  @override
+  String toString() {
+    return 'ArticlesCategoryScreenRouteArgs{key: $key, categoryImg: $categoryImg, categoryTitle: $categoryTitle}';
+  }
 }
 
 /// generated route for
@@ -651,13 +667,13 @@ class HomeScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i20.OpinionScreen]
-class OpinionScreenRoute extends _i21.PageRouteInfo<void> {
-  const OpinionScreenRoute()
+/// [_i20.Opinion]
+class OpinionRoute extends _i21.PageRouteInfo<void> {
+  const OpinionRoute()
       : super(
-          OpinionScreenRoute.name,
-          path: 'opinion-screen',
+          OpinionRoute.name,
+          path: 'Opinion',
         );
 
-  static const String name = 'OpinionScreenRoute';
+  static const String name = 'OpinionRoute';
 }

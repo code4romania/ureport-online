@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/components/article_item.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/components/title_description_widget.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
 
 import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 
 class ArticleListScreen extends StatefulWidget {
   const ArticleListScreen({
@@ -25,10 +27,15 @@ class ArticleListScreen extends StatefulWidget {
 
 class _ArticleListScreenState extends State<ArticleListScreen> {
   List<Result> finalArticleList = [];
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
 
   @override
   void initState() {
     finalArticleList = widget.articles;
+    _stateStore = context.read<StateStore>();
+    _translation =
+        translations["articles_screen"]!["${_stateStore.selectedLanguage}"]!;
     super.initState();
   }
 
@@ -61,7 +68,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              TopHeaderWidget(title: AppLocalizations.of(context)!.stories),
+              TopHeaderWidget(title: _translation["header"]!),
               SearchBarWidget(
                 onSearchChanged: searchList,
               ),

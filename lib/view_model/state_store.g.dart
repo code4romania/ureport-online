@@ -9,22 +9,6 @@ part of 'state_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$StateStore on _StateStoreBase, Store {
-  late final _$localeAtom =
-      Atom(name: '_StateStoreBase.locale', context: context);
-
-  @override
-  Locale? get locale {
-    _$localeAtom.reportRead();
-    return super.locale;
-  }
-
-  @override
-  set locale(Locale? value) {
-    _$localeAtom.reportWrite(value, super.locale, () {
-      super.locale = value;
-    });
-  }
-
   late final _$selectedLanguageAtom =
       Atom(name: '_StateStoreBase.selectedLanguage', context: context);
 
@@ -38,6 +22,22 @@ mixin _$StateStore on _StateStoreBase, Store {
   set selectedLanguage(String? value) {
     _$selectedLanguageAtom.reportWrite(value, super.selectedLanguage, () {
       super.selectedLanguage = value;
+    });
+  }
+
+  late final _$newLanguageAtom =
+      Atom(name: '_StateStoreBase.newLanguage', context: context);
+
+  @override
+  String? get newLanguage {
+    _$newLanguageAtom.reportRead();
+    return super.newLanguage;
+  }
+
+  @override
+  set newLanguage(String? value) {
+    _$newLanguageAtom.reportWrite(value, super.newLanguage, () {
+      super.newLanguage = value;
     });
   }
 
@@ -57,25 +57,11 @@ mixin _$StateStore on _StateStoreBase, Store {
     });
   }
 
-  late final _$_StateStoreBaseActionController =
-      ActionController(name: '_StateStoreBase', context: context);
-
-  @override
-  void setLocale(Locale locale) {
-    final _$actionInfo = _$_StateStoreBaseActionController.startAction(
-        name: '_StateStoreBase.setLocale');
-    try {
-      return super.setLocale(locale);
-    } finally {
-      _$_StateStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''
-locale: ${locale},
 selectedLanguage: ${selectedLanguage},
+newLanguage: ${newLanguage},
 loggedIn: ${loggedIn}
     ''';
   }

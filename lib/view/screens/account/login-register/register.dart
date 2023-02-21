@@ -1,10 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/data/secure_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/sp_utils.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/view/screens/account/login-register/login_register_widgets.dart';
+import 'package:ureport_ecaro/view/shared/general_button_component.dart';
 import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 import 'package:validators/validators.dart' as validator;
 
 class RegisterScreen extends StatefulWidget {
@@ -25,10 +29,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   var _confirmPwError;
   var _nameError;
 
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
+
   bool _isLoading = false;
 
   @override
   void initState() {
+    _stateStore = context.read<StateStore>();
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["register_screen"]!;
     super.initState();
   }
 
@@ -38,16 +48,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: SafeArea(
             child: SingleChildScrollView(
       child: Column(children: [
-        TopHeaderWidget(title: "ÎNREGISTRARE"),
+        TopHeaderWidget(title: _translation["header"]!),
         Container(
-            margin: EdgeInsets.only(top: 80, left: 10),
+            margin: EdgeInsets.only(top: 80, left: 10, right: 10),
             width: double.infinity,
             child: Text(
-              "CREAZĂ-ȚI UN CONT",
+              _translation["title"]!,
               style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 28,
                   fontFamily: 'Heebo'),
+              textAlign: TextAlign.center,
             )),
         Container(
           width: double.infinity,
@@ -84,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Divider(
                       color: Colors.black,
                     )),
-                Text("SAU"),
+                Text(_translation["separator_text"]!),
                 Container(
                     width: 100,
                     child: Divider(
@@ -93,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             )),
         textField(
-          label: "Nume și prenume",
+          label: _translation["username"]!,
           textInputAction: TextInputAction.next,
           obscureText: false,
           keyboardType: TextInputType.name,
@@ -101,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           errorText: _nameError,
         ),
         textField(
-          label: "Email",
+          label: _translation["email"]!,
           textInputAction: TextInputAction.next,
           obscureText: false,
           keyboardType: TextInputType.emailAddress,
@@ -109,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           errorText: _emailError,
         ),
         textField(
-          label: "Password",
+          label: _translation["password"]!,
           textInputAction: TextInputAction.next,
           obscureText: true,
           keyboardType: TextInputType.visiblePassword,
@@ -117,25 +128,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
           errorText: _passwordError,
         ),
         textField(
-          label: "Confirmă parola",
+          label: _translation["confirm_password"]!,
           textInputAction: TextInputAction.done,
           obscureText: true,
           keyboardType: TextInputType.visiblePassword,
           controller: _confirmPwController,
           errorText: _confirmPwError,
         ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(right: 16, left: 16, top: 20),
-          height: 44,
-          child: _isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                )
-              : submitButton(
-                  type: 'register', onPressed: () async => await register()),
-        ),
+        _isLoading
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              )
+            : MainAppButtonComponent(
+                title: _translation["submit"]!,
+                onPressed: () async => await register()),
         SizedBox(
           height: 30,
         ),
@@ -147,12 +154,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 color: Colors.black,
                 fontSize: 16,
               ),
-              text: 'Ai deja cont? ',
-              children: const <TextSpan>[
+              text: _translation['already_have_account']! + " ",
+              children: <TextSpan>[
                 TextSpan(
-                    text: 'Autentifică-te',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.blue)),
+                  text: _translation["go_to_login"]!,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
               ],
             ),
           ),
@@ -173,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> register() async {
     if (_nameController.text.isEmpty || _nameController.text.length < 3) {
       setState(() {
-        _nameError = "Numele este prea scurt";
+        _nameError = _translation["short_username"];
       });
       return;
     } else {
@@ -184,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (!validator.isEmail(_emailController.text)) {
       setState(() {
-        _emailError = "Email invalid";
+        _emailError = _translation["invalid_email"];
       });
       return;
     } else {
@@ -195,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (_passwdController.text.length < 6) {
       setState(() {
-        _passwordError = "Parola este prea scurtă";
+        _passwordError = _translation["short_pw"];
       });
       return;
     } else {
@@ -205,7 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     if (_passwdController.text != _confirmPwController.text) {
       setState(() {
-        _confirmPwError = "Parolele nu se potrivesc";
+        _confirmPwError = _translation["no_matching_pw"];
       });
       return;
     } else {
@@ -229,7 +239,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         type: 'register',
         onPressed: () {
           //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
-          StorageUtil.setString("token", "############");
+          SPUtil().setValue("token", "############");
 
           context.router.replace(ArticlesCategoryScreenRoute(
             categoryImg: "https://i.ytimg.com/vi/2QvOxa_7wEw/maxresdefault.jpg",
@@ -242,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       toggleIsLoading();
       showPopup(
           context: context,
-          message: "Contul acesta deja exista",
+          message: _translation["existing_acc"],
           type: 'error',
           onPressed: () {
             Navigator.pop(context);
@@ -251,7 +261,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       toggleIsLoading();
       showPopup(
           context: context,
-          message: "S-a produs o eroare",
+          message: _translation["error"],
           type: 'error',
           onPressed: () {
             Navigator.pop(context);

@@ -15,9 +15,6 @@ class MessageModelLocal {
     required this.time,
   });
 
-
-
-
   factory MessageModelLocal.fromJson(Map<String, dynamic> json) =>
       MessageModelLocal(
         message: json["message"],

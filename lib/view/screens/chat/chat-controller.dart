@@ -5,17 +5,15 @@ import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
-import 'package:ureport_ecaro/database/database_helper.dart';
+import 'package:ureport_ecaro/data/database/database_helper.dart';
+import 'package:ureport_ecaro/data/sp_utils.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/repository/network_operation/apicall_responsedata/response_contact_creation.dart';
 import 'package:ureport_ecaro/repository/network_operation/firebase/firebase_icoming_message_handling.dart';
-import 'package:ureport_ecaro/repository/rapidpro_service.dart';
+import 'package:ureport_ecaro/repository/network_operation/rapidpro_service.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
-
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/connectivity_controller.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
-
 import 'package:ureport_ecaro/view/screens/chat/model/messagehandler.dart';
 import 'model/response-local-chat-parsing.dart';
 import 'notification-service.dart';
@@ -133,16 +131,6 @@ class ChatController extends ConnectivityController {
     notifyListeners();
   }
 
-  static getDefaultAction() {
-    List<String> list = [];
-    return list;
-  }
-
-  static getOneToOneAction() {
-    List<String> list = [];
-    return list;
-  }
-
   replaceQuickReplayData(int index, data) async {
     List<dynamic> repdata = [];
     repdata.add(data);
@@ -158,7 +146,7 @@ class ChatController extends ConnectivityController {
 
   addQuickType() async {
     List<dynamic> repdata = [];
-    var data = getDefaultAction();
+    var data = [];
     // repdata.add(data);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
@@ -186,7 +174,7 @@ class ChatController extends ConnectivityController {
 
   addQuickTypeCaseManagement() async {
     List<dynamic> repdata = [];
-    var data = getOneToOneAction();
+    var data = [];
     // repdata.add(data);
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
@@ -621,9 +609,7 @@ class ChatController extends ConnectivityController {
           time: formattedDate);
       addMessage(notificationmessage);
       FirebaseNotificationService.display(remotemessage);
-      //TODO: navigate to chat screen with notification parameter
       context.router.push(ChatRoute(from: "notification"));
-      //   NavUtils.pushReplacement(context, Chat("notification"));
     });
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import 'package:ureport_ecaro/view/screens/chat/chat-controller.dart';
 
 import 'arrow_clipper.dart';
@@ -162,7 +163,7 @@ class _CustomDropDownSecondState extends State<CustomDropDownSecond>
                           child: Container(
                             child: DropdownButtonFormField(
                               decoration: InputDecoration(
-                                fillColor: Colors.red,
+                                fillColor: Color.fromRGBO(167, 45, 111, 1),
                                 labelText: "Default Action",
                               ),
                               items: listdata.map((itemvalue) {

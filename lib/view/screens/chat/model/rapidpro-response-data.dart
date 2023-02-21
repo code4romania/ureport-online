@@ -1,4 +1,3 @@
-
 class NodoCollection {
   final List<NodoPOJO> list;
 
@@ -7,7 +6,6 @@ class NodoCollection {
   factory NodoCollection.fromJson(List<dynamic> json) =>
       NodoCollection(json.map((e) => NodoPOJO.fromJson(e)).toList());
 }
-
 
 class NodoPOJO {
   final String extremo1;

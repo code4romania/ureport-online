@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:ureport_ecaro/data/sp_utils.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 import 'api_response.dart';
 
@@ -127,19 +128,17 @@ class HttpService {
     try {
       _getDio().options.contentType = Headers.formUrlEncodedContentType;
       _getDio().options.headers = {"Content-Type": "application/json"};
-      print("data $data");
-      print("route $route");
-      print("route ${Headers.formUrlEncodedContentType}");
+
       Response response = await _getDio().post(
         route,
         data: data,
         options: Options(contentType: Headers.formUrlEncodedContentType),
         onSendProgress: (int sent, int total) {
           print("onSendProgress $total $sent");
-
           if (onProgress != null) onProgress(sent, total);
         },
       );
+      print("$route : $response");
 
       if (response.statusCode == 200) {
         return ApiResponse(

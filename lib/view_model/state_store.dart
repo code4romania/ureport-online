@@ -1,23 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 part 'state_store.g.dart';
 
 class StateStore = _StateStoreBase with _$StateStore;
 
 abstract class _StateStoreBase with Store {
-  @observable
-  Locale? locale;
-
-  List<String> languages = [
-    'Română',
-    'Ucraineană',
-  ];
+  _StateStoreBase() {
+    selectedLanguage = "ro";
+  }
 
   @observable
-  String? selectedLanguage = "Română";
+  String? selectedLanguage;
 
-  @action
-  void setLocale(Locale locale) => locale = locale;
+  @observable
+  String? newLanguage;
+
+  Map<String, String> languages = {
+    'ro': "Română (RO)",
+    'ua': "Ucraineană (UA)",
+  };
 
   @observable
   bool? loggedIn;

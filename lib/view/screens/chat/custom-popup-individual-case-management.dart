@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/view/screens/chat/chat-controller.dart';
-
 import 'arrow_clipper.dart';
 
 class CustomDropdownForth extends StatefulWidget {

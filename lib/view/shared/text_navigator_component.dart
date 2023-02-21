@@ -21,17 +21,16 @@ class TextNavigatorComponent extends StatelessWidget {
         child: Row(
           children: [
             rightEdge ? const Spacer() : Container(),
-            Icon(
-              Icons.keyboard_double_arrow_left_outlined,
-              color: Color.fromRGBO(28, 171, 226, 1),
-            ),
+            if (!rightEdge)
+              Icon(
+                Icons.keyboard_double_arrow_left_outlined,
+              ),
             Container(
               child: Text(
                 title.toUpperCase(),
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.2,
-                  color: Color.fromRGBO(28, 171, 226, 1),
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
                 ),

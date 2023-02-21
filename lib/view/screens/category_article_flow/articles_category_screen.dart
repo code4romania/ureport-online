@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
@@ -18,10 +17,8 @@ class ArticlesCategoryScreen extends StatelessWidget {
   final String categoryTitle;
   StoryStore _storyStore = StoryStore();
 
-  ArticlesCategoryScreen(Key? key, this.categoryImg, this.categoryTitle)
-      : super(key: key) {
-    _storyStore.getStories();
-  }
+  ArticlesCategoryScreen(
+      {super.key, required this.categoryImg, required this.categoryTitle});
 
   Future _refresh() {
     return _storyStore.fetchStories();
@@ -39,7 +36,7 @@ class ArticlesCategoryScreen extends StatelessWidget {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                TopHeaderWidget(title: AppLocalizations.of(context)!.stories),
+                TopHeaderWidget(title: "sssss"),
                 CachedNetworkImage(
                   imageUrl: categoryImg,
                   width: MediaQuery.of(context).size.width,
@@ -82,7 +79,8 @@ class ArticlesCategoryScreen extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   'Failed to load items.',
-                                  style: TextStyle(color: Colors.red),
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(167, 45, 111, 1)),
                                 ),
                                 SizedBox(
                                   height: 10,

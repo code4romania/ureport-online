@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/components/title_description_widget.dart';
 import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
 import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 
 class CategoryListScreen extends StatefulWidget {
   //This screen is only for Romania region
@@ -18,6 +21,8 @@ class _CategoryListScreenState extends State<CategoryListScreen>
     with AutomaticKeepAliveClientMixin {
   List<Result> initCategoryList = [];
   List<Result> finalCategoryList = [];
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
 
   void searchList(String? value) {
     //initCategoryList
@@ -44,6 +49,10 @@ class _CategoryListScreenState extends State<CategoryListScreen>
 
   @override
   void initState() {
+    _stateStore = context.read<StateStore>();
+
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["category_screen"]!;
     super.initState();
   }
 
@@ -55,7 +64,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TopHeaderWidget(title: "Cateogrii"),
+          TopHeaderWidget(title: _translation["header"]!),
           Container(
             child: Divider(
               height: 1,
@@ -70,9 +79,8 @@ class _CategoryListScreenState extends State<CategoryListScreen>
             height: 10,
           ),
           TitleDescriptionWidget(
-            title: "Categorii",
-            description:
-                "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! ",
+            title: _translation["title"]!,
+            description: _translation["body"]!,
           ),
           FutureBuilder<List<Result>>(
               //TODO: FUTURE GET CATEGORIES
@@ -116,7 +124,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                           color: Colors.white,
                           child: Center(
                               child: Text(
-                            "No result found",
+                            _translation["no_articles"]!,
                             style: TextStyle(fontSize: 15),
                           ))),
                     ],

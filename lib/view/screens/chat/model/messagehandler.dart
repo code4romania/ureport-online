@@ -12,5 +12,4 @@ class MessageThread {
     required this.quicktypest,
     required this.time,
   });
-
 }
