@@ -12,11 +12,13 @@ import 'opinion_controller.dart';
 
 class StatisticsHeader {
   static Widget getHeadingStatistics(
-      questionArray.Question question,
-      ResultOpinionLocal opinions,
-      OpinionController provider,
-      String program,
-      BuildContext context) {
+    questionArray.Question question,
+    ResultOpinionLocal opinions,
+    OpinionController provider,
+    String program,
+    BuildContext context,
+    Map<String, String> translation,
+  ) {
     var sp = locator<SPUtil>();
 
     double guysResponseRate = 0.0;
@@ -81,7 +83,7 @@ class StatisticsHeader {
             ? Container(
                 margin: EdgeInsets.only(bottom: 15),
                 child: Text(
-                  "Latest opinion",
+                  translation["latest_opinion"]!,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               )
@@ -142,7 +144,7 @@ class StatisticsHeader {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Respondents",
+                    translation["respondents"]!,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -157,7 +159,7 @@ class StatisticsHeader {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Response rate",
+                    translation["response_rate"]!,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                     textAlign: TextAlign.center,
                   ),
@@ -357,7 +359,10 @@ class StatisticsHeader {
   }
 
   static Widget getHeadingStatisticsEmpty(
-      ResultOpinionLocal opinions, BuildContext context) {
+    ResultOpinionLocal opinions,
+    BuildContext context,
+    Map<String, String> translation,
+  ) {
     String title = opinions.title.replaceAll("\n", " ");
     title = title.replaceAll("\r", " ");
 
@@ -425,7 +430,7 @@ class StatisticsHeader {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Respondents",
+                    translation["respondents"]!,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -440,7 +445,7 @@ class StatisticsHeader {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "RESPONSE RATE",
+                    translation["response_rate"]!,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                   ),
                 ],

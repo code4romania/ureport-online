@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'story.dart';
+part of 'story_long.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,238 +14,35 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-StoryModel _$StoryModelFromJson(Map<String, dynamic> json) {
-  return _StoryModel.fromJson(json);
+StoryLong _$StoryLongFromJson(Map<String, dynamic> json) {
+  return _StoryLong.fromJson(json);
 }
 
 /// @nodoc
-mixin _$StoryModel {
-  int? get count => throw _privateConstructorUsedError;
-  dynamic get next => throw _privateConstructorUsedError;
-  dynamic get previous => throw _privateConstructorUsedError;
-  List<Result>? get results => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $StoryModelCopyWith<StoryModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $StoryModelCopyWith<$Res> {
-  factory $StoryModelCopyWith(
-          StoryModel value, $Res Function(StoryModel) then) =
-      _$StoryModelCopyWithImpl<$Res, StoryModel>;
-  @useResult
-  $Res call(
-      {int? count, dynamic next, dynamic previous, List<Result>? results});
-}
-
-/// @nodoc
-class _$StoryModelCopyWithImpl<$Res, $Val extends StoryModel>
-    implements $StoryModelCopyWith<$Res> {
-  _$StoryModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? count = freezed,
-    Object? next = freezed,
-    Object? previous = freezed,
-    Object? results = freezed,
-  }) {
-    return _then(_value.copyWith(
-      count: freezed == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int?,
-      next: freezed == next
-          ? _value.next
-          : next // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      previous: freezed == previous
-          ? _value.previous
-          : previous // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      results: freezed == results
-          ? _value.results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<Result>?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_StoryModelCopyWith<$Res>
-    implements $StoryModelCopyWith<$Res> {
-  factory _$$_StoryModelCopyWith(
-          _$_StoryModel value, $Res Function(_$_StoryModel) then) =
-      __$$_StoryModelCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int? count, dynamic next, dynamic previous, List<Result>? results});
-}
-
-/// @nodoc
-class __$$_StoryModelCopyWithImpl<$Res>
-    extends _$StoryModelCopyWithImpl<$Res, _$_StoryModel>
-    implements _$$_StoryModelCopyWith<$Res> {
-  __$$_StoryModelCopyWithImpl(
-      _$_StoryModel _value, $Res Function(_$_StoryModel) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? count = freezed,
-    Object? next = freezed,
-    Object? previous = freezed,
-    Object? results = freezed,
-  }) {
-    return _then(_$_StoryModel(
-      count: freezed == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int?,
-      next: freezed == next
-          ? _value.next
-          : next // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      previous: freezed == previous
-          ? _value.previous
-          : previous // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      results: freezed == results
-          ? _value._results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<Result>?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_StoryModel implements _StoryModel {
-  const _$_StoryModel(
-      {this.count, this.next, this.previous, final List<Result>? results})
-      : _results = results;
-
-  factory _$_StoryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_StoryModelFromJson(json);
-
-  @override
-  final int? count;
-  @override
-  final dynamic next;
-  @override
-  final dynamic previous;
-  final List<Result>? _results;
-  @override
-  List<Result>? get results {
-    final value = _results;
-    if (value == null) return null;
-    if (_results is EqualUnmodifiableListView) return _results;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  String toString() {
-    return 'StoryModel(count: $count, next: $next, previous: $previous, results: $results)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_StoryModel &&
-            (identical(other.count, count) || other.count == count) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.previous, previous) &&
-            const DeepCollectionEquality().equals(other._results, _results));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      count,
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(previous),
-      const DeepCollectionEquality().hash(_results));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_StoryModelCopyWith<_$_StoryModel> get copyWith =>
-      __$$_StoryModelCopyWithImpl<_$_StoryModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_StoryModelToJson(
-      this,
-    );
-  }
-}
-
-abstract class _StoryModel implements StoryModel {
-  const factory _StoryModel(
-      {final int? count,
-      final dynamic next,
-      final dynamic previous,
-      final List<Result>? results}) = _$_StoryModel;
-
-  factory _StoryModel.fromJson(Map<String, dynamic> json) =
-      _$_StoryModel.fromJson;
-
-  @override
-  int? get count;
-  @override
-  dynamic get next;
-  @override
-  dynamic get previous;
-  @override
-  List<Result>? get results;
-  @override
-  @JsonKey(ignore: true)
-  _$$_StoryModelCopyWith<_$_StoryModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Result _$ResultFromJson(Map<String, dynamic> json) {
-  return _Result.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Result {
+mixin _$StoryLong {
   int? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   bool? get featured => throw _privateConstructorUsedError;
   String? get summary => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
-  String? get videoId => throw _privateConstructorUsedError;
+  dynamic get videoId => throw _privateConstructorUsedError;
   dynamic get audioLink => throw _privateConstructorUsedError;
-  String? get tags => throw _privateConstructorUsedError;
+  dynamic get tags => throw _privateConstructorUsedError;
   int? get org => throw _privateConstructorUsedError;
-  List<String>? get images => throw _privateConstructorUsedError;
+  List<dynamic>? get images => throw _privateConstructorUsedError;
   Category? get category => throw _privateConstructorUsedError;
   DateTime? get createdOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ResultCopyWith<Result> get copyWith => throw _privateConstructorUsedError;
+  $StoryLongCopyWith<StoryLong> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ResultCopyWith<$Res> {
-  factory $ResultCopyWith(Result value, $Res Function(Result) then) =
-      _$ResultCopyWithImpl<$Res, Result>;
+abstract class $StoryLongCopyWith<$Res> {
+  factory $StoryLongCopyWith(StoryLong value, $Res Function(StoryLong) then) =
+      _$StoryLongCopyWithImpl<$Res, StoryLong>;
   @useResult
   $Res call(
       {int? id,
@@ -253,11 +50,11 @@ abstract class $ResultCopyWith<$Res> {
       bool? featured,
       String? summary,
       String? content,
-      String? videoId,
+      dynamic videoId,
       dynamic audioLink,
-      String? tags,
+      dynamic tags,
       int? org,
-      List<String>? images,
+      List<dynamic>? images,
       Category? category,
       DateTime? createdOn});
 
@@ -265,9 +62,9 @@ abstract class $ResultCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ResultCopyWithImpl<$Res, $Val extends Result>
-    implements $ResultCopyWith<$Res> {
-  _$ResultCopyWithImpl(this._value, this._then);
+class _$StoryLongCopyWithImpl<$Res, $Val extends StoryLong>
+    implements $StoryLongCopyWith<$Res> {
+  _$StoryLongCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -314,7 +111,7 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
       videoId: freezed == videoId
           ? _value.videoId
           : videoId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       audioLink: freezed == audioLink
           ? _value.audioLink
           : audioLink // ignore: cast_nullable_to_non_nullable
@@ -322,7 +119,7 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       org: freezed == org
           ? _value.org
           : org // ignore: cast_nullable_to_non_nullable
@@ -330,7 +127,7 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
       images: freezed == images
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<dynamic>?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -356,9 +153,10 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
 }
 
 /// @nodoc
-abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
-  factory _$$_ResultCopyWith(_$_Result value, $Res Function(_$_Result) then) =
-      __$$_ResultCopyWithImpl<$Res>;
+abstract class _$$_StoryLongCopyWith<$Res> implements $StoryLongCopyWith<$Res> {
+  factory _$$_StoryLongCopyWith(
+          _$_StoryLong value, $Res Function(_$_StoryLong) then) =
+      __$$_StoryLongCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -367,11 +165,11 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
       bool? featured,
       String? summary,
       String? content,
-      String? videoId,
+      dynamic videoId,
       dynamic audioLink,
-      String? tags,
+      dynamic tags,
       int? org,
-      List<String>? images,
+      List<dynamic>? images,
       Category? category,
       DateTime? createdOn});
 
@@ -380,10 +178,11 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ResultCopyWithImpl<$Res>
-    extends _$ResultCopyWithImpl<$Res, _$_Result>
-    implements _$$_ResultCopyWith<$Res> {
-  __$$_ResultCopyWithImpl(_$_Result _value, $Res Function(_$_Result) _then)
+class __$$_StoryLongCopyWithImpl<$Res>
+    extends _$StoryLongCopyWithImpl<$Res, _$_StoryLong>
+    implements _$$_StoryLongCopyWith<$Res> {
+  __$$_StoryLongCopyWithImpl(
+      _$_StoryLong _value, $Res Function(_$_StoryLong) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -402,7 +201,7 @@ class __$$_ResultCopyWithImpl<$Res>
     Object? category = freezed,
     Object? createdOn = freezed,
   }) {
-    return _then(_$_Result(
+    return _then(_$_StoryLong(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -426,7 +225,7 @@ class __$$_ResultCopyWithImpl<$Res>
       videoId: freezed == videoId
           ? _value.videoId
           : videoId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       audioLink: freezed == audioLink
           ? _value.audioLink
           : audioLink // ignore: cast_nullable_to_non_nullable
@@ -434,7 +233,7 @@ class __$$_ResultCopyWithImpl<$Res>
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       org: freezed == org
           ? _value.org
           : org // ignore: cast_nullable_to_non_nullable
@@ -442,7 +241,7 @@ class __$$_ResultCopyWithImpl<$Res>
       images: freezed == images
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<dynamic>?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -457,8 +256,8 @@ class __$$_ResultCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Result implements _Result {
-  const _$_Result(
+class _$_StoryLong implements _StoryLong {
+  const _$_StoryLong(
       {this.id,
       this.title,
       this.featured,
@@ -468,13 +267,13 @@ class _$_Result implements _Result {
       this.audioLink,
       this.tags,
       this.org,
-      final List<String>? images,
+      final List<dynamic>? images,
       this.category,
       this.createdOn})
       : _images = images;
 
-  factory _$_Result.fromJson(Map<String, dynamic> json) =>
-      _$$_ResultFromJson(json);
+  factory _$_StoryLong.fromJson(Map<String, dynamic> json) =>
+      _$$_StoryLongFromJson(json);
 
   @override
   final int? id;
@@ -487,16 +286,16 @@ class _$_Result implements _Result {
   @override
   final String? content;
   @override
-  final String? videoId;
+  final dynamic videoId;
   @override
   final dynamic audioLink;
   @override
-  final String? tags;
+  final dynamic tags;
   @override
   final int? org;
-  final List<String>? _images;
+  final List<dynamic>? _images;
   @override
-  List<String>? get images {
+  List<dynamic>? get images {
     final value = _images;
     if (value == null) return null;
     if (_images is EqualUnmodifiableListView) return _images;
@@ -511,23 +310,23 @@ class _$_Result implements _Result {
 
   @override
   String toString() {
-    return 'Result(id: $id, title: $title, featured: $featured, summary: $summary, content: $content, videoId: $videoId, audioLink: $audioLink, tags: $tags, org: $org, images: $images, category: $category, createdOn: $createdOn)';
+    return 'StoryLong(id: $id, title: $title, featured: $featured, summary: $summary, content: $content, videoId: $videoId, audioLink: $audioLink, tags: $tags, org: $org, images: $images, category: $category, createdOn: $createdOn)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Result &&
+            other is _$_StoryLong &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.featured, featured) ||
                 other.featured == featured) &&
             (identical(other.summary, summary) || other.summary == summary) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.videoId, videoId) || other.videoId == videoId) &&
+            const DeepCollectionEquality().equals(other.videoId, videoId) &&
             const DeepCollectionEquality().equals(other.audioLink, audioLink) &&
-            (identical(other.tags, tags) || other.tags == tags) &&
+            const DeepCollectionEquality().equals(other.tags, tags) &&
             (identical(other.org, org) || other.org == org) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.category, category) ||
@@ -545,9 +344,9 @@ class _$_Result implements _Result {
       featured,
       summary,
       content,
-      videoId,
+      const DeepCollectionEquality().hash(videoId),
       const DeepCollectionEquality().hash(audioLink),
-      tags,
+      const DeepCollectionEquality().hash(tags),
       org,
       const DeepCollectionEquality().hash(_images),
       category,
@@ -556,33 +355,34 @@ class _$_Result implements _Result {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ResultCopyWith<_$_Result> get copyWith =>
-      __$$_ResultCopyWithImpl<_$_Result>(this, _$identity);
+  _$$_StoryLongCopyWith<_$_StoryLong> get copyWith =>
+      __$$_StoryLongCopyWithImpl<_$_StoryLong>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResultToJson(
+    return _$$_StoryLongToJson(
       this,
     );
   }
 }
 
-abstract class _Result implements Result {
-  const factory _Result(
+abstract class _StoryLong implements StoryLong {
+  const factory _StoryLong(
       {final int? id,
       final String? title,
       final bool? featured,
       final String? summary,
       final String? content,
-      final String? videoId,
+      final dynamic videoId,
       final dynamic audioLink,
-      final String? tags,
+      final dynamic tags,
       final int? org,
-      final List<String>? images,
+      final List<dynamic>? images,
       final Category? category,
-      final DateTime? createdOn}) = _$_Result;
+      final DateTime? createdOn}) = _$_StoryLong;
 
-  factory _Result.fromJson(Map<String, dynamic> json) = _$_Result.fromJson;
+  factory _StoryLong.fromJson(Map<String, dynamic> json) =
+      _$_StoryLong.fromJson;
 
   @override
   int? get id;
@@ -595,22 +395,22 @@ abstract class _Result implements Result {
   @override
   String? get content;
   @override
-  String? get videoId;
+  dynamic get videoId;
   @override
   dynamic get audioLink;
   @override
-  String? get tags;
+  dynamic get tags;
   @override
   int? get org;
   @override
-  List<String>? get images;
+  List<dynamic>? get images;
   @override
   Category? get category;
   @override
   DateTime? get createdOn;
   @override
   @JsonKey(ignore: true)
-  _$$_ResultCopyWith<_$_Result> get copyWith =>
+  _$$_StoryLongCopyWith<_$_StoryLong> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -620,7 +420,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Category {
-  dynamic get imageUrl => throw _privateConstructorUsedError;
+  dynamic? get imageUrl => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -634,7 +434,7 @@ abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call({dynamic imageUrl, String? name});
+  $Res call({dynamic? imageUrl, String? name});
 }
 
 /// @nodoc
@@ -657,7 +457,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -673,7 +473,7 @@ abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
       __$$_CategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({dynamic imageUrl, String? name});
+  $Res call({dynamic? imageUrl, String? name});
 }
 
 /// @nodoc
@@ -694,7 +494,7 @@ class __$$_CategoryCopyWithImpl<$Res>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -712,7 +512,7 @@ class _$_Category implements _Category {
       _$$_CategoryFromJson(json);
 
   @override
-  final dynamic imageUrl;
+  final dynamic? imageUrl;
   @override
   final String? name;
 
@@ -750,13 +550,13 @@ class _$_Category implements _Category {
 }
 
 abstract class _Category implements Category {
-  const factory _Category({final dynamic imageUrl, final String? name}) =
+  const factory _Category({final dynamic? imageUrl, final String? name}) =
       _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
-  dynamic get imageUrl;
+  dynamic? get imageUrl;
   @override
   String? get name;
   @override

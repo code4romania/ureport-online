@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class MessageModelLocal {
   String? message;
   final String sender;

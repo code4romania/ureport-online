@@ -5,10 +5,12 @@ class ArticleCategorySectionComponent extends StatelessWidget {
     super.key,
     required this.categoryTitle,
     required this.onTap,
+    required this.viewMore,
   });
 
   final String categoryTitle;
   final Function() onTap;
+  final String viewMore;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class ArticleCategorySectionComponent extends StatelessWidget {
             color: Color.fromRGBO(159, 75, 152, 1),
           ),
           Text(
-            "Vezi mai multe articole din categoria $categoryTitle",
+            "$viewMore $categoryTitle",
             style: TextStyle(
               color: Color.fromRGBO(159, 75, 152, 1),
             ),

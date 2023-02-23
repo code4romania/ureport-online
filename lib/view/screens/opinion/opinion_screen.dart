@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
+import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 import 'model/response-opinion-localdb.dart';
 import 'opinion_controller.dart';
 import 'model/response_opinions.dart' as questionArray;
@@ -31,8 +34,15 @@ class _OpinionState extends State<Opinion> {
   ];
   int colorNumber = 0;
 
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
+
   @override
   void initState() {
+    _stateStore = context.read<StateStore>();
+
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["opinion_screen"]!;
     super.initState();
     Provider.of<OpinionController>(context, listen: false).startMonitoring();
   }
@@ -58,7 +68,7 @@ class _OpinionState extends State<Opinion> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              //  TopBar.getTopBar(AppLocalizations.of(context)!.opinions),
+              TopHeaderWidget(title: _translation["header"]!),
               Container(
                 child: Divider(
                   height: 1,
@@ -95,7 +105,7 @@ class _OpinionState extends State<Opinion> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Search",
+                              _translation["search"]!,
                               style:
                                   TextStyle(fontSize: 18, color: Colors.grey),
                             ),
@@ -144,15 +154,19 @@ class _OpinionState extends State<Opinion> {
                                           questionList.length > 0
                                               ? StatisticsHeader
                                                   .getHeadingStatistics(
-                                                      questionList.first,
-                                                      opinions![0],
-                                                      provider,
-                                                      sp.getValue(
-                                                          SPUtil.PROGRAMKEY),
-                                                      context)
+                                                  questionList.first,
+                                                  opinions![0],
+                                                  provider,
+                                                  sp.getValue(
+                                                      SPUtil.PROGRAMKEY),
+                                                  context,
+                                                  _translation,
+                                                )
                                               : StatisticsHeader
                                                   .getHeadingStatisticsEmpty(
-                                                      opinions![0], context),
+                                                      opinions![0],
+                                                      context,
+                                                      _translation),
                                           ListView.builder(
                                               shrinkWrap: true,
                                               physics: BouncingScrollPhysics(),
@@ -214,7 +228,7 @@ class _OpinionState extends State<Opinion> {
           .checkOpinion("https://ureport.in/api/v1/polls/org/13/featured/",
               sp.getValue(SPUtil.PROGRAMKEY));
     } else {
-      return SnackBar(content: Text("No Internet Connection"));
+      return SnackBar(content: Text(_translation["no_internet"]!));
     }
   }
 }

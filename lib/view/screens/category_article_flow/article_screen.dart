@@ -1,23 +1,31 @@
 import 'dart:convert';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart';
+import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/translation.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/category.dart';
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/story_long.dart';
+import 'package:ureport_ecaro/view/shared/general_button_component.dart';
+import 'package:ureport_ecaro/view/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/view/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
+import 'package:ureport_ecaro/view_model/story_state.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 class ArticleScreen extends StatefulWidget {
   ArticleScreen({
     Key? key,
-    required this.article,
-    required this.title,
-    required this.image,
-    required this.date,
+    required this.storyStore,
+    required this.storyId,
+    required this.subCategory,
   }) : super(key: key);
 
-  final Result article;
-  final String title;
-  final String image;
-  final String date;
+  final StoryStore storyStore;
+  final String subCategory;
+  final String storyId;
 
   @override
   State<ArticleScreen> createState() => _ArticleScreenState();
@@ -26,15 +34,23 @@ class ArticleScreen extends StatefulWidget {
 class _ArticleScreenState extends State<ArticleScreen> {
   final DateFormat formatter = DateFormat('dd/MM/yyyy');
   late WebViewPlusController webViewController;
+  late StateStore _stateStore;
   late ScrollController _scrollController;
+  late Map<String, String> _translation;
+
   double webViewHeight = 0;
   bool _showScrollToTop = true;
 
   @override
   void initState() {
     _scrollController = ScrollController();
+    _stateStore = context.read<StateStore>();
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["article_screen"]!;
 
     super.initState();
+
+    widget.storyStore.fetchStory(widget.storyId);
   }
 
   void _scrollToTop() {
@@ -50,6 +66,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final future = widget.storyStore.story;
     return Scaffold(
       floatingActionButton: _showScrollToTop
           ? GestureDetector(
@@ -71,86 +88,146 @@ class _ArticleScreenState extends State<ArticleScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           controller: _scrollController,
-          child: Column(children: [
-            TopHeaderWidget(title: "Articol"),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 4,
-                    backgroundColor: Color.fromRGBO(201, 13, 182, 1),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    widget.article.category!.name!.split('/')[1].trim(),
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
-                ],
+          child: Column(
+            children: [
+              TopHeaderWidget(title: _translation["header"]!),
+              TextNavigatorComponent(
+                title: _translation["back"]!,
+                rightEdge: false,
+                onPressed: () => context.router.pop(),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-              child: Text(
-                widget.article.title!,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              SizedBox(
+                height: 20,
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10, left: 20, right: 60),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Autor",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Color.fromRGBO(167, 45, 111, 1)),
-                      ),
-                      Text(
-                        "UNICEF România",
-                        style:
-                            TextStyle(color: Color.fromRGBO(167, 45, 111, 1)),
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Date",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Color.fromRGBO(167, 45, 111, 1)),
-                      ),
-                      Text(
-                          formatter.format(
-                              widget.article.createdOn ?? DateTime.now()),
-                          style: TextStyle(
-                            color: Color.fromRGBO(167, 45, 111, 1),
-                          ))
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: loadLocalHTML(widget.article.content!, widget.title,
-                  "widget.image", "widget.date"),
-            ),
-          ]),
+              Observer(
+                builder: (context) {
+                  if (future == null) {
+                    return Text(
+                      _translation["no_articles"]!,
+                      style: TextStyle(color: Colors.black),
+                    );
+                  }
+                  switch (future.status) {
+                    case FutureStatus.pending:
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case FutureStatus.rejected:
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              _translation["no_articles"]!,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(167, 45, 111, 1)),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      );
+                    case FutureStatus.fulfilled:
+                      final StoryLong story = future.result;
+
+                      return Column(
+                        children: [
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 20),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 4,
+                                  backgroundColor:
+                                      Color.fromRGBO(201, 13, 182, 1),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  story.category!.name!.split('/')[1].trim(),
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 20),
+                            child: Text(
+                              widget.subCategory,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 60),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _translation["author"]!,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                          color:
+                                              Color.fromRGBO(167, 45, 111, 1)),
+                                    ),
+                                    Text(
+                                      _translation["author_unicef"]!,
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(167, 45, 111, 1)),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _translation["date"]!,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                          color:
+                                              Color.fromRGBO(167, 45, 111, 1)),
+                                    ),
+                                    Text(
+                                        formatter.format(
+                                            story.createdOn ?? DateTime.now()),
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(167, 45, 111, 1),
+                                        ))
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: loadLocalHTML(
+                                story.content!,
+                                story.title ?? "",
+                                "widget.image",
+                                "widget.date"),
+                          ),
+                        ],
+                      );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

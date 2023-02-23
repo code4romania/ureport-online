@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:ureport_ecaro/locator/locator.dart';
-
 import 'model/response_opinions.dart' as questionArray;
 
 class StatisticsAll {

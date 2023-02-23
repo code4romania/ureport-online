@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TextNavigatorComponent extends StatelessWidget {
-  const TextNavigatorComponent({
-    super.key,
-    required this.title,
-    required this.onPressed,
-    required this.rightEdge,
-  });
+  const TextNavigatorComponent(
+      {super.key,
+      required this.title,
+      required this.onPressed,
+      required this.rightEdge,
+      this.darkMode});
 
   final String title;
   final Function() onPressed;
   final bool rightEdge;
+  final bool? darkMode;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class TextNavigatorComponent extends StatelessWidget {
             if (!rightEdge)
               Icon(
                 Icons.keyboard_double_arrow_left_outlined,
+                color: darkMode != null ? Colors.white : Colors.black,
               ),
             Container(
               child: Text(
@@ -33,6 +35,7 @@ class TextNavigatorComponent extends StatelessWidget {
                   height: 1.2,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.underline,
+                  color: darkMode != null ? Colors.white : Colors.black,
                 ),
               ),
             ),

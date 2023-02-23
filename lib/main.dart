@@ -67,6 +67,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppRouter _appRouter;
   late StateStore _stateStore;
+  late StoryStore _storyStore;
 
   @override
   void initState() {
@@ -85,9 +86,8 @@ class _MyAppState extends State<MyApp> {
                   create: (context) => ConnectivityController()),
               ChangeNotifierProvider(create: (context) => ChatController()),
               ChangeNotifierProvider(create: (context) => OpinionController()),
-              Provider(
-                create: (context) => _stateStore,
-              ),
+              Provider(create: (context) => _stateStore),
+              Provider(create: (context) => _storyStore)
             ],
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,

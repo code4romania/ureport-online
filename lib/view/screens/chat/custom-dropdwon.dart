@@ -1,11 +1,6 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import 'package:ureport_ecaro/view/screens/chat/chat-controller.dart';
-
-import 'arrow_clipper.dart';
 
 class CustomDropDownSecond extends StatefulWidget {
   final List<String> keyword;
@@ -80,7 +75,7 @@ class _CustomDropDownSecondState extends State<CustomDropDownSecond>
     findButton();
     _animationController.forward();
     _overlayEntry = _overlayEntryBuilder();
-    Overlay.of(context)!.insert(_overlayEntry);
+    Overlay.of(context).insert(_overlayEntry);
     isMenuOpen = !isMenuOpen;
   }
 

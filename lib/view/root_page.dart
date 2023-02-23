@@ -1,11 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ureport_ecaro/data/sp_utils.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/view_model/state_store.dart';
-
-import 'screens/category_article_flow/articles_category_screen.dart';
 
 class RootPage extends StatelessWidget {
   RootPage({super.key});
@@ -32,6 +29,7 @@ class RootPage extends StatelessWidget {
         context.router.replaceAll([OpenAppScreenRoute()]);
       } else {
         return AutoTabsScaffold(
+          homeIndex: 2,
           routes: [
             CategoryListScreenRoute(),
             ChatRoute(from: "home"),

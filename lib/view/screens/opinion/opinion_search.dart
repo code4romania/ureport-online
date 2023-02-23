@@ -5,14 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/data/sp_utils.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/utils/app_router.gr.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/resources.dart';
 import 'package:ureport_ecaro/view/screens/opinion/model/searchbar.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 import 'opinion_controller.dart';
-import 'opinion_screen.dart';
-import 'opinion_screen_from_search.dart';
 
 FloatingSearchBarController _floatingSearchBarController =
     FloatingSearchBarController();
@@ -32,8 +32,15 @@ bool isExpanded = false;
 class _OpinionSearchState extends State<OpinionSearch> {
   var sp = locator<SPUtil>();
 
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
+
   @override
   void initState() {
+    _stateStore = context.read<StateStore>();
+
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["opinion_screen"]!;
     super.initState();
     Provider.of<OpinionController>(context, listen: false).isExpanded = false;
     filteredCategoryList.clear();
@@ -117,7 +124,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
                                             color: Colors.white,
                                             child: Center(
                                                 child: Text(
-                                              "No results found",
+                                              _translation["no_results"]!,
                                               style: TextStyle(fontSize: 15),
                                             ))),
                                       ],
@@ -149,7 +156,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
           future: provider.getCategories(program),
           builder: (context, snapshot) {
             return FloatingSearchBar(
-              hint: "Search",
+              hint: _translation["search"]!,
               leadingActions: [Icon(Icons.search)],
               openAxisAlignment: 0.0,
               backdropColor: Colors.transparent,
@@ -324,7 +331,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
                                       color: Color.fromRGBO(167, 45, 111, 1),
                                       borderRadius: BorderRadius.circular(4)),
                                   child: Text(
-                                    "LATEST OPINION",
+                                    _translation["latest_opinion"]!,
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.white),
                                   ),

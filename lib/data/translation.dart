@@ -96,13 +96,58 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "body":
           "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! "
     },
+    "articles_category_screen": {
+      "header": "Articole",
+      "title": "Articole",
+      "body": "Aici vei găsi articole din domeniul",
+      "no_articles": "Nu există articole în această categorie",
+      "retry": "Apasă pentru a reîncerca",
+      "back": "Înapoi",
+      "view_more": "Vezi mai multe articole din categoria",
+    },
     "articles_screen": {
       "header": "Articole",
       "back": "Înapoi",
       "search": "Cautare",
-      "body":
-          "Aici vei găsi articole din domeniul Sănătate. Află mai multe despre prevenția bolilor, sănătatea mintală și multe altele.",
+      "body": "Aici vei găsi articole din subcategoria",
+      "body2": "din cateogoria",
       "no_articles": "Nu există articole în această categorie",
+    },
+    "article_screen": {
+      "header": "Articol",
+      "back": "Înapoi",
+      "author": "Autor",
+      "author_unicef": "UNICEF România",
+      "date": "Data",
+      "opinion": "Opinie",
+    },
+    "opinion_screen": {
+      "header": "Opinii",
+      "search": "Căutare",
+      "no_internet": "Nu există conexiune la internet!",
+      "latest_opinion": "Ultimele opinii",
+      "respondents": "Respondenți",
+      "response_rate": "Rata de răspuns",
+    },
+    "opinion_search": {
+      "no_results": "Nu există rezultate pentru căutarea ta",
+      "search": "Căutare",
+      "latest_opinion": "Ultimele opinii",
+    },
+    "opinion_screen_from_search": {
+      "opinions": "Opinii",
+      "no_internet": "Nu există conexiune la internet!",
+      "latest_opinion": "Ultimele opinii",
+      "respondents": "Respondenți",
+      "response_rate": "Rata de răspuns",
+    },
+    "opinion_item": {
+      "responded_out_of": "au răspuns din",
+      "polled": "intervievați",
+      "all": "toți",
+      "age": "Vârstă",
+      "gender": "Gen",
+      "location": "Locație",
     },
     "chat_screen": {
       "header": "Chat",

@@ -241,11 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
           SPUtil().setValue("token", "############");
 
-          context.router.replace(ArticlesCategoryScreenRoute(
-            categoryImg: "https://i.ytimg.com/vi/2QvOxa_7wEw/maxresdefault.jpg",
-            categoryTitle: "Test",
-            key: Key("test"),
-          ));
+          context.router.replace(RootPageRoute());
         },
       );
     } else if (registerResult == RegisterStatus.EMAIL_EXISTS) {

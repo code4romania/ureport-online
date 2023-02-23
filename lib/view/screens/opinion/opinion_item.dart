@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 import 'package:ureport_ecaro/repository/network_operation/utils/number_format.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 import 'model/response_opinions.dart' as questionArray;
 import 'statistics_age.dart';
 import 'statistics_all.dart';
@@ -26,8 +29,14 @@ class _OpinionItemState extends State<OpinionItem> {
 
   _OpinionItemState(this.question, this.color);
 
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
+
   @override
   Widget build(BuildContext context) {
+    _stateStore = context.read<StateStore>();
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["opinion_item"]!;
     int set = question.results.resultsSet;
     int unset = question.results.unset;
     int total = set + unset;
@@ -61,7 +70,7 @@ class _OpinionItemState extends State<OpinionItem> {
               Container(
                 margin: EdgeInsets.only(bottom: 5),
                 child: Text(
-                  "${FormattedNumber.formatNumber(set)} responded out of  ${FormattedNumber.formatNumber(total)} polled",
+                  "${FormattedNumber.formatNumber(set)} ${_translation["responded_out_of"]!}  ${FormattedNumber.formatNumber(total)} ${_translation["polled"]!}",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.grey[500],
@@ -110,7 +119,7 @@ class _OpinionItemState extends State<OpinionItem> {
                                         child: Center(
                                             child: Container(
                                           child: Text(
-                                            "ALL",
+                                            _translation["all"]!,
                                             style: TextStyle(
                                                 color: selectedTab == 0
                                                     ? Colors.white
@@ -150,7 +159,7 @@ class _OpinionItemState extends State<OpinionItem> {
                                             EdgeInsets.only(top: 5, bottom: 5),
                                         child: Center(
                                             child: Text(
-                                          "AGE",
+                                          _translation["age"]!,
                                           style: TextStyle(
                                               color: selectedTab == 1
                                                   ? Colors.white
@@ -189,7 +198,7 @@ class _OpinionItemState extends State<OpinionItem> {
                                             EdgeInsets.only(top: 5, bottom: 5),
                                         child: Center(
                                             child: Text(
-                                          "Gender",
+                                          _translation["gender"]!,
                                           style: TextStyle(
                                               color: selectedTab == 2
                                                   ? Colors.white
@@ -233,7 +242,7 @@ class _OpinionItemState extends State<OpinionItem> {
                                             top: 5, bottom: 5, right: 7),
                                         child: Center(
                                             child: Text(
-                                          "LOCATION",
+                                          _translation["location"]!,
                                           style: TextStyle(
                                               color: selectedTab == 3
                                                   ? Colors.white

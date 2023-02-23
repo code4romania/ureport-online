@@ -27,7 +27,7 @@ import 'package:ureport_ecaro/view/screens/account/profile/change_pw_view.dart'
 import 'package:ureport_ecaro/view/screens/account/profile/feedback_screen.dart'
     as _i4;
 import 'package:ureport_ecaro/view/screens/account/profile/menu_view.dart'
-    as _i15;
+    as _i16;
 import 'package:ureport_ecaro/view/screens/account/profile/profile_view.dart'
     as _i5;
 import 'package:ureport_ecaro/view/screens/category_article_flow/article_list_screen.dart'
@@ -35,12 +35,12 @@ import 'package:ureport_ecaro/view/screens/category_article_flow/article_list_sc
 import 'package:ureport_ecaro/view/screens/category_article_flow/article_screen.dart'
     as _i11;
 import 'package:ureport_ecaro/view/screens/category_article_flow/articles_category_screen.dart'
-    as _i18;
+    as _i13;
 import 'package:ureport_ecaro/view/screens/category_article_flow/category_list_screen.dart'
-    as _i17;
-import 'package:ureport_ecaro/view/screens/category_article_flow/model/story.dart'
-    as _i23;
-import 'package:ureport_ecaro/view/screens/chat/Chat.dart' as _i16;
+    as _i18;
+import 'package:ureport_ecaro/view/screens/category_article_flow/model/category.dart'
+    as _i24;
+import 'package:ureport_ecaro/view/screens/chat/Chat.dart' as _i17;
 import 'package:ureport_ecaro/view/screens/home/home_screen.dart' as _i19;
 import 'package:ureport_ecaro/view/screens/open_app/onboarding_screen.dart'
     as _i10;
@@ -48,8 +48,9 @@ import 'package:ureport_ecaro/view/screens/open_app/open_app_screen.dart'
     as _i9;
 import 'package:ureport_ecaro/view/screens/opinion/opinion_screen.dart' as _i20;
 import 'package:ureport_ecaro/view/screens/opinion/opinion_screen_from_search.dart'
-    as _i14;
-import 'package:ureport_ecaro/view/screens/opinion/opinion_search.dart' as _i13;
+    as _i15;
+import 'package:ureport_ecaro/view/screens/opinion/opinion_search.dart' as _i14;
+import 'package:ureport_ecaro/view_model/story_state.dart' as _i23;
 
 class AppRouter extends _i21.RootStackRouter {
   AppRouter([_i22.GlobalKey<_i22.NavigatorState>? navigatorKey])
@@ -135,10 +136,9 @@ class AppRouter extends _i21.RootStackRouter {
         routeData: routeData,
         child: _i11.ArticleScreen(
           key: args.key,
-          article: args.article,
-          title: args.title,
-          image: args.image,
-          date: args.date,
+          storyStore: args.storyStore,
+          storyId: args.storyId,
+          subCategory: args.subCategory,
         ),
         opaque: true,
       );
@@ -149,46 +149,11 @@ class AppRouter extends _i21.RootStackRouter {
         routeData: routeData,
         child: _i12.ArticleListScreen(
           key: args.key,
-          articles: args.articles,
           categoryTitle: args.categoryTitle,
           subcategoryTitle: args.subcategoryTitle,
+          storyStore: args.storyStore,
+          stories: args.stories,
         ),
-        opaque: true,
-      );
-    },
-    OpinionSearchRoute.name: (routeData) {
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i13.OpinionSearch(),
-        opaque: true,
-      );
-    },
-    OpinionScreenFromSearchRoute.name: (routeData) {
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i14.OpinionScreenFromSearch(),
-        opaque: true,
-      );
-    },
-    MenuScreenRoute.name: (routeData) {
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i15.MenuScreen(),
-        opaque: true,
-      );
-    },
-    ChatRoute.name: (routeData) {
-      final args = routeData.argsAs<ChatRouteArgs>();
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: _i16.Chat(args.from),
-        opaque: true,
-      );
-    },
-    CategoryListScreenRoute.name: (routeData) {
-      return _i21.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: _i17.CategoryListScreen(),
         opaque: true,
       );
     },
@@ -196,11 +161,48 @@ class AppRouter extends _i21.RootStackRouter {
       final args = routeData.argsAs<ArticlesCategoryScreenRouteArgs>();
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i18.ArticlesCategoryScreen(
+        child: _i13.ArticlesCategoryScreen(
           key: args.key,
-          categoryImg: args.categoryImg,
+          result: args.result,
           categoryTitle: args.categoryTitle,
+          storyStore: args.storyStore,
         ),
+        opaque: true,
+      );
+    },
+    OpinionSearchRoute.name: (routeData) {
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i14.OpinionSearch(),
+        opaque: true,
+      );
+    },
+    OpinionScreenFromSearchRoute.name: (routeData) {
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i15.OpinionScreenFromSearch(),
+        opaque: true,
+      );
+    },
+    MenuScreenRoute.name: (routeData) {
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i16.MenuScreen(),
+        opaque: true,
+      );
+    },
+    ChatRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatRouteArgs>();
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: _i17.Chat(args.from),
+        opaque: true,
+      );
+    },
+    CategoryListScreenRoute.name: (routeData) {
+      return _i21.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: _i18.CategoryListScreen(),
         opaque: true,
       );
     },
@@ -239,11 +241,6 @@ class AppRouter extends _i21.RootStackRouter {
             _i21.RouteConfig(
               CategoryListScreenRoute.name,
               path: 'category-list-screen',
-              parent: RootPageRoute.name,
-            ),
-            _i21.RouteConfig(
-              ArticlesCategoryScreenRoute.name,
-              path: 'articles-category-screen',
               parent: RootPageRoute.name,
             ),
             _i21.RouteConfig(
@@ -301,6 +298,10 @@ class AppRouter extends _i21.RootStackRouter {
         _i21.RouteConfig(
           ArticleListScreenRoute.name,
           path: '/article-list-screen',
+        ),
+        _i21.RouteConfig(
+          ArticlesCategoryScreenRoute.name,
+          path: '/articles-category-screen',
         ),
         _i21.RouteConfig(
           OpinionSearchRoute.name,
@@ -453,19 +454,17 @@ class OnboardingScreenRoute extends _i21.PageRouteInfo<void> {
 class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i22.Key? key,
-    required _i23.Result article,
-    required String title,
-    required String image,
-    required String date,
+    required _i23.StoryStore storyStore,
+    required String storyId,
+    required String subCategory,
   }) : super(
           ArticleScreenRoute.name,
           path: '/article-screen',
           args: ArticleScreenRouteArgs(
             key: key,
-            article: article,
-            title: title,
-            image: image,
-            date: date,
+            storyStore: storyStore,
+            storyId: storyId,
+            subCategory: subCategory,
           ),
         );
 
@@ -475,25 +474,22 @@ class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
 class ArticleScreenRouteArgs {
   const ArticleScreenRouteArgs({
     this.key,
-    required this.article,
-    required this.title,
-    required this.image,
-    required this.date,
+    required this.storyStore,
+    required this.storyId,
+    required this.subCategory,
   });
 
   final _i22.Key? key;
 
-  final _i23.Result article;
+  final _i23.StoryStore storyStore;
 
-  final String title;
+  final String storyId;
 
-  final String image;
-
-  final String date;
+  final String subCategory;
 
   @override
   String toString() {
-    return 'ArticleScreenRouteArgs{key: $key, article: $article, title: $title, image: $image, date: $date}';
+    return 'ArticleScreenRouteArgs{key: $key, storyStore: $storyStore, storyId: $storyId, subCategory: $subCategory}';
   }
 }
 
@@ -503,17 +499,19 @@ class ArticleListScreenRoute
     extends _i21.PageRouteInfo<ArticleListScreenRouteArgs> {
   ArticleListScreenRoute({
     _i22.Key? key,
-    required List<_i23.Result> articles,
     required String categoryTitle,
     required String subcategoryTitle,
+    required _i23.StoryStore storyStore,
+    required List<_i24.Story> stories,
   }) : super(
           ArticleListScreenRoute.name,
           path: '/article-list-screen',
           args: ArticleListScreenRouteArgs(
             key: key,
-            articles: articles,
             categoryTitle: categoryTitle,
             subcategoryTitle: subcategoryTitle,
+            storyStore: storyStore,
+            stories: stories,
           ),
         );
 
@@ -523,27 +521,75 @@ class ArticleListScreenRoute
 class ArticleListScreenRouteArgs {
   const ArticleListScreenRouteArgs({
     this.key,
-    required this.articles,
     required this.categoryTitle,
     required this.subcategoryTitle,
+    required this.storyStore,
+    required this.stories,
   });
 
   final _i22.Key? key;
-
-  final List<_i23.Result> articles;
 
   final String categoryTitle;
 
   final String subcategoryTitle;
 
+  final _i23.StoryStore storyStore;
+
+  final List<_i24.Story> stories;
+
   @override
   String toString() {
-    return 'ArticleListScreenRouteArgs{key: $key, articles: $articles, categoryTitle: $categoryTitle, subcategoryTitle: $subcategoryTitle}';
+    return 'ArticleListScreenRouteArgs{key: $key, categoryTitle: $categoryTitle, subcategoryTitle: $subcategoryTitle, storyStore: $storyStore, stories: $stories}';
   }
 }
 
 /// generated route for
-/// [_i13.OpinionSearch]
+/// [_i13.ArticlesCategoryScreen]
+class ArticlesCategoryScreenRoute
+    extends _i21.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
+  ArticlesCategoryScreenRoute({
+    _i22.Key? key,
+    required List<_i24.Result> result,
+    required String categoryTitle,
+    required _i23.StoryStore storyStore,
+  }) : super(
+          ArticlesCategoryScreenRoute.name,
+          path: '/articles-category-screen',
+          args: ArticlesCategoryScreenRouteArgs(
+            key: key,
+            result: result,
+            categoryTitle: categoryTitle,
+            storyStore: storyStore,
+          ),
+        );
+
+  static const String name = 'ArticlesCategoryScreenRoute';
+}
+
+class ArticlesCategoryScreenRouteArgs {
+  const ArticlesCategoryScreenRouteArgs({
+    this.key,
+    required this.result,
+    required this.categoryTitle,
+    required this.storyStore,
+  });
+
+  final _i22.Key? key;
+
+  final List<_i24.Result> result;
+
+  final String categoryTitle;
+
+  final _i23.StoryStore storyStore;
+
+  @override
+  String toString() {
+    return 'ArticlesCategoryScreenRouteArgs{key: $key, result: $result, categoryTitle: $categoryTitle, storyStore: $storyStore}';
+  }
+}
+
+/// generated route for
+/// [_i14.OpinionSearch]
 class OpinionSearchRoute extends _i21.PageRouteInfo<void> {
   const OpinionSearchRoute()
       : super(
@@ -555,7 +601,7 @@ class OpinionSearchRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i14.OpinionScreenFromSearch]
+/// [_i15.OpinionScreenFromSearch]
 class OpinionScreenFromSearchRoute extends _i21.PageRouteInfo<void> {
   const OpinionScreenFromSearchRoute()
       : super(
@@ -567,7 +613,7 @@ class OpinionScreenFromSearchRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i15.MenuScreen]
+/// [_i16.MenuScreen]
 class MenuScreenRoute extends _i21.PageRouteInfo<void> {
   const MenuScreenRoute()
       : super(
@@ -579,7 +625,7 @@ class MenuScreenRoute extends _i21.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i16.Chat]
+/// [_i17.Chat]
 class ChatRoute extends _i21.PageRouteInfo<ChatRouteArgs> {
   ChatRoute({required String from})
       : super(
@@ -603,7 +649,7 @@ class ChatRouteArgs {
 }
 
 /// generated route for
-/// [_i17.CategoryListScreen]
+/// [_i18.CategoryListScreen]
 class CategoryListScreenRoute extends _i21.PageRouteInfo<void> {
   const CategoryListScreenRoute()
       : super(
@@ -612,46 +658,6 @@ class CategoryListScreenRoute extends _i21.PageRouteInfo<void> {
         );
 
   static const String name = 'CategoryListScreenRoute';
-}
-
-/// generated route for
-/// [_i18.ArticlesCategoryScreen]
-class ArticlesCategoryScreenRoute
-    extends _i21.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
-  ArticlesCategoryScreenRoute({
-    _i22.Key? key,
-    required String categoryImg,
-    required String categoryTitle,
-  }) : super(
-          ArticlesCategoryScreenRoute.name,
-          path: 'articles-category-screen',
-          args: ArticlesCategoryScreenRouteArgs(
-            key: key,
-            categoryImg: categoryImg,
-            categoryTitle: categoryTitle,
-          ),
-        );
-
-  static const String name = 'ArticlesCategoryScreenRoute';
-}
-
-class ArticlesCategoryScreenRouteArgs {
-  const ArticlesCategoryScreenRouteArgs({
-    this.key,
-    required this.categoryImg,
-    required this.categoryTitle,
-  });
-
-  final _i22.Key? key;
-
-  final String categoryImg;
-
-  final String categoryTitle;
-
-  @override
-  String toString() {
-    return 'ArticlesCategoryScreenRouteArgs{key: $key, categoryImg: $categoryImg, categoryTitle: $categoryTitle}';
-  }
 }
 
 /// generated route for

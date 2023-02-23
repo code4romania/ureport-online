@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ureport_ecaro/data/sp_utils.dart';
+import 'package:ureport_ecaro/data/translation.dart';
 
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
+import 'package:ureport_ecaro/view_model/state_store.dart';
 
 import 'model/response-opinion-localdb.dart';
 import 'opinion_controller.dart';
@@ -33,8 +35,14 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
   ];
   int colorNumber = 0;
 
+  late StateStore _stateStore;
+  late Map<String, String> _translation;
+
   @override
   void initState() {
+    _stateStore = context.read<StateStore>();
+    _translation = translations["${_stateStore.selectedLanguage}"]![
+        "opinion_screen_from_search"]!;
     super.initState();
     Provider.of<OpinionController>(context, listen: false).startMonitoring();
   }
@@ -118,7 +126,7 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
                                       padding: EdgeInsets.only(left: 10),
                                       child: Center(
                                         child: Text(
-                                          "Opinions",
+                                          _translation["opinions"]!,
                                           style: TextStyle(
                                               fontSize: 26.0,
                                               color: Color.fromRGBO(
@@ -183,16 +191,20 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
                                               questionList.length > 0
                                                   ? StatisticsHeader
                                                       .getHeadingStatistics(
-                                                          questionList[0],
-                                                          opinions![0],
-                                                          provider,
-                                                          sp.getValue(SPUtil
-                                                              .PROGRAMKEY),
-                                                          context)
+                                                      questionList[0],
+                                                      opinions![0],
+                                                      provider,
+                                                      sp.getValue(
+                                                          SPUtil.PROGRAMKEY),
+                                                      context,
+                                                      _translation,
+                                                    )
                                                   : StatisticsHeader
                                                       .getHeadingStatisticsEmpty(
-                                                          opinions![0],
-                                                          context),
+                                                      opinions![0],
+                                                      context,
+                                                      _translation,
+                                                    ),
                                               ListView.builder(
                                                   shrinkWrap: true,
                                                   physics:
@@ -257,7 +269,7 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
           .checkOpinion("https://ureport.in/api/v1/polls/org/13/featured/",
               sp.getValue(SPUtil.PROGRAMKEY));
     } else {
-      return SnackBar(content: Text("No Internet Connection"));
+      return SnackBar(content: Text(_translation["no_internet"]!));
     }
   }
 

@@ -1,21 +1,14 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
-
 import 'api_response.dart';
-
 import 'apicall_responsedata/response_contact_creation.dart';
-import 'apicall_responsedata/response_single_contact.dart';
 import 'http_service.dart';
-import 'package:http/http.dart' as http;
 
 class RapidProService {
   var _httpService = locator<HttpService>();
 
-  final String _rapidProUrl = "app.rapidpro.io";
-  final String _channelId = "604e94cd-fcd1-42ec-93d8-a77696dd18ac";
+  final String _rapidProUrl = "rapidpro.heroesof.tech";
+  final String _channelId = "0692108c-cc60-4700-96e6-202af3131cc3";
 
   Future<ApiResponse<ResponseContactCreation>> createContact(
     String urn,

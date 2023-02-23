@@ -2,10 +2,6 @@
 //
 //     final sugetiondata = sugetiondataFromJson(jsonString);
 
-import 'dart:convert';
-
-
-
 class Sugetiondata {
   Sugetiondata({
     required this.category,
@@ -14,5 +10,4 @@ class Sugetiondata {
 
   String category;
   List<dynamic> title;
-
 }

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'response_opinions.dart' as questionArray;
 
 class ResultOpinionLocal {

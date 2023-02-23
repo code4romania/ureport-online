@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/data/database/database_helper.dart';
 import 'package:ureport_ecaro/data/sp_utils.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/repository/network_operation/utils/load_data_handling.dart';
 import 'package:ureport_ecaro/utils/click_sound.dart';
 import 'package:ureport_ecaro/utils/connectivity_controller.dart';
-import 'model/response-opinion-localdb.dart';
 import 'model/response_opinions.dart' as opinionsarray;
 import 'opinion_repository.dart';
-import 'model/response_opinions.dart' as questionArray;
 
 class OpinionController extends ConnectivityController {
   DatabaseHelper _databaseHelper = DatabaseHelper();

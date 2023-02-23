@@ -1,12 +1,8 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/data/sp_utils.dart';
 import 'package:ureport_ecaro/locator/locator.dart';
 import 'package:ureport_ecaro/repository/network_operation/api_response.dart';
-
 import 'package:ureport_ecaro/repository/network_operation/http_service.dart';
-
 import 'model/response_opinions.dart';
 import 'model/response_opinions.dart' as quistionlist;
 

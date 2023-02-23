@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
@@ -145,7 +143,6 @@ class ChatController extends ConnectivityController {
   }
 
   addQuickType() async {
-    List<dynamic> repdata = [];
     var data = [];
     // repdata.add(data);
     DateTime now = DateTime.now();
@@ -173,7 +170,6 @@ class ChatController extends ConnectivityController {
   }
 
   addQuickTypeCaseManagement() async {
-    List<dynamic> repdata = [];
     var data = [];
     // repdata.add(data);
     DateTime now = DateTime.now();
@@ -318,6 +314,8 @@ class ChatController extends ConnectivityController {
         var apiResponse = await _rapidproservice
             .createContact(contact_urn, _token, "User", onSuccess: (uuid) {
           contatct = uuid;
+        }, onError: (Exception error) {
+          print("ONERROR: $error");
         });
         if (apiResponse.httpCode == 200) {
           responseContactCreation = apiResponse.data;
@@ -357,6 +355,8 @@ class ChatController extends ConnectivityController {
         var apiResponse = await _rapidproservice
             .createContact(contact_urn, _token, "Unknown", onSuccess: (uuid) {
           contatct = uuid;
+        }, onError: (Exception error) {
+          print("ONERROR: $error");
         });
         // getfirebase();
         if (apiResponse.httpCode == 200) {

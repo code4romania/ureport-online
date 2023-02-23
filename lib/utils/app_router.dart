@@ -27,7 +27,6 @@ import 'package:ureport_ecaro/view/screens/opinion/opinion_search.dart';
       AdaptiveRoute(page: MenuScreen),
       AdaptiveRoute(page: Chat),
       AdaptiveRoute(page: CategoryListScreen),
-      AdaptiveRoute(page: ArticlesCategoryScreen),
       AdaptiveRoute(page: HomeScreen),
       AdaptiveRoute(page: Opinion),
     ]),
@@ -49,9 +48,10 @@ import 'package:ureport_ecaro/view/screens/opinion/opinion_search.dart';
     AdaptiveRoute(page: OnboardingScreen),
     // Category Article Flow
 
-    // AdaptiveRoute(page: ArticlesCategoryScreen),
     AdaptiveRoute(page: ArticleScreen),
     AdaptiveRoute(page: ArticleListScreen),
+    AdaptiveRoute(page: ArticlesCategoryScreen),
+
     // HOME
 
     // Opinions
