@@ -66,7 +66,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                     ),
                     Text(
                       _translation["title"]!,
-                      style: titleTextStlye,
+                      style: titleWhiteTextStlye,
                     ),
                     SizedBox(
                       width: 100,

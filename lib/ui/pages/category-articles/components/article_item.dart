@@ -2,23 +2,40 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/category.dart';
+import 'package:ureport_ecaro/models/story.dart' as storyFull;
 import '../../../../utils/hex_colors_utils.dart';
 
 class ArticleItemWidget extends StatelessWidget {
   ArticleItemWidget({
     Key? key,
-    required this.article,
+    this.article,
+    this.articleFull,
     this.width,
     required this.categoryName,
   }) : super(key: key);
 
-  final Story article;
+  final Story? article;
+  final storyFull.StoryItem? articleFull;
   final String categoryName;
   final double? width;
 
   @override
   Widget build(BuildContext context) {
     double widgetWidth = width ?? 190;
+
+    String imageUrl = "";
+    String title = "";
+
+    title = article?.title ?? articleFull?.title ?? "";
+    if (articleFull != null) {
+      if (article?.images != null) {
+        imageUrl = article!.images!.first;
+      }
+    } else {
+      if (articleFull?.images != null) {
+        imageUrl = articleFull!.images!.first;
+      }
+    }
 
     return Container(
         width: widgetWidth,
@@ -54,9 +71,9 @@ class ArticleItemWidget extends StatelessWidget {
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(20)),
                   ),
-                  child: article.images != null && article.images?.length != 0
+                  child: imageUrl != null && imageUrl.isNotEmpty
                       ? CachedNetworkImage(
-                          imageUrl: article.images!.first,
+                          imageUrl: imageUrl,
                           fit: BoxFit.fitWidth,
                           errorWidget: (context, url, error) => Image.asset(
                             "assets/images/image_placeholder.jpg",
@@ -94,8 +111,8 @@ class ArticleItemWidget extends StatelessWidget {
               width: widgetWidth,
               margin: EdgeInsets.only(top: 10, left: 20, right: 20),
               child: Text(
-                article.title!,
-                overflow: "${article.title}".length < 30
+                title,
+                overflow: title.length < 30
                     ? TextOverflow.clip
                     : TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),

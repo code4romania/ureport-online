@@ -56,8 +56,64 @@ mixin _$StoryStore on _StoryStore, Store {
     });
   }
 
+  late final _$recentStoriesAtom =
+      Atom(name: '_StoryStore.recentStories', context: context);
+
+  @override
+  ObservableFuture<ObservableList<storyFull.StoryItem>>? get recentStories {
+    _$recentStoriesAtom.reportRead();
+    return super.recentStories;
+  }
+
+  @override
+  set recentStories(
+      ObservableFuture<ObservableList<storyFull.StoryItem>>? value) {
+    _$recentStoriesAtom.reportWrite(value, super.recentStories, () {
+      super.recentStories = value;
+    });
+  }
+
+  late final _$recentOpinionsAtom =
+      Atom(name: '_StoryStore.recentOpinions', context: context);
+
+  @override
+  ObservableFuture<ObservableList<opinionsarray.Question>>? get recentOpinions {
+    _$recentOpinionsAtom.reportRead();
+    return super.recentOpinions;
+  }
+
+  @override
+  set recentOpinions(
+      ObservableFuture<ObservableList<opinionsarray.Question>>? value) {
+    _$recentOpinionsAtom.reportWrite(value, super.recentOpinions, () {
+      super.recentOpinions = value;
+    });
+  }
+
   late final _$_StoryStoreActionController =
       ActionController(name: '_StoryStore', context: context);
+
+  @override
+  Future<dynamic> getRecentStories() {
+    final _$actionInfo = _$_StoryStoreActionController.startAction(
+        name: '_StoryStore.getRecentStories');
+    try {
+      return super.getRecentStories();
+    } finally {
+      _$_StoryStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Future<dynamic> getRecentOpinions() {
+    final _$actionInfo = _$_StoryStoreActionController.startAction(
+        name: '_StoryStore.getRecentOpinions');
+    try {
+      return super.getRecentOpinions();
+    } finally {
+      _$_StoryStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   Future<dynamic> fetchCategories() {
@@ -108,7 +164,9 @@ mixin _$StoryStore on _StoryStore, Store {
     return '''
 categoryList: ${categoryList},
 story: ${story},
-stories: ${stories}
+stories: ${stories},
+recentStories: ${recentStories},
+recentOpinions: ${recentOpinions}
     ''';
   }
 }

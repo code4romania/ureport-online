@@ -171,7 +171,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
               width: MediaQuery.of(context).size.width * 0.6 - 20,
               child: Text(
                 item.name!.split('/')[0].toString(),
-                style: titleTextStlye,
+                style: titleWhiteTextStlye,
               ),
             ),
             Container(

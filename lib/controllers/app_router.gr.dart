@@ -14,7 +14,8 @@
 import 'package:auto_route/auto_route.dart' as _i21;
 import 'package:flutter/material.dart' as _i22;
 import 'package:ureport_ecaro/controllers/story_state.dart' as _i23;
-import 'package:ureport_ecaro/models/category.dart' as _i24;
+import 'package:ureport_ecaro/models/category.dart' as _i25;
+import 'package:ureport_ecaro/models/story.dart' as _i24;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_list_screen.dart'
     as _i12;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_screen.dart'
@@ -122,7 +123,8 @@ class AppRouter extends _i21.RootStackRouter {
       );
     },
     ArticleScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<ArticleScreenRouteArgs>();
+      final args = routeData.argsAs<ArticleScreenRouteArgs>(
+          orElse: () => const ArticleScreenRouteArgs());
       return _i21.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i11.ArticleScreen(
@@ -130,6 +132,7 @@ class AppRouter extends _i21.RootStackRouter {
           storyStore: args.storyStore,
           storyId: args.storyId,
           subCategory: args.subCategory,
+          storyFull: args.storyFull,
         ),
         opaque: true,
       );
@@ -445,9 +448,10 @@ class OnboardingScreenRoute extends _i21.PageRouteInfo<void> {
 class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i22.Key? key,
-    required _i23.StoryStore storyStore,
-    required String storyId,
-    required String subCategory,
+    _i23.StoryStore? storyStore,
+    String? storyId,
+    String? subCategory,
+    _i24.StoryItem? storyFull,
   }) : super(
           ArticleScreenRoute.name,
           path: '/article-screen',
@@ -456,6 +460,7 @@ class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
             storyStore: storyStore,
             storyId: storyId,
             subCategory: subCategory,
+            storyFull: storyFull,
           ),
         );
 
@@ -465,22 +470,25 @@ class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
 class ArticleScreenRouteArgs {
   const ArticleScreenRouteArgs({
     this.key,
-    required this.storyStore,
-    required this.storyId,
-    required this.subCategory,
+    this.storyStore,
+    this.storyId,
+    this.subCategory,
+    this.storyFull,
   });
 
   final _i22.Key? key;
 
-  final _i23.StoryStore storyStore;
+  final _i23.StoryStore? storyStore;
 
-  final String storyId;
+  final String? storyId;
 
-  final String subCategory;
+  final String? subCategory;
+
+  final _i24.StoryItem? storyFull;
 
   @override
   String toString() {
-    return 'ArticleScreenRouteArgs{key: $key, storyStore: $storyStore, storyId: $storyId, subCategory: $subCategory}';
+    return 'ArticleScreenRouteArgs{key: $key, storyStore: $storyStore, storyId: $storyId, subCategory: $subCategory, storyFull: $storyFull}';
   }
 }
 
@@ -493,7 +501,7 @@ class ArticleListScreenRoute
     required String categoryTitle,
     required String subcategoryTitle,
     required _i23.StoryStore storyStore,
-    required List<_i24.Story> stories,
+    required List<_i25.Story> stories,
   }) : super(
           ArticleListScreenRoute.name,
           path: '/article-list-screen',
@@ -526,7 +534,7 @@ class ArticleListScreenRouteArgs {
 
   final _i23.StoryStore storyStore;
 
-  final List<_i24.Story> stories;
+  final List<_i25.Story> stories;
 
   @override
   String toString() {
@@ -540,7 +548,7 @@ class ArticlesCategoryScreenRoute
     extends _i21.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
   ArticlesCategoryScreenRoute({
     _i22.Key? key,
-    required List<_i24.Result> result,
+    required List<_i25.Result> result,
     required String categoryTitle,
     required _i23.StoryStore storyStore,
   }) : super(
@@ -567,7 +575,7 @@ class ArticlesCategoryScreenRouteArgs {
 
   final _i22.Key? key;
 
-  final List<_i24.Result> result;
+  final List<_i25.Result> result;
 
   final String categoryTitle;
 

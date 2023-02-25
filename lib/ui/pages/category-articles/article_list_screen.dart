@@ -71,7 +71,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                     ),
                     Text(
                       widget.categoryTitle,
-                      style: titleTextStlye,
+                      style: titleWhiteTextStlye,
                     ),
                     SizedBox(
                       width: 100,

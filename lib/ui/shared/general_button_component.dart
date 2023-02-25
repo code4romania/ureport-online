@@ -6,10 +6,16 @@ class MainAppButtonComponent extends StatelessWidget {
     super.key,
     required this.title,
     required this.onPressed,
+    this.color,
+    this.textStyle,
+    this.border,
   });
 
   final String title;
   final Function() onPressed;
+  final Color? color;
+  final TextStyle? textStyle;
+  final Border? border;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +30,13 @@ class MainAppButtonComponent extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: purpleColor,
+          color: color ?? purpleColor,
+          border: border,
         ),
         child: Center(
           child: Text(
             title,
-            style: bold16TextStyle,
+            style: textStyle ?? bold16TextStyle,
           ),
         ),
       ),
