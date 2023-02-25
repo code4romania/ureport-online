@@ -2,17 +2,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:ureport_ecaro/locator/locator.dart';
-import 'package:ureport_ecaro/utils/app_router.gr.dart';
-import 'package:ureport_ecaro/utils/connectivity_controller.dart';
-import 'package:ureport_ecaro/view/screens/chat/chat-controller.dart';
-import 'package:ureport_ecaro/view/screens/opinion/opinion_controller.dart';
-import 'package:ureport_ecaro/view_model/state_store.dart';
-import 'package:ureport_ecaro/view_model/story_state.dart';
+import 'package:ureport_ecaro/controllers/opinion_controller.dart';
+import 'controllers/app_router.gr.dart';
+import 'controllers/state_store.dart';
+import 'controllers/story_state.dart';
+import 'controllers/chat-controller.dart';
+import 'locator/locator.dart';
+import 'controllers/connectivity_controller.dart';
+import 'utils/constants.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -77,50 +77,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => ChatController(),
+  Widget build(BuildContext context) => MultiProvider(
+        providers: [
+          Provider(
+            create: (context) => _stateStore,
+          ),
+          ChangeNotifierProvider(create: (context) => ConnectivityController()),
+          ChangeNotifierProvider(create: (context) => ChatController()),
+          ChangeNotifierProvider(create: (context) => OpinionController()),
+        ],
         builder: (context, child) {
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(
-                  create: (context) => ConnectivityController()),
-              ChangeNotifierProvider(create: (context) => ChatController()),
-              ChangeNotifierProvider(create: (context) => OpinionController()),
-              Provider(create: (context) => _stateStore),
-              Provider(create: (context) => _storyStore)
-            ],
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primarySwatch: Colors.pink,
-                fontFamily: "Inter",
-                backgroundColor: Colors.white,
-                splashColor: Color.fromRGBO(167, 45, 111, 1),
-              ),
-              routerDelegate: _appRouter.delegate(),
-              routeInformationParser: _appRouter.defaultRouteParser(),
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.pink,
+              fontFamily: "Inter",
+              backgroundColor: Colors.white,
+              splashColor: purpleColor,
             ),
+            routerDelegate: _appRouter.delegate(),
+            routeInformationParser: _appRouter.defaultRouteParser(),
           );
         },
-        // providers: [
-        //   Provider(
-        //     create: (context) => _stateStore,
-        //   ),
-        //   ChangeNotifierProvider(create: (context) => ConnectivityController()),
-        //   ChangeNotifierProvider(create: (context) => ChatController()),
-        // ],
-        // builder: (context, child) {
-        //   return MaterialApp.router(
-        //     debugShowCheckedModeBanner: false,
-        //     theme: ThemeData(
-        //       primarySwatch: Colors.pink,
-        //       fontFamily: "Inter",
-        //       backgroundColor: Colors.white,
-        //       splashColor: Color.fromRGBO(167, 45, 111, 1),
-        //     ),
-        //     routerDelegate: _appRouter.delegate(),
-        //     routeInformationParser: _appRouter.defaultRouteParser(),
-        //   );
-        // },
       );
 }

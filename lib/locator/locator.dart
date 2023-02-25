@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:ureport_ecaro/data/sp_utils.dart';
-import 'package:ureport_ecaro/repository/network_operation/http_service.dart';
-import 'package:ureport_ecaro/repository/network_operation/rapidpro_service.dart';
-import 'package:ureport_ecaro/view/screens/opinion/opinion_repository.dart';
+import 'package:ureport_ecaro/services/opinions_service.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
+import '../services/network_operation/http_service.dart';
+import '../services/network_operation/rapidpro_service.dart';
 
 GetIt locator = GetIt.instance;
 

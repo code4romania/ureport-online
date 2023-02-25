@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAPP8T_-eVAYZU4ZJRwmcss08mMaBtGSmg',
-    appId: '1:1053882350049:android:49eb00d10c6e0c5ea5faa0',
-    messagingSenderId: '1053882350049',
-    projectId: 'u-report-romania-dev',
-    storageBucket: 'u-report-romania-dev.appspot.com',
+    apiKey: 'AIzaSyDtqwxTgqk_qWtH71nxf-nu34v01IUVPuQ',
+    appId: '1:671571515216:android:47c73ede1814ad5a32fe55',
+    messagingSenderId: '671571515216',
+    projectId: 'ureport-dev',
+    storageBucket: 'ureport-dev.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAL0UOxyX2vD9KjAi2uG2-drlJLmNjAOrE',
-    appId: '1:1053882350049:ios:06f3564943dce2eca5faa0',
-    messagingSenderId: '1053882350049',
-    projectId: 'u-report-romania-dev',
-    storageBucket: 'u-report-romania-dev.appspot.com',
-    iosClientId: '1053882350049-hco5asoj27tjmkuglhv7qvup7dsk1m7s.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAxWmSccaFHfG-jEbaDCxpedzzxE6rzM1o',
+    appId: '1:671571515216:ios:e96836430660630a32fe55',
+    messagingSenderId: '671571515216',
+    projectId: 'ureport-dev',
+    storageBucket: 'ureport-dev.appspot.com',
+    iosClientId: '671571515216-4d22oh22dpvvbp35ulnq2d6qcrnb58vm.apps.googleusercontent.com',
     iosBundleId: 'org.unicef.ureport',
   );
 }
