@@ -14,17 +14,28 @@ class SearchBarWidget extends StatelessWidget {
       margin: EdgeInsets.only(top: 20, left: 20, right: 20),
       height: 80,
       width: MediaQuery.of(context).size.width,
-      child: TextField(
-        onChanged: onSearchChanged,
-        onEditingComplete: () {},
-        decoration: InputDecoration(
-          hintText: "Caută",
-          hintStyle: TextStyle(fontSize: 16, color: Colors.black),
-          filled: true,
-          fillColor: Color.fromRGBO(217, 217, 217, 1),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
+      child: Theme(
+        data: Theme.of(context)
+            .copyWith(colorScheme: ColorScheme.light(primary: Colors.black)),
+        child: TextField(
+          onChanged: onSearchChanged,
+          onEditingComplete: () {},
+          decoration: InputDecoration(
+            hintStyle: TextStyle(fontSize: 16, color: Colors.black),
+            filled: true,
+            prefixIcon: Icon(
+              Icons.search,
+            ),
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide:
+                  BorderSide(width: 1, color: Color.fromRGBO(228, 228, 231, 1)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(width: 1, color: Colors.black),
+            ),
           ),
         ),
       ),

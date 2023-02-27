@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   text: _translation["go_to_login"]!,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Color.fromRGBO(159, 75, 152, 1),
                   ),
                 ),
               ],
@@ -243,25 +243,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
           context.router.replace(RootPageRoute());
         },
+        buttonText: _translation["continue"]!,
+        message: _translation["succes"]!,
       );
     } else if (registerResult == RegisterStatus.EMAIL_EXISTS) {
       toggleIsLoading();
       showPopup(
-          context: context,
-          message: _translation["existing_acc"],
-          type: 'error',
-          onPressed: () {
-            Navigator.pop(context);
-          });
+        context: context,
+        type: 'error',
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        buttonText: _translation["continue"]!,
+        message: _translation["existing_acc"]!,
+      );
     } else {
       toggleIsLoading();
       showPopup(
-          context: context,
-          message: _translation["error"],
-          type: 'error',
-          onPressed: () {
-            Navigator.pop(context);
-          });
+        context: context,
+        type: 'error',
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        message: _translation["error"]!,
+        buttonText: _translation["continue"]!,
+      );
     }
   }
 }

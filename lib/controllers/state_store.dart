@@ -13,6 +13,9 @@ abstract class _StateStoreBase with Store {
   String? selectedLanguage;
 
   @observable
+  bool isLoading = true;
+
+  @observable
   String? newLanguage;
 
   Map<String, String> languages = {

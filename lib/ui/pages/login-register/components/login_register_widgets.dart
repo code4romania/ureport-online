@@ -9,14 +9,22 @@ Widget submitButton({
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(10),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 1,
+          blurRadius: 7,
+          offset: Offset(0, 3), // changes position of shadow
+        ),
+      ],
     ),
     margin: EdgeInsets.only(left: 10),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: type == 'google'
-            ? purpleColor
+            ? Colors.white
             : type == 'facebook'
-                ? Color(0xff3B5998)
+                ? Colors.white
                 : type == 'apple'
                     ? Colors.black
                     : Color.fromRGBO(68, 151, 223, 1),
@@ -35,32 +43,8 @@ Widget submitButton({
                       : type == "facebook"
                           ? 'assets/images/facebook-logo.png'
                           : 'assets/images/apple-logo.png'),
-                  color: Colors.white,
-                  height: 14.0,
+                  height: 18.0,
                 ),
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            child: Text(
-              type == "google"
-                  ? 'Google'
-                  : type == "facebook"
-                      ? 'Facebook'
-                      : type == 'apple'
-                          ? 'Apple'
-                          : type == 'login'
-                              ? 'AUTENTIFICĂ-TE'
-                              : 'CREEAZĂ CONT',
-              style: TextStyle(
-                fontWeight: type == 'login' || type == 'register'
-                    ? FontWeight.w700
-                    : FontWeight.w400,
-                fontSize: type == 'login' || type == 'register' ? 16 : 14,
-                color: type == 'login' || type == 'register'
-                    ? Colors.black
-                    : Colors.white,
-              ),
-            ),
-          ),
         ],
       ),
     ),
@@ -132,32 +116,26 @@ Widget textField({
   );
 }
 
-void showPopup({
-  required BuildContext context,
-  String? type,
-  String? message,
-  required Function() onPressed,
-}) async {
+void showPopup(
+    {required BuildContext context,
+    String? type,
+    required String message,
+    required Function() onPressed,
+    required String buttonText}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         title: const Text('U-Report'),
-        content: message == null
-            ? Text(type == 'register'
-                ? 'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios! '
-                : type == 'pwrecover'
-                    ? "Ai primit pe email modalitatea de resetare a parolei!"
-                    : 'Ai fost autentificat cu succes!')
-            : Text(message),
+        content: Text(message),
         actions: <Widget>[
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromRGBO(68, 151, 223, 1),
             ),
-            child: const Text(
-              'Continuă',
+            child: Text(
+              buttonText,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w700,

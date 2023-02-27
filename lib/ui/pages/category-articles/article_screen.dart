@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
 import 'package:ureport_ecaro/models/story.dart';
@@ -20,12 +21,10 @@ class ArticleScreen extends StatefulWidget {
     Key? key,
     this.storyStore,
     this.storyId,
-    this.subCategory,
     this.storyFull,
   }) : super(key: key);
 
   final StoryStore? storyStore;
-  final String? subCategory;
   final String? storyId;
 
   final StoryItem? storyFull;
@@ -75,17 +74,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
           ? GestureDetector(
               onTap: _scrollToTop,
               child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                ),
-                child: Icon(
-                  Icons.arrow_circle_up,
-                  size: 50,
-                ),
-              ),
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: Image.asset("assets/images/arrow_up_rectangular.png")),
             )
           : SizedBox(),
       body: SafeArea(
@@ -117,19 +112,48 @@ class _ArticleScreenState extends State<ArticleScreen> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+          margin: EdgeInsets.only(left: 20, right: 20),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
-                radius: 4,
-                backgroundColor: Color.fromRGBO(201, 13, 182, 1),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 4,
+                    backgroundColor: Color.fromRGBO(201, 13, 182, 1),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    widget.storyFull!.category!.name!.split('/')[1].trim(),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                widget.storyFull!.category!.name!.split('/')[1].trim(),
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              Row(
+                children: [
+                  Icon(
+                    Icons.bookmark_border_outlined,
+                    color: purpleColor,
+                    size: 30,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Share.share(
+                          shareStoryUrl + "/" + widget.storyFull!.id.toString(),
+                          subject: widget.storyFull!.title.toString());
+                    },
+                    child: Icon(
+                      Icons.share_outlined,
+                      color: purpleColor,
+                      size: 30,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -138,7 +162,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(top: 10, left: 20, right: 20),
           child: Text(
-            widget.subCategory!,
+            widget.storyFull!.title.toString(),
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           ),
         ),
@@ -230,20 +254,49 @@ class _ArticleScreenState extends State<ArticleScreen> {
             return Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+                  margin: EdgeInsets.only(left: 20, right: 20),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
-                        radius: 4,
-                        backgroundColor: Color.fromRGBO(201, 13, 182, 1),
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 4,
+                            backgroundColor: Color.fromRGBO(201, 13, 182, 1),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            story.category!.name!.split('/')[1].trim(),
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        story.category!.name!.split('/')[1].trim(),
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.bookmark_border_outlined,
+                            color: purpleColor,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Share.share(
+                                  shareStoryUrl + "/" + story.id.toString(),
+                                  subject: story.title.toString());
+                            },
+                            child: Icon(
+                              Icons.share_outlined,
+                              color: purpleColor,
+                              size: 30,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -252,7 +305,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: Text(
-                    widget.subCategory!,
+                    story.title.toString(),
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                 ),

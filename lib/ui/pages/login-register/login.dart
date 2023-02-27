@@ -225,31 +225,39 @@ class _LoginScreenState extends State<LoginScreen> {
           SPUtil().setValue("token", "############");
           context.router.replaceAll([RootPageRoute()]);
         },
+        buttonText: _translation["continue"]!,
+        message: _translation["succes"]!,
       );
     } else if (signInResult == LoginStatus.NOT_FOUND) {
       toggleIsLoading();
 
       showPopup(
-          context: context,
-          type: 'error',
-          message: _translation["no_existing_acc"],
-          onPressed: () => Navigator.pop(context));
+        context: context,
+        type: 'error',
+        message: _translation["no_existing_acc"]!,
+        buttonText: _translation["continue"]!,
+        onPressed: () => Navigator.pop(context),
+      );
     } else if (signInResult == LoginStatus.WRONG_DETAILS) {
       toggleIsLoading();
 
       showPopup(
-          context: context,
-          type: 'error',
-          message: _translation["failed_login"]!,
-          onPressed: () => Navigator.pop(context));
+        context: context,
+        type: 'error',
+        message: _translation["failed_login"]!,
+        buttonText: _translation["continue"]!,
+        onPressed: () => Navigator.pop(context),
+      );
     } else {
       toggleIsLoading();
 
       showPopup(
-          context: context,
-          type: 'error',
-          message: _translation["error"],
-          onPressed: () => Navigator.pop(context));
+        context: context,
+        type: 'error',
+        message: _translation["error"]!,
+        buttonText: _translation["continue"]!,
+        onPressed: () => Navigator.pop(context),
+      );
     }
   }
 }

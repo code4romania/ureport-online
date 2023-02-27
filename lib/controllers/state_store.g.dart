@@ -25,6 +25,22 @@ mixin _$StateStore on _StateStoreBase, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: '_StateStoreBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
   late final _$newLanguageAtom =
       Atom(name: '_StateStoreBase.newLanguage', context: context);
 
@@ -61,6 +77,7 @@ mixin _$StateStore on _StateStoreBase, Store {
   String toString() {
     return '''
 selectedLanguage: ${selectedLanguage},
+isLoading: ${isLoading},
 newLanguage: ${newLanguage},
 loggedIn: ${loggedIn}
     ''';

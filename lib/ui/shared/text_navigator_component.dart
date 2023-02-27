@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextNavigatorComponent extends StatelessWidget {
-  const TextNavigatorComponent(
-      {super.key,
-      required this.title,
-      required this.onPressed,
-      required this.rightEdge,
-      this.darkMode});
+  const TextNavigatorComponent({
+    super.key,
+    required this.title,
+    required this.onPressed,
+    required this.rightEdge,
+    this.darkMode,
+  });
 
   final String title;
   final Function() onPressed;
@@ -23,10 +24,11 @@ class TextNavigatorComponent extends StatelessWidget {
           children: [
             rightEdge ? const Spacer() : Container(),
             if (!rightEdge)
-              Icon(
-                Icons.keyboard_double_arrow_left_outlined,
-                color: darkMode != null ? Colors.white : Colors.black,
-              ),
+              Text("< ",
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: darkMode != null ? Colors.white : Colors.black,
+                  )),
             Container(
               child: Text(
                 title.toUpperCase(),

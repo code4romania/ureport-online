@@ -90,6 +90,23 @@ mixin _$StoryStore on _StoryStore, Store {
     });
   }
 
+  late final _$searchCategoryKeywordAtom =
+      Atom(name: '_StoryStore.searchCategoryKeyword', context: context);
+
+  @override
+  String? get searchCategoryKeyword {
+    _$searchCategoryKeywordAtom.reportRead();
+    return super.searchCategoryKeyword;
+  }
+
+  @override
+  set searchCategoryKeyword(String? value) {
+    _$searchCategoryKeywordAtom.reportWrite(value, super.searchCategoryKeyword,
+        () {
+      super.searchCategoryKeyword = value;
+    });
+  }
+
   late final _$_StoryStoreActionController =
       ActionController(name: '_StoryStore', context: context);
 
@@ -127,22 +144,22 @@ mixin _$StoryStore on _StoryStore, Store {
   }
 
   @override
-  void setInitialList(List<Story> stories) {
+  void setInitialStoryList(List<Story> stories) {
     final _$actionInfo = _$_StoryStoreActionController.startAction(
-        name: '_StoryStore.setInitialList');
+        name: '_StoryStore.setInitialStoryList');
     try {
-      return super.setInitialList(stories);
+      return super.setInitialStoryList(stories);
     } finally {
       _$_StoryStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void search(String? keyword) {
-    final _$actionInfo =
-        _$_StoryStoreActionController.startAction(name: '_StoryStore.search');
+  void searchStory(String? keyword) {
+    final _$actionInfo = _$_StoryStoreActionController.startAction(
+        name: '_StoryStore.searchStory');
     try {
-      return super.search(keyword);
+      return super.searchStory(keyword);
     } finally {
       _$_StoryStoreActionController.endAction(_$actionInfo);
     }
@@ -166,7 +183,8 @@ categoryList: ${categoryList},
 story: ${story},
 stories: ${stories},
 recentStories: ${recentStories},
-recentOpinions: ${recentOpinions}
+recentOpinions: ${recentOpinions},
+searchCategoryKeyword: ${searchCategoryKeyword}
     ''';
   }
 }

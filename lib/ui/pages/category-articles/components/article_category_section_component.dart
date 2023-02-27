@@ -38,10 +38,10 @@ class ArticleCategorySectionComponent extends StatelessWidget {
           ],
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(
-            Icons.arrow_circle_right_outlined,
-            size: 100,
-            color: Color.fromRGBO(159, 75, 152, 1),
+          Image.asset(
+            "assets/images/arrow_right_circled.png",
+            width: 100,
+            height: 100,
           ),
           Text(
             "$viewMore $categoryTitle",

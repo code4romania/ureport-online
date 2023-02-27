@@ -19,7 +19,7 @@ import 'package:ureport_ecaro/ui/pages/profile/menu_view.dart';
 import 'package:ureport_ecaro/ui/pages/profile/profile_view.dart';
 import 'package:ureport_ecaro/ui/pages/root_page.dart';
 
-import '../ui/pages/login-register/components/forgot_password.dart';
+import '../ui/pages/login-register/forgot_password.dart';
 
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[

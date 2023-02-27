@@ -7,6 +7,7 @@ import 'package:ureport_ecaro/controllers/story_state.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_category_section_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -32,6 +33,7 @@ class ArticlesCategoryScreen extends StatefulWidget {
 class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
   late StateStore _stateStore;
   late Map<String, String> _translation;
+  final Map<String, List<Result>> map = {};
 
   @override
   void initState() {
@@ -150,8 +152,6 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                         context.router.push(
                                           ArticleScreenRoute(
                                             storyStore: widget.storyStore,
-                                            subCategory:
-                                                map.keys.elementAt(index),
                                             storyId: map.values
                                                 .elementAt(index)
                                                 .first
@@ -169,6 +169,8 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                             .stories!
                                             .first,
                                         categoryName: widget.categoryTitle,
+                                        subCategoryName:
+                                            map.keys.elementAt(index),
                                       ),
                                     ),
                                   ),

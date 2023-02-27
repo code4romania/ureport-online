@@ -27,7 +27,13 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
     return Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Container(
-            child: Image.asset("assets/images/ureport_romania_landscape.png")),
+          width: MediaQuery.of(context).size.width * 0.8,
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(left: 20),
+          child: Image.asset(
+            "assets/images/ureport_romania_landscape.png",
+          ),
+        ),
         SizedBox(
           height: 20,
         ),
@@ -88,8 +94,13 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    margin: const EdgeInsets.only(
+                      top: 40,
+                      left: 40,
+                      right: 40,
+                    ),
                     child: Observer(builder: (context) {
                       return Text(
                         translations[_state.selectedLanguage]![

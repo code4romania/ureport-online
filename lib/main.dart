@@ -79,9 +79,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) => MultiProvider(
         providers: [
-          Provider(
-            create: (context) => _stateStore,
-          ),
+          Provider(create: (context) => _stateStore),
+          Provider(create: (context) => _storyStore),
           ChangeNotifierProvider(create: (context) => ConnectivityController()),
           ChangeNotifierProvider(create: (context) => ChatController()),
           ChangeNotifierProvider(create: (context) => OpinionController()),
@@ -90,10 +89,10 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.pink,
               fontFamily: "Inter",
-              backgroundColor: Colors.white,
               splashColor: purpleColor,
+              colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)
+                  .copyWith(background: Colors.white),
             ),
             routerDelegate: _appRouter.delegate(),
             routeInformationParser: _appRouter.defaultRouteParser(),

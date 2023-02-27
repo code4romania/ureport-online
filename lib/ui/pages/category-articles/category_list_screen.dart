@@ -10,6 +10,7 @@ import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
 import 'package:ureport_ecaro/models/category.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/title_description_widget.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
@@ -63,6 +64,9 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                 color: Colors.grey[600],
               ),
             ),
+            SearchBarWidget(
+                onSearchChanged: (value) =>
+                    _storyStore.searchCategoryKeyword = value),
             SizedBox(
               height: 5,
             ),
@@ -106,7 +110,21 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                       ),
                     );
                   case FutureStatus.fulfilled:
-                    final List<Result> categories = future.result;
+                    List<Result> categories = future.result;
+                    _storyStore.initialCategoryList = future.result;
+
+                    if (_storyStore.searchCategoryKeyword != null &&
+                        _storyStore.searchCategoryKeyword!.isNotEmpty) {
+                      categories = _storyStore.initialCategoryList!
+                          .where((element) => element.name!
+                              .toLowerCase()
+                              .startsWith(_storyStore.searchCategoryKeyword!
+                                  .toLowerCase()))
+                          .toList();
+                    } else {
+                      categories = _storyStore.initialCategoryList!;
+                    }
+
                     final Map<String, List<Result>> map = {};
                     categories.forEach((element) {
                       final String key = element.name!.split('/')[0].trim();

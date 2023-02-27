@@ -26,7 +26,7 @@ import 'package:ureport_ecaro/ui/pages/category-articles/category_list_screen.da
     as _i18;
 import 'package:ureport_ecaro/ui/pages/chat/chat_screen.dart' as _i17;
 import 'package:ureport_ecaro/ui/pages/home/home_screen.dart' as _i19;
-import 'package:ureport_ecaro/ui/pages/login-register/components/forgot_password.dart'
+import 'package:ureport_ecaro/ui/pages/login-register/forgot_password.dart'
     as _i8;
 import 'package:ureport_ecaro/ui/pages/login-register/login.dart' as _i7;
 import 'package:ureport_ecaro/ui/pages/login-register/register.dart' as _i6;
@@ -131,7 +131,6 @@ class AppRouter extends _i21.RootStackRouter {
           key: args.key,
           storyStore: args.storyStore,
           storyId: args.storyId,
-          subCategory: args.subCategory,
           storyFull: args.storyFull,
         ),
         opaque: true,
@@ -450,7 +449,6 @@ class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
     _i22.Key? key,
     _i23.StoryStore? storyStore,
     String? storyId,
-    String? subCategory,
     _i24.StoryItem? storyFull,
   }) : super(
           ArticleScreenRoute.name,
@@ -459,7 +457,6 @@ class ArticleScreenRoute extends _i21.PageRouteInfo<ArticleScreenRouteArgs> {
             key: key,
             storyStore: storyStore,
             storyId: storyId,
-            subCategory: subCategory,
             storyFull: storyFull,
           ),
         );
@@ -472,7 +469,6 @@ class ArticleScreenRouteArgs {
     this.key,
     this.storyStore,
     this.storyId,
-    this.subCategory,
     this.storyFull,
   });
 
@@ -482,13 +478,11 @@ class ArticleScreenRouteArgs {
 
   final String? storyId;
 
-  final String? subCategory;
-
   final _i24.StoryItem? storyFull;
 
   @override
   String toString() {
-    return 'ArticleScreenRouteArgs{key: $key, storyStore: $storyStore, storyId: $storyId, subCategory: $subCategory, storyFull: $storyFull}';
+    return 'ArticleScreenRouteArgs{key: $key, storyStore: $storyStore, storyId: $storyId, storyFull: $storyFull}';
   }
 }
 

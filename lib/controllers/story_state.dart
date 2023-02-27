@@ -11,7 +11,8 @@ class StoryStore = _StoryStore with _$StoryStore;
 
 abstract class _StoryStore with Store {
   final CategoryArticleService httpClient = CategoryArticleService();
-  List<Story>? _initialList;
+  List<Story>? _initialStoryList;
+  List<Result>? initialCategoryList;
 
   @observable
   ObservableFuture<ObservableList<Result>>? categoryList;
@@ -27,6 +28,9 @@ abstract class _StoryStore with Store {
 
   @observable
   ObservableFuture<ObservableList<opinionsarray.Question>>? recentOpinions;
+
+  @observable
+  String? searchCategoryKeyword;
 
   @action
   Future getRecentStories() =>
@@ -46,18 +50,18 @@ abstract class _StoryStore with Store {
       .then((categories) => categories.asObservable()));
 
   @action
-  void setInitialList(List<Story> stories) {
+  void setInitialStoryList(List<Story> stories) {
     this.stories = stories.asObservable();
-    _initialList = stories.asObservable();
+    _initialStoryList = stories.asObservable();
   }
 
   @action
-  void search(String? keyword) {
+  void searchStory(String? keyword) {
     if (keyword == null || keyword.isEmpty) {
-      stories = _initialList!.asObservable();
+      stories = _initialStoryList!.asObservable();
       return;
     } else {
-      stories = _initialList!
+      stories = _initialStoryList!
           .where((story) =>
               story.title!.toLowerCase().startsWith(keyword.toLowerCase()))
           .toList()

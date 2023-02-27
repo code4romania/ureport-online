@@ -43,7 +43,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         translations["${_stateStore.selectedLanguage}"]!["articles_screen"]!;
     super.initState();
 
-    widget.storyStore.setInitialList(widget.stories);
+    widget.storyStore.setInitialStoryList(widget.stories);
   }
 
   @override
@@ -92,7 +92,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                 ),
               ),
               SearchBarWidget(
-                onSearchChanged: widget.storyStore.search,
+                onSearchChanged: widget.storyStore.searchStory,
               ),
               SizedBox(
                 height: 20,
@@ -133,7 +133,6 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                                   storyId: widget.storyStore.stories[index].id
                                       .toString(),
                                   storyStore: widget.storyStore,
-                                  subCategory: widget.subcategoryTitle,
                                 ),
                               );
                             },
@@ -141,6 +140,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                               article: widget.storyStore.stories[index],
                               width: MediaQuery.of(context).size.width,
                               categoryName: widget.categoryTitle,
+                              subCategoryName: widget.subcategoryTitle,
                             ),
                           );
                         });

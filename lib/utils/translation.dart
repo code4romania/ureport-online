@@ -37,6 +37,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "short_pw": "Parola este prea scurta",
       "no_matching_pw": "Parolele nu se potrivesc",
       "existing_acc": "Există deja un cont cu acest email!",
+      "succes":
+          'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios! ',
     },
     "login_screen": {
       "header": "Autentificare",
@@ -53,6 +55,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_existing_acc": "Nu există cont cu acest email",
       "failed_login": "Detaliile introduse nu sunt corecte!",
       "error": "S-a produs o eroare",
+      "succes": "Ai fost autentificat cu succes!",
+      "continue": "Continuă",
     },
     "forgot_password_screen": {
       "header": "Recuperare",
@@ -78,6 +82,9 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "go_to_login": "Autentifică-te",
       "known_account": "Ți-ai amintit parola?",
       "invalid_email": "Email invalid",
+      "back": "Înapoi",
+      "succes": "Parolă a fost schimbată cu succes!",
+      "continue": "Continuă",
     },
     "home_screen": {
       "header": "Acasă",

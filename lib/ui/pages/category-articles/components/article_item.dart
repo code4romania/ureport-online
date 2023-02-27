@@ -12,11 +12,13 @@ class ArticleItemWidget extends StatelessWidget {
     this.articleFull,
     this.width,
     required this.categoryName,
+    required this.subCategoryName,
   }) : super(key: key);
 
   final Story? article;
   final storyFull.StoryItem? articleFull;
   final String categoryName;
+  final String subCategoryName;
   final double? width;
 
   @override
@@ -100,7 +102,7 @@ class ArticleItemWidget extends StatelessWidget {
                 Container(
                   width: widgetWidth - 60,
                   child: Text(
-                    categoryName,
+                    subCategoryName,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                     overflow: TextOverflow.clip,
                   ),

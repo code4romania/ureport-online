@@ -20,3 +20,6 @@ final TextStyle bold16TextStyle = TextStyle(
   fontWeight: FontWeight.w700,
   fontSize: 16,
 );
+
+const String shareStoryUrl = "https://ureport.in/story";
+const String shareOpinionUrl = "https://ureport.in/opinion";
