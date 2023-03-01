@@ -1,252 +1,127 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:ureport_ecaro/data/sp_utils.dart';
-// import 'package:ureport_ecaro/utils/click_sound.dart';
-// import 'package:ureport_ecaro/utils/resources.dart';
-// import 'package:ureport_ecaro/view_model/state_store.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/controllers/app_router.gr.dart';
+import 'package:ureport_ecaro/controllers/state_store.dart';
+import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
+import '../../shared/general_button_component.dart';
+import '../../shared/text_navigator_component.dart';
 
-// class LanguageScreen extends StatefulWidget {
-//   const LanguageScreen({Key? key}) : super(key: key);
+class LanguageScreen extends StatelessWidget {
+  const LanguageScreen({super.key, required this.translations});
+  final Map<String, String> translations;
 
-//   @override
-//   _LanguageScreenState createState() => _LanguageScreenState();
-// }
-
-// class _LanguageScreenState extends State<LanguageScreen> {
-//   var _dropdownValue = "English";
-
-//   late StateStore _state;
-
-//   @override
-//   void initState() {
-//     /*
-//   'English' en,
-//   '中國人' zh,
-//   'Español' es,
-//   'Français' fr,
-//   'Romanian' ro,
-//   'русский' ru,
-//   'Italiano' it,
-//   'عربي' ar,                                       
-//     */
-
-//     _state = context.read<StateStore>();
-
-//     switch (_state.locale?.countryCode) {
-//       case 'en':
-//         _dropdownValue = "English";
-//         break;
-//       case 'ro':
-//         _dropdownValue = "Romanian";
-//         break;
-//       case 'zh':
-//         _dropdownValue = "中國人";
-//         break;
-//       case 'es':
-//         _dropdownValue = "Español";
-//         break;
-//       case 'fr':
-//         _dropdownValue = "Français";
-//         break;
-//       case 'it':
-//         _dropdownValue = "Italiano";
-//         break;
-//       case 'ru':
-//         _dropdownValue = "русский";
-//         break;
-//       case 'ar':
-//         _dropdownValue = "عربي";
-//         break;
-//       default:
-//         _dropdownValue = "English";
-//     }
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: AppColors.mainBgColor,
-//       body: Container(
-//         width: double.infinity,
-//         child: Column(
-//           children: [
-//             Expanded(
-//               flex: 1,
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                 children: [
-//                   Center(
-//                     child: Container(
-//                         margin: EdgeInsets.only(top: 50),
-//                         height: 55,
-//                         width: 170,
-//                         child: Image(
-//                           fit: BoxFit.fill,
-//                           image: AssetImage("assets/images/v2_logo_1.png"),
-//                         )),
-//                   ),
-//                   SizedBox(
-//                     height: 40,
-//                   ),
-//                   Container(
-//                     width: double.infinity,
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         Container(
-//                           child: RichText(
-//                             text: TextSpan(children: [
-//                               TextSpan(
-//                                   text: AppLocalizations.of(context)!.welcome,
-//                                   style: TextStyle(
-//                                       fontSize: 45,
-//                                       fontWeight: FontWeight.w800,
-//                                       color: Colors.black,
-//                                       fontFamily: "Poppins")),
-//                               TextSpan(
-//                                   text:
-//                                       "\n${AppLocalizations.of(context)!.get_started}",
-//                                   style: TextStyle(
-//                                       fontSize: 35,
-//                                       fontWeight: FontWeight.w500,
-//                                       color: Colors.black,
-//                                       fontFamily: "Poppins")),
-//                             ]),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Expanded(
-//               flex: 1,
-//               child: Container(
-//                 width: double.infinity,
-//                 margin: EdgeInsets.only(left: 30, right: 30),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                   children: [
-//                     Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Padding(
-//                           padding: const EdgeInsets.only(left: 5),
-//                           child: Text(
-//                             "${AppLocalizations.of(context)?.select_language ?? "Select language"}",
-//                             style: TextStyle(fontSize: 22),
-//                           ),
-//                         ),
-//                         SizedBox(height: 10),
-//                         Container(
-//                           width: double.infinity,
-//                           child: Card(
-//                             shape: RoundedRectangleBorder(
-//                               side: BorderSide(
-//                                   width: 1.0,
-//                                   style: BorderStyle.solid,
-//                                   color: Colors.white),
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(15.0)),
-//                             ),
-//                             child: Padding(
-//                               padding:
-//                                   const EdgeInsets.only(left: 15.0, right: 15),
-//                               child: DropdownButtonHideUnderline(
-//                                 child: DropdownButton<String>(
-//                                   value: _dropdownValue,
-//                                   iconSize: 24,
-//                                   elevation: 16,
-//                                   style: TextStyle(
-//                                       color: Colors.black,
-//                                       fontWeight: FontWeight.bold),
-//                                   onChanged: (String? newValue) {
-//                                     ClickSound.soundClick();
-
-//                                     _dropdownValue = newValue!;
-//                                     if (_dropdownValue == "English") {
-//                                       _state.setLocale(new Locale('en'));
-//                                     } else if (_dropdownValue == "中國人") {
-//                                       _state.setLocale(new Locale('zh'));
-//                                     } else if (_dropdownValue == "Français") {
-//                                       _state.setLocale(Locale('fr'));
-//                                     } else if (_dropdownValue == "Romanian") {
-//                                       _state.setLocale(Locale('ro'));
-//                                     } else if (_dropdownValue == "русский") {
-//                                       _state.setLocale(Locale('ru'));
-//                                     } else if (_dropdownValue == "Español") {
-//                                       _state.setLocale(Locale('es'));
-//                                     } else if (_dropdownValue == "عربي") {
-//                                       _state.setLocale(Locale('ar'));
-//                                     } else if (_dropdownValue == "Italiano") {
-//                                       _state.setLocale(Locale('it'));
-//                                     } else {
-//                                       _state.setLocale(Locale('en'));
-//                                     }
-//                                     setState(() {});
-//                                   },
-//                                   items: <String>[
-//                                     'English',
-//                                     '中國人',
-//                                     'Español',
-//                                     'Français',
-//                                     'Romanian',
-//                                     'русский',
-//                                     'Italiano',
-//                                     'عربي',
-//                                   ].map<DropdownMenuItem<String>>(
-//                                       (String value) {
-//                                     return DropdownMenuItem<String>(
-//                                       value: value,
-//                                       onTap: () {},
-//                                       child: Text(value),
-//                                     );
-//                                   }).toList(),
-//                                   onTap: () {
-//                                     ClickSound.soundDropdown();
-//                                   },
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                     SizedBox(height: 70),
-//                     Container(
-//                       width: double.infinity,
-//                       height: 40,
-//                       child: Container(
-//                           child: GestureDetector(
-//                         onTap: () {
-//                           ClickSound.soundClick();
-
-//                           SPUtil().setValue(
-//                               "language", _state.locale!.languageCode);
-
-//                           //TODO: GOTO INTRO SCREEN
-//                           // NavUtils.pushAndRemoveUntil(context, IntroScreen());
-//                         },
-//                         child: Center(
-//                           child: Text(
-//                             AppLocalizations.of(context)!.continu,
-//                             style: TextStyle(
-//                                 fontSize: 20,
-//                                 decoration: TextDecoration.underline),
-//                           ),
-//                         ),
-//                       )),
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    final _state = context.read<StateStore>();
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TopHeaderWidget(title: translations["header"]!),
+          TextNavigatorComponent(
+            title: translations["back"]!,
+            onPressed: () => context.router.pop(),
+            rightEdge: false,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              translations["title"]!,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
+            child: Text(
+              translations["body"]!,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              width: MediaQuery.of(context).size.width,
+              child: Text(
+                translations["reset_required"]!,
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              )),
+          Column(
+            children: _state.languages.entries.map((e) {
+              return Observer(
+                builder: ((context) {
+                  return Row(
+                    children: [
+                      Radio(
+                        value: e.key,
+                        groupValue: _state.selectedLanguage,
+                        activeColor: blueColor,
+                        onChanged: (value) {
+                          if (translations[e.key] == null) {
+                            SnackBar snackBar = SnackBar(
+                              content:
+                                  Text("This language is not supported yet"),
+                              duration: Duration(seconds: 2),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            if (_state.selectedLanguage != e.key) {
+                              _state.changeLanguage(e.key);
+                              context.router.replaceAll([RootPageRoute()]);
+                            }
+                          }
+                        },
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            if (translations[e.key] == null) {
+                              SnackBar snackBar = SnackBar(
+                                content:
+                                    Text("This language is not supported yet"),
+                                duration: Duration(seconds: 2),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } else {
+                              if (_state.selectedLanguage != e.key) {
+                                _state.changeLanguage(e.key);
+                                context.router.replaceAll([RootPageRoute()]);
+                              }
+                            }
+                          },
+                          child: Text(e.value)),
+                    ],
+                  );
+                }),
+              );
+            }).toList(),
+          ),
+          Spacer(),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset(
+              "assets/images/unicef_about.png",
+              fit: BoxFit.fill,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

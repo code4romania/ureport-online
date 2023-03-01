@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 part 'state_store.g.dart';
 
@@ -11,6 +12,12 @@ abstract class _StateStoreBase with Store {
 
   @observable
   String? selectedLanguage;
+
+  @action
+  void changeLanguage(String language) {
+    SPUtil().setValue(SPUtil.KEY_USER_LANGUAGE, language);
+    selectedLanguage = language;
+  }
 
   @observable
   bool isLoading = true;

@@ -73,6 +73,20 @@ mixin _$StateStore on _StateStoreBase, Store {
     });
   }
 
+  late final _$_StateStoreBaseActionController =
+      ActionController(name: '_StateStoreBase', context: context);
+
+  @override
+  void changeLanguage(String language) {
+    final _$actionInfo = _$_StateStoreBaseActionController.startAction(
+        name: '_StateStoreBase.changeLanguage');
+    try {
+      return super.changeLanguage(language);
+    } finally {
+      _$_StateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

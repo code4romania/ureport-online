@@ -12,11 +12,14 @@ import 'package:ureport_ecaro/ui/pages/open_app/open_app_screen.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/components/opinion_search.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen_from_search.dart';
-import 'package:ureport_ecaro/ui/pages/profile/about_view.dart';
-import 'package:ureport_ecaro/ui/pages/profile/change_pw_view.dart';
+import 'package:ureport_ecaro/ui/pages/profile/about_screen.dart';
+import 'package:ureport_ecaro/ui/pages/profile/account_screen.dart';
+import 'package:ureport_ecaro/ui/pages/profile/change_pw_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/feedback_screen.dart';
-import 'package:ureport_ecaro/ui/pages/profile/menu_view.dart';
-import 'package:ureport_ecaro/ui/pages/profile/profile_view.dart';
+import 'package:ureport_ecaro/ui/pages/profile/language_screen.dart';
+import 'package:ureport_ecaro/ui/pages/profile/menu_screen.dart';
+import 'package:ureport_ecaro/ui/pages/profile/notification_screen.dart';
+import 'package:ureport_ecaro/ui/pages/profile/profile_screen.dart';
 import 'package:ureport_ecaro/ui/pages/root_page.dart';
 
 import '../ui/pages/login-register/forgot_password.dart';
@@ -34,8 +37,10 @@ import '../ui/pages/login-register/forgot_password.dart';
     // More
 
     AdaptiveRoute(page: AboutScreen),
-    AdaptiveRoute(page: ProfileSettingsScreen),
-    // AdaptiveRoute(page: LanguageScreen),
+    AdaptiveRoute(page: ChangePasswordScreen),
+    AdaptiveRoute(page: NotificationScreen),
+    AdaptiveRoute(page: AccountScreen),
+    AdaptiveRoute(page: LanguageScreen),
     AdaptiveRoute(page: FeedbackScreen),
 
     // Chat

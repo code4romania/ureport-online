@@ -76,7 +76,7 @@ class MedalWidget extends StatelessWidget {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(68, 151, 223, 1),
+            color: Color.fromRGBO(253, 209, 243, 1),
             height: 2,
           )
         ],

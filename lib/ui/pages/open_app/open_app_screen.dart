@@ -57,39 +57,39 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
                     );
                   }),
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: purpleColor,
-                          width: 1,
-                        ),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: purpleColor,
+                        width: 1,
                       ),
-                      child: Column(
-                        children: _state.languages.entries.map((e) {
-                          return Observer(
-                            builder: ((context) {
-                              return Row(
-                                children: [
-                                  Radio(
-                                    value: e.key,
-                                    groupValue: _state.selectedLanguage,
-                                    activeColor: HexColor("#A72D6F"),
-                                    onChanged: (value) {
-                                      _state.selectedLanguage = e.key;
-                                    },
-                                  ),
-                                  GestureDetector(
-                                      onTap: () =>
-                                          _state.selectedLanguage = e.key,
-                                      child: Text(e.value)),
-                                ],
-                              );
-                            }),
-                          );
-                        }).toList(),
-                      ))
+                    ),
+                    child: Column(
+                      children: _state.languages.entries.map((e) {
+                        return Observer(
+                          builder: ((context) {
+                            return Row(
+                              children: [
+                                Radio(
+                                  value: e.key,
+                                  groupValue: _state.selectedLanguage,
+                                  activeColor: HexColor("#A72D6F"),
+                                  onChanged: (value) {
+                                    _state.selectedLanguage = e.key;
+                                  },
+                                ),
+                                GestureDetector(
+                                    onTap: () => _state.changeLanguage(e.key),
+                                    child: Text(e.value)),
+                              ],
+                            );
+                          }),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ],
               ),
               Column(

@@ -52,6 +52,14 @@ class HistoryWidget extends StatelessWidget {
               alignment: Alignment.centerRight,
             ),
           ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          color: Color.fromRGBO(253, 209, 243, 1),
+          height: 2,
         )
       ]),
     );

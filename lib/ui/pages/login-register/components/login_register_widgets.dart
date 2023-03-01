@@ -61,7 +61,7 @@ Widget textField({
 }) {
   return Container(
     padding: EdgeInsets.all(15),
-    margin: EdgeInsets.only(right: 30, left: 30, top: 10),
+    margin: EdgeInsets.only(left: 20, right: 20),
     child: Column(
       children: [
         Container(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../controllers/app_router.gr.dart';
 import '../../controllers/state_store.dart';
@@ -11,15 +12,25 @@ import '../../utils/sp_utils.dart';
 class RootPage extends StatelessWidget {
   RootPage({super.key});
   late StateStore _store;
-  late StoryStore _storyStore;
 
   void setInitialLocal() {
-    String? localeLanguage = SPUtil().getValue("language");
+    String? localeLanguage = SPUtil().getValue(SPUtil.KEY_USER_LANGUAGE);
+
+    print(localeLanguage);
 
     if (localeLanguage == "ro" || localeLanguage.isEmpty) {
+      print("Nu exista limba aleasa, continuam cu Romana");
       _store.selectedLanguage = "ro";
-    } else if (localeLanguage == "ua") {
-      _store.selectedLanguage = "ua";
+      SPUtil().setValue(SPUtil.KEY_USER_LANGUAGE, "ro");
+    } else if (localeLanguage == "uk") {
+      if (translations["uk"] == null) {
+        _store.selectedLanguage = "ro";
+        print("Nu exista traducerea pentru limba ucrainiana");
+        SPUtil().setValue(SPUtil.KEY_USER_LANGUAGE, "ro");
+      } else {
+        _store.selectedLanguage = "uk";
+        SPUtil().setValue(SPUtil.KEY_USER_LANGUAGE, "uk");
+      }
     }
   }
 
@@ -30,7 +41,6 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(context) {
     _store = context.read<StateStore>();
-    _storyStore = StoryStore();
     return FutureBuilder(
       future: splash(),
       builder: (context, snapshot) {
