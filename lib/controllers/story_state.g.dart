@@ -107,6 +107,22 @@ mixin _$StoryStore on _StoryStore, Store {
     });
   }
 
+  late final _$isStoryBookmarkedAtom =
+      Atom(name: '_StoryStore.isStoryBookmarked', context: context);
+
+  @override
+  bool get isStoryBookmarked {
+    _$isStoryBookmarkedAtom.reportRead();
+    return super.isStoryBookmarked;
+  }
+
+  @override
+  set isStoryBookmarked(bool value) {
+    _$isStoryBookmarkedAtom.reportWrite(value, super.isStoryBookmarked, () {
+      super.isStoryBookmarked = value;
+    });
+  }
+
   late final _$_StoryStoreActionController =
       ActionController(name: '_StoryStore', context: context);
 
@@ -184,7 +200,8 @@ story: ${story},
 stories: ${stories},
 recentStories: ${recentStories},
 recentOpinions: ${recentOpinions},
-searchCategoryKeyword: ${searchCategoryKeyword}
+searchCategoryKeyword: ${searchCategoryKeyword},
+isStoryBookmarked: ${isStoryBookmarked}
     ''';
   }
 }

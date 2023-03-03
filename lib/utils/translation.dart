@@ -127,6 +127,11 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "author_unicef": "UNICEF România",
       "date": "Data",
       "opinion": "Opinie",
+      "rating": "Dă un rating acestui articol",
+      "bottom_text1": "Felicitări!\nAi terminat de citit cel de-al ",
+      "bottom_text2":
+          " articol în această categorie. Dă click aici pentru a primi un badge nou!",
+      "claim_badge_button": "Click aici",
     },
     "opinion_screen": {
       "header": "Opinii",

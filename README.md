@@ -9,11 +9,9 @@ This documatation has several pages of information for developers, and people co
 All packages have been updated to the latest version (nov 2022)
 
 ## New features from forked version
-- Romanian language support
-- Custom navigation menu for region Romania
-- Custom onboarding for region Romania
-- Login-Register-Forgot password feature only when region is Romania
-- Updated packages
+- New features
+- New screen
+- Updated
 
   
 ## Current Flutter Version

@@ -10,6 +10,8 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/feedback_component.dart';
+import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -78,7 +80,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Colors.white,
                   ),
                   child: Image.asset("assets/images/arrow_up_rectangular.png")),
             )
@@ -212,6 +213,57 @@ class _ArticleScreenState extends State<ArticleScreen> {
           width: double.infinity,
           child: loadLocalHTML(widget.storyFull!.content!,
               widget.storyFull!.title ?? "", "widget.image", "widget.date"),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 20, bottom: 10),
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 1,
+          color: blueColor,
+        ),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Text(
+            _translation["rating"]!,
+            style: TextStyle(
+              color: blueColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+        ),
+        FeedbackComponent(),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          color: Color.fromRGBO(167, 45, 111, 1),
+          height: 350,
+          width: double.infinity,
+          padding: EdgeInsets.all(20),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(
+              _translation["bottom_text1"]! +
+                  widget.storyFull!.id.toString() +
+                  "-lea" +
+                  _translation["bottom_text2"]!,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            MainAppButtonComponent(
+                color: Colors.white,
+                textStyle: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+                title: _translation["claim_badge_button"]!,
+                onPressed: () {}),
+          ]),
         ),
       ],
     );
@@ -355,6 +407,59 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   width: double.infinity,
                   child: loadLocalHTML(story.content!, story.title ?? "",
                       "widget.image", "widget.date"),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 1,
+                  color: blueColor,
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    _translation["rating"]!,
+                    style: TextStyle(
+                      color: blueColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                FeedbackComponent(),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  color: Color.fromRGBO(167, 45, 111, 1),
+                  height: 350,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _translation["bottom_text1"]! +
+                              story.id.toString() +
+                              "-lea" +
+                              _translation["bottom_text2"]!,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        MainAppButtonComponent(
+                            color: Colors.white,
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                            title: _translation["claim_badge_button"]!,
+                            onPressed: () {}),
+                      ]),
                 ),
               ],
             );

@@ -96,26 +96,38 @@ class RootPage extends StatelessWidget {
                     showSelectedLabels: true,
                     showUnselectedLabels: true,
                     unselectedItemColor: Color.fromRGBO(28, 171, 226, 1),
-                    selectedItemColor: Color.fromRGBO(28, 171, 226, 1),
+                    selectedItemColor: Color.fromRGBO(159, 75, 152, 1),
                     enableFeedback: true,
                     iconSize: 26,
-                    selectedIconTheme: IconThemeData(
-                        color: Color.fromRGBO(28, 171, 226, 1), size: 28),
+                    selectedIconTheme:
+                        IconThemeData(color: Color.fromRGBO(159, 75, 152, 1)),
                     items: [
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_article.png"),
+                        icon: Image.asset("assets/images/icon_article.png",
+                            color: tabsRouter.activeIndex == 0
+                                ? Color.fromRGBO(159, 75, 152, 1)
+                                : Color.fromRGBO(28, 171, 226, 1)),
                         label: 'Articole',
                       ),
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_chat.png"),
+                        icon: Image.asset("assets/images/icon_chat.png",
+                            color: tabsRouter.activeIndex == 1
+                                ? Color.fromRGBO(159, 75, 152, 1)
+                                : Color.fromRGBO(28, 171, 226, 1)),
                         label: 'Chat',
                       ),
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_home.png"),
+                        icon: Image.asset("assets/images/icon_home.png",
+                            color: tabsRouter.activeIndex == 2
+                                ? Color.fromRGBO(159, 75, 152, 1)
+                                : Color.fromRGBO(28, 171, 226, 1)),
                         label: 'Home',
                       ),
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_opinions.png"),
+                        icon: Image.asset("assets/images/icon_opinions.png",
+                            color: tabsRouter.activeIndex == 3
+                                ? Color.fromRGBO(159, 75, 152, 1)
+                                : Color.fromRGBO(28, 171, 226, 1)),
                         label: 'Opinii',
                       ),
                       BottomNavigationBarItem(

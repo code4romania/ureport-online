@@ -53,4 +53,15 @@ class CategoryArticleService {
       return storyLong.StoryLong();
     }
   }
+
+  //   Future<storyLong.StoryLong> getStory(String url) async {
+  //   final response = await http.get(Uri.parse(url));
+  //   if (response.statusCode == 200) {
+  //     final story = storyLong.StoryLong.fromJson(
+  //         jsonDecode(utf8.decode(response.bodyBytes)));
+  //     return story;
+  //   } else {
+  //     return storyLong.StoryLong();
+  //   }
+  // }
 }

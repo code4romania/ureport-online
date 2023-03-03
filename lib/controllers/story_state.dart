@@ -32,6 +32,9 @@ abstract class _StoryStore with Store {
   @observable
   String? searchCategoryKeyword;
 
+  @observable
+  bool isStoryBookmarked = false;
+
   @action
   Future getRecentStories() =>
       recentStories = ObservableFuture(httpClient.getRecentStories(
@@ -71,6 +74,11 @@ abstract class _StoryStore with Store {
 
   @action
   Future fetchStory(String id) => story = ObservableFuture(httpClient
-          .getStory("https://ureport.heroesof.tech/api/v1/stories/$id"))
-      .then((story) => story);
+              .getStory("https://ureport.heroesof.tech/api/v1/stories/$id"))
+          .then(
+        (story) {
+          //   httpClient.getBookmarkStatus("https://ureport.heroesof.tech/api/v1/storybookmarks/story/${story.id}");
+          return story;
+        },
+      );
 }
