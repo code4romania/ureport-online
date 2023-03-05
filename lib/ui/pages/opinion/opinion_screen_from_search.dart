@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ureport_ecaro/models/response-opinion-localdb.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/components/statistics_header.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 
 import '../../../../models/response_opinions.dart' as questionArray;
 import '../../../controllers/opinion_controller.dart';
@@ -235,20 +236,20 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
                                   : Container(
                                       height: 60,
                                       width: 60,
-                                      child: CircularProgressIndicator(),
+                                      child: LoadingIndicatorComponent(),
                                     );
                             } else {
                               return Container(
                                 height: 60,
                                 width: 60,
-                                child: CircularProgressIndicator(),
+                                child: LoadingIndicatorComponent(),
                               );
                             }
                           } else {
                             return Container(
                               height: 60,
                               width: 60,
-                              child: CircularProgressIndicator(),
+                              child: LoadingIndicatorComponent(),
                             );
                           }
                         }),

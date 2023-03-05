@@ -118,7 +118,6 @@ Widget textField({
 
 void showPopup(
     {required BuildContext context,
-    String? type,
     required String message,
     required Function() onPressed,
     required String buttonText}) async {

@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
-
+import 'package:ureport_ecaro/ui/shared/dotted_line_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import '../../../../controllers/app_router.gr.dart';
 import '../../../../controllers/opinion_controller.dart';
 import '../../../../controllers/state_store.dart';
@@ -116,7 +116,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
                               : !provider.noResultFound
                                   ? Container(
                                       child: Center(
-                                          child: CircularProgressIndicator()))
+                                          child: LoadingIndicatorComponent()))
                                   : Column(
                                       children: [
                                         Container(
@@ -268,10 +268,17 @@ class _OpinionSearchState extends State<OpinionSearch> {
             )),
         Container(
           margin: EdgeInsets.only(left: 17, right: 17),
-          child: DottedLine(
+          child: DottedLineComponent(
+            totalWidth: MediaQuery.of(context).size.width * 0.8,
+            dashWidth: 10,
+            dashHeight: 2,
+            emptyWidth: 5,
             dashColor: purpleColor,
-            dashLength: 2,
           ),
+          // child: DottedLine(
+          //   dashColor: purpleColor,
+          //   dashLength: 2,
+          // ),
         )
       ],
     );

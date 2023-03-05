@@ -5,11 +5,11 @@ import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../../utils/enums.dart';
-import 'package:validators/validators.dart' as validator;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -138,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _isLoading
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
+                child: LoadingIndicatorComponent(),
               )
             : MainAppButtonComponent(
                 title: _translation["submit"]!,
@@ -192,7 +192,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
 
-    if (!validator.isEmail(_emailController.text)) {
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(_emailController.text);
+
+    if (!emailValid) {
       setState(() {
         _emailError = _translation["invalid_email"];
       });
@@ -236,10 +240,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       showPopup(
         context: context,
-        type: 'register',
         onPressed: () {
-          //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
-          SPUtil().setValue("token", "############");
+          SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, "############");
 
           context.router.replace(RootPageRoute());
         },
@@ -250,7 +252,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       toggleIsLoading();
       showPopup(
         context: context,
-        type: 'error',
         onPressed: () {
           Navigator.pop(context);
         },
@@ -261,7 +262,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       toggleIsLoading();
       showPopup(
         context: context,
-        type: 'error',
         onPressed: () {
           Navigator.pop(context);
         },

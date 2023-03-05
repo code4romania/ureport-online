@@ -1,14 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
+import 'package:ureport_ecaro/controllers/login_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
-import 'package:validators/validators.dart' as validator;
 import '../../../utils/constants.dart';
 import '../../../utils/enums.dart';
 
@@ -20,21 +23,59 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwdController = TextEditingController();
-  var _emailError;
-  var _passwordError;
-
   late StateStore _stateStore;
+  late LoginStore _loginStore;
   late Map<String, String> _translation;
-
-  bool _isLoading = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwdController.dispose();
+    _loginStore.dispose();
+
     super.dispose();
+  }
+
+  void handleLogin(LoginStatus? status) {
+    if (status != null) {
+      switch (status) {
+        case LoginStatus.SUCCESS:
+          {
+            showPopup(
+              context: context,
+              onPressed: () {
+                context.router.replaceAll([RootPageRoute()]);
+              },
+              buttonText: _translation["continue"]!,
+              message: _translation["succes"]!,
+            );
+            break;
+          }
+
+        case LoginStatus.NOT_FOUND:
+          showPopup(
+            context: context,
+            message: _translation["no_existing_acc"]!,
+            buttonText: _translation["continue"]!,
+            onPressed: () => Navigator.pop(context),
+          );
+          break;
+        case LoginStatus.WRONG_DETAILS:
+          showPopup(
+            context: context,
+            message: _translation["failed_login"]!,
+            buttonText: _translation["continue"]!,
+            onPressed: () => Navigator.pop(context),
+          );
+          break;
+        case LoginStatus.ERROR:
+          showPopup(
+            context: context,
+            message: _translation["error"]!,
+            buttonText: _translation["continue"]!,
+            onPressed: () => Navigator.pop(context),
+          );
+          break;
+      }
+    }
   }
 
   @override
@@ -42,6 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _stateStore = context.read<StateStore>();
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["login_screen"]!;
+    _loginStore = LoginStore(_translation);
+
     super.initState();
   }
 
@@ -86,31 +129,39 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        textField(
-          label: _translation["email"]!,
-          textInputAction: TextInputAction.next,
-          obscureText: false,
-          keyboardType: TextInputType.emailAddress,
-          controller: _emailController,
-          errorText: _emailError,
-        ),
-        textField(
-          label: _translation["password"]!,
-          textInputAction: TextInputAction.done,
-          obscureText: true,
-          keyboardType: TextInputType.visiblePassword,
-          controller: _passwdController,
-          errorText: _passwordError,
-        ),
-        _isLoading
-            ? Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
-              )
-            : MainAppButtonComponent(
-                title: _translation["submit"]!,
-                onPressed: () async => await login(),
-              ),
+        Observer(builder: (context) {
+          return textField(
+            label: _translation["email"]!,
+            textInputAction: TextInputAction.next,
+            obscureText: false,
+            keyboardType: TextInputType.emailAddress,
+            controller: _loginStore.emailController,
+            errorText: _loginStore.emailError,
+          );
+        }),
+        Observer(builder: (context) {
+          return textField(
+            label: _translation["password"]!,
+            textInputAction: TextInputAction.done,
+            obscureText: true,
+            keyboardType: TextInputType.visiblePassword,
+            controller: _loginStore.passwdController,
+            errorText: _loginStore.passwordError,
+          );
+        }),
+        Observer(builder: (context) {
+          return _loginStore.isLoading
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: LoadingIndicatorComponent(),
+                )
+              : MainAppButtonComponent(
+                  title: _translation["submit"]!,
+                  onPressed: () {
+                    _loginStore.login().then((status) => handleLogin(status));
+                  },
+                );
+        }),
         SizedBox(
           height: 10,
         ),
@@ -177,87 +228,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ]),
     )));
-  }
-
-  void toggleIsLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
-
-  Future<void> login() async {
-    if (!validator.isEmail(_emailController.text)) {
-      setState(() {
-        _emailError = _translation['invalid_email']!;
-      });
-      return;
-    } else {
-      setState(() {
-        _emailError = null;
-      });
-    }
-
-    if (_passwdController.text.length < 6) {
-      setState(() {
-        _passwordError = _translation['short_pw']!;
-      });
-      return;
-    } else {
-      setState(() {
-        _passwordError = null;
-      });
-    }
-    toggleIsLoading();
-
-    final signInResult = LoginStatus.SUCCESS; //await FirebaseApis().signIn(
-    //   email: _emailController.text,
-    //   password: _passwdController.text,
-    // );
-
-    if (signInResult == LoginStatus.SUCCESS) {
-      toggleIsLoading();
-
-      showPopup(
-        context: context,
-        type: 'login',
-        onPressed: () {
-          //TODO: GET TOKEN FROM REMOTE AND SET TO STORAGE
-          SPUtil().setValue("token", "############");
-          context.router.replaceAll([RootPageRoute()]);
-        },
-        buttonText: _translation["continue"]!,
-        message: _translation["succes"]!,
-      );
-    } else if (signInResult == LoginStatus.NOT_FOUND) {
-      toggleIsLoading();
-
-      showPopup(
-        context: context,
-        type: 'error',
-        message: _translation["no_existing_acc"]!,
-        buttonText: _translation["continue"]!,
-        onPressed: () => Navigator.pop(context),
-      );
-    } else if (signInResult == LoginStatus.WRONG_DETAILS) {
-      toggleIsLoading();
-
-      showPopup(
-        context: context,
-        type: 'error',
-        message: _translation["failed_login"]!,
-        buttonText: _translation["continue"]!,
-        onPressed: () => Navigator.pop(context),
-      );
-    } else {
-      toggleIsLoading();
-
-      showPopup(
-        context: context,
-        type: 'error',
-        message: _translation["error"]!,
-        buttonText: _translation["continue"]!,
-        onPressed: () => Navigator.pop(context),
-      );
-    }
   }
 }

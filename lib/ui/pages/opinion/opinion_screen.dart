@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import '../../../controllers/app_router.gr.dart';
 import '../../../controllers/state_store.dart';
 import '../../../models/response-opinion-localdb.dart';
@@ -195,20 +196,19 @@ class _OpinionState extends State<Opinion> {
                               : Container(
                                   height: 60,
                                   width: 60,
-                                  child: CircularProgressIndicator(),
-                                );
+                                  child: LoadingIndicatorComponent());
                         } else {
                           return Container(
                             height: 60,
                             width: 60,
-                            child: CircularProgressIndicator(),
+                            child: LoadingIndicatorComponent(),
                           );
                         }
                       } else {
                         return Container(
                           height: 60,
                           width: 60,
-                          child: CircularProgressIndicator(),
+                          child: LoadingIndicatorComponent(),
                         );
                       }
                     }),

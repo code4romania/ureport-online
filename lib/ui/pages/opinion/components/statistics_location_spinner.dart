@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/opinion_controller.dart';
 import 'package:ureport_ecaro/models/response_opinions.dart';
+import 'package:ureport_ecaro/ui/pages/opinion/components/custom_linear_indicator.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import '../../../../locator/locator.dart';
 import '../../../../services/click_sound_service.dart';
@@ -96,23 +96,10 @@ class _StatisticsLocationSpinnerState extends State<StatisticsLocationSpinner> {
                       flex: 6,
                       child: Container(
                         margin: EdgeInsets.only(bottom: 5),
-                        child: LinearPercentIndicator(
-                          animation: false,
-                          lineHeight: 28.0,
-                          backgroundColor: Colors.white,
+                        child: CustomLinearIndicator(
                           percent: set != 0 ? count / set : 0.0,
-                          center: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                      "${location.categories[index].label}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600))),
-                            ],
-                          ),
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: color,
+                          color: color,
+                          label: "${location.categories[index].label}",
                         ),
                       ),
                     ),

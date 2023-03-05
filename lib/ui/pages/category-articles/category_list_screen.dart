@@ -13,6 +13,7 @@ import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/title_description_widget.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
@@ -88,7 +89,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                 switch (future.status) {
                   case FutureStatus.pending:
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: LoadingIndicatorComponent(),
                     );
                   case FutureStatus.rejected:
                     return Center(
@@ -227,7 +228,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                     child: Container(
                       height: 60,
                       width: 60,
-                      child: CircularProgressIndicator(),
+                      child: LoadingIndicatorComponent(),
                     ),
                   ),
                 ],
@@ -236,7 +237,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                 child: Container(
                   height: 50,
                   width: 50,
-                  child: CircularProgressIndicator(),
+                  child: LoadingIndicatorComponent(),
                 ),
               ),
             ),

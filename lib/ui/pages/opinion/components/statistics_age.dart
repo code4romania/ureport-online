@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:ureport_ecaro/ui/pages/opinion/components/custom_linear_indicator.dart';
 import '../../../../models/response_opinions.dart' as questionArray;
 
 class StatisticsAge {
@@ -36,7 +36,15 @@ class StatisticsAge {
                           flex: 6,
                           child: Container(
                             margin: EdgeInsets.only(bottom: 5),
-                            child: LinearPercentIndicator(
+                            child: CustomLinearIndicator(
+                              percent: set != 0 ? count / set : 0.0,
+                              color: color,
+                              label:
+                                  "${question.resultsByAge[index1].categories[index].label}",
+                            ),
+                            /*
+
+LinearPercentIndicator(
                               animation: false,
                               lineHeight: 28.0,
                               backgroundColor: Colors.white,
@@ -54,6 +62,25 @@ class StatisticsAge {
                               linearStrokeCap: LinearStrokeCap.roundAll,
                               progressColor: color,
                             ),
+                            */
+                            // child: LinearProgressIndicator(
+
+                            //   minHeight: 28.0,
+                            //   backgroundColor: Colors.white,
+                            //   value: set != 0 ? count / set : 0.0,
+                            //   center: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       Expanded(
+                            //           child: Text(
+                            //               "${question.resultsByAge[index1].categories[index].label}",
+                            //               style: TextStyle(
+                            //                   fontWeight: FontWeight.w600))),
+                            //     ],
+                            //   ),
+                            //   linearStrokeCap: LinearStrokeCap.roundAll,
+                            //   color: color,
+                            // ),
                           ),
                         ),
                         Expanded(

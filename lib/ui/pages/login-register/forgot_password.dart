@@ -9,7 +9,6 @@ import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
-import 'package:validators/validators.dart' as validator;
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -289,7 +288,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Future<void> sendCode() async {
-    if (!validator.isEmail(_emailController.text)) {
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(_emailController.text);
+
+    if (!emailValid) {
       setState(() {
         _emailError = _translation["invalid_email"]!;
       });
@@ -337,7 +340,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     showPopup(
       context: context,
-      type: 'pwrecover',
       onPressed: () => context.router.replace(LoginScreenRoute()),
       message: _translation["succes"]!,
       buttonText: _translation["continue"]!,

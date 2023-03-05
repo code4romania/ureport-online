@@ -3,8 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
@@ -55,15 +53,6 @@ class _ChatState extends State<Chat> {
 
     Provider.of<ChatController>(context, listen: false).startMonitoring();
     myFocusNode = FocusNode();
-    KeyboardVisibilityController().onChange.listen((event) {
-      setState(() {
-        isKeyboardOpen = event;
-        if (isKeyboardOpen == true) {
-          Provider.of<ChatController>(context, listen: false).isExpanded =
-              false;
-        }
-      });
-    });
 
     if (Provider.of<ChatController>(context, listen: false).isLoaded) {
       Provider.of<ChatController>(context, listen: false)
@@ -841,10 +830,11 @@ class _ChatState extends State<Chat> {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Lottie.asset(
-                                        'assets/local-json/chatloading.json',
-                                        height: 20,
-                                        width: 40),
+                                    Image.asset(
+                                      'assets/gifs/chat_loading.gif',
+                                      height: 20,
+                                      width: 40,
+                                    ),
                                   ],
                                 )
                               : SizedBox(),

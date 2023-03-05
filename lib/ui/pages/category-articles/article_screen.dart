@@ -12,6 +12,7 @@ import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/feedback_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -283,7 +284,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
         switch (future.status) {
           case FutureStatus.pending:
             return Center(
-              child: CircularProgressIndicator(),
+              child: LoadingIndicatorComponent(),
             );
           case FutureStatus.rejected:
             return Center(
@@ -469,41 +470,28 @@ class _ArticleScreenState extends State<ArticleScreen> {
   }
 
   loadLocalHTML(String content, String title, String image, String date) {
-    return content == ""
-        ? Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.6,
-            margin: EdgeInsets.only(top: 30),
-            child: Column(
-              children: [
-                CircularProgressIndicator(),
-              ],
-            ),
-          )
-        : Container(
-            width: MediaQuery.of(context).size.width,
-            height: webViewHeight,
-            child: WebViewPlus(
-              onWebViewCreated: (controller) {
-                webViewController = controller;
-                controller.webViewController.clearCache();
-                // loadData();
-                loadDataRaw(content, title, image, date);
-              },
-              onPageFinished: (url) {
-                webViewController.webViewController
-                    .evaluateJavascript("document.body.scrollHeight")
-                    .then((value) {
-                  setState(() {
-                    webViewHeight = double.parse(value);
-                  });
-                });
-                content = content.replaceAll("\"", "\'");
-                content = content.replaceAll("\\", "");
-              },
-              javascriptMode: JavascriptMode.unrestricted,
-            ),
-          );
+    return Container(
+      height: webViewHeight,
+      child: WebViewPlus(
+        onWebViewCreated: (controller) {
+          webViewController = controller;
+          controller.webViewController.clearCache();
+          loadDataRaw(content, title, image, date);
+        },
+        onPageFinished: (url) {
+          webViewController.webViewController
+              .evaluateJavascript("document.body.scrollHeight")
+              .then((value) {
+            setState(() {
+              webViewHeight = double.parse(value);
+            });
+          });
+          content = content.replaceAll("\"", "\'");
+          content = content.replaceAll("\\", "");
+        },
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
+    );
   }
 
   loadDataRaw(String content, String title, String image, String date) {

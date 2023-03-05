@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-
+import 'package:ureport_ecaro/ui/pages/opinion/components/custom_linear_indicator.dart';
 import '../../../../models/response_opinions.dart' as questionArray;
 
 class StatisticsAll {
@@ -19,24 +18,10 @@ class StatisticsAll {
                   margin: EdgeInsets.only(top: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    child: LinearPercentIndicator(
-                      animation: false,
-                      lineHeight: 28.0,
-                      backgroundColor: Colors.white,
+                    child: CustomLinearIndicator(
                       percent: question.results.categories[index].count / set,
-                      center: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                              child: Text(
-                            "${question.results.categories[index].label}",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                          )),
-                        ],
-                      ),
-                      linearStrokeCap: LinearStrokeCap.round,
-                      progressColor: color,
+                      color: color,
+                      label: "${question.results.categories[index].label}",
                     ),
                   ),
                 ),

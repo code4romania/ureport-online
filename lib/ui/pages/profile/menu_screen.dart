@@ -151,6 +151,7 @@ class _MenuScreenState extends State<MenuScreen> {
           title,
           style: TextStyle(
             fontSize: 26,
+            color: Colors.white,
             fontWeight: FontWeight.w700,
           ),
         ),

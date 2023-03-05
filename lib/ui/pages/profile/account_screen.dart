@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
@@ -6,6 +9,8 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/snackbar_controller.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../shared/general_button_component.dart';
 import '../../shared/text_navigator_component.dart';
@@ -22,6 +27,8 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   late StateStore _state;
   late Map<String, String> _translation;
+  String? localProfilePic;
+  String? remoteprofilePic;
 
   final TextEditingController usernameController = TextEditingController();
 
@@ -33,6 +40,9 @@ class _AccountScreenState extends State<AccountScreen> {
         translations["${_state.selectedLanguage}"]!["account_screen"]!;
 
     super.initState();
+
+    remoteprofilePic =
+        "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg";
   }
 
   @override
@@ -85,6 +95,7 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: EdgeInsets.all(15),
               margin: EdgeInsets.only(left: 20, right: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: EdgeInsets.only(bottom: 5),
@@ -98,52 +109,85 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5),
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      bottom: 20,
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "avatar.png",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: blueColor,
-                            ),
-                            child: Text(
-                              _translation["upload"]!,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    height: 150,
+                    width: 150,
+                    child: localProfilePic != null
+                        ? Image.file(
+                            File(localProfilePic!),
+                            fit: BoxFit.cover,
+                          )
+                        : remoteprofilePic != null
+                            ? Image.network(
+                                remoteprofilePic!,
+                                fit: BoxFit.cover,
+                              )
+                            : Container(),
                   ),
                   Container(
-                    width: double.infinity,
-                    alignment: Alignment.centerRight,
                     child: Text(
                       _translation["size"]!,
                     ),
-                  )
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      try {
+                        FilePickerResult? result = await FilePicker.platform
+                            .pickFiles(
+                                type: FileType.image,
+                                allowMultiple: false,
+                                allowCompression: true);
+
+                        if (result != null) {
+                          if (result.files.single.size > 6000000) {
+                            SnackbarController(
+                                    context: context,
+                                    message:
+                                        "File size should be less than 6MB")
+                                .show();
+                            return;
+                          }
+
+                          setState(() {
+                            localProfilePic = result.files.single.path!;
+                          });
+                        } else {}
+                      } on Exception catch (e) {
+                        SnackbarController(context: context, message: "Error")
+                            .show();
+                      } catch (e) {
+                        SnackbarController(context: context, message: "Error")
+                            .show();
+                      }
+                    },
+                    child: Container(
+                      width: 170,
+                      height: 40,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      margin: EdgeInsets.only(
+                        top: 10,
+                      ),
+                      child: Row(children: [
+                        Icon(Icons.upload),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          _translation["upload"]!,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ]),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -251,28 +295,34 @@ class _AccountScreenState extends State<AccountScreen> {
                 SizedBox(
                   height: 5,
                 ),
-                Container(
-                  width: 170,
-                  height: 40,
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Row(children: [
-                    Icon(Icons.delete_outline_sharp, color: Colors.red),
-                    SizedBox(
-                      width: 10,
+                GestureDetector(
+                  onTap: () {
+                    SPUtil().deleteKey(SPUtil.KEY_AUTH_TOKEN);
+                    context.router.replaceAll([RootPageRoute()]);
+                  },
+                  child: Container(
+                    width: 170,
+                    height: 40,
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                    Text(
-                      _translation["delete_account_button"]!,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.w700,
+                    child: Row(children: [
+                      Icon(Icons.delete_outline_sharp, color: Colors.red),
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ]),
+                      Text(
+                        _translation["delete_account_button"]!,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ]),
+                  ),
                 ),
               ],
             ),

@@ -54,7 +54,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "short_pw": "Parola este prea scurta",
       "no_existing_acc": "Nu există cont cu acest email",
       "failed_login": "Detaliile introduse nu sunt corecte!",
-      "error": "S-a produs o eroare",
+      "error":
+          "S-a produs o eroare. Verificați detaliile introduse și încercați din nou!",
       "succes": "Ai fost autentificat cu succes!",
       "continue": "Continuă",
     },

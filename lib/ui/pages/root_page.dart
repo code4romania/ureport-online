@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../controllers/app_router.gr.dart';
@@ -35,7 +36,7 @@ class RootPage extends StatelessWidget {
   }
 
   Future<void> splash() async {
-    // return Future.delayed(Duration(seconds: 3));
+    return Future.delayed(Duration(seconds: 2));
   }
 
   @override
@@ -63,15 +64,12 @@ class RootPage extends StatelessWidget {
                     Image.asset(
                       "assets/images/logo_ureport_3.png",
                     ),
-                    CircularProgressIndicator(
-                      color: Color.fromRGBO(28, 171, 226, 1),
-                    ),
                   ]),
             ),
           );
         } else {
           setInitialLocal();
-          String? token = SPUtil().getValue("token");
+          String? token = SPUtil().getValue(SPUtil.KEY_AUTH_TOKEN);
 
           if (token.isEmpty) {
             context.router.replaceAll([OpenAppScreenRoute()]);

@@ -11,6 +11,7 @@ import 'package:ureport_ecaro/ui/pages/home/components/quiz_component.dart';
 import 'package:ureport_ecaro/ui/pages/home/components/recent_opinions_component.dart';
 import 'package:ureport_ecaro/ui/pages/home/components/recent_stories_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../../utils/constants.dart';
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   switch (futureStories.status) {
                     case FutureStatus.pending:
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingIndicatorComponent(),
                       );
                     case FutureStatus.rejected:
                       return Center(
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   switch (futureOpinions.status) {
                     case FutureStatus.pending:
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingIndicatorComponent(),
                       );
                     case FutureStatus.rejected:
                       return Center(
