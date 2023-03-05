@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
 
 class TextNavigatorComponent extends StatelessWidget {
   const TextNavigatorComponent({
@@ -17,7 +18,10 @@ class TextNavigatorComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: () {
+        ClickSound.soundClick();
+        onPressed();
+      },
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(

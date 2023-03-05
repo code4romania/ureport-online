@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
@@ -90,7 +91,10 @@ class RootPage extends StatelessWidget {
                   ),
                   child: BottomNavigationBar(
                     currentIndex: tabsRouter.activeIndex,
-                    onTap: tabsRouter.setActiveIndex,
+                    onTap: (index) {
+                      ClickSound.soundClick();
+                      tabsRouter.setActiveIndex(index);
+                    },
                     showSelectedLabels: true,
                     showUnselectedLabels: true,
                     unselectedItemColor: Color.fromRGBO(28, 171, 226, 1),

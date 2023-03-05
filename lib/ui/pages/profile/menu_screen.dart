@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../controllers/app_router.gr.dart';
@@ -137,7 +138,10 @@ class _MenuScreenState extends State<MenuScreen> {
   */
   Widget menuItem(BuildContext context, String title, VoidCallback onTap) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        ClickSound.soundClick();
+        onTap();
+      },
       child: Container(
         margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
         width: MediaQuery.of(context).size.width * 0.9,

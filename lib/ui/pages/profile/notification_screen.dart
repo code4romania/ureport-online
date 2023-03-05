@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
@@ -19,12 +20,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  bool _notificationsActive = false;
+  late bool _notificationsActive;
+  late bool _soundClickActive;
 
   @override
   void initState() {
     _notificationsActive =
         SPUtil().getValue(SPUtil.KEY_USER_NOTIFICATIONS) == "true";
+    _soundClickActive = SPUtil().getValue(SPUtil.SOUND) == "true";
     super.initState();
   }
 
@@ -103,9 +106,58 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     activeColor: Color.fromRGBO(159, 75, 152, 1),
                     onChanged: (value) {
                       setState(() {
+                        ClickSound.soundDropdown();
                         _notificationsActive = value;
                         SPUtil().setValue(
                             SPUtil.KEY_USER_NOTIFICATIONS, value.toString());
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ]),
+          ),
+          Container(
+            height: 90,
+            margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: blueColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(widget.translations["sound"]!,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.volume_down,
+                        size: 28,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "On/Off",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  CupertinoSwitch(
+                    value: _soundClickActive,
+                    activeColor: Color.fromRGBO(159, 75, 152, 1),
+                    onChanged: (value) {
+                      ClickSound.soundDropdown();
+                      setState(() {
+                        _soundClickActive = value;
+                        SPUtil().setValue(SPUtil.SOUND, value.toString());
                       });
                     },
                   ),

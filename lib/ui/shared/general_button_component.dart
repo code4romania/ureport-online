@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
 import '../../utils/constants.dart';
 
 class MainAppButtonComponent extends StatelessWidget {
@@ -20,7 +21,10 @@ class MainAppButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: () {
+        ClickSound.soundClick();
+        onPressed();
+      },
       child: Container(
         margin: EdgeInsets.only(
           top: 20,

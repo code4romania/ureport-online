@@ -243,6 +243,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "back": "Înapoi",
       "body": "Salvează-ți preferințele pentru notificări",
       "mobile": "Notificări pe mobil",
+      "sound": "Feedback sonor",
     },
     "profile_screen": {
       "header": "Profilul tău",

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,7 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/story_state.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
-import 'package:ureport_ecaro/ui/pages/category-articles/components/feedback_component.dart';
-import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/finish_reading_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
@@ -43,8 +43,25 @@ class _ArticleScreenState extends State<ArticleScreen> {
   late ScrollController _scrollController;
   late Map<String, String> _translation;
 
+  late Timer _timer;
+
   double webViewHeight = 0;
   bool _showScrollToTop = true;
+
+  bool canFinishReading = false;
+  bool timerFinished = false;
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      if (timerFinished) {
+        setState(() {
+          canFinishReading = true;
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -53,10 +70,17 @@ class _ArticleScreenState extends State<ArticleScreen> {
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["article_screen"]!;
 
-    super.initState();
+    _timer = Timer(const Duration(seconds: 10), () {
+      print("finished");
+      timerFinished = true;
+    });
 
     if (widget.storyStore != null)
       widget.storyStore!.fetchStory(widget.storyId!);
+
+    _scrollController.addListener(_scrollListener);
+
+    super.initState();
   }
 
   void _scrollToTop() {
@@ -67,6 +91,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   void dispose() {
     _scrollController.dispose(); // dispose the controller
+    _timer.cancel();
     super.dispose();
   }
 
@@ -215,57 +240,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
           child: loadLocalHTML(widget.storyFull!.content!,
               widget.storyFull!.title ?? "", "widget.image", "widget.date"),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 20, bottom: 10),
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: 1,
-          color: blueColor,
-        ),
-        Container(
-          margin: EdgeInsets.only(bottom: 20),
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: Text(
-            _translation["rating"]!,
-            style: TextStyle(
-              color: blueColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ),
-        FeedbackComponent(),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          color: Color.fromRGBO(167, 45, 111, 1),
-          height: 350,
-          width: double.infinity,
-          padding: EdgeInsets.all(20),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(
-              _translation["bottom_text1"]! +
-                  widget.storyFull!.id.toString() +
-                  "-lea" +
-                  _translation["bottom_text2"]!,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            MainAppButtonComponent(
-                color: Colors.white,
-                textStyle: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
-                title: _translation["claim_badge_button"]!,
-                onPressed: () {}),
-          ]),
-        ),
+        canFinishReading
+            ? FinishReadingComponent(
+                translation: _translation,
+                storyId: widget.storyFull!.id.toString(),
+              )
+            : SizedBox()
       ],
     );
   }
@@ -409,59 +389,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   child: loadLocalHTML(story.content!, story.title ?? "",
                       "widget.image", "widget.date"),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 10),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 1,
-                  color: blueColor,
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Text(
-                    _translation["rating"]!,
-                    style: TextStyle(
-                      color: blueColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                FeedbackComponent(),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  color: Color.fromRGBO(167, 45, 111, 1),
-                  height: 350,
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          _translation["bottom_text1"]! +
-                              story.id.toString() +
-                              "-lea" +
-                              _translation["bottom_text2"]!,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        MainAppButtonComponent(
-                            color: Colors.white,
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
-                            title: _translation["claim_badge_button"]!,
-                            onPressed: () {}),
-                      ]),
-                ),
+                canFinishReading
+                    ? FinishReadingComponent(
+                        translation: _translation,
+                        storyId: story.id.toString(),
+                      )
+                    : SizedBox()
               ],
             );
         }
