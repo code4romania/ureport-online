@@ -96,10 +96,13 @@ class _StatisticsLocationSpinnerState extends State<StatisticsLocationSpinner> {
                       flex: 6,
                       child: Container(
                         margin: EdgeInsets.only(bottom: 5),
-                        child: CustomLinearIndicator(
-                          percent: set != 0 ? count / set : 0.0,
-                          color: color,
-                          label: "${location.categories[index].label}",
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: CustomLinearIndicator(
+                            percent: set != 0 ? count / set : 0.0,
+                            color: color,
+                            label: "${location.categories[index].label}",
+                          ),
                         ),
                       ),
                     ),

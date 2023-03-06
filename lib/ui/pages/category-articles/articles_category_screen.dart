@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
-import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_category_section_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
@@ -18,7 +18,7 @@ import '../../../utils/constants.dart';
 class ArticlesCategoryScreen extends StatefulWidget {
   final List<Result> result;
   final String categoryTitle;
-  final StoryStore storyStore;
+  final CategoryStories storyStore;
 
   ArticlesCategoryScreen({
     super.key,
@@ -176,7 +176,6 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
 
                                       context.router.push(
                                         ArticleScreenRoute(
-                                          storyStore: widget.storyStore,
                                           storyId: mapOfItems.values
                                               .elementAt(index)
                                               .first
@@ -184,6 +183,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                               .first
                                               .id
                                               .toString(),
+                                          isComingFromHome: false,
                                         ),
                                       );
                                     },

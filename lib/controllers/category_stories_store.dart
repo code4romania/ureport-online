@@ -1,24 +1,21 @@
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/category.dart';
-import 'package:ureport_ecaro/models/story_long.dart';
 import '../services/category_article_service.dart';
 import '../models/story.dart' as storyFull;
 import 'package:ureport_ecaro/models/response_opinions.dart' as opinionsarray;
 
-part 'story_state.g.dart';
+part 'category_stories_store.g.dart';
 
-class StoryStore = _StoryStore with _$StoryStore;
+class CategoryStories = _CategoryStories with _$CategoryStories;
 
-abstract class _StoryStore with Store {
+abstract class _CategoryStories with Store {
   final CategoryArticleService httpClient = CategoryArticleService();
+
   List<Story>? _initialStoryList;
   List<Result>? initialCategoryList;
 
   @observable
   ObservableFuture<ObservableList<Result>>? categoryList;
-
-  @observable
-  ObservableFuture<StoryLong>? story;
 
   @observable
   ObservableList<Story> stories = ObservableList<Story>();
@@ -71,14 +68,4 @@ abstract class _StoryStore with Store {
           .asObservable();
     }
   }
-
-  @action
-  Future fetchStory(String id) => story = ObservableFuture(httpClient
-              .getStory("https://ureport.heroesof.tech/api/v1/stories/$id"))
-          .then(
-        (story) {
-          //   httpClient.getBookmarkStatus("https://ureport.heroesof.tech/api/v1/storybookmarks/story/${story.id}");
-          return story;
-        },
-      );
 }

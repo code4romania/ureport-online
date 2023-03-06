@@ -5,15 +5,16 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/ui/shared/dotted_line_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
-import '../../../../controllers/app_router.gr.dart';
-import '../../../../controllers/opinion_controller.dart';
-import '../../../../controllers/state_store.dart';
-import '../../../../locator/locator.dart';
-import '../../../../models/opinion_search_list.dart';
-import '../../../../services/click_sound_service.dart';
-import '../../../../utils/constants.dart';
-import '../../../../utils/sp_utils.dart';
-import '../../../../utils/translation.dart';
+import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
+import '../../../controllers/app_router.gr.dart';
+import '../../../controllers/opinion_controller.dart';
+import '../../../controllers/state_store.dart';
+import '../../../locator/locator.dart';
+import '../../../models/opinion_search_list.dart';
+import '../../../services/click_sound_service.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/sp_utils.dart';
+import '../../../utils/translation.dart';
 
 FloatingSearchBarController _floatingSearchBarController =
     FloatingSearchBarController();
@@ -21,16 +22,16 @@ List<OpinionSearchList> filteredCategoryList = [];
 List<OpinionSearchList> categoryListFull = [];
 var isLoaded = true;
 
-class OpinionSearch extends StatefulWidget {
-  const OpinionSearch({Key? key}) : super(key: key);
+class OpinionSearchScreen extends StatefulWidget {
+  const OpinionSearchScreen({Key? key}) : super(key: key);
 
   @override
-  _OpinionSearchState createState() => _OpinionSearchState();
+  _OpinionSearchScreenState createState() => _OpinionSearchScreenState();
 }
 
 bool isExpanded = false;
 
-class _OpinionSearchState extends State<OpinionSearch> {
+class _OpinionSearchScreenState extends State<OpinionSearchScreen> {
   var sp = locator<SPUtil>();
 
   late StateStore _stateStore;
@@ -67,24 +68,32 @@ class _OpinionSearchState extends State<OpinionSearch> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
+                  // Positioned(
+                  //   top: 12,
+                  //   left: 10,
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.pop(context);
+                  //       ClickSound.soundClose();
+                  //     },
+                  //     child: Container(
+                  //       margin: EdgeInsets.only(left: 5),
+                  //       height: 70,
+                  //       child: Image(
+                  //         height: 55,
+                  //         width: 55,
+                  //         image: AssetImage("assets/images/v2_ic_back.png"),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned(
                     top: 12,
                     left: 10,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                        ClickSound.soundClose();
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5),
-                        height: 70,
-                        child: Image(
-                          height: 55,
-                          width: 55,
-                          image: AssetImage("assets/images/v2_ic_back.png"),
-                        ),
-                      ),
-                    ),
+                    child: TextNavigatorComponent(
+                        title: _translation["back"]!,
+                        onPressed: () => context.router.pop(),
+                        rightEdge: false),
                   ),
                   Container(
                       margin: EdgeInsets.only(left: 11, right: 12, top: 80),
@@ -273,7 +282,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
             dashWidth: 10,
             dashHeight: 2,
             emptyWidth: 5,
-            dashColor: purpleColor,
+            dashColor: blueColor,
           ),
           // child: DottedLine(
           //   dashColor: purpleColor,
@@ -298,7 +307,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
               ClickSound.soundClick();
               _floatingSearchBarController.clear();
               provider.opinionID = item.id;
-              context.router.push(OpinionScreenFromSearchRoute());
+              context.router.push(OpinionFromSearchScreenRoute());
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 17, bottom: 15),
@@ -336,7 +345,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
                                   padding: EdgeInsets.only(
                                       left: 6, right: 6, top: 3, bottom: 3),
                                   decoration: BoxDecoration(
-                                      color: purpleColor,
+                                      color: blueColor,
                                       borderRadius: BorderRadius.circular(4)),
                                   child: Text(
                                     _translation["latest_opinion"]!,
@@ -378,7 +387,7 @@ class _OpinionSearchState extends State<OpinionSearch> {
         text: source.substring(match.start, match.end),
         style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: purpleColor,
+            color: blueColor,
             backgroundColor: Colors.white,
             fontSize: 15),
       ));

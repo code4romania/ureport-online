@@ -8,13 +8,14 @@ import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
-import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/title_description_widget.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../services/click_sound_service.dart';
@@ -30,7 +31,7 @@ class CategoryListScreen extends StatefulWidget {
 class _CategoryListScreenState extends State<CategoryListScreen>
     with AutomaticKeepAliveClientMixin {
   late StateStore _stateStore;
-  late StoryStore _storyStore;
+  late CategoryStories _storyStore;
   late Map<String, String> _translation;
 
   Future _refresh() {
@@ -40,7 +41,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
   @override
   void initState() {
     _stateStore = context.read<StateStore>();
-    _storyStore = StoryStore();
+    _storyStore = CategoryStories();
 
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["category_screen"]!;

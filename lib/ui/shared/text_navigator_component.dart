@@ -19,7 +19,7 @@ class TextNavigatorComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ClickSound.soundClick();
+        ClickSound.soundClose();
         onPressed();
       },
       child: Padding(

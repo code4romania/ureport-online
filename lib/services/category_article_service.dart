@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/response_opinions.dart' as opinionsarray;
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import '../models/story_long.dart' as storyLong;
 import '../models/story.dart' as storyFull;
 
@@ -42,26 +43,4 @@ class CategoryArticleService {
       return [];
     }
   }
-
-  Future<storyLong.StoryLong> getStory(String url) async {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      final story = storyLong.StoryLong.fromJson(
-          jsonDecode(utf8.decode(response.bodyBytes)));
-      return story;
-    } else {
-      return storyLong.StoryLong();
-    }
-  }
-
-  //   Future<storyLong.StoryLong> getStory(String url) async {
-  //   final response = await http.get(Uri.parse(url));
-  //   if (response.statusCode == 200) {
-  //     final story = storyLong.StoryLong.fromJson(
-  //         jsonDecode(utf8.decode(response.bodyBytes)));
-  //     return story;
-  //   } else {
-  //     return storyLong.StoryLong();
-  //   }
-  // }
 }

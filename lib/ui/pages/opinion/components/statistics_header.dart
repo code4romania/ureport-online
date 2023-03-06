@@ -99,7 +99,7 @@ class StatisticsHeader {
           children: [
             Container(
                 decoration: BoxDecoration(
-                  color: purpleColor,
+                  color: blueColor,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 padding: EdgeInsets.all(5),
@@ -110,248 +110,248 @@ class StatisticsHeader {
                       fontWeight: FontWeight.w600,
                       fontSize: 12),
                 )),
-            SizedBox(
-              width: 15,
-            ),
-            Text(
-              clockString,
-              style: TextStyle(fontWeight: FontWeight.w700),
-            )
+            // SizedBox(
+            //   width: 15,
+            // ),
+            // Text(
+            //   clockString,
+            //   style: TextStyle(fontWeight: FontWeight.w700),
+            // )
           ],
         ),
         SizedBox(
           height: 8,
         ),
-        Container(
-          child: Divider(
-            height: 1.5,
-            color: Colors.grey[600],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  Text(
-                    "${FormattedNumber.formatNumber(respondents)}",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    translation["respondents"]!,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  Text(
-                    "${responseRate.round().toString()}%",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    translation["response_rate"]!,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        question.resultsByGender.length != 0
-            ? Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 65,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.asset(
-                                "assets/images/male.png",
-                                height: 35,
-                                width: 35,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "${question.resultsByGender.length > 0 ? question.resultsByGender[0].label : "-"}",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Container(
-                          height: 63,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "${maleResponseRate.round().toString()}%",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              Text(
-                                "${FormattedNumber.formatNumber(maleRespondent)}",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 65,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.asset(
-                                "assets/images/female.png",
-                                height: 35,
-                                width: 35,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "${question.resultsByGender.length > 0 ? question.resultsByGender[1].label : "-"}",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Container(
-                          height: 63,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "${femaleResponseRate.round().toString()}%",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              Text(
-                                "${FormattedNumber.formatNumber(femaleRespondent)}",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  question.resultsByGender.length == 3
-                      ? Expanded(
-                          flex: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 65,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/gender_other.png",
-                                      height: 35,
-                                      width: 35,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "${question.resultsByGender.length > 0 ? question.resultsByGender[2].label : "-"}",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                height: 63,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${guysResponseRate.round().toString()}%",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(
-                                      height: 13,
-                                    ),
-                                    Text(
-                                      "${FormattedNumber.formatNumber(guysRespondent)}",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(),
-                ],
-              )
-            : Container(),
-        SizedBox(
-          height: question.resultsByGender.length != 0 ? 15 : 0,
-        ),
-        Container(
-          child: Divider(
-            height: 1.5,
-            color: Colors.grey[600],
-          ),
-        ),
-        SizedBox(
-          height: 8,
-        ),
+        // Container(
+        //   child: Divider(
+        //     height: 1.5,
+        //     color: Colors.grey[600],
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 15,
+        // ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 1,
+        //       child: Column(
+        //         children: [
+        //           Text(
+        //             "${FormattedNumber.formatNumber(respondents)}",
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        //           ),
+        //           Text(
+        //             translation["respondents"]!,
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: Column(
+        //         children: [
+        //           Text(
+        //             "${responseRate.round().toString()}%",
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        //           ),
+        //           Text(
+        //             translation["response_rate"]!,
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+        //             textAlign: TextAlign.center,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(
+        //   height: 20,
+        // ),
+        // question.resultsByGender.length != 0
+        //     ? Row(
+        //         children: [
+        //           Expanded(
+        //             flex: 1,
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Container(
+        //                   height: 65,
+        //                   child: Column(
+        //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //                     children: [
+        //                       Image.asset(
+        //                         "assets/images/male.png",
+        //                         height: 35,
+        //                         width: 35,
+        //                       ),
+        //                       SizedBox(
+        //                         height: 5,
+        //                       ),
+        //                       Text(
+        //                         "${question.resultsByGender.length > 0 ? question.resultsByGender[0].label : "-"}",
+        //                         style: TextStyle(
+        //                             fontSize: 14, fontWeight: FontWeight.w700),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ),
+        //                 SizedBox(
+        //                   width: 5,
+        //                 ),
+        //                 Container(
+        //                   height: 63,
+        //                   child: Column(
+        //                     mainAxisAlignment: MainAxisAlignment.end,
+        //                     children: [
+        //                       Text(
+        //                         "${maleResponseRate.round().toString()}%",
+        //                         style: TextStyle(
+        //                             fontSize: 14, fontWeight: FontWeight.w700),
+        //                       ),
+        //                       SizedBox(
+        //                         height: 13,
+        //                       ),
+        //                       Text(
+        //                         "${FormattedNumber.formatNumber(maleRespondent)}",
+        //                         style: TextStyle(
+        //                             fontSize: 14, fontWeight: FontWeight.w700),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           Expanded(
+        //             flex: 1,
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Container(
+        //                   height: 65,
+        //                   child: Column(
+        //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //                     children: [
+        //                       Image.asset(
+        //                         "assets/images/female.png",
+        //                         height: 35,
+        //                         width: 35,
+        //                       ),
+        //                       SizedBox(
+        //                         height: 5,
+        //                       ),
+        //                       Text(
+        //                         "${question.resultsByGender.length > 0 ? question.resultsByGender[1].label : "-"}",
+        //                         style: TextStyle(
+        //                             fontSize: 14, fontWeight: FontWeight.w700),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ),
+        //                 SizedBox(
+        //                   width: 5,
+        //                 ),
+        //                 Container(
+        //                   height: 63,
+        //                   child: Column(
+        //                     mainAxisAlignment: MainAxisAlignment.end,
+        //                     children: [
+        //                       Text(
+        //                         "${femaleResponseRate.round().toString()}%",
+        //                         style: TextStyle(
+        //                             fontSize: 14, fontWeight: FontWeight.w700),
+        //                       ),
+        //                       SizedBox(
+        //                         height: 13,
+        //                       ),
+        //                       Text(
+        //                         "${FormattedNumber.formatNumber(femaleRespondent)}",
+        //                         style: TextStyle(
+        //                             fontSize: 14, fontWeight: FontWeight.w700),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           question.resultsByGender.length == 3
+        //               ? Expanded(
+        //                   flex: 1,
+        //                   child: Row(
+        //                     mainAxisAlignment: MainAxisAlignment.center,
+        //                     children: [
+        //                       Container(
+        //                         height: 65,
+        //                         child: Column(
+        //                           mainAxisAlignment:
+        //                               MainAxisAlignment.spaceEvenly,
+        //                           children: [
+        //                             Image.asset(
+        //                               "assets/images/gender_other.png",
+        //                               height: 35,
+        //                               width: 35,
+        //                             ),
+        //                             SizedBox(
+        //                               height: 5,
+        //                             ),
+        //                             Text(
+        //                               "${question.resultsByGender.length > 0 ? question.resultsByGender[2].label : "-"}",
+        //                               style: TextStyle(
+        //                                   fontSize: 14,
+        //                                   fontWeight: FontWeight.w700),
+        //                             ),
+        //                           ],
+        //                         ),
+        //                       ),
+        //                       SizedBox(
+        //                         width: 5,
+        //                       ),
+        //                       Container(
+        //                         height: 63,
+        //                         child: Column(
+        //                           mainAxisAlignment: MainAxisAlignment.end,
+        //                           children: [
+        //                             Text(
+        //                               "${guysResponseRate.round().toString()}%",
+        //                               style: TextStyle(
+        //                                   fontSize: 14,
+        //                                   fontWeight: FontWeight.w700),
+        //                             ),
+        //                             SizedBox(
+        //                               height: 13,
+        //                             ),
+        //                             Text(
+        //                               "${FormattedNumber.formatNumber(guysRespondent)}",
+        //                               style: TextStyle(
+        //                                   fontSize: 14,
+        //                                   fontWeight: FontWeight.w700),
+        //                             ),
+        //                           ],
+        //                         ),
+        //                       ),
+        //                ],
+        //            ),
+        //      )
+        //   : Container(),
+        // ],
+        // )
+        //  : Container(),
+        // SizedBox(
+        //   height: question.resultsByGender.length != 0 ? 15 : 0,
+        // ),
+        // Container(
+        //   child: Divider(
+        //     height: 1.5,
+        //     color: Colors.grey[600],
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 8,
+        // ),
       ],
     );
   }
@@ -385,7 +385,7 @@ class StatisticsHeader {
           children: [
             Container(
                 decoration: BoxDecoration(
-                  color: purpleColor,
+                  color: blueColor,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 padding: EdgeInsets.all(5),
@@ -396,227 +396,227 @@ class StatisticsHeader {
                       fontWeight: FontWeight.w600,
                       fontSize: 12),
                 )),
-            SizedBox(
-              width: 15,
-            ),
-            Text(
-              clockString,
-              style: TextStyle(fontWeight: FontWeight.w700),
-            )
+            // SizedBox(
+            //   width: 15,
+            // ),
+            // Text(
+            //   clockString,
+            //   style: TextStyle(fontWeight: FontWeight.w700),
+            // )
           ],
         ),
         SizedBox(
           height: 8,
         ),
-        Container(
-          child: Divider(
-            height: 1.5,
-            color: Colors.grey[600],
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  Text(
-                    "---",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    translation["respondents"]!,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  Text(
-                    "0%",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    translation["response_rate"]!,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 65,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(
-                          "assets/images/male.png",
-                          height: 35,
-                          width: 35,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "---",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 63,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "0%",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 13,
-                        ),
-                        Text(
-                          "---",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 65,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(
-                          "assets/images/female.png",
-                          height: 35,
-                          width: 35,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "---",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 63,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "0%",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 13,
-                        ),
-                        Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 65,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(
-                          "assets/images/gender_other.png",
-                          height: 35,
-                          width: 35,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "---",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 63,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "0%",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 13,
-                        ),
-                        Text(
-                          "0",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        // Container(
+        //   child: Divider(
+        //     height: 1.5,
+        //     color: Colors.grey[600],
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 15,
+        // ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 1,
+        //       child: Column(
+        //         children: [
+        //           Text(
+        //             "---",
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        //           ),
+        //           Text(
+        //             translation["respondents"]!,
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: Column(
+        //         children: [
+        //           Text(
+        //             "0%",
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        //           ),
+        //           Text(
+        //             translation["response_rate"]!,
+        //             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(
+        //   height: 20,
+        // ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 1,
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           Container(
+        //             height: 65,
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //               children: [
+        //                 Image.asset(
+        //                   "assets/images/male.png",
+        //                   height: 35,
+        //                   width: 35,
+        //                 ),
+        //                 SizedBox(
+        //                   height: 5,
+        //                 ),
+        //                 Text(
+        //                   "---",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           SizedBox(
+        //             width: 5,
+        //           ),
+        //           Container(
+        //             height: 63,
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.end,
+        //               children: [
+        //                 Text(
+        //                   "0%",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 13,
+        //                 ),
+        //                 Text(
+        //                   "---",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           Container(
+        //             height: 65,
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //               children: [
+        //                 Image.asset(
+        //                   "assets/images/female.png",
+        //                   height: 35,
+        //                   width: 35,
+        //                 ),
+        //                 SizedBox(
+        //                   height: 5,
+        //                 ),
+        //                 Text(
+        //                   "---",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           SizedBox(
+        //             width: 5,
+        //           ),
+        //           Container(
+        //             height: 63,
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.end,
+        //               children: [
+        //                 Text(
+        //                   "0%",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 13,
+        //                 ),
+        //                 Text(
+        //                   "0",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           Container(
+        //             height: 65,
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //               children: [
+        //                 Image.asset(
+        //                   "assets/images/gender_other.png",
+        //                   height: 35,
+        //                   width: 35,
+        //                 ),
+        //                 SizedBox(
+        //                   height: 5,
+        //                 ),
+        //                 Text(
+        //                   "---",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           SizedBox(
+        //             width: 5,
+        //           ),
+        //           Container(
+        //             height: 63,
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.end,
+        //               children: [
+        //                 Text(
+        //                   "0%",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //                 SizedBox(
+        //                   height: 13,
+        //                 ),
+        //                 Text(
+        //                   "0",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.w700),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
         SizedBox(
           height: 8,
         ),

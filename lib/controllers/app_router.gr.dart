@@ -13,9 +13,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
 import 'package:flutter/material.dart' as _i25;
-import 'package:ureport_ecaro/controllers/story_state.dart' as _i26;
+import 'package:ureport_ecaro/controllers/category_stories_store.dart' as _i27;
 import 'package:ureport_ecaro/models/category.dart' as _i28;
-import 'package:ureport_ecaro/models/story.dart' as _i27;
+import 'package:ureport_ecaro/models/story.dart' as _i26;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_list_screen.dart'
     as _i15;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_screen.dart'
@@ -32,11 +32,11 @@ import 'package:ureport_ecaro/ui/pages/login-register/login.dart' as _i10;
 import 'package:ureport_ecaro/ui/pages/login-register/register.dart' as _i9;
 import 'package:ureport_ecaro/ui/pages/open_app/onboarding_screen.dart' as _i13;
 import 'package:ureport_ecaro/ui/pages/open_app/open_app_screen.dart' as _i12;
-import 'package:ureport_ecaro/ui/pages/opinion/components/opinion_search.dart'
-    as _i17;
-import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen.dart' as _i23;
-import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen_from_search.dart'
+import 'package:ureport_ecaro/ui/pages/opinion/opinion_from_search_screen.dart'
     as _i18;
+import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen.dart' as _i23;
+import 'package:ureport_ecaro/ui/pages/opinion/opinion_search_screen.dart'
+    as _i17;
 import 'package:ureport_ecaro/ui/pages/profile/about_screen.dart' as _i2;
 import 'package:ureport_ecaro/ui/pages/profile/account_screen.dart' as _i5;
 import 'package:ureport_ecaro/ui/pages/profile/change_pw_screen.dart' as _i3;
@@ -171,15 +171,14 @@ class AppRouter extends _i24.RootStackRouter {
       );
     },
     ArticleScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<ArticleScreenRouteArgs>(
-          orElse: () => const ArticleScreenRouteArgs());
+      final args = routeData.argsAs<ArticleScreenRouteArgs>();
       return _i24.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i14.ArticleScreen(
           key: args.key,
-          storyStore: args.storyStore,
           storyId: args.storyId,
-          storyFull: args.storyFull,
+          preloadedStory: args.preloadedStory,
+          isComingFromHome: args.isComingFromHome,
         ),
         opaque: true,
       );
@@ -211,17 +210,17 @@ class AppRouter extends _i24.RootStackRouter {
         opaque: true,
       );
     },
-    OpinionSearchRoute.name: (routeData) {
+    OpinionSearchScreenRoute.name: (routeData) {
       return _i24.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i17.OpinionSearch(),
+        child: const _i17.OpinionSearchScreen(),
         opaque: true,
       );
     },
-    OpinionScreenFromSearchRoute.name: (routeData) {
+    OpinionFromSearchScreenRoute.name: (routeData) {
       return _i24.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i18.OpinionScreenFromSearch(),
+        child: const _i18.OpinionFromSearchScreen(),
         opaque: true,
       );
     },
@@ -357,12 +356,12 @@ class AppRouter extends _i24.RootStackRouter {
           path: '/articles-category-screen',
         ),
         _i24.RouteConfig(
-          OpinionSearchRoute.name,
-          path: '/opinion-search',
+          OpinionSearchScreenRoute.name,
+          path: '/opinion-search-screen',
         ),
         _i24.RouteConfig(
-          OpinionScreenFromSearchRoute.name,
-          path: '/opinion-screen-from-search',
+          OpinionFromSearchScreenRoute.name,
+          path: '/opinion-from-search-screen',
         ),
       ];
 }
@@ -677,17 +676,17 @@ class OnboardingScreenRoute extends _i24.PageRouteInfo<void> {
 class ArticleScreenRoute extends _i24.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i25.Key? key,
-    _i26.StoryStore? storyStore,
     String? storyId,
-    _i27.StoryItem? storyFull,
+    _i26.StoryItem? preloadedStory,
+    required bool isComingFromHome,
   }) : super(
           ArticleScreenRoute.name,
           path: '/article-screen',
           args: ArticleScreenRouteArgs(
             key: key,
-            storyStore: storyStore,
             storyId: storyId,
-            storyFull: storyFull,
+            preloadedStory: preloadedStory,
+            isComingFromHome: isComingFromHome,
           ),
         );
 
@@ -697,22 +696,22 @@ class ArticleScreenRoute extends _i24.PageRouteInfo<ArticleScreenRouteArgs> {
 class ArticleScreenRouteArgs {
   const ArticleScreenRouteArgs({
     this.key,
-    this.storyStore,
     this.storyId,
-    this.storyFull,
+    this.preloadedStory,
+    required this.isComingFromHome,
   });
 
   final _i25.Key? key;
 
-  final _i26.StoryStore? storyStore;
-
   final String? storyId;
 
-  final _i27.StoryItem? storyFull;
+  final _i26.StoryItem? preloadedStory;
+
+  final bool isComingFromHome;
 
   @override
   String toString() {
-    return 'ArticleScreenRouteArgs{key: $key, storyStore: $storyStore, storyId: $storyId, storyFull: $storyFull}';
+    return 'ArticleScreenRouteArgs{key: $key, storyId: $storyId, preloadedStory: $preloadedStory, isComingFromHome: $isComingFromHome}';
   }
 }
 
@@ -724,7 +723,7 @@ class ArticleListScreenRoute
     _i25.Key? key,
     required String categoryTitle,
     required String subcategoryTitle,
-    required _i26.StoryStore storyStore,
+    required _i27.CategoryStories storyStore,
     required List<_i28.Story> stories,
   }) : super(
           ArticleListScreenRoute.name,
@@ -756,7 +755,7 @@ class ArticleListScreenRouteArgs {
 
   final String subcategoryTitle;
 
-  final _i26.StoryStore storyStore;
+  final _i27.CategoryStories storyStore;
 
   final List<_i28.Story> stories;
 
@@ -774,7 +773,7 @@ class ArticlesCategoryScreenRoute
     _i25.Key? key,
     required List<_i28.Result> result,
     required String categoryTitle,
-    required _i26.StoryStore storyStore,
+    required _i27.CategoryStories storyStore,
   }) : super(
           ArticlesCategoryScreenRoute.name,
           path: '/articles-category-screen',
@@ -803,7 +802,7 @@ class ArticlesCategoryScreenRouteArgs {
 
   final String categoryTitle;
 
-  final _i26.StoryStore storyStore;
+  final _i27.CategoryStories storyStore;
 
   @override
   String toString() {
@@ -812,27 +811,27 @@ class ArticlesCategoryScreenRouteArgs {
 }
 
 /// generated route for
-/// [_i17.OpinionSearch]
-class OpinionSearchRoute extends _i24.PageRouteInfo<void> {
-  const OpinionSearchRoute()
+/// [_i17.OpinionSearchScreen]
+class OpinionSearchScreenRoute extends _i24.PageRouteInfo<void> {
+  const OpinionSearchScreenRoute()
       : super(
-          OpinionSearchRoute.name,
-          path: '/opinion-search',
+          OpinionSearchScreenRoute.name,
+          path: '/opinion-search-screen',
         );
 
-  static const String name = 'OpinionSearchRoute';
+  static const String name = 'OpinionSearchScreenRoute';
 }
 
 /// generated route for
-/// [_i18.OpinionScreenFromSearch]
-class OpinionScreenFromSearchRoute extends _i24.PageRouteInfo<void> {
-  const OpinionScreenFromSearchRoute()
+/// [_i18.OpinionFromSearchScreen]
+class OpinionFromSearchScreenRoute extends _i24.PageRouteInfo<void> {
+  const OpinionFromSearchScreenRoute()
       : super(
-          OpinionScreenFromSearchRoute.name,
-          path: '/opinion-screen-from-search',
+          OpinionFromSearchScreenRoute.name,
+          path: '/opinion-from-search-screen',
         );
 
-  static const String name = 'OpinionScreenFromSearchRoute';
+  static const String name = 'OpinionFromSearchScreenRoute';
 }
 
 /// generated route for

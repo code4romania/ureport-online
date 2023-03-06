@@ -7,9 +7,9 @@ import '../../../../models/response_opinions.dart' as questionArray;
 class WordCloud {
   static Widget getWordCloud(context, questionArray.Question question) {
     List<Color> colors = [
-      purpleColor,
-      purpleColor,
-      purpleColor,
+      blueColor,
+      blueColor,
+      blueColor,
     ];
 
     List<FlutterHashtag> wordList = [];

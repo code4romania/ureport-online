@@ -57,7 +57,8 @@ class RecentStoriesComponent extends StatelessWidget {
 
                     context.router.push(
                       ArticleScreenRoute(
-                        storyFull: recentStories[0],
+                        preloadedStory: recentStories[0],
+                        isComingFromHome: true,
                       ),
                     );
                   },
@@ -76,8 +77,8 @@ class RecentStoriesComponent extends StatelessWidget {
 
                     context.router.push(
                       ArticleScreenRoute(
-                        storyFull: recentStories[1],
-                      ),
+                          preloadedStory: recentStories[1],
+                          isComingFromHome: true),
                     );
                   },
                   child: ArticleItemWidget(

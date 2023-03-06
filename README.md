@@ -6,19 +6,23 @@
 
 This documatation has several pages of information for developers, and people contributing to "U-Report Online". Check it out for your authoritative source of information about the <ureport-online> community.
 
-All packages have been updated to the latest version (nov 2022)
+All packages have been updated to the latest version (mar 2023)
 
 ## New features from forked version
 - New features
 - New screen
-- Updated
+- Updated packages
 
-  
 ## Current Flutter Version
 1. Flutter sdk - 3.3.7 (Stable) 
 2. Dart sdk - 2.18.4
 
-## Current App Version : 1.0.4
+## Current App Version : 1.0.0+1
+
+## Utils
+1. Build runner command: flutter pub run build_runner watch --delete-conflicting-outputs
+2. If build_runner encounter problems run: flutter packages pub get then re-run the first command
+3. Build android apk: flutter build apk --release
 
 
 ## Contribution

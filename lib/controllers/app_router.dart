@@ -9,9 +9,9 @@ import 'package:ureport_ecaro/ui/pages/login-register/login.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/register.dart';
 import 'package:ureport_ecaro/ui/pages/open_app/onboarding_screen.dart';
 import 'package:ureport_ecaro/ui/pages/open_app/open_app_screen.dart';
-import 'package:ureport_ecaro/ui/pages/opinion/components/opinion_search.dart';
+import 'package:ureport_ecaro/ui/pages/opinion/opinion_search_screen.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen.dart';
-import 'package:ureport_ecaro/ui/pages/opinion/opinion_screen_from_search.dart';
+import 'package:ureport_ecaro/ui/pages/opinion/opinion_from_search_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/about_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/account_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/change_pw_screen.dart';
@@ -62,8 +62,8 @@ import '../ui/pages/login-register/forgot_password.dart';
 
     // Opinions
 
-    AdaptiveRoute(page: OpinionSearch),
-    AdaptiveRoute(page: OpinionScreenFromSearch),
+    AdaptiveRoute(page: OpinionSearchScreen),
+    AdaptiveRoute(page: OpinionFromSearchScreen),
   ],
 )
 class $AppRouter {}

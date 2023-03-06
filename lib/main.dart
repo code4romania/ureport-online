@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/opinion_controller.dart';
 import 'controllers/app_router.gr.dart';
 import 'controllers/state_store.dart';
-import 'controllers/story_state.dart';
+import 'controllers/category_stories_store.dart';
 import 'controllers/chat-controller.dart';
 import 'locator/locator.dart';
 import 'controllers/connectivity_controller.dart';
@@ -67,7 +67,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppRouter _appRouter;
   late StateStore _stateStore;
-  late StoryStore _storyStore;
+  late CategoryStories _storyStore;
 
   @override
   void initState() {

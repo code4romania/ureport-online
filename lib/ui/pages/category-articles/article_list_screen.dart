@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
+import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
-import 'package:ureport_ecaro/controllers/story_state.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
@@ -25,7 +25,7 @@ class ArticleListScreen extends StatefulWidget {
 
   final String categoryTitle;
   final String subcategoryTitle;
-  final StoryStore storyStore;
+  final CategoryStories storyStore;
   final List<Story> stories;
 
   @override
@@ -132,7 +132,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                                 ArticleScreenRoute(
                                   storyId: widget.storyStore.stories[index].id
                                       .toString(),
-                                  storyStore: widget.storyStore,
+                                  isComingFromHome: false,
                                 ),
                               );
                             },

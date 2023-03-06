@@ -30,9 +30,8 @@ var count = 0;
 class _OpinionState extends State<Opinion> {
   var sp = locator<SPUtil>();
   List<Color> colors = [
-    purpleColor,
-    purpleColor,
-    purpleColor,
+    blueColor,
+    blueColor,
   ];
   int colorNumber = 0;
 
@@ -85,7 +84,7 @@ class _OpinionState extends State<Opinion> {
                       height: 5,
                       padding: EdgeInsets.only(left: 13, right: 13),
                       child: LinearProgressIndicator(
-                        color: purpleColor,
+                        color: blueColor,
                       ),
                     )
                   : Container(),
@@ -94,7 +93,7 @@ class _OpinionState extends State<Opinion> {
                 child: GestureDetector(
                   onTap: () {
                     ClickSound.soundClick();
-                    context.router.push(OpinionSearchRoute());
+                    context.router.push(OpinionSearchScreenRoute());
                   },
                   child: Card(
                     elevation: 2,

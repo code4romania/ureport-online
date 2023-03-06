@@ -8,13 +8,16 @@ import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
-import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/controllers/story_store.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
+import 'package:ureport_ecaro/services/story_service.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/finish_reading_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../../utils/constants.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
@@ -22,15 +25,14 @@ import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 class ArticleScreen extends StatefulWidget {
   ArticleScreen({
     Key? key,
-    this.storyStore,
     this.storyId,
-    this.storyFull,
+    this.preloadedStory,
+    required this.isComingFromHome,
   }) : super(key: key);
 
-  final StoryStore? storyStore;
   final String? storyId;
-
-  final StoryItem? storyFull;
+  final StoryItem? preloadedStory;
+  final bool isComingFromHome;
 
   @override
   State<ArticleScreen> createState() => _ArticleScreenState();
@@ -40,6 +42,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   final DateFormat formatter = DateFormat('dd/MM/yyyy');
   late WebViewPlusController webViewController;
   late StateStore _stateStore;
+  late StoryStore _storyStore;
   late ScrollController _scrollController;
   late Map<String, String> _translation;
 
@@ -65,6 +68,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
   @override
   void initState() {
+    final httpClient = StoryService();
+    final spUtil = SPUtil();
+
     _scrollController = ScrollController();
     _stateStore = context.read<StateStore>();
     _translation =
@@ -75,10 +81,24 @@ class _ArticleScreenState extends State<ArticleScreen> {
       timerFinished = true;
     });
 
-    if (widget.storyStore != null)
-      widget.storyStore!.fetchStory(widget.storyId!);
-
     _scrollController.addListener(_scrollListener);
+
+    if (!widget.isComingFromHome) {
+      _storyStore = StoryStore(
+        widget.storyId!,
+        null,
+        httpClient,
+        spUtil,
+      );
+      _storyStore.fetchStory(widget.storyId!);
+    } else {
+      _storyStore = StoryStore(
+        widget.preloadedStory!.id!.toString(),
+        widget.preloadedStory!,
+        httpClient,
+        spUtil,
+      );
+    }
 
     super.initState();
   }
@@ -124,7 +144,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
               SizedBox(
                 height: 20,
               ),
-              if (widget.storyStore != null)
+              if (!widget.isComingFromHome)
                 fetchedArticle()
               else
                 preloadedArticle()
@@ -153,26 +173,50 @@ class _ArticleScreenState extends State<ArticleScreen> {
                     width: 10,
                   ),
                   Text(
-                    widget.storyFull!.category!.name!.split('/')[1].trim(),
+                    widget.preloadedStory!.category!.name!.split('/')[1].trim(),
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.bookmark_border_outlined,
-                    color: purpleColor,
-                    size: 30,
+                  GestureDetector(
+                    onTap: () {
+                      ClickSound.soundClick();
+
+                      if (_storyStore.isBookmarked!) {
+                        _storyStore.removeBookmark(
+                          storyId: widget.preloadedStory!.id.toString(),
+                        );
+                      } else {
+                        _storyStore.addBookmark(
+                          storyId: widget.preloadedStory!.id.toString(),
+                        );
+                      }
+
+                      // call api to bookmark story
+                    },
+                    child: Observer(builder: (context) {
+                      return Icon(
+                        _storyStore.isBookmarked!
+                            ? Icons.bookmark
+                            : Icons.bookmark_border_outlined,
+                        color: purpleColor,
+                        size: 30,
+                      );
+                    }),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   GestureDetector(
                     onTap: () {
+                      ClickSound.soundShare();
                       Share.share(
-                          shareStoryUrl + "/" + widget.storyFull!.id.toString(),
-                          subject: widget.storyFull!.title.toString());
+                          shareStoryUrl +
+                              "/" +
+                              widget.preloadedStory!.id.toString(),
+                          subject: widget.preloadedStory!.title.toString());
                     },
                     child: Icon(
                       Icons.share_outlined,
@@ -189,7 +233,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(top: 10, left: 20, right: 20),
           child: Text(
-            widget.storyFull!.title.toString(),
+            widget.preloadedStory!.title.toString(),
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           ),
         ),
@@ -226,7 +270,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   ),
                   Text(
                       formatter.format(
-                          widget.storyFull!.createdOn ?? DateTime.now()),
+                          widget.preloadedStory!.createdOn ?? DateTime.now()),
                       style: TextStyle(
                         color: purpleColor,
                       ))
@@ -237,53 +281,57 @@ class _ArticleScreenState extends State<ArticleScreen> {
         ),
         Container(
           width: double.infinity,
-          child: loadLocalHTML(widget.storyFull!.content!,
-              widget.storyFull!.title ?? "", "widget.image", "widget.date"),
+          child: loadLocalHTML(
+              widget.preloadedStory!.content!,
+              widget.preloadedStory!.title ?? "",
+              "widget.image",
+              "widget.date"),
         ),
         canFinishReading
-            ? FinishReadingComponent(
-                translation: _translation,
-                storyId: widget.storyFull!.id.toString(),
-              )
+            ? Observer(builder: (context) {
+                if (_storyStore.isActionLoading) {
+                  return LoadingIndicatorComponent();
+                }
+                return FinishReadingComponent(
+                  translation: _translation,
+                  storyId: widget.preloadedStory!.id.toString(),
+                  initRating: _storyStore.rating ?? 0,
+                  onRateArticle: (int newRating) => _storyStore.rateStory(
+                    storyId: widget.preloadedStory!.id.toString(),
+                    rating: newRating,
+                  ),
+                );
+              })
             : SizedBox()
       ],
     );
   }
 
   Widget fetchedArticle() {
-    final future = widget.storyStore!.story;
-
     return Observer(
       builder: (context) {
-        if (future == null) {
-          return Text(
-            _translation["no_articles"]!,
-            style: TextStyle(color: Colors.black),
-          );
-        }
-        switch (future.status) {
-          case FutureStatus.pending:
+        switch (_storyStore.isLoading) {
+          case true:
             return Center(
               child: LoadingIndicatorComponent(),
             );
-          case FutureStatus.rejected:
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    _translation["no_articles"]!,
-                    style: TextStyle(color: purpleColor),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            );
-          case FutureStatus.fulfilled:
-            final StoryLong story = future.result;
-
+          case false:
+            if (_storyStore.fetchedStory == null) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      _translation["no_articles"]!,
+                      style: TextStyle(color: purpleColor),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              );
+            }
             return Column(
               children: [
                 Container(
@@ -301,7 +349,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                             width: 10,
                           ),
                           Text(
-                            story.category!.name!.split('/')[1].trim(),
+                            _storyStore.fetchedStory!.category!.name!
+                                .split('/')[1]
+                                .trim(),
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w600),
                           ),
@@ -309,19 +359,41 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       ),
                       Row(
                         children: [
-                          Icon(
-                            Icons.bookmark_border_outlined,
-                            color: purpleColor,
-                            size: 30,
+                          GestureDetector(
+                            onTap: () {
+                              ClickSound.soundClick();
+                              if (_storyStore.isBookmarked!) {
+                                _storyStore.removeBookmark(
+                                    storyId: _storyStore.fetchedStory!.id
+                                        .toString());
+                              } else {
+                                _storyStore.addBookmark(
+                                    storyId: _storyStore.fetchedStory!.id
+                                        .toString());
+                              }
+                            },
+                            child: Observer(builder: (context) {
+                              return Icon(
+                                _storyStore.isBookmarked!
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border_outlined,
+                                color: purpleColor,
+                                size: 30,
+                              );
+                            }),
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           GestureDetector(
                             onTap: () {
+                              ClickSound.soundShare();
                               Share.share(
-                                  shareStoryUrl + "/" + story.id.toString(),
-                                  subject: story.title.toString());
+                                  shareStoryUrl +
+                                      "/" +
+                                      _storyStore.fetchedStory!.id.toString(),
+                                  subject: _storyStore.fetchedStory!.title
+                                      .toString());
                             },
                             child: Icon(
                               Icons.share_outlined,
@@ -338,7 +410,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: Text(
-                    story.title.toString(),
+                    _storyStore.fetchedStory!.title.toString(),
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -374,8 +446,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                 color: purpleColor),
                           ),
                           Text(
-                              formatter
-                                  .format(story.createdOn ?? DateTime.now()),
+                              formatter.format(
+                                  _storyStore.fetchedStory!.createdOn ??
+                                      DateTime.now()),
                               style: TextStyle(
                                 color: purpleColor,
                               ))
@@ -386,18 +459,33 @@ class _ArticleScreenState extends State<ArticleScreen> {
                 ),
                 Container(
                   width: double.infinity,
-                  child: loadLocalHTML(story.content!, story.title ?? "",
-                      "widget.image", "widget.date"),
+                  child: loadLocalHTML(
+                      _storyStore.fetchedStory!.content!,
+                      _storyStore.fetchedStory!.title ?? "",
+                      "widget.image",
+                      "widget.date"),
                 ),
                 canFinishReading
-                    ? FinishReadingComponent(
-                        translation: _translation,
-                        storyId: story.id.toString(),
-                      )
+                    ? Observer(builder: (context) {
+                        if (_storyStore.isActionLoading) {
+                          return LoadingIndicatorComponent();
+                        }
+                        return FinishReadingComponent(
+                          translation: _translation,
+                          storyId: _storyStore.fetchedStory!.id.toString(),
+                          initRating: _storyStore.rating ?? 0,
+                          onRateArticle: (int newRating) =>
+                              _storyStore.rateStory(
+                            storyId: _storyStore.fetchedStory!.id.toString(),
+                            rating: newRating,
+                          ),
+                        );
+                      })
                     : SizedBox()
               ],
             );
         }
+        return Container();
       },
     );
   }

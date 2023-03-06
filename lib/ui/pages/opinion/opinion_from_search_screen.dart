@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ureport_ecaro/models/response-opinion-localdb.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/components/statistics_header.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
+import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
+import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 
 import '../../../../models/response_opinions.dart' as questionArray;
 import '../../../controllers/opinion_controller.dart';
@@ -17,22 +20,21 @@ import '../../../utils/sp_utils.dart';
 import '../../../utils/translation.dart';
 import 'components/opinion_item.dart';
 
-class OpinionScreenFromSearch extends StatefulWidget {
-  const OpinionScreenFromSearch({Key? key}) : super(key: key);
+class OpinionFromSearchScreen extends StatefulWidget {
+  const OpinionFromSearchScreen({Key? key}) : super(key: key);
 
   @override
-  _OpinionScreenFromSearchState createState() =>
-      _OpinionScreenFromSearchState();
+  _OpinionFromSearchScreenState createState() =>
+      _OpinionFromSearchScreenState();
 }
 
 var count = 0;
 
-class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
+class _OpinionFromSearchScreenState extends State<OpinionFromSearchScreen> {
   var sp = locator<SPUtil>();
   List<Color> colors = [
-    purpleColor,
-    purpleColor,
-    purpleColor,
+    blueColor,
+    blueColor,
   ];
   int colorNumber = 0;
 
@@ -76,87 +78,92 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
                 children: [
                   Column(
                     children: [
-                      Container(
-                        height: 70,
-                        color: Colors.white,
-                        child: Row(
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 80,
-                                        height: 80,
-                                        child: IconButton(
-                                          icon: Container(
-                                              child: Image(
-                                            fit: BoxFit.fill,
-                                            image: AssetImage(
-                                                "assets/images/v2_ic_back.png"),
-                                          )),
-                                          color: Colors.black,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            ClickSound.soundClose();
-                                          },
-                                        ),
-                                      ),
-                                      Expanded(
-                                          child: Container(
-                                        child: Center(
-                                          child: getShareButton(
-                                              "${provider.opinionID}"),
-                                        ),
-                                      ))
-                                    ],
-                                  ),
-                                )),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                child: CustomPaint(
-                                  painter: CustomBackground(),
-                                  child: Container(
-                                    height: 80,
-                                    child: Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Center(
-                                        child: Text(
-                                          _translation["opinions"]!,
-                                          style: TextStyle(
-                                              fontSize: 26.0,
-                                              color: Color.fromRGBO(
-                                                  167, 45, 111, 1),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Divider(
-                          height: 1,
-                          color: Colors.grey[600],
-                        ),
-                      ),
+                      TopHeaderWidget(title: _translation["opinions"]!),
+                      TextNavigatorComponent(
+                          title: _translation["back"]!,
+                          onPressed: () => context.router.pop(),
+                          rightEdge: false),
+                      // Container(
+                      //   height: 70,
+                      //   color: Colors.white,
+                      //   child: Row(
+                      //     children: [
+                      //       Expanded(
+                      //           flex: 1,
+                      //           child: Container(
+                      //             child: Row(
+                      //               mainAxisAlignment: MainAxisAlignment.start,
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.center,
+                      //               children: [
+                      //                 Container(
+                      //                   width: 80,
+                      //                   height: 80,
+                      //                   child: IconButton(
+                      //                     icon: Container(
+                      //                         child: Image(
+                      //                       fit: BoxFit.fill,
+                      //                       image: AssetImage(
+                      //                           "assets/images/v2_ic_back.png"),
+                      //                     )),
+                      //                     color: Colors.black,
+                      //                     onPressed: () {
+                      //                       Navigator.pop(context);
+                      //                       ClickSound.soundClose();
+                      //                     },
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                     child: Container(
+                      //                   child: Center(
+                      //                     child: getShareButton(
+                      //                         "${provider.opinionID}"),
+                      //                   ),
+                      //                 ))
+                      //               ],
+                      //             ),
+                      //           )),
+                      //       Expanded(
+                      //         flex: 1,
+                      //         child: Container(
+                      //           child: CustomPaint(
+                      //             painter: CustomBackground(),
+                      //             child: Container(
+                      //               height: 80,
+                      //               child: Container(
+                      //                 padding: EdgeInsets.only(left: 10),
+                      //                 child: Center(
+                      //                   child: Text(
+                      //                     _translation["opinions"]!,
+                      //                     style: TextStyle(
+                      //                         fontSize: 26.0,
+                      //                         color: Color.fromRGBO(
+                      //                             167, 45, 111, 1),
+                      //                         fontWeight: FontWeight.bold),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Container(
+                      //   child: Divider(
+                      //     height: 1,
+                      //     color: Colors.grey[600],
+                      //   ),
+                      // ),
                     ],
                   ),
-                  Container(
-                    child: Divider(
-                      height: 1,
-                      color: Colors.grey[600],
-                    ),
-                  ),
+                  // Container(
+                  //   child: Divider(
+                  //     height: 1,
+                  //     color: Colors.grey[600],
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 10,
                   ),
@@ -287,7 +294,7 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
           children: [
             Text(
               "SHARE",
-              style: TextStyle(fontSize: 15, color: purpleColor),
+              style: TextStyle(fontSize: 15, color: blueColor),
             ),
             SizedBox(
               width: 5,
@@ -296,7 +303,7 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
               image: AssetImage("assets/images/ic_share.png"),
               height: 17,
               width: 17,
-              color: purpleColor,
+              color: blueColor,
             )
           ],
         ),
@@ -305,31 +312,35 @@ class _OpinionScreenFromSearchState extends State<OpinionScreenFromSearch> {
   }
 }
 
-class CustomBackground extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Gradient gradient = new LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [Colors.white],
-      tileMode: TileMode.clamp,
-    );
+// class CustomBackground extends CustomPainter {
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final Gradient gradient = new LinearGradient(
+//       begin: Alignment.topCenter,
+//       end: Alignment.bottomCenter,
+//       colors: [
+//         blueColor,
+//        blueColor,
+// blueColor
+//       ],
+//       tileMode: TileMode.clamp,
+//     );
 
-    final Rect colorBounds = Rect.fromLTRB(0, 0, size.width, size.height);
-    final Paint paint = new Paint()
-      ..shader = gradient.createShader(colorBounds);
+//     final Rect colorBounds = Rect.fromLTRB(0, 0, size.width, size.height);
+//     final Paint paint = new Paint()
+//       ..shader = gradient.createShader(colorBounds);
 
-    Path path = Path();
-    path.moveTo(size.width / 5, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(size.width / 5, 0);
-    path.close();
+//     Path path = Path();
+//     path.moveTo(size.width / 5, 0);
+//     path.lineTo(size.width, 0);
+//     path.lineTo(size.width, size.height);
+//     path.lineTo(0, size.height);
+//     path.lineTo(size.width / 5, 0);
+//     path.close();
 
-    canvas.drawPath(path, paint);
-  }
+//     canvas.drawPath(path, paint);
+//   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
+//   @override
+//   bool shouldRepaint(CustomPainter oldDelegate) => false;
+// }

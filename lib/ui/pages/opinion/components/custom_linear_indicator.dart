@@ -15,7 +15,7 @@ class CustomLinearIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.center,
+      alignment: Alignment.centerLeft,
       children: [
         LinearProgressIndicator(
           minHeight: 28.0,
@@ -29,7 +29,7 @@ class CustomLinearIndicator extends StatelessWidget {
             label,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),

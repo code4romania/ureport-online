@@ -128,6 +128,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "author_unicef": "UNICEF România",
       "date": "Data",
       "opinion": "Opinie",
+      "no_articles": "Nu s-a gasit acest articol",
       "rating": "Dă un rating acestui articol",
       "bottom_text1": "Felicitări!\nAi terminat de citit cel de-al ",
       "bottom_text2":
@@ -141,6 +142,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "latest_opinion": "Ultimele opinii",
       "respondents": "Respondenți",
       "response_rate": "Rata de răspuns",
+      "back": "Înapoi",
     },
     "opinion_search": {
       "no_results": "Nu există rezultate pentru căutarea ta",
@@ -153,6 +155,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "latest_opinion": "Ultimele opinii",
       "respondents": "Respondenți",
       "response_rate": "Rata de răspuns",
+      "back": "Înapoi",
     },
     "opinion_item": {
       "responded_out_of": "au răspuns din",

@@ -5,7 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
-import 'package:ureport_ecaro/controllers/story_state.dart';
+import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/models/response_opinions.dart';
 import 'package:ureport_ecaro/ui/pages/home/components/quiz_component.dart';
 import 'package:ureport_ecaro/ui/pages/home/components/recent_opinions_component.dart';
@@ -13,6 +13,7 @@ import 'package:ureport_ecaro/ui/pages/home/components/recent_stories_component.
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../../utils/constants.dart';
 import 'package:ureport_ecaro/models/response_opinions.dart' as opinionsarray;
@@ -26,13 +27,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late StateStore _stateStore;
-  late StoryStore _storyStore;
+  late CategoryStories _storyStore;
   late Map<String, String> _translation;
 
   @override
   void initState() {
     _stateStore = context.read<StateStore>();
-    _storyStore = StoryStore();
+    _storyStore = CategoryStories();
 
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["home_screen"]!;
