@@ -14,8 +14,8 @@ All packages have been updated to the latest version (mar 2023)
 - Updated packages
 
 ## Current Flutter Version
-1. Flutter sdk - 3.3.7 (Stable) 
-2. Dart sdk - 2.18.4
+1. Flutter sdk - 3.7.6 (Stable) 
+2. Dart sdk - 2.19.3
 
 ## Current App Version : 1.0.0+1
 
