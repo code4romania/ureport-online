@@ -254,6 +254,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "library": "Bibliotecă",
       "medals": "Medalii",
       "share": "Distribuie",
+      "no_badges": "Nu ai nicio medalie încă!",
+      "no_bookmarks": "Nu ai niciun bookmark încă!",
     },
     "account_screen": {
       "header": "Contul tău",

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/models/medal.dart';
+import 'package:ureport_ecaro/models/badge_medal.dart';
 
 class MedalWidget extends StatelessWidget {
   const MedalWidget({Key? key, required this.medal}) : super(key: key);
-  final Medal medal;
+  final BadgeMedal medal;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,19 @@ class MedalWidget extends StatelessWidget {
                 ]),
                 child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: Image.network(medal.badgeType.image!),
+                  child: Image.network(
+                    medal.badgeType?.image ?? "",
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        child: Center(
+                          child: Text("Image not found"),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Column(
@@ -38,7 +50,7 @@ class MedalWidget extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.5,
                     child: Text(
-                      medal.title,
+                      medal.badgeType?.title ?? "",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -48,7 +60,7 @@ class MedalWidget extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.5,
                     child: Text(
-                      medal.description,
+                      medal.badgeType?.description ?? "",
                     ),
                   ),
                   Container(
