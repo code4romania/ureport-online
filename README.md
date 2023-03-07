@@ -1,5 +1,5 @@
-# U-Report Online
-(updated nov 2022)
+# U-Report România
+(March 2023)
 
 
 ## Documentation
@@ -9,8 +9,8 @@ This documatation has several pages of information for developers, and people co
 All packages have been updated to the latest version (mar 2023)
 
 ## New features from forked version
-- New features
-- New screen
+- New features 
+- New screens (home, profile, auth, categories, settings)
 - Updated packages
 
 ## Current Flutter Version

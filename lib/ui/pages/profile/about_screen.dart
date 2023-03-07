@@ -25,10 +25,6 @@ class AboutScreen extends StatelessWidget {
         child: Container(
             width: 50,
             height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-            ),
             child: Image.asset("assets/images/arrow_up_rectangular.png")),
       ),
       body: SingleChildScrollView(

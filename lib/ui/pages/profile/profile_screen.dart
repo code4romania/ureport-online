@@ -6,7 +6,7 @@ import 'components/medal_widget.dart';
 import 'components/profile_header_component.dart';
 import '../../shared/text_navigator_component.dart';
 import '../../shared/top_header_widget.dart';
-import '../../../models/medal.dart';
+import '../../../models/badge.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.translation}) : super(key: key);
@@ -19,44 +19,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   late TabController _controller;
-
-  final List<Medal> medalsList = [
-    Medal(
-        id: 1,
-        image:
-            "https://www.iconpacks.net/icons/1/free-medal-icon-1369-thumb.png",
-        title: "Medal title",
-        description: "Short description medal",
-        isActive: true),
-    Medal(
-        id: 1,
-        image:
-            "https://www.iconpacks.net/icons/1/free-medal-icon-1369-thumb.png",
-        title: "Medal title",
-        description: "Short description medal",
-        isActive: true),
-    Medal(
-        id: 1,
-        image:
-            "https://www.iconpacks.net/icons/1/free-medal-icon-1369-thumb.png",
-        title: "Medal title",
-        description: "Short description medal",
-        isActive: true),
-    Medal(
-        id: 1,
-        image:
-            "https://www.iconpacks.net/icons/1/free-medal-icon-1369-thumb.png",
-        title: "Medal title",
-        description: "Short description medal",
-        isActive: true),
-    Medal(
-        id: 1,
-        image:
-            "https://www.iconpacks.net/icons/1/free-medal-icon-1369-thumb.png",
-        title: "Medal title",
-        description: "Short description medal",
-        isActive: true),
-  ];
 
   List<History> historyList = [
     History(

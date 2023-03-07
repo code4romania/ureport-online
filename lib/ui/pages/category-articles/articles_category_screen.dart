@@ -181,8 +181,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                               .first
                                               .stories!
                                               .first
-                                              .id
-                                              .toString(),
+                                              .id,
                                           isComingFromHome: false,
                                         ),
                                       );

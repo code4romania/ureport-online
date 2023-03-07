@@ -73,17 +73,33 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
+  late final _$canFinishReadingAtom =
+      Atom(name: '_StoryStoreBase.canFinishReading', context: context);
+
+  @override
+  bool get canFinishReading {
+    _$canFinishReadingAtom.reportRead();
+    return super.canFinishReading;
+  }
+
+  @override
+  set canFinishReading(bool value) {
+    _$canFinishReadingAtom.reportWrite(value, super.canFinishReading, () {
+      super.canFinishReading = value;
+    });
+  }
+
   late final _$storyIdAtom =
       Atom(name: '_StoryStoreBase.storyId', context: context);
 
   @override
-  String get storyId {
+  int get storyId {
     _$storyIdAtom.reportRead();
     return super.storyId;
   }
 
   @override
-  set storyId(String value) {
+  set storyId(int value) {
     _$storyIdAtom.reportWrite(value, super.storyId, () {
       super.storyId = value;
     });
@@ -93,13 +109,13 @@ mixin _$StoryStore on _StoryStoreBase, Store {
       Atom(name: '_StoryStoreBase.isBookmarked', context: context);
 
   @override
-  bool? get isBookmarked {
+  bool get isBookmarked {
     _$isBookmarkedAtom.reportRead();
     return super.isBookmarked;
   }
 
   @override
-  set isBookmarked(bool? value) {
+  set isBookmarked(bool value) {
     _$isBookmarkedAtom.reportWrite(value, super.isBookmarked, () {
       super.isBookmarked = value;
     });
@@ -109,31 +125,47 @@ mixin _$StoryStore on _StoryStoreBase, Store {
       Atom(name: '_StoryStoreBase.rating', context: context);
 
   @override
-  int? get rating {
+  int get rating {
     _$ratingAtom.reportRead();
     return super.rating;
   }
 
   @override
-  set rating(int? value) {
+  set rating(int value) {
     _$ratingAtom.reportWrite(value, super.rating, () {
       super.rating = value;
     });
   }
 
-  late final _$isReadAtom =
-      Atom(name: '_StoryStoreBase.isRead', context: context);
+  late final _$alreadyReadAtom =
+      Atom(name: '_StoryStoreBase.alreadyRead', context: context);
 
   @override
-  bool? get isRead {
-    _$isReadAtom.reportRead();
-    return super.isRead;
+  bool get alreadyRead {
+    _$alreadyReadAtom.reportRead();
+    return super.alreadyRead;
   }
 
   @override
-  set isRead(bool? value) {
-    _$isReadAtom.reportWrite(value, super.isRead, () {
-      super.isRead = value;
+  set alreadyRead(bool value) {
+    _$alreadyReadAtom.reportWrite(value, super.alreadyRead, () {
+      super.alreadyRead = value;
+    });
+  }
+
+  late final _$readArticleAtom =
+      Atom(name: '_StoryStoreBase.readArticle', context: context);
+
+  @override
+  bool get readArticle {
+    _$readArticleAtom.reportRead();
+    return super.readArticle;
+  }
+
+  @override
+  set readArticle(bool value) {
+    _$readArticleAtom.reportWrite(value, super.readArticle, () {
+      super.readArticle = value;
     });
   }
 
@@ -141,7 +173,7 @@ mixin _$StoryStore on _StoryStoreBase, Store {
       AsyncAction('_StoryStoreBase.isStoryRead', context: context);
 
   @override
-  Future<void> isStoryRead(String storyId) {
+  Future<void> isStoryRead(int storyId) {
     return _$isStoryReadAsyncAction.run(() => super.isStoryRead(storyId));
   }
 
@@ -149,7 +181,7 @@ mixin _$StoryStore on _StoryStoreBase, Store {
       AsyncAction('_StoryStoreBase.getStoryRating', context: context);
 
   @override
-  Future<void> getStoryRating(String storyId) {
+  Future<void> getStoryRating(int storyId) {
     return _$getStoryRatingAsyncAction.run(() => super.getStoryRating(storyId));
   }
 
@@ -157,7 +189,7 @@ mixin _$StoryStore on _StoryStoreBase, Store {
       AsyncAction('_StoryStoreBase.isStoryBookmarked', context: context);
 
   @override
-  Future<void> isStoryBookmarked(String storyId) {
+  Future<void> isStoryBookmarked(int storyId) {
     return _$isStoryBookmarkedAsyncAction
         .run(() => super.isStoryBookmarked(storyId));
   }
@@ -166,15 +198,24 @@ mixin _$StoryStore on _StoryStoreBase, Store {
       AsyncAction('_StoryStoreBase.fetchStory', context: context);
 
   @override
-  Future<dynamic> fetchStory(String id) {
+  Future<dynamic> fetchStory(int id) {
     return _$fetchStoryAsyncAction.run(() => super.fetchStory(id));
+  }
+
+  late final _$markAsReadAsyncAction =
+      AsyncAction('_StoryStoreBase.markAsRead', context: context);
+
+  @override
+  Future<void> markAsRead({required int storyId}) {
+    return _$markAsReadAsyncAction
+        .run(() => super.markAsRead(storyId: storyId));
   }
 
   late final _$addBookmarkAsyncAction =
       AsyncAction('_StoryStoreBase.addBookmark', context: context);
 
   @override
-  Future<void> addBookmark({required String storyId}) {
+  Future<void> addBookmark({required int storyId}) {
     return _$addBookmarkAsyncAction
         .run(() => super.addBookmark(storyId: storyId));
   }
@@ -196,6 +237,31 @@ mixin _$StoryStore on _StoryStoreBase, Store {
         .run(() => super.rateStory(storyId: storyId, rating: rating));
   }
 
+  late final _$_StoryStoreBaseActionController =
+      ActionController(name: '_StoryStoreBase', context: context);
+
+  @override
+  void timerFinished() {
+    final _$actionInfo = _$_StoryStoreBaseActionController.startAction(
+        name: '_StoryStoreBase.timerFinished');
+    try {
+      return super.timerFinished();
+    } finally {
+      _$_StoryStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void finishReading() {
+    final _$actionInfo = _$_StoryStoreBaseActionController.startAction(
+        name: '_StoryStoreBase.finishReading');
+    try {
+      return super.finishReading();
+    } finally {
+      _$_StoryStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
@@ -203,10 +269,12 @@ isLoading: ${isLoading},
 isActionLoading: ${isActionLoading},
 story: ${story},
 fetchedStory: ${fetchedStory},
+canFinishReading: ${canFinishReading},
 storyId: ${storyId},
 isBookmarked: ${isBookmarked},
 rating: ${rating},
-isRead: ${isRead}
+alreadyRead: ${alreadyRead},
+readArticle: ${readArticle}
     ''';
   }
 }

@@ -676,7 +676,7 @@ class OnboardingScreenRoute extends _i24.PageRouteInfo<void> {
 class ArticleScreenRoute extends _i24.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i25.Key? key,
-    String? storyId,
+    int? storyId,
     _i26.StoryItem? preloadedStory,
     required bool isComingFromHome,
   }) : super(
@@ -703,7 +703,7 @@ class ArticleScreenRouteArgs {
 
   final _i25.Key? key;
 
-  final String? storyId;
+  final int? storyId;
 
   final _i26.StoryItem? preloadedStory;
 

@@ -130,8 +130,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
 
                               context.router.push(
                                 ArticleScreenRoute(
-                                  storyId: widget.storyStore.stories[index].id
-                                      .toString(),
+                                  storyId: widget.storyStore.stories[index].id,
                                   isComingFromHome: false,
                                 ),
                               );

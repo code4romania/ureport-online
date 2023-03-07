@@ -3,7 +3,7 @@ import 'package:ureport_ecaro/models/medal.dart';
 
 class MedalWidget extends StatelessWidget {
   const MedalWidget({Key? key, required this.medal}) : super(key: key);
-  final Medal medal;
+  final Badge medal;
 
   @override
   Widget build(BuildContext context) {

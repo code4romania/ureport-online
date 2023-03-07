@@ -30,7 +30,7 @@ class ArticleScreen extends StatefulWidget {
     required this.isComingFromHome,
   }) : super(key: key);
 
-  final String? storyId;
+  final int? storyId;
   final StoryItem? preloadedStory;
   final bool isComingFromHome;
 
@@ -46,29 +46,22 @@ class _ArticleScreenState extends State<ArticleScreen> {
   late ScrollController _scrollController;
   late Map<String, String> _translation;
 
-  late Timer _timer;
-
   double webViewHeight = 0;
   bool _showScrollToTop = true;
-
-  bool canFinishReading = false;
-  bool timerFinished = false;
 
   void _scrollListener() {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange) {
-      if (timerFinished) {
-        setState(() {
-          canFinishReading = true;
-        });
+      if (_storyStore.readArticle || _storyStore.timer != null) {
+        _storyStore.finishReading();
+        _scrollController.removeListener(_scrollListener);
       }
     }
   }
 
   @override
   void initState() {
-    final httpClient = StoryService();
     final spUtil = SPUtil();
 
     _scrollController = ScrollController();
@@ -76,29 +69,22 @@ class _ArticleScreenState extends State<ArticleScreen> {
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["article_screen"]!;
 
-    _timer = Timer(const Duration(seconds: 10), () {
-      print("finished");
-      timerFinished = true;
-    });
-
-    _scrollController.addListener(_scrollListener);
-
     if (!widget.isComingFromHome) {
       _storyStore = StoryStore(
         widget.storyId!,
         null,
-        httpClient,
         spUtil,
       );
       _storyStore.fetchStory(widget.storyId!);
     } else {
       _storyStore = StoryStore(
-        widget.preloadedStory!.id!.toString(),
+        widget.preloadedStory!.id!,
         widget.preloadedStory!,
-        httpClient,
         spUtil,
       );
     }
+
+    _scrollController.addListener(_scrollListener);
 
     super.initState();
   }
@@ -111,7 +97,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   void dispose() {
     _scrollController.dispose(); // dispose the controller
-    _timer.cancel();
+    _storyStore.cancelTimer();
     super.dispose();
   }
 
@@ -184,13 +170,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
                     onTap: () {
                       ClickSound.soundClick();
 
-                      if (_storyStore.isBookmarked!) {
+                      if (_storyStore.isBookmarked) {
                         _storyStore.removeBookmark(
-                          storyId: widget.preloadedStory!.id.toString(),
+                          storyId: widget.preloadedStory!.id!,
                         );
                       } else {
                         _storyStore.addBookmark(
-                          storyId: widget.preloadedStory!.id.toString(),
+                          storyId: widget.preloadedStory!.id!,
                         );
                       }
 
@@ -198,7 +184,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                     },
                     child: Observer(builder: (context) {
                       return Icon(
-                        _storyStore.isBookmarked!
+                        _storyStore.isBookmarked
                             ? Icons.bookmark
                             : Icons.bookmark_border_outlined,
                         color: purpleColor,
@@ -287,22 +273,22 @@ class _ArticleScreenState extends State<ArticleScreen> {
               "widget.image",
               "widget.date"),
         ),
-        canFinishReading
-            ? Observer(builder: (context) {
-                if (_storyStore.isActionLoading) {
-                  return LoadingIndicatorComponent();
-                }
-                return FinishReadingComponent(
-                  translation: _translation,
-                  storyId: widget.preloadedStory!.id.toString(),
-                  initRating: _storyStore.rating ?? 0,
-                  onRateArticle: (int newRating) => _storyStore.rateStory(
+        Observer(builder: (context) {
+          return Visibility(
+            visible: _storyStore.canFinishReading,
+            child: _storyStore.isActionLoading
+                ? LoadingIndicatorComponent()
+                : FinishReadingComponent(
+                    translation: _translation,
                     storyId: widget.preloadedStory!.id.toString(),
-                    rating: newRating,
+                    initRating: _storyStore.rating,
+                    onRateArticle: (int newRating) => _storyStore.rateStory(
+                      storyId: widget.preloadedStory!.id.toString(),
+                      rating: newRating,
+                    ),
                   ),
-                );
-              })
-            : SizedBox()
+          );
+        })
       ],
     );
   }
@@ -315,6 +301,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
             return Center(
               child: LoadingIndicatorComponent(),
             );
+
           case false:
             if (_storyStore.fetchedStory == null) {
               return Center(
@@ -362,19 +349,17 @@ class _ArticleScreenState extends State<ArticleScreen> {
                           GestureDetector(
                             onTap: () {
                               ClickSound.soundClick();
-                              if (_storyStore.isBookmarked!) {
+                              if (_storyStore.isBookmarked) {
                                 _storyStore.removeBookmark(
-                                    storyId: _storyStore.fetchedStory!.id
-                                        .toString());
+                                    storyId: _storyStore.fetchedStory!.id!);
                               } else {
                                 _storyStore.addBookmark(
-                                    storyId: _storyStore.fetchedStory!.id
-                                        .toString());
+                                    storyId: _storyStore.fetchedStory!.id!);
                               }
                             },
                             child: Observer(builder: (context) {
                               return Icon(
-                                _storyStore.isBookmarked!
+                                _storyStore.isBookmarked
                                     ? Icons.bookmark
                                     : Icons.bookmark_border_outlined,
                                 color: purpleColor,
@@ -465,23 +450,23 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       "widget.image",
                       "widget.date"),
                 ),
-                canFinishReading
-                    ? Observer(builder: (context) {
-                        if (_storyStore.isActionLoading) {
-                          return LoadingIndicatorComponent();
-                        }
-                        return FinishReadingComponent(
-                          translation: _translation,
-                          storyId: _storyStore.fetchedStory!.id.toString(),
-                          initRating: _storyStore.rating ?? 0,
-                          onRateArticle: (int newRating) =>
-                              _storyStore.rateStory(
+                Observer(builder: (context) {
+                  return Visibility(
+                    visible: _storyStore.canFinishReading,
+                    child: _storyStore.isActionLoading
+                        ? LoadingIndicatorComponent()
+                        : FinishReadingComponent(
+                            translation: _translation,
                             storyId: _storyStore.fetchedStory!.id.toString(),
-                            rating: newRating,
+                            initRating: _storyStore.rating,
+                            onRateArticle: (int newRating) =>
+                                _storyStore.rateStory(
+                              storyId: _storyStore.fetchedStory!.id.toString(),
+                              rating: newRating,
+                            ),
                           ),
-                        );
-                      })
-                    : SizedBox()
+                  );
+                })
               ],
             );
         }

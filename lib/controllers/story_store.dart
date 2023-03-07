@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart';
@@ -9,8 +11,9 @@ part 'story_store.g.dart';
 class StoryStore = _StoryStoreBase with _$StoryStore;
 
 abstract class _StoryStoreBase with Store {
-  late String token;
   late StoryService httpClient;
+  late String token;
+  late int userId;
   late SPUtil spUtil;
 
   @observable
@@ -26,53 +29,74 @@ abstract class _StoryStoreBase with Store {
   StoryLong? fetchedStory;
 
   @observable
-  String storyId;
+  bool canFinishReading = false;
+
+  @observable
+  int storyId;
+
+  @observable
+  bool isBookmarked = false;
+
+  @observable
+  int rating = 0;
+
+  @observable
+  bool alreadyRead = false;
+
+  @observable
+  bool readArticle = false;
+
+  Timer? timer;
+
+  void cancelTimer() {
+    timer?.cancel();
+  }
 
   _StoryStoreBase(
     this.storyId,
     this.story,
-    this.httpClient,
     this.spUtil,
   ) {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
+    httpClient = StoryService(token: token);
+    userId = 3;
     if (fetchedStory == null) {
       fetchStory(storyId);
     }
 
-    // isStoryBookmarked(storyId.toString());
-    // isStoryRead(storyId.toString());
-    getStoryRating(storyId.toString());
+    print("StoryStore: $storyId");
+
+    isStoryBookmarked(storyId)
+        .then((value) => print("is bookmarked: $isBookmarked"));
+
+    isStoryRead(storyId).then((value) {
+      print("is read: $alreadyRead");
+      if (!alreadyRead) {
+        print("Timer started");
+        timer = Timer(const Duration(seconds: 10), () {
+          timerFinished();
+        });
+      }
+    });
+    //getStoryRating(storyId.toString());
   }
-
-  @observable
-  bool? isBookmarked;
-
-  @observable
-  int? rating;
-
-  @observable
-  bool? isRead;
 
   // Get story details
 
   @action
-  Future<void> isStoryRead(String storyId) async =>
-      isRead = await httpClient.getStoryReadStatus(
-          "https://ureport.heroesof.tech/api/v1/storyreads/story/$storyId");
+  Future<void> isStoryRead(int storyId) async => alreadyRead =
+      await httpClient.getStoryReadStatus(storyId: storyId, userId: userId);
 
   @action
-  Future<void> getStoryRating(String storyId) async =>
-      rating = await httpClient.getStoryRating(
-          "https://ureport.heroesof.tech/api/v1/storyratings/story/$storyId");
+  Future<void> getStoryRating(int storyId) async => rating =
+      (await httpClient.getStoryRating(storyId: storyId, userId: userId))!;
 
   @action
-  Future<void> isStoryBookmarked(String storyId) async =>
-      isBookmarked = await httpClient.getStoryBookmark(
-        "https://ureport.heroesof.tech/api/v1/storybookmarks/story/$storyId",
-      );
+  Future<void> isStoryBookmarked(int storyId) async => isBookmarked =
+      await httpClient.getStoryBookmarkStatus(storyId: storyId, userId: userId);
 
   @action
-  Future fetchStory(String id) async => fetchedStory = await httpClient
+  Future fetchStory(int id) async => fetchedStory = await httpClient
           .getStory("https://ureport.heroesof.tech/api/v1/stories/$id")
           .then(
         (story) {
@@ -86,17 +110,36 @@ abstract class _StoryStoreBase with Store {
   // Actions about current story
 
   @action
-  Future<void> addBookmark({required String storyId}) async {
-    isActionLoading = true;
-    // await httpClient.bookmarkStory(storyId: storyId);
-    isBookmarked = true;
-    isActionLoading = false;
+  void timerFinished() {
+    print("timer finished");
+    markAsRead(storyId: storyId);
   }
 
-  Future<void> removeBookmark({required String storyId}) async {
+  @action
+  void finishReading() {
+    print("finishReading");
+    if (readArticle) canFinishReading = true;
+  }
+
+  @action
+  Future<void> markAsRead({required int storyId}) async {
+    final result =
+        await httpClient.markAsRead(storyId: storyId, userId: userId);
+    if (result != null) readArticle = true;
+  }
+
+  @action
+  Future<void> addBookmark({required int storyId}) async {
+    final result =
+        await httpClient.addBookmark(storyId: storyId, userId: userId);
+    if (result) isBookmarked = true;
+  }
+
+  Future<void> removeBookmark({required int storyId}) async {
     isActionLoading = true;
-    // await httpClient.bookmarkStory(storyId: storyId);
-    isBookmarked = false;
+    final result =
+        await httpClient.removeBookmark(storyId: storyId, userId: userId);
+    if (result) isBookmarked = false;
     isActionLoading = false;
   }
 
@@ -104,7 +147,7 @@ abstract class _StoryStoreBase with Store {
   Future<void> readStory({required String storyId}) async {
     isActionLoading = true;
     // await httpClient.readStory(storyId: storyId);
-    isRead = true;
+    alreadyRead = true;
     isActionLoading = false;
   }
 
