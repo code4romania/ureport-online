@@ -12,10 +12,28 @@ part 'bookmark.g.dart';
 class Bookmark with _$Bookmark {
   const factory Bookmark({
     int? id,
-    int? story,
     int? user,
+    Story? story,
   }) = _Bookmark;
 
   factory Bookmark.fromJson(Map<String, dynamic> json) =>
       _$BookmarkFromJson(json);
+}
+
+@freezed
+class Story with _$Story {
+  const factory Story({
+    int? id,
+    String? title,
+    bool? featured,
+    String? summary,
+    dynamic videoId,
+    dynamic audioLink,
+    dynamic tags,
+    int? org,
+    List<String>? images,
+    DateTime? createdOn,
+  }) = _Story;
+
+  factory Story.fromJson(Map<String, dynamic> json) => _$StoryFromJson(json);
 }

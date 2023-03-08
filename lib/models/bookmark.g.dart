@@ -8,13 +8,44 @@ part of 'bookmark.dart';
 
 _$_Bookmark _$$_BookmarkFromJson(Map json) => _$_Bookmark(
       id: json['id'] as int?,
-      story: json['story'] as int?,
       user: json['user'] as int?,
+      story: json['story'] == null
+          ? null
+          : Story.fromJson(Map<String, dynamic>.from(json['story'] as Map)),
     );
 
 Map<String, dynamic> _$$_BookmarkToJson(_$_Bookmark instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'story': instance.story,
       'user': instance.user,
+      'story': instance.story?.toJson(),
+    };
+
+_$_Story _$$_StoryFromJson(Map json) => _$_Story(
+      id: json['id'] as int?,
+      title: json['title'] as String?,
+      featured: json['featured'] as bool?,
+      summary: json['summary'] as String?,
+      videoId: json['videoId'],
+      audioLink: json['audioLink'],
+      tags: json['tags'],
+      org: json['org'] as int?,
+      images:
+          (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      createdOn: json['createdOn'] == null
+          ? null
+          : DateTime.parse(json['createdOn'] as String),
+    );
+
+Map<String, dynamic> _$$_StoryToJson(_$_Story instance) => <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'featured': instance.featured,
+      'summary': instance.summary,
+      'videoId': instance.videoId,
+      'audioLink': instance.audioLink,
+      'tags': instance.tags,
+      'org': instance.org,
+      'images': instance.images,
+      'createdOn': instance.createdOn?.toIso8601String(),
     };

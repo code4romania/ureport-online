@@ -103,8 +103,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                     itemCount: _profileInfoStore.bookmarks.length,
                     itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: HistoryWidget(
-                        history: _profileInfoStore.bookmarks[index],
+                      child: BookmarkWidget(
+                        bookmarkItem: _profileInfoStore.bookmarks[index],
                       ),
                     ),
                   );
