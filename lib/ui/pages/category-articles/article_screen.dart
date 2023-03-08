@@ -50,9 +50,16 @@ class _ArticleScreenState extends State<ArticleScreen> {
   bool _showScrollToTop = true;
 
   void _scrollListener() {
-    if (_scrollController.offset >=
-            _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange) {
+    if (_scrollController.position.maxScrollExtent > 0) {
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        if (_storyStore.readArticle || _storyStore.timer != null) {
+          _storyStore.finishReading();
+          _scrollController.removeListener(_scrollListener);
+        }
+      }
+    } else {
       if (_storyStore.readArticle || _storyStore.timer != null) {
         _storyStore.finishReading();
         _scrollController.removeListener(_scrollListener);
