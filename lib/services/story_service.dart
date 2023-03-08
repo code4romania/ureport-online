@@ -68,21 +68,39 @@ class StoryService {
     }
   }
 
-  Future<int?> getStoryRating({
+  Future<int> getStoryRating({
     required int storyId,
     required int userId,
   }) async {
     final response = await http.get(Uri.parse(
         "https://ureport.heroesof.tech/api/v1/storyratings/user/$userId/?story=$storyId"));
     if (response.statusCode == 200) {
-      return 4;
+      if (response.body == "[]") return 0;
+      final rating = jsonDecode(response.body)[0]["score"];
+      return rating;
     } else {
-      return 4;
+      return 0;
     }
   }
 
-  Future<void> rateStory(
-      {required String storyId, required int rating}) async {}
+  Future<int> rateStory({
+    required String storyId,
+    required int userId,
+    required int rating,
+  }) async {
+    final response = await http.post(
+        Uri.https("ureport.heroesof.tech", "/api/v1/storyratings/user/$userId"),
+        headers: header,
+        body: jsonEncode({
+          "story": storyId,
+          "score": rating,
+        }));
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return rating;
+    } else {
+      return 0;
+    }
+  }
 
   //Bookmark
 

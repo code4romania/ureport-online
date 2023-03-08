@@ -89,21 +89,18 @@ abstract class _StoryStoreBase with Store {
 
   @action
   Future<void> getStoryRating(int storyId) async => rating =
-      (await httpClient.getStoryRating(storyId: storyId, userId: userId))!;
+      await httpClient.getStoryRating(storyId: storyId, userId: userId);
 
   @action
   Future<void> isStoryBookmarked(int storyId) async => isBookmarked =
       await httpClient.getStoryBookmarkStatus(storyId: storyId, userId: userId);
 
   @action
-  Future fetchStory(int id) async => fetchedStory = await httpClient
-          .getStory("https://ureport.heroesof.tech/api/v1/stories/$id")
-          .then(
-        (story) {
-          isLoading = false;
-          return story;
-        },
-      );
+  Future fetchStory(int id) async {
+    fetchedStory = await httpClient
+        .getStory("https://ureport.heroesof.tech/api/v1/stories/$id");
+    isLoading = false;
+  }
 
   // End of get story details
 
