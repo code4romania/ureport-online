@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDtqwxTgqk_qWtH71nxf-nu34v01IUVPuQ',
-    appId: '1:671571515216:android:47c73ede1814ad5a32fe55',
+    appId: '1:671571515216:android:0c04fd501b27d67532fe55',
     messagingSenderId: '671571515216',
     projectId: 'ureport-dev',
     storageBucket: 'ureport-dev.appspot.com',
@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAxWmSccaFHfG-jEbaDCxpedzzxE6rzM1o',
-    appId: '1:671571515216:ios:e96836430660630a32fe55',
+    appId: '1:671571515216:ios:15399623abaebe5a32fe55',
     messagingSenderId: '671571515216',
     projectId: 'ureport-dev',
     storageBucket: 'ureport-dev.appspot.com',
-    iosClientId: '671571515216-4d22oh22dpvvbp35ulnq2d6qcrnb58vm.apps.googleusercontent.com',
-    iosBundleId: 'org.unicef.ureport',
+    iosClientId: '671571515216-2ui9kt06vhu13piet24ch1c1ngsaqib7.apps.googleusercontent.com',
+    iosBundleId: 'org.unicef.ureportromania',
   );
 }

@@ -1,4 +1,4 @@
-package `in`.ureport
+package in.ureportromania
 
 import io.flutter.embedding.android.FlutterActivity
 

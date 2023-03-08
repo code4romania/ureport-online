@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:671571515216:android:47c73ede1814ad5a32fe55",
+        "mobilesdk_app_id": "1:671571515216:android:0c04fd501b27d67532fe55",
         "android_client_info": {
-          "package_name": "org.unicef.ureport"
+          "package_name": "org.unicef.ureportromania"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "671571515216-jnkmrki4akrao291k6l6t5r63ropnlag.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "671571515216-4d22oh22dpvvbp35ulnq2d6qcrnb58vm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.unicef.ureport"
+              }
             }
           ]
         }

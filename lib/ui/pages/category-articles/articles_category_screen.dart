@@ -54,23 +54,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
     initMap.addAll(mapOfItems);
   }
 
-  void search(String value) {
-    if (value.isEmpty) {
-      setState(() {
-        mapOfItems.clear();
-        mapOfItems.addAll(initMap);
-      });
-    } else {
-      initMap.keys.forEach((element) {
-        if (element.startsWith(value)) {
-          setState(() {
-            mapOfItems.clear();
-            mapOfItems[element] = initMap[element]!;
-          });
-        }
-      });
-    }
-  }
+  void search(String value) {}
 
   @override
   Widget build(BuildContext context) {

@@ -40,7 +40,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.unicef.ureport"
+        applicationId "in.ureportromania"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
