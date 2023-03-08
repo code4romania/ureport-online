@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/profile_info_store.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
@@ -103,8 +104,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                     itemCount: _profileInfoStore.bookmarks.length,
                     itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: BookmarkWidget(
-                        bookmarkItem: _profileInfoStore.bookmarks[index],
+                      child: GestureDetector(
+                        onTap: () => context.router.push(ArticleScreenRoute(
+                            isComingFromHome: false,
+                            storyId:
+                                _profileInfoStore.bookmarks[index].story!.id)),
+                        child: BookmarkWidget(
+                          bookmarkItem: _profileInfoStore.bookmarks[index],
+                        ),
                       ),
                     ),
                   );

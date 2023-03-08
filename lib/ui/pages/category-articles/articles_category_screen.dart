@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
+import 'package:ureport_ecaro/controllers/article_category_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
-import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
+import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_category_section_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
@@ -33,28 +34,18 @@ class ArticlesCategoryScreen extends StatefulWidget {
 
 class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
   late StateStore _stateStore;
+  late ArticleCategoryStore _articleCategoryStore;
   late Map<String, String> _translation;
-  final Map<String, List<Result>> mapOfItems = {};
-  final Map<String, List<Result>> initMap = {};
 
   @override
   void initState() {
     _stateStore = context.read<StateStore>();
     _translation = translations["${_stateStore.selectedLanguage}"]![
         "articles_category_screen"]!;
+    _articleCategoryStore = ArticleCategoryStore(widget.result);
+
     super.initState();
-
-    widget.result.forEach((element) {
-      if (mapOfItems.containsKey(element.name!.split('/')[1].trim())) {
-        mapOfItems[element.name!.split('/')[1].trim()]!.add(element);
-      } else {
-        mapOfItems[element.name!.split('/')[1].trim()] = [element];
-      }
-    });
-    initMap.addAll(mapOfItems);
   }
-
-  void search(String value) {}
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +80,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                   ],
                 ),
               ),
-              SearchBarWidget(onSearchChanged: search),
+              SearchBarWidget(onSearchChanged: _articleCategoryStore.search),
               SizedBox(
                 height: 20,
               ),
@@ -103,18 +94,12 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                   ),
                 ),
               ),
-              ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: mapOfItems.length,
-                itemBuilder: (context, index) {
-                  if (mapOfItems.values.elementAt(index).first.stories !=
-                          null &&
-                      mapOfItems.values
-                          .elementAt(index)
-                          .first
-                          .stories!
-                          .isNotEmpty)
+              Observer(builder: (context) {
+                return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: _articleCategoryStore.mapOfItems.keys.length,
+                  itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(
                         top: 20,
@@ -126,7 +111,8 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            mapOfItems.keys.elementAt(index),
+                            _articleCategoryStore.mapOfItems.keys
+                                .elementAt(index),
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -160,7 +146,8 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
 
                                       context.router.push(
                                         ArticleScreenRoute(
-                                          storyId: mapOfItems.values
+                                          storyId: _articleCategoryStore
+                                              .mapOfItems.values
                                               .elementAt(index)
                                               .first
                                               .stories!
@@ -171,22 +158,25 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                       );
                                     },
                                     child: ArticleItemWidget(
-                                      article: mapOfItems.values
+                                      article: _articleCategoryStore
+                                          .mapOfItems.values
                                           .elementAt(index)
                                           .first
                                           .stories!
                                           .first,
                                       categoryName: widget.categoryTitle,
-                                      subCategoryName:
-                                          mapOfItems.keys.elementAt(index),
+                                      subCategoryName: _articleCategoryStore
+                                          .mapOfItems.keys
+                                          .elementAt(index),
                                     ),
                                   ),
                                 ),
                                 Expanded(
                                   child: ArticleCategorySectionComponent(
                                     viewMore: _translation["view_more"]!,
-                                    categoryTitle:
-                                        mapOfItems.keys.elementAt(index),
+                                    categoryTitle: _articleCategoryStore
+                                        .mapOfItems.keys
+                                        .elementAt(index),
                                     onTap: () {
                                       ClickSound.soundTap();
 
@@ -194,8 +184,11 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                         ArticleListScreenRoute(
                                           categoryTitle: widget.categoryTitle,
                                           subcategoryTitle:
-                                              mapOfItems.keys.elementAt(index),
-                                          stories: mapOfItems.values
+                                              _articleCategoryStore
+                                                  .mapOfItems.keys
+                                                  .elementAt(index),
+                                          stories: _articleCategoryStore
+                                              .mapOfItems.values
                                               .elementAt(index)
                                               .first
                                               .stories!,
@@ -211,10 +204,9 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                         ],
                       ),
                     );
-                  else
-                    return Container();
-                },
-              ),
+                  },
+                );
+              }),
             ],
           ),
         ),
