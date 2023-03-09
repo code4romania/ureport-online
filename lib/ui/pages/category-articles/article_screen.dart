@@ -46,7 +46,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   late ScrollController _scrollController;
   late Map<String, String> _translation;
 
-  double webViewHeight = 0;
+  double webViewHeight = 300;
   bool _showScrollToTop = true;
 
   void _scrollListener() {
@@ -486,23 +486,24 @@ class _ArticleScreenState extends State<ArticleScreen> {
     return Container(
       height: webViewHeight,
       child: WebViewPlus(
-        onWebViewCreated: (controller) {
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (controller) async {
           webViewController = controller;
           controller.webViewController.clearCache();
+
           loadDataRaw(content, title, image, date);
-        },
-        onPageFinished: (url) {
-          webViewController.webViewController
-              .evaluateJavascript("document.body.scrollHeight")
-              .then((value) {
-            setState(() {
-              webViewHeight = double.parse(value);
-            });
+          final height = await controller.getHeight();
+
+          print(height);
+
+          setState(() {
+            webViewHeight = height;
           });
+        },
+        onPageFinished: (url) async {
           content = content.replaceAll("\"", "\'");
           content = content.replaceAll("\\", "");
         },
-        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }

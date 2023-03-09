@@ -185,10 +185,10 @@ class _CategoryListScreenState extends State<CategoryListScreen>
         ),
         margin: EdgeInsets.all(20),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               margin: EdgeInsets.only(left: 20),
-              width: MediaQuery.of(context).size.width * 0.6 - 20,
               child: Text(
                 item.name!.split('/')[0].toString(),
                 style: titleWhiteTextStlye,
@@ -197,12 +197,9 @@ class _CategoryListScreenState extends State<CategoryListScreen>
             Container(
               height: 130,
               width: 130,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Padding(
-                  padding: const EdgeInsets.all(28.0),
-                  child: getItemTitleImage(item.imageUrl),
-                ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: getItemTitleImage(item.imageUrl),
               ),
             ),
           ],
@@ -217,8 +214,8 @@ class _CategoryListScreenState extends State<CategoryListScreen>
         ? ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             child: CachedNetworkImage(
-              height: 150,
-              width: 150,
+              height: 120,
+              width: 120,
               fit: BoxFit.cover,
               imageUrl: imageUrl,
               progressIndicatorBuilder: (context, url, downloadProgress) =>

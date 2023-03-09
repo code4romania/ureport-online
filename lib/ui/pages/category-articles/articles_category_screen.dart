@@ -100,110 +100,122 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                   shrinkWrap: true,
                   itemCount: _articleCategoryStore.mapOfItems.keys.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                        top: 20,
-                        bottom: 20,
-                      ),
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _articleCategoryStore.mapOfItems.keys
-                                .elementAt(index),
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          Stack(
-                            alignment: Alignment.centerRight,
-                            children: [
-                              Container(
-                                height: 1,
-                                width: 200,
-                                color: purpleColor,
-                              ),
-                              Container(
-                                height: 8,
-                                width: 8,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
+                    if (_articleCategoryStore.mapOfItems.values
+                                .elementAt(index)
+                                .first
+                                .stories !=
+                            null &&
+                        _articleCategoryStore.mapOfItems.values
+                            .elementAt(index)
+                            .first
+                            .stories!
+                            .isNotEmpty)
+                      return Container(
+                        margin: EdgeInsets.only(
+                          top: 20,
+                          bottom: 20,
+                        ),
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _articleCategoryStore.mapOfItems.keys
+                                  .elementAt(index),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            Stack(
+                              alignment: Alignment.centerRight,
+                              children: [
+                                Container(
+                                  height: 1,
+                                  width: 200,
                                   color: purpleColor,
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 390,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      ClickSound.soundTap();
-
-                                      context.router.push(
-                                        ArticleScreenRoute(
-                                          storyId: _articleCategoryStore
-                                              .mapOfItems.values
-                                              .elementAt(index)
-                                              .first
-                                              .stories!
-                                              .first
-                                              .id,
-                                          isComingFromHome: false,
-                                        ),
-                                      );
-                                    },
-                                    child: ArticleItemWidget(
-                                      article: _articleCategoryStore
-                                          .mapOfItems.values
-                                          .elementAt(index)
-                                          .first
-                                          .stories!
-                                          .first,
-                                      categoryName: widget.categoryTitle,
-                                      subCategoryName: _articleCategoryStore
-                                          .mapOfItems.keys
-                                          .elementAt(index),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ArticleCategorySectionComponent(
-                                    viewMore: _translation["view_more"]!,
-                                    categoryTitle: _articleCategoryStore
-                                        .mapOfItems.keys
-                                        .elementAt(index),
-                                    onTap: () {
-                                      ClickSound.soundTap();
-
-                                      context.router.push(
-                                        ArticleListScreenRoute(
-                                          categoryTitle: widget.categoryTitle,
-                                          subcategoryTitle:
-                                              _articleCategoryStore
-                                                  .mapOfItems.keys
-                                                  .elementAt(index),
-                                          stories: _articleCategoryStore
-                                              .mapOfItems.values
-                                              .elementAt(index)
-                                              .first
-                                              .stories!,
-                                          storyStore: widget.storyStore,
-                                        ),
-                                      );
-                                    },
+                                Container(
+                                  height: 8,
+                                  width: 8,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: purpleColor,
                                   ),
                                 ),
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    );
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 390,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        ClickSound.soundTap();
+
+                                        context.router.push(
+                                          ArticleScreenRoute(
+                                            storyId: _articleCategoryStore
+                                                .mapOfItems.values
+                                                .elementAt(index)
+                                                .first
+                                                .stories!
+                                                .first
+                                                .id,
+                                            isComingFromHome: false,
+                                          ),
+                                        );
+                                      },
+                                      child: ArticleItemWidget(
+                                        article: _articleCategoryStore
+                                            .mapOfItems.values
+                                            .elementAt(index)
+                                            .first
+                                            .stories!
+                                            .first,
+                                        categoryName: widget.categoryTitle,
+                                        subCategoryName: _articleCategoryStore
+                                            .mapOfItems.keys
+                                            .elementAt(index),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: ArticleCategorySectionComponent(
+                                      viewMore: _translation["view_more"]!,
+                                      categoryTitle: _articleCategoryStore
+                                          .mapOfItems.keys
+                                          .elementAt(index),
+                                      onTap: () {
+                                        ClickSound.soundTap();
+
+                                        context.router.push(
+                                          ArticleListScreenRoute(
+                                            categoryTitle: widget.categoryTitle,
+                                            subcategoryTitle:
+                                                _articleCategoryStore
+                                                    .mapOfItems.keys
+                                                    .elementAt(index),
+                                            stories: _articleCategoryStore
+                                                .mapOfItems.values
+                                                .elementAt(index)
+                                                .first
+                                                .stories!,
+                                            storyStore: widget.storyStore,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    else
+                      return Container();
                   },
                 );
               }),
