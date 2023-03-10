@@ -1,24 +1,24 @@
 // To parse this JSON data, do
 //
-//     final badgeMedal = badgeMedalFromJson(jsonString);
+//     final claimedBadge = claimedBadgeFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
-part 'badge_medal.freezed.dart';
-part 'badge_medal.g.dart';
+part 'claimed_badge.freezed.dart';
+part 'claimed_badge.g.dart';
 
 @freezed
-class BadgeMedal with _$BadgeMedal {
-  const factory BadgeMedal({
+class ClaimedBadge with _$ClaimedBadge {
+  const factory ClaimedBadge({
     int? id,
-    BadgeType? badge_type,
+    BadgeType? badgeType,
     int? user,
-    DateTime? offered_on,
-  }) = _BadgeMedal;
+    DateTime? offeredOn,
+  }) = _ClaimedBadge;
 
-  factory BadgeMedal.fromJson(Map<String, dynamic> json) =>
-      _$BadgeMedalFromJson(json);
+  factory ClaimedBadge.fromJson(Map<String, dynamic> json) =>
+      _$ClaimedBadgeFromJson(json);
 }
 
 @freezed
@@ -29,7 +29,7 @@ class BadgeType with _$BadgeType {
     String? title,
     String? image,
     String? description,
-    dynamic item_category,
+    int? itemCategory,
   }) = _BadgeType;
 
   factory BadgeType.fromJson(Map<String, dynamic> json) =>

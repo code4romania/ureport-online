@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:mobx/mobx.dart';
-import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
 import 'package:ureport_ecaro/services/story_service.dart';
@@ -29,9 +28,6 @@ abstract class _StoryStoreBase with Store {
   StoryLong? fetchedStory;
 
   @observable
-  bool canFinishReading = false;
-
-  @observable
   int storyId;
 
   @observable
@@ -41,10 +37,19 @@ abstract class _StoryStoreBase with Store {
   int rating = 0;
 
   @observable
+  bool canShowRating = false;
+
+  @observable
   bool alreadyRead = false;
 
   @observable
   bool readArticle = false;
+
+  @observable
+  bool finishedTimer = false;
+
+  @observable
+  bool scrolledToTheBottom = false;
 
   Timer? timer;
 
@@ -64,8 +69,6 @@ abstract class _StoryStoreBase with Store {
       fetchStory(storyId);
     }
 
-    print("StoryStore: $storyId");
-
     isStoryBookmarked(storyId)
         .then((value) => print("is bookmarked: $isBookmarked"));
 
@@ -73,12 +76,16 @@ abstract class _StoryStoreBase with Store {
       print("is read: $alreadyRead");
       if (!alreadyRead) {
         print("Timer started");
+
         timer = Timer(const Duration(seconds: 10), () {
           timerFinished();
         });
       }
     });
-    //getStoryRating(storyId.toString());
+
+    showRating(storyId: storyId);
+
+    // getStoryRating(storyId);
   }
 
   // Get story details
@@ -108,21 +115,16 @@ abstract class _StoryStoreBase with Store {
 
   @action
   void timerFinished() {
-    print("timer finished");
+    print("Timer finished");
+    finishedTimer = true;
     markAsRead(storyId: storyId);
-  }
-
-  @action
-  void finishReading() {
-    print("finishReading");
-    if (readArticle) canFinishReading = true;
   }
 
   @action
   Future<void> markAsRead({required int storyId}) async {
     final result =
         await httpClient.markAsRead(storyId: storyId, userId: userId);
-    if (result != null) readArticle = true;
+    readArticle = result;
   }
 
   @action
@@ -141,18 +143,20 @@ abstract class _StoryStoreBase with Store {
   }
 
   @action
-  Future<void> readStory({required String storyId}) async {
+  Future<void> rateStory({required int storyId, required int rating}) async {
     isActionLoading = true;
-    // await httpClient.readStory(storyId: storyId);
-    alreadyRead = true;
+
+    final receivedRating = await httpClient.rateStory(
+        storyId: storyId, userId: userId, rating: rating);
+    this.rating = receivedRating;
     isActionLoading = false;
   }
 
   @action
-  Future<void> rateStory({required String storyId, required int rating}) async {
+  Future<void> showRating({required int storyId}) async {
     isActionLoading = true;
-    // await httpClient.rateStory(storyId: storyId, rating: rating);
-    this.rating = rating;
+    final show = await httpClient.showRating(storyId: storyId);
+    this.canShowRating = show;
     isActionLoading = false;
   }
 

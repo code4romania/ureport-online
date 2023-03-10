@@ -73,22 +73,6 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
-  late final _$canFinishReadingAtom =
-      Atom(name: '_StoryStoreBase.canFinishReading', context: context);
-
-  @override
-  bool get canFinishReading {
-    _$canFinishReadingAtom.reportRead();
-    return super.canFinishReading;
-  }
-
-  @override
-  set canFinishReading(bool value) {
-    _$canFinishReadingAtom.reportWrite(value, super.canFinishReading, () {
-      super.canFinishReading = value;
-    });
-  }
-
   late final _$storyIdAtom =
       Atom(name: '_StoryStoreBase.storyId', context: context);
 
@@ -137,6 +121,22 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
+  late final _$canShowRatingAtom =
+      Atom(name: '_StoryStoreBase.canShowRating', context: context);
+
+  @override
+  bool get canShowRating {
+    _$canShowRatingAtom.reportRead();
+    return super.canShowRating;
+  }
+
+  @override
+  set canShowRating(bool value) {
+    _$canShowRatingAtom.reportWrite(value, super.canShowRating, () {
+      super.canShowRating = value;
+    });
+  }
+
   late final _$alreadyReadAtom =
       Atom(name: '_StoryStoreBase.alreadyRead', context: context);
 
@@ -166,6 +166,38 @@ mixin _$StoryStore on _StoryStoreBase, Store {
   set readArticle(bool value) {
     _$readArticleAtom.reportWrite(value, super.readArticle, () {
       super.readArticle = value;
+    });
+  }
+
+  late final _$finishedTimerAtom =
+      Atom(name: '_StoryStoreBase.finishedTimer', context: context);
+
+  @override
+  bool get finishedTimer {
+    _$finishedTimerAtom.reportRead();
+    return super.finishedTimer;
+  }
+
+  @override
+  set finishedTimer(bool value) {
+    _$finishedTimerAtom.reportWrite(value, super.finishedTimer, () {
+      super.finishedTimer = value;
+    });
+  }
+
+  late final _$scrolledToTheBottomAtom =
+      Atom(name: '_StoryStoreBase.scrolledToTheBottom', context: context);
+
+  @override
+  bool get scrolledToTheBottom {
+    _$scrolledToTheBottomAtom.reportRead();
+    return super.scrolledToTheBottom;
+  }
+
+  @override
+  set scrolledToTheBottom(bool value) {
+    _$scrolledToTheBottomAtom.reportWrite(value, super.scrolledToTheBottom, () {
+      super.scrolledToTheBottom = value;
     });
   }
 
@@ -220,21 +252,22 @@ mixin _$StoryStore on _StoryStoreBase, Store {
         .run(() => super.addBookmark(storyId: storyId));
   }
 
-  late final _$readStoryAsyncAction =
-      AsyncAction('_StoryStoreBase.readStory', context: context);
-
-  @override
-  Future<void> readStory({required String storyId}) {
-    return _$readStoryAsyncAction.run(() => super.readStory(storyId: storyId));
-  }
-
   late final _$rateStoryAsyncAction =
       AsyncAction('_StoryStoreBase.rateStory', context: context);
 
   @override
-  Future<void> rateStory({required String storyId, required int rating}) {
+  Future<void> rateStory({required int storyId, required int rating}) {
     return _$rateStoryAsyncAction
         .run(() => super.rateStory(storyId: storyId, rating: rating));
+  }
+
+  late final _$showRatingAsyncAction =
+      AsyncAction('_StoryStoreBase.showRating', context: context);
+
+  @override
+  Future<void> showRating({required int storyId}) {
+    return _$showRatingAsyncAction
+        .run(() => super.showRating(storyId: storyId));
   }
 
   late final _$_StoryStoreBaseActionController =
@@ -252,29 +285,20 @@ mixin _$StoryStore on _StoryStoreBase, Store {
   }
 
   @override
-  void finishReading() {
-    final _$actionInfo = _$_StoryStoreBaseActionController.startAction(
-        name: '_StoryStoreBase.finishReading');
-    try {
-      return super.finishReading();
-    } finally {
-      _$_StoryStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 isActionLoading: ${isActionLoading},
 story: ${story},
 fetchedStory: ${fetchedStory},
-canFinishReading: ${canFinishReading},
 storyId: ${storyId},
 isBookmarked: ${isBookmarked},
 rating: ${rating},
+canShowRating: ${canShowRating},
 alreadyRead: ${alreadyRead},
-readArticle: ${readArticle}
+readArticle: ${readArticle},
+finishedTimer: ${finishedTimer},
+scrolledToTheBottom: ${scrolledToTheBottom}
     ''';
   }
 }

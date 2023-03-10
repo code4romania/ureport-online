@@ -4,15 +4,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/story_store.dart';
 import 'package:ureport_ecaro/models/story.dart';
-import 'package:ureport_ecaro/models/story_long.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
-import 'package:ureport_ecaro/services/story_service.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/finish_reading_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
@@ -43,35 +40,14 @@ class _ArticleScreenState extends State<ArticleScreen> {
   late WebViewPlusController webViewController;
   late StateStore _stateStore;
   late StoryStore _storyStore;
-  late ScrollController _scrollController;
   late Map<String, String> _translation;
 
   double webViewHeight = 300;
-  bool _showScrollToTop = true;
-
-  void _scrollListener() {
-    if (_scrollController.position.maxScrollExtent > 0) {
-      if (_scrollController.offset >=
-              _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
-        if (_storyStore.readArticle || _storyStore.timer != null) {
-          _storyStore.finishReading();
-          _scrollController.removeListener(_scrollListener);
-        }
-      }
-    } else {
-      if (_storyStore.readArticle || _storyStore.timer != null) {
-        _storyStore.finishReading();
-        _scrollController.removeListener(_scrollListener);
-      }
-    }
-  }
 
   @override
   void initState() {
     final spUtil = SPUtil();
 
-    _scrollController = ScrollController();
     _stateStore = context.read<StateStore>();
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["article_screen"]!;
@@ -90,20 +66,16 @@ class _ArticleScreenState extends State<ArticleScreen> {
         spUtil,
       );
     }
-
-    _scrollController.addListener(_scrollListener);
-
     super.initState();
   }
 
   void _scrollToTop() {
-    _scrollController.animateTo(0,
-        duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+    webViewController.webViewController
+        .runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
   }
 
   @override
   void dispose() {
-    _scrollController.dispose(); // dispose the controller
     _storyStore.cancelTimer();
     super.dispose();
   }
@@ -111,39 +83,73 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _showScrollToTop
-          ? GestureDetector(
-              onTap: _scrollToTop,
-              child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Image.asset("assets/images/arrow_up_rectangular.png")),
-            )
-          : SizedBox(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              TopHeaderWidget(title: _translation["header"]!),
-              TextNavigatorComponent(
-                title: _translation["back"]!,
-                rightEdge: false,
-                onPressed: () => context.router.pop(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              if (!widget.isComingFromHome)
-                fetchedArticle()
-              else
-                preloadedArticle()
-            ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Observer(builder: (context) {
+            return _storyStore.scrolledToTheBottom && _storyStore.finishedTimer
+                ? GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(20),
+                                  child: Observer(builder: (context) {
+                                    return FinishReadingComponent(
+                                      translation: _translation,
+                                      showRating: _storyStore.canShowRating,
+                                      initRating: 0,
+                                      storyId: _storyStore.storyId.toString(),
+                                      onRateArticle: (int rating) =>
+                                          _storyStore.rateStory(
+                                              storyId: _storyStore.storyId,
+                                              rating: rating),
+                                    );
+                                  }),
+                                ),
+                              ],
+                            );
+                          }).then((value) => context.router.pop());
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: blueColor,
+                      ),
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : SizedBox();
+          }),
+          GestureDetector(
+            onTap: _scrollToTop,
+            child: Container(
+                width: 50,
+                height: 50,
+                child: Image.asset("assets/images/arrow_up_rectangular.png")),
           ),
-        ),
+        ],
+      ),
+      body: Column(
+        children: [
+          TopHeaderWidget(title: _translation["header"]!),
+          TextNavigatorComponent(
+            title: _translation["back"]!,
+            rightEdge: false,
+            onPressed: () => context.router.pop(),
+          ),
+          !widget.isComingFromHome ? fetchedArticle() : preloadedArticle(),
+        ],
       ),
     );
   }
@@ -275,27 +281,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
         Container(
           width: double.infinity,
           child: loadLocalHTML(
-              widget.preloadedStory!.content!,
-              widget.preloadedStory!.title ?? "",
-              "widget.image",
-              "widget.date"),
+            widget.preloadedStory!.content!,
+            widget.preloadedStory!.title ?? "",
+            "widget.image",
+            "widget.date",
+          ),
         ),
-        Observer(builder: (context) {
-          return Visibility(
-            visible: _storyStore.canFinishReading,
-            child: _storyStore.isActionLoading
-                ? LoadingIndicatorComponent()
-                : FinishReadingComponent(
-                    translation: _translation,
-                    storyId: widget.preloadedStory!.id.toString(),
-                    initRating: _storyStore.rating,
-                    onRateArticle: (int newRating) => _storyStore.rateStory(
-                      storyId: widget.preloadedStory!.id.toString(),
-                      rating: newRating,
-                    ),
-                  ),
-          );
-        })
       ],
     );
   }
@@ -313,7 +304,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
             if (_storyStore.fetchedStory == null) {
               return Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       _translation["no_articles"]!,
@@ -327,6 +317,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
               );
             }
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -457,23 +448,6 @@ class _ArticleScreenState extends State<ArticleScreen> {
                       "widget.image",
                       "widget.date"),
                 ),
-                Observer(builder: (context) {
-                  return Visibility(
-                    visible: _storyStore.canFinishReading,
-                    child: _storyStore.isActionLoading
-                        ? LoadingIndicatorComponent()
-                        : FinishReadingComponent(
-                            translation: _translation,
-                            storyId: _storyStore.fetchedStory!.id.toString(),
-                            initRating: _storyStore.rating,
-                            onRateArticle: (int newRating) =>
-                                _storyStore.rateStory(
-                              storyId: _storyStore.fetchedStory!.id.toString(),
-                              rating: newRating,
-                            ),
-                          ),
-                  );
-                })
               ],
             );
         }
@@ -483,27 +457,46 @@ class _ArticleScreenState extends State<ArticleScreen> {
   }
 
   loadLocalHTML(String content, String title, String image, String date) {
-    return Container(
-      height: webViewHeight,
-      child: WebViewPlus(
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (controller) async {
-          webViewController = controller;
-          controller.webViewController.clearCache();
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.6,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+        ),
+        child: WebViewPlus(
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (controller) async {
+            webViewController = controller;
+            controller.webViewController.clearCache();
 
-          loadDataRaw(content, title, image, date);
-          final height = await controller.getHeight();
+            loadDataRaw(content, title, image, date);
+          },
+          gestureNavigationEnabled: true,
+          javascriptChannels: [
+            JavascriptChannel(
+                name: 'FLUTTER_CHANNEL',
+                onMessageReceived: (message) {
+                  if (_storyStore.scrolledToTheBottom) {
+                    return;
+                  } else {
+                    if (message.message.toString() == "end of scroll") {
+                      print("END OF SCROLL");
+                      _storyStore.scrolledToTheBottom = true;
+                    }
 
-          print(height);
-
-          setState(() {
-            webViewHeight = height;
-          });
-        },
-        onPageFinished: (url) async {
-          content = content.replaceAll("\"", "\'");
-          content = content.replaceAll("\\", "");
-        },
+                    if (message.message.toString() == "not scrollable") {
+                      print("NOT SCROLLABLE");
+                      _storyStore.scrolledToTheBottom = true;
+                    }
+                  }
+                }),
+          ].toSet(),
+          onPageFinished: (url) async {
+            content = content.replaceAll("\"", "\'");
+            content = content.replaceAll("\\", "");
+          },
+        ),
       ),
     );
   }
@@ -526,6 +519,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   loadHtml(String content, String title, String image, String date) {
     final dateTime = DateTime.tryParse(date);
     final format = DateFormat('dd MMMM, yyyy');
+    final width = MediaQuery.of(context).size.width;
     final clockString = dateTime == null ? "" : format.format(dateTime);
 
     content = content.replaceAll("src=\"//", "src=\"https:");
@@ -535,11 +529,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
     <html> 
    <head>
    
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, viewport-fit=cover">
+
     <style> 
     
-    body{width: 90% !important;margin-left: auto;margin-right: auto;display: block;margin-top:10px;margin-bottom:10px;}
+    body{width: 90% max-height :100px; max-width:$width; !important;margin-left: auto;margin-right: auto;display: block;margin-top:10px;margin-bottom:10px;}
     img{width: 100% !important;margin-left: auto;margin-right: auto;display: block;margin-top:20px;margin-bottom:20px;}
     p{font-size: 24px;}
     span{font-size: 16px !important; line-height: 1.6 !important;}
@@ -553,43 +547,34 @@ class _ArticleScreenState extends State<ArticleScreen> {
     
     </head>
     <body> 
+    <script>
+      window.onload = function() {
+          var docHeight = document.documentElement.scrollHeight;
+          var viewportHeight = window.innerHeight;
+
+          if (docHeight > viewportHeight) {
+              window.FLUTTER_CHANNEL.postMessage('scrollable');
+          } else {
+              window.FLUTTER_CHANNEL.postMessage('not scrollable');
+          }
+  }
+    </script>
+
     <div class="image_box"><img class = "title_image" src="$image"></div>
       <div class="header_time">$clockString</div>
     <div style=" font-weight: bold; margin-top:10px; margin-bottom: 10px; font-size: 20px "><h2>$title</h2></div>
-    <div  >$content</div> 
-    </body> 
-    </html>''';
+    <div>$content</div>
 
-    String final_content_offline = '''
-    
-    <!ECOTYPE html>
-    <html> 
-    <style> 
-    img{width: 100% !important;margin-left: auto;margin-right: auto;display: block;margin-top:20px;margin-bottom:20px;} 
-    iframe{width: 100% !important;margin-left: auto;margin-right: auto;display: block;margin-top:20px;margin-bottom:20px;} 
-    body{width: 90% !important;margin-left: auto;margin-right: auto;display: block;margin-top:10px;margin-bottom:10px;} 
-    p{font-size: 24px;}
-    span{font-size: 16px !important; line-height: 1.6 !important;}
-    .header_group{
-      display: inline-flex;
+<script>
+window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    window.FLUTTER_CHANNEL.postMessage('end of scroll');
     }
-    .header_group img {
-      height: 20px;
-      margin: 0 0 0 5px !important;
-    }
-    .header_time{
-       margin-top: 3px;
-       font-size: 14px;
-       font-weight: bold;
-    }
-    .header_share{
-      margin-right: 20px;
-    }
-    </style> 
-    <head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-    <body> 
-    <div style="font-weight: bold; margin-top:10px; margin-bottom: 10px; font-size: 20px "><h2>$title</h2></div>
-    <div  >$content</div> 
+};
+</script>
+
+
+  
     </body> 
     </html>''';
 

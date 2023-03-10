@@ -1,29 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'badge_medal.dart';
+part of 'claimed_badge.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BadgeMedal _$$_BadgeMedalFromJson(Map json) => _$_BadgeMedal(
+_$_ClaimedBadge _$$_ClaimedBadgeFromJson(Map json) => _$_ClaimedBadge(
       id: json['id'] as int?,
-      badge_type: json['badge_type'] == null
+      badgeType: json['badgeType'] == null
           ? null
           : BadgeType.fromJson(
-              Map<String, dynamic>.from(json['badge_type'] as Map)),
+              Map<String, dynamic>.from(json['badgeType'] as Map)),
       user: json['user'] as int?,
-      offered_on: json['offered_on'] == null
+      offeredOn: json['offeredOn'] == null
           ? null
-          : DateTime.parse(json['offered_on'] as String),
+          : DateTime.parse(json['offeredOn'] as String),
     );
 
-Map<String, dynamic> _$$_BadgeMedalToJson(_$_BadgeMedal instance) =>
+Map<String, dynamic> _$$_ClaimedBadgeToJson(_$_ClaimedBadge instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'badge_type': instance.badge_type?.toJson(),
+      'badgeType': instance.badgeType?.toJson(),
       'user': instance.user,
-      'offered_on': instance.offered_on?.toIso8601String(),
+      'offeredOn': instance.offeredOn?.toIso8601String(),
     };
 
 _$_BadgeType _$$_BadgeTypeFromJson(Map json) => _$_BadgeType(
@@ -32,7 +32,7 @@ _$_BadgeType _$$_BadgeTypeFromJson(Map json) => _$_BadgeType(
       title: json['title'] as String?,
       image: json['image'] as String?,
       description: json['description'] as String?,
-      item_category: json['item_category'],
+      itemCategory: json['itemCategory'] as int?,
     );
 
 Map<String, dynamic> _$$_BadgeTypeToJson(_$_BadgeType instance) =>
@@ -42,5 +42,5 @@ Map<String, dynamic> _$$_BadgeTypeToJson(_$_BadgeType instance) =>
       'title': instance.title,
       'image': instance.image,
       'description': instance.description,
-      'item_category': instance.item_category,
+      'itemCategory': instance.itemCategory,
     };

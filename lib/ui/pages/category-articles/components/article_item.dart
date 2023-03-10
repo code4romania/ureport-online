@@ -100,7 +100,7 @@ class ArticleItemWidget extends StatelessWidget {
                   width: 10,
                 ),
                 Container(
-                  width: widgetWidth - 60,
+                  width: widgetWidth - 80,
                   child: Text(
                     subCategoryName,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),

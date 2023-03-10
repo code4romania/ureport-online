@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/utils/snackbar_controller.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../utils/constants.dart';
@@ -77,11 +78,32 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
                                   groupValue: _state.selectedLanguage,
                                   activeColor: HexColor("#A72D6F"),
                                   onChanged: (value) {
-                                    _state.selectedLanguage = e.key;
+                                    if (translations[e.key] == null) {
+                                      SnackbarController(
+                                        context: context,
+                                        message:
+                                            "This language is not supported yet",
+                                      ).show();
+                                      return;
+                                    } else {
+                                      _state.selectedLanguage = e.key;
+                                    }
                                   },
                                 ),
                                 GestureDetector(
-                                    onTap: () => _state.changeLanguage(e.key),
+                                    onTap: () {
+                                      print(translations[e.key]);
+                                      if (translations[e.key] == null) {
+                                        SnackbarController(
+                                          context: context,
+                                          message:
+                                              "This language is not supported yet",
+                                        ).show();
+                                        return;
+                                      } else {
+                                        _state.changeLanguage(e.key);
+                                      }
+                                    },
                                     child: Text(e.value)),
                               ],
                             );

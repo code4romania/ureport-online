@@ -7,6 +7,7 @@ class MedalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("https://ureport.heroesof.tech${medal.badge_type?.image}");
     return Container(
       margin: EdgeInsets.all(10),
       child: Column(
@@ -28,7 +29,7 @@ class MedalWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: Image.network(
-                    medal.badgeType?.image ?? "",
+                    "https://ureport.heroesof.tech${medal.badge_type?.image}",
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
                       return Container(
@@ -48,9 +49,9 @@ class MedalWidget extends StatelessWidget {
                     height: 20,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: Text(
-                      medal.badgeType?.title ?? "",
+                      medal.badge_type?.title ?? "",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -58,9 +59,9 @@ class MedalWidget extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: Text(
-                      medal.badgeType?.description ?? "",
+                      medal.badge_type?.description ?? "",
                     ),
                   ),
                   Container(

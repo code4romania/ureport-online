@@ -44,8 +44,6 @@ class ProfileInfoServices {
           "https://ureport.heroesof.tech/api/v1/storybookmarks/user/$userId/"),
       headers: header,
     );
-    print(response.body);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
       final List<Bookmark> bookmarks =

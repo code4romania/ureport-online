@@ -188,6 +188,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              width: 200,
               margin: EdgeInsets.only(left: 20),
               child: Text(
                 item.name!.split('/')[0].toString(),

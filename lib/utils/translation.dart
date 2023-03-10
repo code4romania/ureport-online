@@ -132,7 +132,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "rating": "Dă un rating acestui articol",
       "bottom_text1": "Felicitări!\nAi terminat de citit cel de-al ",
       "bottom_text2":
-          " articol în această categorie. Dă click aici pentru a primi un badge nou!",
+          " articol în această categorie. Dă click aici pentru a continua.",
       "claim_badge_button": "Click aici",
     },
     "opinion_screen": {

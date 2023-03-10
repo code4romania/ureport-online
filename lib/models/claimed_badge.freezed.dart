@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'badge_medal.dart';
+part of 'claimed_badge.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,38 +14,38 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-BadgeMedal _$BadgeMedalFromJson(Map<String, dynamic> json) {
-  return _BadgeMedal.fromJson(json);
+ClaimedBadge _$ClaimedBadgeFromJson(Map<String, dynamic> json) {
+  return _ClaimedBadge.fromJson(json);
 }
 
 /// @nodoc
-mixin _$BadgeMedal {
+mixin _$ClaimedBadge {
   int? get id => throw _privateConstructorUsedError;
-  BadgeType? get badge_type => throw _privateConstructorUsedError;
+  BadgeType? get badgeType => throw _privateConstructorUsedError;
   int? get user => throw _privateConstructorUsedError;
-  DateTime? get offered_on => throw _privateConstructorUsedError;
+  DateTime? get offeredOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BadgeMedalCopyWith<BadgeMedal> get copyWith =>
+  $ClaimedBadgeCopyWith<ClaimedBadge> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BadgeMedalCopyWith<$Res> {
-  factory $BadgeMedalCopyWith(
-          BadgeMedal value, $Res Function(BadgeMedal) then) =
-      _$BadgeMedalCopyWithImpl<$Res, BadgeMedal>;
+abstract class $ClaimedBadgeCopyWith<$Res> {
+  factory $ClaimedBadgeCopyWith(
+          ClaimedBadge value, $Res Function(ClaimedBadge) then) =
+      _$ClaimedBadgeCopyWithImpl<$Res, ClaimedBadge>;
   @useResult
-  $Res call({int? id, BadgeType? badge_type, int? user, DateTime? offered_on});
+  $Res call({int? id, BadgeType? badgeType, int? user, DateTime? offeredOn});
 
-  $BadgeTypeCopyWith<$Res>? get badge_type;
+  $BadgeTypeCopyWith<$Res>? get badgeType;
 }
 
 /// @nodoc
-class _$BadgeMedalCopyWithImpl<$Res, $Val extends BadgeMedal>
-    implements $BadgeMedalCopyWith<$Res> {
-  _$BadgeMedalCopyWithImpl(this._value, this._then);
+class _$ClaimedBadgeCopyWithImpl<$Res, $Val extends ClaimedBadge>
+    implements $ClaimedBadgeCopyWith<$Res> {
+  _$ClaimedBadgeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -56,89 +56,89 @@ class _$BadgeMedalCopyWithImpl<$Res, $Val extends BadgeMedal>
   @override
   $Res call({
     Object? id = freezed,
-    Object? badge_type = freezed,
+    Object? badgeType = freezed,
     Object? user = freezed,
-    Object? offered_on = freezed,
+    Object? offeredOn = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      badge_type: freezed == badge_type
-          ? _value.badge_type
-          : badge_type // ignore: cast_nullable_to_non_nullable
+      badgeType: freezed == badgeType
+          ? _value.badgeType
+          : badgeType // ignore: cast_nullable_to_non_nullable
               as BadgeType?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as int?,
-      offered_on: freezed == offered_on
-          ? _value.offered_on
-          : offered_on // ignore: cast_nullable_to_non_nullable
+      offeredOn: freezed == offeredOn
+          ? _value.offeredOn
+          : offeredOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $BadgeTypeCopyWith<$Res>? get badge_type {
-    if (_value.badge_type == null) {
+  $BadgeTypeCopyWith<$Res>? get badgeType {
+    if (_value.badgeType == null) {
       return null;
     }
 
-    return $BadgeTypeCopyWith<$Res>(_value.badge_type!, (value) {
-      return _then(_value.copyWith(badge_type: value) as $Val);
+    return $BadgeTypeCopyWith<$Res>(_value.badgeType!, (value) {
+      return _then(_value.copyWith(badgeType: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_BadgeMedalCopyWith<$Res>
-    implements $BadgeMedalCopyWith<$Res> {
-  factory _$$_BadgeMedalCopyWith(
-          _$_BadgeMedal value, $Res Function(_$_BadgeMedal) then) =
-      __$$_BadgeMedalCopyWithImpl<$Res>;
+abstract class _$$_ClaimedBadgeCopyWith<$Res>
+    implements $ClaimedBadgeCopyWith<$Res> {
+  factory _$$_ClaimedBadgeCopyWith(
+          _$_ClaimedBadge value, $Res Function(_$_ClaimedBadge) then) =
+      __$$_ClaimedBadgeCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, BadgeType? badge_type, int? user, DateTime? offered_on});
+  $Res call({int? id, BadgeType? badgeType, int? user, DateTime? offeredOn});
 
   @override
-  $BadgeTypeCopyWith<$Res>? get badge_type;
+  $BadgeTypeCopyWith<$Res>? get badgeType;
 }
 
 /// @nodoc
-class __$$_BadgeMedalCopyWithImpl<$Res>
-    extends _$BadgeMedalCopyWithImpl<$Res, _$_BadgeMedal>
-    implements _$$_BadgeMedalCopyWith<$Res> {
-  __$$_BadgeMedalCopyWithImpl(
-      _$_BadgeMedal _value, $Res Function(_$_BadgeMedal) _then)
+class __$$_ClaimedBadgeCopyWithImpl<$Res>
+    extends _$ClaimedBadgeCopyWithImpl<$Res, _$_ClaimedBadge>
+    implements _$$_ClaimedBadgeCopyWith<$Res> {
+  __$$_ClaimedBadgeCopyWithImpl(
+      _$_ClaimedBadge _value, $Res Function(_$_ClaimedBadge) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
-    Object? badge_type = freezed,
+    Object? badgeType = freezed,
     Object? user = freezed,
-    Object? offered_on = freezed,
+    Object? offeredOn = freezed,
   }) {
-    return _then(_$_BadgeMedal(
+    return _then(_$_ClaimedBadge(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      badge_type: freezed == badge_type
-          ? _value.badge_type
-          : badge_type // ignore: cast_nullable_to_non_nullable
+      badgeType: freezed == badgeType
+          ? _value.badgeType
+          : badgeType // ignore: cast_nullable_to_non_nullable
               as BadgeType?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as int?,
-      offered_on: freezed == offered_on
-          ? _value.offered_on
-          : offered_on // ignore: cast_nullable_to_non_nullable
+      offeredOn: freezed == offeredOn
+          ? _value.offeredOn
+          : offeredOn // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
@@ -146,79 +146,78 @@ class __$$_BadgeMedalCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BadgeMedal implements _BadgeMedal {
-  const _$_BadgeMedal({this.id, this.badge_type, this.user, this.offered_on});
+class _$_ClaimedBadge implements _ClaimedBadge {
+  const _$_ClaimedBadge({this.id, this.badgeType, this.user, this.offeredOn});
 
-  factory _$_BadgeMedal.fromJson(Map<String, dynamic> json) =>
-      _$$_BadgeMedalFromJson(json);
+  factory _$_ClaimedBadge.fromJson(Map<String, dynamic> json) =>
+      _$$_ClaimedBadgeFromJson(json);
 
   @override
   final int? id;
   @override
-  final BadgeType? badge_type;
+  final BadgeType? badgeType;
   @override
   final int? user;
   @override
-  final DateTime? offered_on;
+  final DateTime? offeredOn;
 
   @override
   String toString() {
-    return 'BadgeMedal(id: $id, badge_type: $badge_type, user: $user, offered_on: $offered_on)';
+    return 'ClaimedBadge(id: $id, badgeType: $badgeType, user: $user, offeredOn: $offeredOn)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BadgeMedal &&
+            other is _$_ClaimedBadge &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.badge_type, badge_type) ||
-                other.badge_type == badge_type) &&
+            (identical(other.badgeType, badgeType) ||
+                other.badgeType == badgeType) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.offered_on, offered_on) ||
-                other.offered_on == offered_on));
+            (identical(other.offeredOn, offeredOn) ||
+                other.offeredOn == offeredOn));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, badge_type, user, offered_on);
+  int get hashCode => Object.hash(runtimeType, id, badgeType, user, offeredOn);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BadgeMedalCopyWith<_$_BadgeMedal> get copyWith =>
-      __$$_BadgeMedalCopyWithImpl<_$_BadgeMedal>(this, _$identity);
+  _$$_ClaimedBadgeCopyWith<_$_ClaimedBadge> get copyWith =>
+      __$$_ClaimedBadgeCopyWithImpl<_$_ClaimedBadge>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BadgeMedalToJson(
+    return _$$_ClaimedBadgeToJson(
       this,
     );
   }
 }
 
-abstract class _BadgeMedal implements BadgeMedal {
-  const factory _BadgeMedal(
+abstract class _ClaimedBadge implements ClaimedBadge {
+  const factory _ClaimedBadge(
       {final int? id,
-      final BadgeType? badge_type,
+      final BadgeType? badgeType,
       final int? user,
-      final DateTime? offered_on}) = _$_BadgeMedal;
+      final DateTime? offeredOn}) = _$_ClaimedBadge;
 
-  factory _BadgeMedal.fromJson(Map<String, dynamic> json) =
-      _$_BadgeMedal.fromJson;
+  factory _ClaimedBadge.fromJson(Map<String, dynamic> json) =
+      _$_ClaimedBadge.fromJson;
 
   @override
   int? get id;
   @override
-  BadgeType? get badge_type;
+  BadgeType? get badgeType;
   @override
   int? get user;
   @override
-  DateTime? get offered_on;
+  DateTime? get offeredOn;
   @override
   @JsonKey(ignore: true)
-  _$$_BadgeMedalCopyWith<_$_BadgeMedal> get copyWith =>
+  _$$_ClaimedBadgeCopyWith<_$_ClaimedBadge> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -233,7 +232,7 @@ mixin _$BadgeType {
   String? get title => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  dynamic get item_category => throw _privateConstructorUsedError;
+  int? get itemCategory => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -252,7 +251,7 @@ abstract class $BadgeTypeCopyWith<$Res> {
       String? title,
       String? image,
       String? description,
-      dynamic item_category});
+      int? itemCategory});
 }
 
 /// @nodoc
@@ -273,7 +272,7 @@ class _$BadgeTypeCopyWithImpl<$Res, $Val extends BadgeType>
     Object? title = freezed,
     Object? image = freezed,
     Object? description = freezed,
-    Object? item_category = freezed,
+    Object? itemCategory = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -296,10 +295,10 @@ class _$BadgeTypeCopyWithImpl<$Res, $Val extends BadgeType>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      item_category: freezed == item_category
-          ? _value.item_category
-          : item_category // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      itemCategory: freezed == itemCategory
+          ? _value.itemCategory
+          : itemCategory // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -317,7 +316,7 @@ abstract class _$$_BadgeTypeCopyWith<$Res> implements $BadgeTypeCopyWith<$Res> {
       String? title,
       String? image,
       String? description,
-      dynamic item_category});
+      int? itemCategory});
 }
 
 /// @nodoc
@@ -336,7 +335,7 @@ class __$$_BadgeTypeCopyWithImpl<$Res>
     Object? title = freezed,
     Object? image = freezed,
     Object? description = freezed,
-    Object? item_category = freezed,
+    Object? itemCategory = freezed,
   }) {
     return _then(_$_BadgeType(
       id: freezed == id
@@ -359,10 +358,10 @@ class __$$_BadgeTypeCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      item_category: freezed == item_category
-          ? _value.item_category
-          : item_category // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      itemCategory: freezed == itemCategory
+          ? _value.itemCategory
+          : itemCategory // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -376,7 +375,7 @@ class _$_BadgeType implements _BadgeType {
       this.title,
       this.image,
       this.description,
-      this.item_category});
+      this.itemCategory});
 
   factory _$_BadgeType.fromJson(Map<String, dynamic> json) =>
       _$$_BadgeTypeFromJson(json);
@@ -392,11 +391,11 @@ class _$_BadgeType implements _BadgeType {
   @override
   final String? description;
   @override
-  final dynamic item_category;
+  final int? itemCategory;
 
   @override
   String toString() {
-    return 'BadgeType(id: $id, org: $org, title: $title, image: $image, description: $description, item_category: $item_category)';
+    return 'BadgeType(id: $id, org: $org, title: $title, image: $image, description: $description, itemCategory: $itemCategory)';
   }
 
   @override
@@ -410,14 +409,14 @@ class _$_BadgeType implements _BadgeType {
             (identical(other.image, image) || other.image == image) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality()
-                .equals(other.item_category, item_category));
+            (identical(other.itemCategory, itemCategory) ||
+                other.itemCategory == itemCategory));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, org, title, image,
-      description, const DeepCollectionEquality().hash(item_category));
+  int get hashCode => Object.hash(
+      runtimeType, id, org, title, image, description, itemCategory);
 
   @JsonKey(ignore: true)
   @override
@@ -440,7 +439,7 @@ abstract class _BadgeType implements BadgeType {
       final String? title,
       final String? image,
       final String? description,
-      final dynamic item_category}) = _$_BadgeType;
+      final int? itemCategory}) = _$_BadgeType;
 
   factory _BadgeType.fromJson(Map<String, dynamic> json) =
       _$_BadgeType.fromJson;
@@ -456,7 +455,7 @@ abstract class _BadgeType implements BadgeType {
   @override
   String? get description;
   @override
-  dynamic get item_category;
+  int? get itemCategory;
   @override
   @JsonKey(ignore: true)
   _$$_BadgeTypeCopyWith<_$_BadgeType> get copyWith =>
