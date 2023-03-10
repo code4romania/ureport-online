@@ -13,12 +13,14 @@ class ArticleItemWidget extends StatelessWidget {
     this.width,
     required this.categoryName,
     required this.subCategoryName,
+    required this.isExpanded,
   }) : super(key: key);
 
   final Story? article;
   final storyFull.StoryItem? articleFull;
   final String categoryName;
   final String subCategoryName;
+  final bool isExpanded;
   final double? width;
 
   @override
@@ -111,13 +113,18 @@ class ArticleItemWidget extends StatelessWidget {
             ),
             Container(
               width: widgetWidth,
-              margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+              margin: EdgeInsets.only(
+                top: 10,
+                left: 20,
+                right: 5,
+              ),
               child: Text(
-                title,
-                overflow: title.length < 30
-                    ? TextOverflow.clip
-                    : TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                !isExpanded
+                    ? title.length < 50
+                        ? title
+                        : "${title.substring(0, 50)}..."
+                    : title,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ),
             ),
             Container(
@@ -131,9 +138,10 @@ class ArticleItemWidget extends StatelessWidget {
               child: Text(
                 "CITEȘTE MAI MULT",
                 style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: HexColor("#A72D6F")),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: HexColor("#A72D6F"),
+                ),
               ),
             ),
           ],

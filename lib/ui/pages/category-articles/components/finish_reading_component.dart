@@ -8,6 +8,7 @@ class FinishReadingComponent extends StatefulWidget {
   const FinishReadingComponent({
     super.key,
     required this.translation,
+    required this.translationProfile,
     required this.storyId,
     required this.onRateArticle,
     required this.initRating,
@@ -15,6 +16,7 @@ class FinishReadingComponent extends StatefulWidget {
   });
 
   final Map<String, String> translation;
+  final Map<String, String> translationProfile;
   final bool showRating;
   final String storyId;
   final int initRating;
@@ -79,7 +81,9 @@ class _FinishReadingComponentState extends State<FinishReadingComponent> {
                   ),
                   title: widget.translation["claim_badge_button"]!,
                   onPressed: () {
-                    context.router.pop();
+                    context.router.replaceAll([
+                      ProfileScreenRoute(translation: widget.translationProfile)
+                    ]);
                   }),
             ]),
           ),

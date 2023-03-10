@@ -67,6 +67,7 @@ class RecentStoriesComponent extends StatelessWidget {
                     categoryName: recentStories[0].category!.name!,
                     subCategoryName:
                         recentStories[0].category!.name!.split("/")[1].trim(),
+                    isExpanded: false,
                   ),
                 ),
               ),
@@ -82,13 +83,12 @@ class RecentStoriesComponent extends StatelessWidget {
                     );
                   },
                   child: ArticleItemWidget(
-                      articleFull: recentStories[1],
-                      categoryName: recentStories[1].category!.name!,
-                      subCategoryName: recentStories[1]
-                          .category!
-                          .name!
-                          .split("/")[1]
-                          .trim()),
+                    articleFull: recentStories[1],
+                    categoryName: recentStories[1].category!.name!,
+                    subCategoryName:
+                        recentStories[1].category!.name!.split("/")[1].trim(),
+                    isExpanded: false,
+                  ),
                 ),
               ),
             ],

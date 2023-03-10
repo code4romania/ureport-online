@@ -51,10 +51,21 @@ abstract class _StoryStoreBase with Store {
   @observable
   bool scrolledToTheBottom = false;
 
+  @observable
+  bool expandedWebView = false;
+
+  @observable
+  bool hasClaimedBadge = false;
+
   Timer? timer;
+  Timer? expandWebViewTimer;
 
   void cancelTimer() {
     timer?.cancel();
+  }
+
+  void cancelExpandWebViewTimer() {
+    expandWebViewTimer?.cancel();
   }
 
   _StoryStoreBase(
@@ -77,10 +88,14 @@ abstract class _StoryStoreBase with Store {
       if (!alreadyRead) {
         print("Timer started");
 
-        timer = Timer(const Duration(seconds: 10), () {
+        timer = Timer(const Duration(minutes: 2), () {
           timerFinished();
         });
       }
+    });
+
+    expandWebViewTimer = Timer(const Duration(seconds: 10), () {
+      expandedWebView = true;
     });
 
     showRating(storyId: storyId);
@@ -122,9 +137,10 @@ abstract class _StoryStoreBase with Store {
 
   @action
   Future<void> markAsRead({required int storyId}) async {
-    final result =
+    hasClaimedBadge =
         await httpClient.markAsRead(storyId: storyId, userId: userId);
-    readArticle = result;
+
+    readArticle = true;
   }
 
   @action

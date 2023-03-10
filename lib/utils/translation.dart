@@ -131,9 +131,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_articles": "Nu s-a gasit acest articol",
       "rating": "Dă un rating acestui articol",
       "bottom_text1": "Felicitări!\nAi terminat de citit cel de-al ",
-      "bottom_text2":
-          " articol în această categorie. Dă click aici pentru a continua.",
-      "claim_badge_button": "Click aici",
+      "bottom_text2": " articol în această categorie. Dă click aici pentru ",
+      "claim_badge_button": "Click aici pentru a primi un badge nou!",
+      "hide": "Ascunde",
+      "show": "Arată",
     },
     "opinion_screen": {
       "header": "Opinii",

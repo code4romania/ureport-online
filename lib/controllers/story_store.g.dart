@@ -201,6 +201,38 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
+  late final _$expandedWebViewAtom =
+      Atom(name: '_StoryStoreBase.expandedWebView', context: context);
+
+  @override
+  bool get expandedWebView {
+    _$expandedWebViewAtom.reportRead();
+    return super.expandedWebView;
+  }
+
+  @override
+  set expandedWebView(bool value) {
+    _$expandedWebViewAtom.reportWrite(value, super.expandedWebView, () {
+      super.expandedWebView = value;
+    });
+  }
+
+  late final _$hasClaimedBadgeAtom =
+      Atom(name: '_StoryStoreBase.hasClaimedBadge', context: context);
+
+  @override
+  bool get hasClaimedBadge {
+    _$hasClaimedBadgeAtom.reportRead();
+    return super.hasClaimedBadge;
+  }
+
+  @override
+  set hasClaimedBadge(bool value) {
+    _$hasClaimedBadgeAtom.reportWrite(value, super.hasClaimedBadge, () {
+      super.hasClaimedBadge = value;
+    });
+  }
+
   late final _$isStoryReadAsyncAction =
       AsyncAction('_StoryStoreBase.isStoryRead', context: context);
 
@@ -298,7 +330,9 @@ canShowRating: ${canShowRating},
 alreadyRead: ${alreadyRead},
 readArticle: ${readArticle},
 finishedTimer: ${finishedTimer},
-scrolledToTheBottom: ${scrolledToTheBottom}
+scrolledToTheBottom: ${scrolledToTheBottom},
+expandedWebView: ${expandedWebView},
+hasClaimedBadge: ${hasClaimedBadge}
     ''';
   }
 }

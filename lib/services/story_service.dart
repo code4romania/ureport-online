@@ -62,9 +62,12 @@ class StoryService {
     );
 
     if (response.statusCode == 201 || response.statusCode == 200) {
-      // convert the response which is a list of ClaimedBadges into an object getting the first element from json
-      // final ClaimedBadge claimedBadge =
-      //     ClaimedBadge.fromJson(jsonDecode(utf8.decode(response.bodyBytes))[0]);
+      final decodedResponse = jsonDecode(response.body);
+
+      if (response.body == "[]") return false;
+      if (decodedResponse == "[]") return false;
+      if (decodedResponse == null) return false;
+      if (response.body.isEmpty) return false;
 
       return true;
     } else {

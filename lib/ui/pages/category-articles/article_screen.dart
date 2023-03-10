@@ -10,6 +10,7 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/story_store.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/article_header_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/finish_reading_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
@@ -35,7 +36,8 @@ class ArticleScreen extends StatefulWidget {
   State<ArticleScreen> createState() => _ArticleScreenState();
 }
 
-class _ArticleScreenState extends State<ArticleScreen> {
+class _ArticleScreenState extends State<ArticleScreen>
+    with TickerProviderStateMixin {
   final DateFormat formatter = DateFormat('dd/MM/yyyy');
   late WebViewPlusController webViewController;
   late StateStore _stateStore;
@@ -77,11 +79,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   void dispose() {
     _storyStore.cancelTimer();
+    _storyStore.cancelExpandWebViewTimer();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       floatingActionButton: Column(
@@ -92,30 +96,36 @@ class _ArticleScreenState extends State<ArticleScreen> {
             return _storyStore.scrolledToTheBottom && _storyStore.finishedTimer
                 ? GestureDetector(
                     onTap: () {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          builder: (context) {
-                            return Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.all(20),
-                                  child: Observer(builder: (context) {
-                                    return FinishReadingComponent(
-                                      translation: _translation,
-                                      showRating: _storyStore.canShowRating,
-                                      initRating: 0,
-                                      storyId: _storyStore.storyId.toString(),
-                                      onRateArticle: (int rating) =>
-                                          _storyStore.rateStory(
-                                              storyId: _storyStore.storyId,
-                                              rating: rating),
-                                    );
-                                  }),
-                                ),
-                              ],
-                            );
-                          }).then((value) => context.router.pop());
+                      if (_storyStore.hasClaimedBadge)
+                        showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.all(20),
+                                    child: Observer(builder: (context) {
+                                      return FinishReadingComponent(
+                                        translation: _translation,
+                                        translationProfile: translations[
+                                                "${_stateStore.selectedLanguage}"]![
+                                            "profile_screen"]!,
+                                        showRating: _storyStore.canShowRating,
+                                        initRating: 0,
+                                        storyId: _storyStore.storyId.toString(),
+                                        onRateArticle: (int rating) =>
+                                            _storyStore.rateStory(
+                                                storyId: _storyStore.storyId,
+                                                rating: rating),
+                                      );
+                                    }),
+                                  ),
+                                ],
+                              );
+                            });
+                      else
+                        context.router.pop();
                     },
                     child: Container(
                       height: 40,
@@ -134,21 +144,59 @@ class _ArticleScreenState extends State<ArticleScreen> {
           GestureDetector(
             onTap: _scrollToTop,
             child: Container(
-                width: 50,
-                height: 50,
-                child: Image.asset("assets/images/arrow_up_rectangular.png")),
+              width: 50,
+              height: 50,
+              child: Image.asset(
+                "assets/images/arrow_up_rectangular.png",
+              ),
+            ),
           ),
         ],
       ),
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          TopHeaderWidget(title: _translation["header"]!),
-          TextNavigatorComponent(
-            title: _translation["back"]!,
-            rightEdge: false,
-            onPressed: () => context.router.pop(),
+          Container(
+              height: 80,
+              child: TopHeaderWidget(title: _translation["header"]!)),
+          Container(
+            height: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextNavigatorComponent(
+                  title: _translation["back"]!,
+                  rightEdge: false,
+                  onPressed: () => context.router.pop(),
+                ),
+                Observer(builder: (context) {
+                  return TextButton(
+                      onPressed: () {
+                        if (_storyStore.expandedWebView) {
+                          _storyStore.expandedWebView = false;
+                        } else {
+                          _storyStore.expandedWebView = true;
+                        }
+                      },
+                      child: Text(
+                        _storyStore.expandedWebView
+                            ? _translation["show"]!
+                            : _translation["hide"]!,
+                        style: TextStyle(color: blueColor),
+                      ));
+                }),
+              ],
+            ),
           ),
-          !widget.isComingFromHome ? fetchedArticle() : preloadedArticle(),
+          Container(
+              height: height - 120,
+              constraints: BoxConstraints(
+                  minHeight: height - 120, maxHeight: height - 120),
+              child: Expanded(
+                child: !widget.isComingFromHome
+                    ? fetchedArticle()
+                    : preloadedArticle(),
+              )),
         ],
       ),
     );
@@ -157,136 +205,57 @@ class _ArticleScreenState extends State<ArticleScreen> {
   Widget preloadedArticle() {
     return Column(
       children: [
-        Container(
-          margin: EdgeInsets.only(left: 20, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 4,
-                    backgroundColor: Color.fromRGBO(201, 13, 182, 1),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    widget.preloadedStory!.category!.name!.split('/')[1].trim(),
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      ClickSound.soundClick();
+        Observer(builder: (context) {
+          return _storyStore.expandedWebView
+              ? SizedBox()
+              : ArticleHeaderComponent(
+                  storyId: _storyStore.storyId,
+                  title: widget.preloadedStory!.title.toString(),
+                  categoryName: widget.preloadedStory!.category!.name!
+                      .split('/')[1]
+                      .trim(),
+                  date: _translation["date"]!,
+                  dateValue: widget.preloadedStory!.createdOn ?? DateTime.now(),
+                  author: _translation["author"]!,
+                  authorValue: _translation["author_unicef"]!,
+                  isBookmarked: _storyStore.isBookmarked,
+                  onShare: () {
+                    ClickSound.soundShare();
+                    Share.share(
+                        shareStoryUrl +
+                            "/" +
+                            widget.preloadedStory!.id.toString(),
+                        subject: widget.preloadedStory!.title.toString());
+                  },
+                  onBookmark: () {
+                    ClickSound.soundClick();
 
-                      if (_storyStore.isBookmarked) {
-                        _storyStore.removeBookmark(
-                          storyId: widget.preloadedStory!.id!,
-                        );
-                      } else {
-                        _storyStore.addBookmark(
-                          storyId: widget.preloadedStory!.id!,
-                        );
-                      }
-
-                      // call api to bookmark story
-                    },
-                    child: Observer(builder: (context) {
-                      return Icon(
-                        _storyStore.isBookmarked
-                            ? Icons.bookmark
-                            : Icons.bookmark_border_outlined,
-                        color: purpleColor,
-                        size: 30,
+                    if (_storyStore.isBookmarked) {
+                      _storyStore.removeBookmark(
+                        storyId: widget.preloadedStory!.id!,
                       );
-                    }),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      ClickSound.soundShare();
-                      Share.share(
-                          shareStoryUrl +
-                              "/" +
-                              widget.preloadedStory!.id.toString(),
-                          subject: widget.preloadedStory!.title.toString());
-                    },
-                    child: Icon(
-                      Icons.share_outlined,
-                      color: purpleColor,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-          child: Text(
-            widget.preloadedStory!.title.toString(),
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 10, left: 20, right: 60),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _translation["author"]!,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: purpleColor),
-                  ),
-                  Text(
-                    _translation["author_unicef"]!,
-                    style: TextStyle(color: purpleColor),
-                  )
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _translation["date"]!,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: purpleColor),
-                  ),
-                  Text(
-                      formatter.format(
-                          widget.preloadedStory!.createdOn ?? DateTime.now()),
-                      style: TextStyle(
-                        color: purpleColor,
-                      ))
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          child: loadLocalHTML(
-            widget.preloadedStory!.content!,
-            widget.preloadedStory!.title ?? "",
-            "widget.image",
-            "widget.date",
-          ),
-        ),
+                    } else {
+                      _storyStore.addBookmark(
+                        storyId: widget.preloadedStory!.id!,
+                      );
+                    }
+                  },
+                );
+        }),
+        Observer(builder: (context) {
+          return Container(
+            width: double.infinity,
+            child: loadLocalHTML(
+              widget.preloadedStory!.content!,
+              widget.preloadedStory!.title ?? "",
+              "widget.image",
+              "widget.date",
+              _storyStore.expandedWebView
+                  ? MediaQuery.of(context).size.height * 0.83
+                  : MediaQuery.of(context).size.height * 0.64,
+            ),
+          );
+        }),
       ],
     );
   }
@@ -319,135 +288,54 @@ class _ArticleScreenState extends State<ArticleScreen> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 4,
-                            backgroundColor: Color.fromRGBO(201, 13, 182, 1),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            _storyStore.fetchedStory!.category!.name!
-                                .split('/')[1]
-                                .trim(),
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              ClickSound.soundClick();
-                              if (_storyStore.isBookmarked) {
-                                _storyStore.removeBookmark(
-                                    storyId: _storyStore.fetchedStory!.id!);
-                              } else {
-                                _storyStore.addBookmark(
-                                    storyId: _storyStore.fetchedStory!.id!);
-                              }
-                            },
-                            child: Observer(builder: (context) {
-                              return Icon(
-                                _storyStore.isBookmarked
-                                    ? Icons.bookmark
-                                    : Icons.bookmark_border_outlined,
-                                color: purpleColor,
-                                size: 30,
-                              );
-                            }),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              ClickSound.soundShare();
-                              Share.share(
-                                  shareStoryUrl +
-                                      "/" +
-                                      _storyStore.fetchedStory!.id.toString(),
-                                  subject: _storyStore.fetchedStory!.title
-                                      .toString());
-                            },
-                            child: Icon(
-                              Icons.share_outlined,
-                              color: purpleColor,
-                              size: 30,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                  child: Text(
-                    _storyStore.fetchedStory!.title.toString(),
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10, left: 20, right: 60),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _translation["author"]!,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: purpleColor),
-                          ),
-                          Text(
-                            _translation["author_unicef"]!,
-                            style: TextStyle(color: purpleColor),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _translation["date"]!,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: purpleColor),
-                          ),
-                          Text(
-                              formatter.format(
-                                  _storyStore.fetchedStory!.createdOn ??
-                                      DateTime.now()),
-                              style: TextStyle(
-                                color: purpleColor,
-                              ))
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: loadLocalHTML(
-                      _storyStore.fetchedStory!.content!,
-                      _storyStore.fetchedStory!.title ?? "",
-                      "widget.image",
-                      "widget.date"),
-                ),
+                Observer(builder: (context) {
+                  return _storyStore.expandedWebView
+                      ? SizedBox()
+                      : ArticleHeaderComponent(
+                          storyId: _storyStore.storyId,
+                          title: _storyStore.fetchedStory!.title.toString(),
+                          categoryName: _storyStore
+                              .fetchedStory!.category!.name!
+                              .split('/')[1]
+                              .trim(),
+                          date: _translation["date"]!,
+                          dateValue: _storyStore.fetchedStory!.createdOn ??
+                              DateTime.now(),
+                          author: _translation["author"]!,
+                          authorValue: _translation["author_unicef"]!,
+                          isBookmarked: _storyStore.isBookmarked,
+                          onShare: () {
+                            ClickSound.soundShare();
+                            Share.share(
+                                shareStoryUrl +
+                                    "/" +
+                                    _storyStore.fetchedStory!.id.toString(),
+                                subject:
+                                    _storyStore.fetchedStory!.title.toString());
+                          },
+                          onBookmark: () {
+                            ClickSound.soundClick();
+                            if (_storyStore.isBookmarked) {
+                              _storyStore.removeBookmark(
+                                  storyId: _storyStore.fetchedStory!.id!);
+                            } else {
+                              _storyStore.addBookmark(
+                                  storyId: _storyStore.fetchedStory!.id!);
+                            }
+                          },
+                        );
+                }),
+                Observer(builder: (context) {
+                  return loadLocalHTML(
+                    _storyStore.fetchedStory!.content!,
+                    _storyStore.fetchedStory!.title ?? "",
+                    "widget.image",
+                    "widget.date",
+                    _storyStore.expandedWebView
+                        ? MediaQuery.of(context).size.height * 0.83
+                        : MediaQuery.of(context).size.height * 0.64,
+                  );
+                }),
               ],
             );
         }
@@ -456,47 +344,48 @@ class _ArticleScreenState extends State<ArticleScreen> {
     );
   }
 
-  loadLocalHTML(String content, String title, String image, String date) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-        ),
-        child: WebViewPlus(
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (controller) async {
-            webViewController = controller;
-            controller.webViewController.clearCache();
+  Widget loadLocalHTML(
+    String content,
+    String title,
+    String image,
+    String date,
+    double height,
+  ) {
+    return Container(
+      height: height,
+      width: double.infinity,
+      child: WebViewPlus(
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (controller) async {
+          webViewController = controller;
+          controller.webViewController.clearCache();
 
-            loadDataRaw(content, title, image, date);
-          },
-          gestureNavigationEnabled: true,
-          javascriptChannels: [
-            JavascriptChannel(
-                name: 'FLUTTER_CHANNEL',
-                onMessageReceived: (message) {
-                  if (_storyStore.scrolledToTheBottom) {
-                    return;
-                  } else {
-                    if (message.message.toString() == "end of scroll") {
-                      print("END OF SCROLL");
-                      _storyStore.scrolledToTheBottom = true;
-                    }
-
-                    if (message.message.toString() == "not scrollable") {
-                      print("NOT SCROLLABLE");
-                      _storyStore.scrolledToTheBottom = true;
-                    }
+          loadDataRaw(content, title, image, date);
+        },
+        gestureNavigationEnabled: true,
+        javascriptChannels: [
+          JavascriptChannel(
+              name: 'FLUTTER_CHANNEL',
+              onMessageReceived: (message) {
+                if (_storyStore.scrolledToTheBottom) {
+                  return;
+                } else {
+                  if (message.message.toString() == "end of scroll") {
+                    print("END OF SCROLL");
+                    _storyStore.scrolledToTheBottom = true;
                   }
-                }),
-          ].toSet(),
-          onPageFinished: (url) async {
-            content = content.replaceAll("\"", "\'");
-            content = content.replaceAll("\\", "");
-          },
-        ),
+
+                  if (message.message.toString() == "not scrollable") {
+                    print("NOT SCROLLABLE");
+                    _storyStore.scrolledToTheBottom = true;
+                  }
+                }
+              }),
+        ].toSet(),
+        onPageFinished: (url) async {
+          content = content.replaceAll("\"", "\'");
+          content = content.replaceAll("\\", "");
+        },
       ),
     );
   }
@@ -519,12 +408,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
   loadHtml(String content, String title, String image, String date) {
     final dateTime = DateTime.tryParse(date);
     final format = DateFormat('dd MMMM, yyyy');
-    final width = MediaQuery.of(context).size.width;
     final clockString = dateTime == null ? "" : format.format(dateTime);
 
     content = content.replaceAll("src=\"//", "src=\"https:");
 
-    String final_content = '''
+    String finalContent = '''
     <!ECOTYPE html>
     <html> 
    <head>
@@ -533,7 +421,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
 
     <style> 
     
-    body{width: 90% max-height :100px; max-width:$width; !important;margin-left: auto;margin-right: auto;display: block;margin-top:10px;margin-bottom:10px;}
+    body{width: 90%;  overflow-x: hidden; margin-left: auto;margin-right: auto;display: block;margin-top:10px;margin-bottom:10px;}
     img{width: 100% !important;margin-left: auto;margin-right: auto;display: block;margin-top:20px;margin-bottom:20px;}
     p{font-size: 24px;}
     span{font-size: 16px !important; line-height: 1.6 !important;}
@@ -570,6 +458,7 @@ window.onscroll = function(ev) {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
     window.FLUTTER_CHANNEL.postMessage('end of scroll');
     }
+
 };
 </script>
 
@@ -578,7 +467,7 @@ window.onscroll = function(ev) {
     </body> 
     </html>''';
 
-    webViewController.loadUrl(Uri.dataFromString(final_content,
+    webViewController.loadUrl(Uri.dataFromString(finalContent,
             mimeType: 'text/html', encoding: Encoding.getByName("UTF-8"))
         .toString());
   }

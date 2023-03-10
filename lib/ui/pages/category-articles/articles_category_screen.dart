@@ -174,6 +174,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                                             .first
                                             .stories!
                                             .first,
+                                        isExpanded: false,
                                         categoryName: widget.categoryTitle,
                                         subCategoryName: _articleCategoryStore
                                             .mapOfItems.keys
