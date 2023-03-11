@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Column(children: [
           TopHeaderWidget(
             title: widget.translation["header"]!,

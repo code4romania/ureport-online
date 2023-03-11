@@ -217,6 +217,11 @@ final Map<String, Map<String, Map<String, String>>> translations = {
           "Orice sugestie ne ajută să îmbunătățim aplicația așa că te rugăm să ne trimiți un mesaj cu ideile tale de noi funcționalități sau propuneri de schimbare. ",
       "write_message": "Scrie aici mesajul tau",
       "send": "Trimite mesaj",
+      "empty_text": "Mesajul trebuie sa contina cel putin 10 caractere",
+      "popup_succes_title": "Feedback transmis cu succes",
+      "popup_succes_body":
+          "Sugestia ta a ajuns la echipa noastră! Îți mulțumim!",
+      "popup_succes_button_text": "Mergi înapoi la Profilul tău",
     },
     "language_screen": {
       "header": "Limba",
