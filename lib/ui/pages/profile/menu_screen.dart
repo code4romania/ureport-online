@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
+import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../controllers/app_router.gr.dart';
@@ -44,73 +46,87 @@ class _MenuScreenState extends State<MenuScreen> {
             TopHeaderWidget(title: _translation["header"] ?? "Menu"),
             ProfileHeaderComponent(),
             ListView(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: [
-                  menuItem(
-                    context,
-                    _translation["about"]!,
-                    () => context.router.push(
-                      AboutScreenRoute(
-                        translations:
-                            translations["${_stateStore.selectedLanguage}"]![
-                                "about_screen"]!,
-                      ),
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                menuItem(
+                  context,
+                  _translation["about"]!,
+                  () => context.router.push(
+                    AboutScreenRoute(
+                      translations: translations[
+                          "${_stateStore.selectedLanguage}"]!["about_screen"]!,
                     ),
                   ),
-                  menuItem(
-                    context,
-                    _translation["profile"]!,
-                    () => context.router.push(
-                      ProfileScreenRoute(
-                        translation:
-                            translations["${_stateStore.selectedLanguage}"]![
-                                "profile_screen"]!,
-                      ),
-                    ),
-                  ), //NavUtils.push(context, ProfileScreen())),
-                  menuItem(
-                    context,
-                    _translation["feedback"]!,
-                    () => context.router.push(
-                      FeedbackScreenRoute(
-                        translations:
-                            translations["${_stateStore.selectedLanguage}"]![
-                                "feedback_screen"]!,
-                      ),
-                    ),
-                  ), //NavUtils.push(context, ProgramChooser())),
-                  menuItem(
-                    context,
-                    _translation["language"]!,
-                    () => context.router.push(
-                      LanguageScreenRoute(
-                        translations:
-                            translations["${_stateStore.selectedLanguage}"]![
-                                "language_screen"]!,
-                      ),
+                ),
+                menuItem(
+                  context,
+                  _translation["profile"]!,
+                  () => context.router.push(
+                    ProfileScreenRoute(
+                      translation:
+                          translations["${_stateStore.selectedLanguage}"]![
+                              "profile_screen"]!,
                     ),
                   ),
+                ), //NavUtils.push(context, ProfileScreen())),
+                menuItem(
+                  context,
+                  _translation["feedback"]!,
+                  () => context.router.push(
+                    FeedbackScreenRoute(
+                      translations:
+                          translations["${_stateStore.selectedLanguage}"]![
+                              "feedback_screen"]!,
+                    ),
+                  ),
+                ), //NavUtils.push(context, ProgramChooser())),
+                menuItem(
+                  context,
+                  _translation["language"]!,
+                  () => context.router.push(
+                    LanguageScreenRoute(
+                      translations:
+                          translations["${_stateStore.selectedLanguage}"]![
+                              "language_screen"]!,
+                    ),
+                  ),
+                ),
 
-                  menuItem(
-                    context,
-                    _translation["account"]!,
-                    () => context.router.push(
-                      AccountScreenRoute(),
+                menuItem(
+                  context,
+                  _translation["account"]!,
+                  () => context.router.push(
+                    AccountScreenRoute(),
+                  ),
+                ), //NavUtils.push(context, ChangePasswordScreen())),
+                menuItem(
+                  context,
+                  _translation["notifications"]!,
+                  () => context.router.push(
+                    NotificationScreenRoute(
+                      translations:
+                          translations["${_stateStore.selectedLanguage}"]![
+                              "notification_screen"]!,
                     ),
-                  ), //NavUtils.push(context, ChangePasswordScreen())),
-                  menuItem(
-                    context,
-                    _translation["notifications"]!,
-                    () => context.router.push(
-                      NotificationScreenRoute(
-                        translations:
-                            translations["${_stateStore.selectedLanguage}"]![
-                                "notification_screen"]!,
-                      ),
-                    ),
-                  ), //NavUtils.push(context, NotificationsScreen())),
-                ]),
+                  ),
+                ), //NavUtils.push(context, NotificationsScreen())),
+              ],
+            ),
+            MainAppButtonComponent(
+                title: _translation["logout"]!,
+                onPressed: () {
+                  var spUtil = SPUtil();
+
+                  ClickSound.soundClick();
+
+                  spUtil.deleteKey(SPUtil.KEY_AUTH_TOKEN);
+                  spUtil.deleteKey(SPUtil.KEY_USER_LANGUAGE);
+                  context.router.replaceAll([RootPageRoute()]);
+                }),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       )),

@@ -196,6 +196,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "language": "Schimbă limba",
       "account": "Setările contului",
       "notifications": "Notificări",
+      "logout": "Ieși din cont",
     },
     "about_screen": {
       "header": "Despre",
