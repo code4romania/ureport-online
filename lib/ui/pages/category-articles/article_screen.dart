@@ -192,11 +192,9 @@ class _ArticleScreenState extends State<ArticleScreen>
               height: height - 120,
               constraints: BoxConstraints(
                   minHeight: height - 120, maxHeight: height - 120),
-              child: Expanded(
-                child: !widget.isComingFromHome
-                    ? fetchedArticle()
-                    : preloadedArticle(),
-              )),
+              child: !widget.isComingFromHome
+                  ? fetchedArticle()
+                  : preloadedArticle()),
         ],
       ),
     );
@@ -252,7 +250,7 @@ class _ArticleScreenState extends State<ArticleScreen>
               "widget.date",
               _storyStore.expandedWebView
                   ? MediaQuery.of(context).size.height * 0.83
-                  : MediaQuery.of(context).size.height * 0.64,
+                  : MediaQuery.of(context).size.height * 0.62,
             ),
           );
         }),
@@ -333,7 +331,7 @@ class _ArticleScreenState extends State<ArticleScreen>
                     "widget.date",
                     _storyStore.expandedWebView
                         ? MediaQuery.of(context).size.height * 0.83
-                        : MediaQuery.of(context).size.height * 0.64,
+                        : MediaQuery.of(context).size.height * 0.62,
                   );
                 }),
               ],

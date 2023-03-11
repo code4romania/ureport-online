@@ -39,7 +39,7 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
           height: 20,
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.5,
           child: PageView(
             controller: _controller,
             children: [
@@ -119,7 +119,6 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.8,
                     margin: const EdgeInsets.only(
-                      top: 40,
                       left: 40,
                       right: 40,
                     ),

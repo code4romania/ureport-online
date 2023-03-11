@@ -15,7 +15,6 @@ import 'package:ureport_ecaro/ui/pages/category-articles/components/title_descri
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../services/click_sound_service.dart';
@@ -137,31 +136,32 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                       }
                     });
 
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemCount: map.keys.length,
-                      itemBuilder: (BuildContext context, int index) =>
+                    return Column(
+                      children: [
+                        for (int i = 0; i < map.keys.length; i++)
                           GestureDetector(
-                        onTap: () {
-                          ClickSound.soundTap();
-                          context.router.push(
-                            ArticlesCategoryScreenRoute(
-                              categoryTitle: map.keys.elementAt(index),
-                              result: map.values.elementAt(index),
-                              storyStore: _storyStore,
+                            onTap: () {
+                              ClickSound.soundTap();
+                              context.router.push(
+                                ArticlesCategoryScreenRoute(
+                                  categoryTitle: map.keys.elementAt(i),
+                                  result: map.values.elementAt(i),
+                                  storyStore: _storyStore,
+                                ),
+                              );
+                            },
+                            child: categoryItem(
+                              item: categories.firstWhere(
+                                (element) =>
+                                    element.name!.split('/')[0].trim() ==
+                                    map.keys.elementAt(i),
+                              ),
                             ),
-                          );
-                        },
-                        child: categoryItem(
-                          item: categories.firstWhere(
-                            (element) =>
-                                element.name!.split('/')[0].trim() ==
-                                map.keys.elementAt(index),
                           ),
+                        Container(
+                          height: 60,
                         ),
-                      ),
+                      ],
                     );
                 }
               },
@@ -186,6 +186,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
         margin: EdgeInsets.all(20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               width: 200,
@@ -195,14 +196,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                 style: titleWhiteTextStlye,
               ),
             ),
-            Container(
-              height: 130,
-              width: 130,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: getItemTitleImage(item.imageUrl),
-              ),
-            ),
+            Expanded(child: getItemTitleImage(item.imageUrl)),
           ],
         ),
       );
@@ -212,32 +206,27 @@ class _CategoryListScreenState extends State<CategoryListScreen>
 
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
-        ? ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: CachedNetworkImage(
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
-              imageUrl: imageUrl,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Container(
-                      height: 60,
-                      width: 60,
-                      child: LoadingIndicatorComponent(),
-                    ),
+        ? CachedNetworkImage(
+            fit: BoxFit.cover,
+            imageUrl: imageUrl,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    child: LoadingIndicatorComponent(),
                   ),
-                ],
-              ),
-              errorWidget: (context, url, error) => Center(
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  child: LoadingIndicatorComponent(),
                 ),
+              ],
+            ),
+            errorWidget: (context, url, error) => Center(
+              child: Container(
+                height: 50,
+                width: 50,
+                child: LoadingIndicatorComponent(),
               ),
             ),
           )

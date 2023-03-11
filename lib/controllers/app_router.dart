@@ -34,34 +34,29 @@ import '../ui/pages/login-register/forgot_password.dart';
       AdaptiveRoute(page: HomeScreen),
       AdaptiveRoute(page: Opinion),
     ]),
-    // More
 
+    // More
     AdaptiveRoute(page: AboutScreen),
     AdaptiveRoute(page: ChangePasswordScreen),
     AdaptiveRoute(page: NotificationScreen),
     AdaptiveRoute(page: AccountScreen),
     AdaptiveRoute(page: LanguageScreen),
     AdaptiveRoute(page: FeedbackScreen),
-
-    // Chat
+    AdaptiveRoute(page: ProfileScreen),
 
     // Profile
-    AdaptiveRoute(page: ProfileScreen),
     AdaptiveRoute(page: RegisterScreen),
     AdaptiveRoute(page: LoginScreen),
     AdaptiveRoute(page: ForgotPasswordScreen),
     AdaptiveRoute(page: OpenAppScreen),
     AdaptiveRoute(page: OnboardingScreen),
-    // Category Article Flow
 
+    // Category Article Flow
     AdaptiveRoute(page: ArticleScreen),
     AdaptiveRoute(page: ArticleListScreen),
     AdaptiveRoute(page: ArticlesCategoryScreen),
 
-    // HOME
-
     // Opinions
-
     AdaptiveRoute(page: OpinionSearchScreen),
     AdaptiveRoute(page: OpinionFromSearchScreen),
   ],

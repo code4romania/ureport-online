@@ -4,12 +4,18 @@ import 'package:ureport_ecaro/models/bookmark.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
 class BookmarkWidget extends StatelessWidget {
-  const BookmarkWidget({Key? key, required this.bookmarkItem})
-      : super(key: key);
+  const BookmarkWidget({
+    Key? key,
+    required this.bookmarkItem,
+    required this.isLastItem,
+  }) : super(key: key);
   final Bookmark bookmarkItem;
+  final bool isLastItem;
 
   @override
   Widget build(BuildContext context) {
+    print(isLastItem);
+    print(bookmarkItem.story?.title);
     String creationDate = "";
     String bookmarkImageUrl = "";
 
@@ -23,7 +29,14 @@ class BookmarkWidget extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: isLastItem
+          ? EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: 40,
+            )
+          : EdgeInsets.all(10),
       child: Column(children: [
         Container(
           width: MediaQuery.of(context).size.width,

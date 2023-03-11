@@ -89,7 +89,7 @@ class ArticleHeaderComponent extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                fontSize: title.length > 60 ? 15 : 20,
+                fontSize: title.length > 60 ? 13 : 20,
                 fontWeight: FontWeight.w700),
           ),
         ),

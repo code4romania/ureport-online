@@ -116,7 +116,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           SizedBox(
             height: 10,
           ),
-          Image.asset(imagePath)
+          Image.asset(imagePath, height: 250)
         ],
       ),
     );

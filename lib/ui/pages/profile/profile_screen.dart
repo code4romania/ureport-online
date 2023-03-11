@@ -115,6 +115,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   _profileInfoStore.fetchBookmarks()),
                           child: BookmarkWidget(
                             bookmarkItem: _profileInfoStore.bookmarks[index],
+                            isLastItem:
+                                index == _profileInfoStore.bookmarks.length - 1,
                           ),
                         ),
                       ),
@@ -134,6 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       itemCount: _profileInfoStore.badges.length,
                       itemBuilder: (context, index) => MedalWidget(
                         medal: _profileInfoStore.badges[index],
+                        isLastItem:
+                            index == _profileInfoStore.badges.length - 1,
                       ),
                     );
                   }

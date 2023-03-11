@@ -76,6 +76,7 @@ class RootPage extends StatelessWidget {
             context.router.replaceAll([OpenAppScreenRoute()]);
           } else {
             return AutoTabsScaffold(
+              extendBody: true,
               homeIndex: 2,
               routes: [
                 CategoryListScreenRoute(),

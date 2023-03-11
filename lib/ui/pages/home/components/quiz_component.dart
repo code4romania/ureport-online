@@ -66,13 +66,13 @@ class QuizComponent extends StatelessWidget {
                   Text(
                     "Sondaj nou disponibil!",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                   Text(
                     "Vrei sa-l completezi acum?",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 15,
                       color: Colors.grey[600],
                     ),
                   ),

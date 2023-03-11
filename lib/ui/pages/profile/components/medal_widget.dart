@@ -2,14 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 
 class MedalWidget extends StatelessWidget {
-  const MedalWidget({Key? key, required this.medal}) : super(key: key);
+  const MedalWidget({
+    Key? key,
+    required this.medal,
+    required this.isLastItem,
+  }) : super(key: key);
   final BadgeMedal medal;
+  final bool isLastItem;
 
   @override
   Widget build(BuildContext context) {
     print("https://ureport.heroesof.tech${medal.badge_type?.image}");
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: isLastItem
+          ? EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: 40,
+            )
+          : EdgeInsets.all(10),
       child: Column(
         children: [
           Row(
