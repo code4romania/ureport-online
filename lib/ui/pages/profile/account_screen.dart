@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
+import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -298,8 +298,20 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    SPUtil().deleteKey(SPUtil.KEY_AUTH_TOKEN);
-                    context.router.replaceAll([RootPageRoute()]);
+                    showDialog(
+                      context: context,
+                      builder: (context) => PopupComponent(
+                        _translation["delete_account_confirmation_title"]!,
+                        Icons.warning,
+                        Color.fromRGBO(254, 226, 226, 1),
+                        Color.fromRGBO(220, 38, 38, 1),
+                        _translation["delete_account_confirmation_body"]!,
+                        _translation["delete_account_confirmation_button"]!,
+                        () => context.router.pop(),
+                        _translation["back"]!,
+                        () => context.router.pop(),
+                      ),
+                    );
                   },
                   child: Container(
                     width: 170,

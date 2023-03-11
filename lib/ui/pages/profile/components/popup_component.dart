@@ -5,17 +5,24 @@ class PopupComponent extends AlertDialog {
   const PopupComponent(
     this.titleText,
     this.iconData,
-    this.bodyText, {
-    super.key,
-    required this.buttonText,
-    required this.onPressed,
-  });
+    this.iconBackgroundColor,
+    this.iconColor,
+    this.bodyText,
+    this.confirmButtonText,
+    this.onPressConfirm,
+    this.backButtonText,
+    this.onPressBack,
+  );
 
   final String titleText;
   final IconData iconData;
+  final Color iconBackgroundColor;
+  final Color iconColor;
   final String bodyText;
-  final String buttonText;
-  final Function() onPressed;
+  final String confirmButtonText;
+  final Function() onPressConfirm;
+  final String? backButtonText;
+  final Function()? onPressBack;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +48,12 @@ class PopupComponent extends AlertDialog {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: Color.fromRGBO(209, 250, 229, 1),
+              color: iconBackgroundColor,
               borderRadius: BorderRadius.circular(25),
             ),
             child: Icon(
               iconData,
-              color: Color.fromRGBO(5, 150, 105, 1),
+              color: iconColor,
             ),
           ),
           SizedBox(
@@ -70,9 +77,25 @@ class PopupComponent extends AlertDialog {
             height: 20,
           ),
           MainAppButtonComponent(
-            title: buttonText,
-            onPressed: onPressed,
+            title: confirmButtonText,
+            onPressed: onPressConfirm,
           ),
+          backButtonText != null
+              ? MainAppButtonComponent(
+                  title: backButtonText!,
+                  onPressed: onPressBack!,
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );

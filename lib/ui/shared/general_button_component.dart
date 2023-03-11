@@ -27,8 +27,8 @@ class MainAppButtonComponent extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(
-          top: 20,
-          bottom: 20,
+          top: 10,
+          bottom: 10,
         ),
         width: MediaQuery.of(context).size.width * 0.8,
         height: 50,

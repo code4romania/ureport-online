@@ -100,10 +100,13 @@ class FeedbackScreen extends StatelessWidget {
                           return PopupComponent(
                             translations["popup_succes_title"]!,
                             Icons.check,
+                            Color.fromRGBO(209, 250, 229, 1),
+                            Color.fromRGBO(5, 150, 105, 1),
                             translations["popup_succes_body"]!,
-                            buttonText:
-                                translations["popup_succes_button_text"]!,
-                            onPressed: () => context.router.pop(),
+                            translations["popup_succes_button_text"]!,
+                            () => context.router.pop(),
+                            null,
+                            null,
                           );
                         }).then(
                       (value) => context.router.pop(),

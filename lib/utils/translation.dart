@@ -288,6 +288,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "delete_account_body":
           "Atenție ! Ștergerea contului duce la ștergerea tuturor informațiilor și progresului aferente contului și nu vor putea fi recuperate",
       "delete_account_button": "Șterge contul",
+      "delete_account_confirmation_title": "Ștergere cont",
+      "delete_account_confirmation_body":
+          "Ești sigur că vrei să îți ștergi contul? Atenție ! Ștergerea contului duce la ștergerea tuturor informațiilor și progresului aferente contului și nu vor putea fi recuperate",
+      "delete_account_confirmation_button": "Șterge cont",
     }
   },
 };
