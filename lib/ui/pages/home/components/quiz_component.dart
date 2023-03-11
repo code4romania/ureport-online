@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
@@ -18,7 +19,7 @@ class QuizComponent extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -36,13 +37,13 @@ class QuizComponent extends StatelessWidget {
                     child: Container(
                       height: 50,
                       width: 50,
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: blueColor,
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      child: Icon(
-                        Icons.chat_sharp,
-                        color: Colors.white,
+                      child: SvgPicture.asset(
+                        "assets/images/icon_quiz.svg",
                       ),
                     ),
                   ),
@@ -90,14 +91,16 @@ class QuizComponent extends StatelessWidget {
                   child: MainAppButtonComponent(title: "Da", onPressed: () {})),
               SizedBox(width: 20),
               SizedBox(
-                  width: 100,
-                  height: 80,
-                  child: MainAppButtonComponent(
-                      color: Colors.white,
-                      textStyle: TextStyle(color: Colors.grey[600]),
-                      border: Border.all(color: Colors.grey[600]!),
-                      title: "Nu acum",
-                      onPressed: () {})),
+                width: 100,
+                height: 80,
+                child: MainAppButtonComponent(
+                  color: Colors.white,
+                  textStyle: TextStyle(color: Colors.grey[600]),
+                  border: Border.all(color: Colors.grey[600]!),
+                  title: "Nu acum",
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
         ],

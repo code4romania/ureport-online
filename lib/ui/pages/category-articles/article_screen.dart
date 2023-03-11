@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -154,47 +153,39 @@ class _ArticleScreenState extends State<ArticleScreen>
         ],
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
               height: 80,
               child: TopHeaderWidget(title: _translation["header"]!)),
-          Container(
-            height: 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextNavigatorComponent(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: TextNavigatorComponent(
                   title: _translation["back"]!,
                   rightEdge: false,
                   onPressed: () => context.router.pop(),
                 ),
-                Observer(builder: (context) {
-                  return TextButton(
-                      onPressed: () {
-                        if (_storyStore.expandedWebView) {
-                          _storyStore.expandedWebView = false;
-                        } else {
-                          _storyStore.expandedWebView = true;
-                        }
-                      },
-                      child: Text(
-                        _storyStore.expandedWebView
-                            ? _translation["show"]!
-                            : _translation["hide"]!,
-                        style: TextStyle(color: blueColor),
-                      ));
-                }),
-              ],
-            ),
+              ),
+              Observer(builder: (context) {
+                return TextButton(
+                    onPressed: () {
+                      if (_storyStore.expandedWebView) {
+                        _storyStore.expandedWebView = false;
+                      } else {
+                        _storyStore.expandedWebView = true;
+                      }
+                    },
+                    child: Text(
+                      _storyStore.expandedWebView
+                          ? _translation["show"]!
+                          : _translation["hide"]!,
+                      style: TextStyle(color: blueColor),
+                    ));
+              }),
+            ],
           ),
-          Container(
-              height: height - 120,
-              constraints: BoxConstraints(
-                  minHeight: height - 120, maxHeight: height - 120),
-              child: !widget.isComingFromHome
-                  ? fetchedArticle()
-                  : preloadedArticle()),
+          !widget.isComingFromHome ? fetchedArticle() : preloadedArticle(),
         ],
       ),
     );
@@ -369,12 +360,10 @@ class _ArticleScreenState extends State<ArticleScreen>
                   return;
                 } else {
                   if (message.message.toString() == "end of scroll") {
-                    print("END OF SCROLL");
                     _storyStore.scrolledToTheBottom = true;
                   }
 
                   if (message.message.toString() == "not scrollable") {
-                    print("NOT SCROLLABLE");
                     _storyStore.scrolledToTheBottom = true;
                   }
                 }

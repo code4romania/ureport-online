@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 
@@ -63,8 +64,8 @@ class AboutScreen extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                "assets/images/unicef_about.png",
+              child: SvgPicture.asset(
+                "assets/images/unicef_about.svg",
                 fit: BoxFit.fill,
               ),
             ),

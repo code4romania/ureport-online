@@ -84,7 +84,7 @@ abstract class _StoryStoreBase with Store {
         .then((value) => print("is bookmarked: $isBookmarked"));
 
     isStoryRead(storyId).then((value) {
-      print("is read: $alreadyRead");
+      print("read: $alreadyRead");
       if (!alreadyRead) {
         print("Timer started");
 

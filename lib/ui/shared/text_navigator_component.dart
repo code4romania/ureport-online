@@ -22,18 +22,25 @@ class TextNavigatorComponent extends StatelessWidget {
         ClickSound.soundClose();
         onPressed();
       },
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.all(10.0),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             rightEdge ? const Spacer() : Container(),
             if (!rightEdge)
-              Text("< ",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: darkMode != null ? Colors.white : Colors.black,
-                  )),
+              Container(
+                height: 30,
+                child: Text("< ",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: darkMode != null ? Colors.white : Colors.black,
+                    )),
+              ),
             Container(
+              height: 30,
+              alignment: Alignment.center,
               child: Text(
                 title.toUpperCase(),
                 style: TextStyle(

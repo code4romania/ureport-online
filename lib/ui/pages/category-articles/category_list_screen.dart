@@ -27,8 +27,7 @@ class CategoryListScreen extends StatefulWidget {
   _CategoryListScreenState createState() => _CategoryListScreenState();
 }
 
-class _CategoryListScreenState extends State<CategoryListScreen>
-    with AutomaticKeepAliveClientMixin {
+class _CategoryListScreenState extends State<CategoryListScreen> {
   late StateStore _stateStore;
   late CategoryStories _storyStore;
   late Map<String, String> _translation;
@@ -56,6 +55,7 @@ class _CategoryListScreenState extends State<CategoryListScreen>
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TopHeaderWidget(title: _translation["header"]!),
@@ -166,14 +166,14 @@ class _CategoryListScreenState extends State<CategoryListScreen>
                 }
               },
             ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
   Widget categoryItem({required Result item}) {
     if (item.stories != null) if (item.stories!.isNotEmpty)

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
@@ -106,31 +107,51 @@ class RootPage extends StatelessWidget {
                         IconThemeData(color: Color.fromRGBO(159, 75, 152, 1)),
                     items: [
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_article.png",
-                            color: tabsRouter.activeIndex == 0
+                        icon: SvgPicture.asset(
+                          "assets/images/icon_article.svg",
+                          colorFilter: ColorFilter.mode(
+                            tabsRouter.activeIndex == 0
                                 ? Color.fromRGBO(159, 75, 152, 1)
-                                : Color.fromRGBO(28, 171, 226, 1)),
+                                : Color.fromRGBO(28, 171, 226, 1),
+                            BlendMode.srcATop,
+                          ),
+                        ),
                         label: 'Articole',
                       ),
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_chat.png",
-                            color: tabsRouter.activeIndex == 1
+                        icon: SvgPicture.asset(
+                          "assets/images/icon_chat.svg",
+                          colorFilter: ColorFilter.mode(
+                            tabsRouter.activeIndex == 1
                                 ? Color.fromRGBO(159, 75, 152, 1)
-                                : Color.fromRGBO(28, 171, 226, 1)),
+                                : Color.fromRGBO(28, 171, 226, 1),
+                            BlendMode.srcATop,
+                          ),
+                        ),
                         label: 'Chat',
                       ),
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_home.png",
-                            color: tabsRouter.activeIndex == 2
+                        icon: SvgPicture.asset(
+                          "assets/images/icon_home.svg",
+                          colorFilter: ColorFilter.mode(
+                            tabsRouter.activeIndex == 2
                                 ? Color.fromRGBO(159, 75, 152, 1)
-                                : Color.fromRGBO(28, 171, 226, 1)),
+                                : Color.fromRGBO(28, 171, 226, 1),
+                            BlendMode.srcATop,
+                          ),
+                        ),
                         label: 'Home',
                       ),
                       BottomNavigationBarItem(
-                        icon: Image.asset("assets/images/icon_opinions.png",
-                            color: tabsRouter.activeIndex == 3
+                        icon: SvgPicture.asset(
+                          "assets/images/icon_opinions.svg",
+                          colorFilter: ColorFilter.mode(
+                            tabsRouter.activeIndex == 3
                                 ? Color.fromRGBO(159, 75, 152, 1)
-                                : Color.fromRGBO(28, 171, 226, 1)),
+                                : Color.fromRGBO(28, 171, 226, 1),
+                            BlendMode.srcATop,
+                          ),
+                        ),
                         label: 'Opinii',
                       ),
                       BottomNavigationBarItem(

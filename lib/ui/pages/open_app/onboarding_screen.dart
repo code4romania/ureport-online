@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
@@ -93,10 +94,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget page(int page, String text) {
     final String imagePath = page == 0
-        ? "assets/images/v2_about_1_ro.png"
+        ? "assets/images/v2_about_1_ro.svg"
         : page == 1
-            ? "assets/images/v2_about_2_ro.png"
-            : "assets/images/v2_about_3_ro.png";
+            ? "assets/images/v2_about_2_ro.svg"
+            : "assets/images/v2_about_3_ro.svg";
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -116,7 +117,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           SizedBox(
             height: 10,
           ),
-          Image.asset(imagePath, height: 250)
+          SvgPicture.asset(
+            imagePath,
+            height: 250,
+          ),
         ],
       ),
     );

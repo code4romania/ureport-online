@@ -46,7 +46,8 @@ abstract class _CategoryStories with Store {
 
   @action
   Future fetchCategories() => categoryList = ObservableFuture(httpClient
-      .getCategories('https://ureport.heroesof.tech/api/v1/categories/org/1')
+      .getCategories(
+          'https://ureport.heroesof.tech/api/v1/categories/org/1/?limit=60')
       .then((categories) => categories.asObservable()));
 
   @action

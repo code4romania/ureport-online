@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
@@ -110,8 +111,8 @@ class LanguageScreen extends StatelessWidget {
           Spacer(),
           Container(
             width: MediaQuery.of(context).size.width,
-            child: Image.asset(
-              "assets/images/unicef_about.png",
+            child: SvgPicture.asset(
+              "assets/images/unicef_about.svg",
               fit: BoxFit.fill,
             ),
           ),
