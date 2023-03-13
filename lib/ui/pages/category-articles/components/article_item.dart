@@ -89,45 +89,51 @@ class ArticleItemWidget extends StatelessWidget {
                           fit: BoxFit.cover,
                         )),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 20,
-                ),
-                CircleAvatar(
-                  radius: 4,
-                  backgroundColor: Color.fromRGBO(201, 13, 182, 1),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: widgetWidth - 80,
-                  child: Text(
-                    subCategoryName,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.clip,
+            Container(
+              height: 50,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
                   ),
-                ),
-              ],
+                  CircleAvatar(
+                    radius: 4,
+                    backgroundColor: Color.fromRGBO(155, 13, 132, 1),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    width: widgetWidth - 80,
+                    child: Text(
+                      subCategoryName,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
               width: widgetWidth,
               margin: EdgeInsets.only(
+                left: 15,
                 top: 10,
-                left: 20,
                 right: 5,
               ),
               child: Text(
-                !isExpanded
-                    ? title.length < 50
-                        ? title
-                        : "${title.substring(0, 50)}..."
-                    : title,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: isExpanded ? 2 : 3,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             Container(
+              height: 20,
               width: widgetWidth,
               margin: EdgeInsets.only(
                 top: 10,

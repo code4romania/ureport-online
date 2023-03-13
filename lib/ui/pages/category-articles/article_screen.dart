@@ -83,7 +83,6 @@ class _ArticleScreenState extends State<ArticleScreen>
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       floatingActionButton: Column(
@@ -227,20 +226,18 @@ class _ArticleScreenState extends State<ArticleScreen>
   }
 
   Widget preloadedArticle() {
-    return Column(
-      children: [
-        Observer(builder: (context) {
-          return Container(
-            width: double.infinity,
-            child: loadLocalHTML(
-              content: widget.preloadedStory!.content!,
-              title: widget.preloadedStory!.title ?? "",
-              date: widget.preloadedStory!.createdOn,
-              category: widget.preloadedStory!.category!.name!.split('/')[1],
-            ),
-          );
-        }),
-      ],
+    return Observer(
+      builder: (context) {
+        return Container(
+          width: double.infinity,
+          child: loadLocalHTML(
+            content: widget.preloadedStory!.content!,
+            title: widget.preloadedStory!.title ?? "",
+            date: widget.preloadedStory!.createdOn,
+            category: widget.preloadedStory!.category!.name!.split('/')[1],
+          ),
+        );
+      },
     );
   }
 
@@ -297,7 +294,7 @@ class _ArticleScreenState extends State<ArticleScreen>
     required String category,
   }) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.83,
+      height: MediaQuery.of(context).size.height - 130,
       width: double.infinity,
       child: WebViewPlus(
         javascriptMode: JavascriptMode.unrestricted,

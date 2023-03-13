@@ -94,10 +94,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget page(int page, String text) {
     final String imagePath = page == 0
-        ? "assets/images/v2_about_1_ro.svg"
+        ? "assets/images/v2_about_1_ro.png"
         : page == 1
-            ? "assets/images/v2_about_2_ro.svg"
-            : "assets/images/v2_about_3_ro.svg";
+            ? "assets/images/v2_about_2_ro.png"
+            : "assets/images/v2_about_3_ro.png";
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -117,7 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           SizedBox(
             height: 10,
           ),
-          SvgPicture.asset(
+          Image.asset(
             imagePath,
             height: 250,
           ),
