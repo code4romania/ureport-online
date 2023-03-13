@@ -52,20 +52,12 @@ abstract class _StoryStoreBase with Store {
   bool scrolledToTheBottom = false;
 
   @observable
-  bool expandedWebView = false;
-
-  @observable
   bool hasClaimedBadge = false;
 
   Timer? timer;
-  Timer? expandWebViewTimer;
 
   void cancelTimer() {
     timer?.cancel();
-  }
-
-  void cancelExpandWebViewTimer() {
-    expandWebViewTimer?.cancel();
   }
 
   _StoryStoreBase(
@@ -75,32 +67,34 @@ abstract class _StoryStoreBase with Store {
   ) {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
     httpClient = StoryService(token: token);
-    userId = 3;
-    if (fetchedStory == null) {
-      fetchStory(storyId);
-    }
-
-    isStoryBookmarked(storyId)
-        .then((value) => print("is bookmarked: $isBookmarked"));
-
-    isStoryRead(storyId).then((value) {
-      print("read: $alreadyRead");
-      if (!alreadyRead) {
-        print("Timer started");
-
-        timer = Timer(const Duration(minutes: 2), () {
-          timerFinished();
-        });
+    fetchUserId().then((value) {
+      if (fetchedStory == null) {
+        fetchStory(storyId);
       }
+
+      isStoryBookmarked(storyId)
+          .then((value) => print("is bookmarked: $isBookmarked"));
+
+      isStoryRead(storyId).then((value) {
+        print("read: $alreadyRead");
+        if (!alreadyRead) {
+          print("Timer started");
+
+          timer = Timer(const Duration(minutes: 2), () {
+            timerFinished();
+          });
+        }
+      });
+
+      showRating(storyId: storyId);
+
+      // getStoryRating(storyId);
     });
+  }
 
-    expandWebViewTimer = Timer(const Duration(seconds: 10), () {
-      expandedWebView = true;
-    });
-
-    showRating(storyId: storyId);
-
-    // getStoryRating(storyId);
+  @action
+  Future<void> fetchUserId() async {
+    userId = 3;
   }
 
   // Get story details

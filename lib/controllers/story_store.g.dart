@@ -201,22 +201,6 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
-  late final _$expandedWebViewAtom =
-      Atom(name: '_StoryStoreBase.expandedWebView', context: context);
-
-  @override
-  bool get expandedWebView {
-    _$expandedWebViewAtom.reportRead();
-    return super.expandedWebView;
-  }
-
-  @override
-  set expandedWebView(bool value) {
-    _$expandedWebViewAtom.reportWrite(value, super.expandedWebView, () {
-      super.expandedWebView = value;
-    });
-  }
-
   late final _$hasClaimedBadgeAtom =
       Atom(name: '_StoryStoreBase.hasClaimedBadge', context: context);
 
@@ -231,6 +215,14 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     _$hasClaimedBadgeAtom.reportWrite(value, super.hasClaimedBadge, () {
       super.hasClaimedBadge = value;
     });
+  }
+
+  late final _$fetchUserIdAsyncAction =
+      AsyncAction('_StoryStoreBase.fetchUserId', context: context);
+
+  @override
+  Future<void> fetchUserId() {
+    return _$fetchUserIdAsyncAction.run(() => super.fetchUserId());
   }
 
   late final _$isStoryReadAsyncAction =
@@ -331,7 +323,6 @@ alreadyRead: ${alreadyRead},
 readArticle: ${readArticle},
 finishedTimer: ${finishedTimer},
 scrolledToTheBottom: ${scrolledToTheBottom},
-expandedWebView: ${expandedWebView},
 hasClaimedBadge: ${hasClaimedBadge}
     ''';
   }
