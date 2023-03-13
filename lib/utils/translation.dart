@@ -246,6 +246,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "save": "Salvează parola",
       "empty_password": "Parola nu poate fi goală!",
       "passwords_not_match": "Parolele nu se potrivesc!",
+      "password_changed": "Parola a fost schimbată cu succes!",
+      "password_changed_error":
+          "A apărut o eroare la schimbarea parolei. Te rugăm să încerci din nou!",
+      "continue_button": "Continuă",
     },
     "notification_screen": {
       "header": "Notificări",

@@ -57,6 +57,30 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  late final _$resultAtom =
+      Atom(name: '_LoginStoreBase.result', context: context);
+
+  @override
+  LoginStatus? get result {
+    _$resultAtom.reportRead();
+    return super.result;
+  }
+
+  @override
+  set result(LoginStatus? value) {
+    _$resultAtom.reportWrite(value, super.result, () {
+      super.result = value;
+    });
+  }
+
+  late final _$loginAsyncAction =
+      AsyncAction('_LoginStoreBase.login', context: context);
+
+  @override
+  Future<void> login() {
+    return _$loginAsyncAction.run(() => super.login());
+  }
+
   late final _$_LoginStoreBaseActionController =
       ActionController(name: '_LoginStoreBase', context: context);
 
@@ -76,7 +100,8 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     return '''
 emailError: ${emailError},
 passwordError: ${passwordError},
-isLoading: ${isLoading}
+isLoading: ${isLoading},
+result: ${result}
     ''';
   }
 }

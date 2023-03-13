@@ -25,12 +25,16 @@ abstract class _LoginStoreBase with Store {
   @observable
   var isLoading = false;
 
+  @observable
+  LoginStatus? result;
+
   @action
   void toggleLoading() {
     isLoading = !isLoading;
   }
 
-  Future<LoginStatus?> login() async {
+  @action
+  Future<void> login() async {
     final bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(emailController.text);
@@ -51,13 +55,16 @@ abstract class _LoginStoreBase with Store {
     }
     toggleLoading();
 
-    final signInResult = await AuthService().login(
+    result = await AuthService().login(
       email: emailController.text,
       password: passwdController.text,
     );
 
+    if (result == LoginStatus.SUCCESS) {
+      ///   await SPUtils.saveUser(emailController.text);
+    }
+
     toggleLoading();
-    return signInResult;
   }
 
   void dispose() {

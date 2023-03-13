@@ -10,7 +10,6 @@ import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/enums.dart';
@@ -30,13 +29,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     _loginStore.dispose();
-
     super.dispose();
   }
 
-  void handleLogin(LoginStatus? status) {
-    if (status != null) {
-      switch (status) {
+  @override
+  void initState() {
+    _stateStore = context.read<StateStore>();
+    _translation =
+        translations["${_stateStore.selectedLanguage}"]!["login_screen"]!;
+    _loginStore = LoginStore(_translation);
+
+    super.initState();
+
+    reaction((p0) => _loginStore.result != null, (p0) {
+      switch (_loginStore.result) {
         case LoginStatus.SUCCESS:
           {
             showPopup(
@@ -55,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             message: _translation["no_existing_acc"]!,
             buttonText: _translation["continue"]!,
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.router.pop(),
           );
           break;
         case LoginStatus.WRONG_DETAILS:
@@ -63,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             message: _translation["failed_login"]!,
             buttonText: _translation["continue"]!,
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.router.pop(),
           );
           break;
         case LoginStatus.ERROR:
@@ -71,162 +77,154 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             message: _translation["error"]!,
             buttonText: _translation["continue"]!,
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.router.pop(),
           );
           break;
+        default:
+          break;
       }
-    }
-  }
-
-  @override
-  void initState() {
-    _stateStore = context.read<StateStore>();
-    _translation =
-        translations["${_stateStore.selectedLanguage}"]!["login_screen"]!;
-    _loginStore = LoginStore(_translation);
-
-    super.initState();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: SingleChildScrollView(
-      child: Column(children: [
-        TopHeaderWidget(title: _translation["header"]!),
-        Container(
-            margin: EdgeInsets.only(top: 80, left: 10, right: 10),
-            width: double.infinity,
-            child: Text(
-              _translation["title"]!,
-              style: TextStyle(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopHeaderWidget(title: _translation["header"]!),
+            Container(
+              margin: EdgeInsets.only(top: 80, left: 10, right: 10),
+              width: double.infinity,
+              child: Text(
+                _translation["title"]!,
+                style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 28,
-                  fontFamily: 'Heebo'),
-              textAlign: TextAlign.center,
-            )),
-        SizedBox(
-          height: 10,
-        ),
-        GestureDetector(
-          onTap: () => context.router.replace(RegisterScreenRoute()),
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
+                  fontFamily: 'Heebo',
+                ),
+                textAlign: TextAlign.center,
               ),
-              text: _translation["no_account"]! + " ",
-              children: <TextSpan>[
-                TextSpan(
-                    text: _translation['no_account2']!,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: purpleColor,
-                    )),
-              ],
             ),
-          ),
-        ),
-        Observer(builder: (context) {
-          return textField(
-            label: _translation["email"]!,
-            textInputAction: TextInputAction.next,
-            obscureText: false,
-            keyboardType: TextInputType.emailAddress,
-            controller: _loginStore.emailController,
-            errorText: _loginStore.emailError,
-          );
-        }),
-        Observer(builder: (context) {
-          return textField(
-            label: _translation["password"]!,
-            textInputAction: TextInputAction.done,
-            obscureText: true,
-            keyboardType: TextInputType.visiblePassword,
-            controller: _loginStore.passwdController,
-            errorText: _loginStore.passwordError,
-          );
-        }),
-        Observer(builder: (context) {
-          return _loginStore.isLoading
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: LoadingIndicatorComponent(),
-                )
-              : MainAppButtonComponent(
-                  title: _translation["submit"]!,
-                  onPressed: () {
-                    _loginStore.login().then((status) => handleLogin(status));
-                  },
-                );
-        }),
-        SizedBox(
-          height: 10,
-        ),
-        GestureDetector(
-          onTap: () => context.router.replace(ForgotPasswordScreenRoute()),
-          child: Text(
-            _translation["forgot_pw"]!,
-            style: TextStyle(
-              color: purpleColor,
+            SizedBox(
+              height: 10,
             ),
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Container(
-            margin: EdgeInsets.only(top: 30),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
+            GestureDetector(
+              onTap: () => context.router.replace(RegisterScreenRoute()),
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                  text: _translation["no_account"]! + " ",
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: _translation['no_account2']!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: purpleColor,
+                        )),
+                  ],
+                ),
+              ),
+            ),
+            Observer(builder: (context) {
+              return textField(
+                label: _translation["email"]!,
+                textInputAction: TextInputAction.next,
+                obscureText: false,
+                keyboardType: TextInputType.emailAddress,
+                controller: _loginStore.emailController,
+                errorText: _loginStore.emailError,
+              );
+            }),
+            Observer(builder: (context) {
+              return textField(
+                label: _translation["password"]!,
+                textInputAction: TextInputAction.done,
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+                controller: _loginStore.passwdController,
+                errorText: _loginStore.passwordError,
+              );
+            }),
+            Observer(builder: (context) {
+              return _loginStore.isLoading
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LoadingIndicatorComponent(),
+                    )
+                  : MainAppButtonComponent(
+                      title: _translation["submit"]!,
+                      onPressed: () => _loginStore.login());
+            }),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () => context.router.replace(ForgotPasswordScreenRoute()),
+              child: Text(
+                _translation["forgot_pw"]!,
+                style: TextStyle(
+                  color: purpleColor,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 100,
+                      child: Divider(
+                        color: Colors.black,
+                      )),
+                  Text(_translation['separator_text']!),
+                  Container(
                     width: 100,
                     child: Divider(
                       color: Colors.black,
-                    )),
-                Text(_translation['separator_text']!),
-                Container(
-                    width: 100,
-                    child: Divider(
-                      color: Colors.black,
-                    )),
-              ],
-            )),
-        Container(
-          width: double.infinity,
-          height: 40,
-          margin: EdgeInsets.only(right: 30, left: 30, top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: submitButton(
-                    type: 'google',
-                    onPressed: () {
-                      print("google");
-                    }),
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: submitButton(
-                    type: 'facebook',
-                    onPressed: () {
-                      print("facebook");
-                    }),
+            ),
+            Container(
+              width: double.infinity,
+              height: 40,
+              margin: EdgeInsets.only(right: 30, left: 30, top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: submitButton(
+                        type: 'google',
+                        onPressed: () {
+                          print("google");
+                        }),
+                  ),
+                  Expanded(
+                    child: submitButton(
+                        type: 'facebook',
+                        onPressed: () {
+                          print("facebook");
+                        }),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+          ],
         ),
-        SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          height: 30,
-        ),
-      ]),
-    )));
+      ),
+    );
   }
 }

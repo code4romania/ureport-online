@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/utils/sp_utils.dart';
