@@ -110,7 +110,7 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
   }
 
   @override
-  void validateCurrentPassword() {
+  bool validateCurrentPassword() {
     final _$actionInfo = _$_ChangePasswordStoreBaseActionController.startAction(
         name: '_ChangePasswordStoreBase.validateCurrentPassword');
     try {
@@ -121,7 +121,7 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
   }
 
   @override
-  void validateNewPassword() {
+  bool validateNewPassword() {
     final _$actionInfo = _$_ChangePasswordStoreBaseActionController.startAction(
         name: '_ChangePasswordStoreBase.validateNewPassword');
     try {
@@ -132,7 +132,7 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
   }
 
   @override
-  void validatePasswordConfirmation() {
+  bool validatePasswordConfirmation() {
     final _$actionInfo = _$_ChangePasswordStoreBaseActionController.startAction(
         name: '_ChangePasswordStoreBase.validatePasswordConfirmation');
     try {
@@ -143,7 +143,7 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
   }
 
   @override
-  void validateNewWithConfirmation() {
+  bool validateNewWithConfirmation() {
     final _$actionInfo = _$_ChangePasswordStoreBaseActionController.startAction(
         name: '_ChangePasswordStoreBase.validateNewWithConfirmation');
     try {

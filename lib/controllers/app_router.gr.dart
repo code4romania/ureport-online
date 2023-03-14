@@ -13,9 +13,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
 import 'package:flutter/material.dart' as _i25;
-import 'package:ureport_ecaro/controllers/category_stories_store.dart' as _i27;
-import 'package:ureport_ecaro/models/category.dart' as _i28;
-import 'package:ureport_ecaro/models/story.dart' as _i26;
+import 'package:ureport_ecaro/controllers/category_stories_store.dart' as _i28;
+import 'package:ureport_ecaro/models/category.dart' as _i29;
+import 'package:ureport_ecaro/models/profile.dart' as _i26;
+import 'package:ureport_ecaro/models/story.dart' as _i27;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_list_screen.dart'
     as _i15;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_screen.dart'
@@ -131,6 +132,7 @@ class AppRouter extends _i24.RootStackRouter {
         child: _i8.ProfileScreen(
           key: args.key,
           translation: args.translation,
+          profile: args.profile,
         ),
         opaque: true,
       );
@@ -583,12 +585,14 @@ class ProfileScreenRoute extends _i24.PageRouteInfo<ProfileScreenRouteArgs> {
   ProfileScreenRoute({
     _i25.Key? key,
     required Map<String, String> translation,
+    _i26.Profile? profile,
   }) : super(
           ProfileScreenRoute.name,
           path: '/profile-screen',
           args: ProfileScreenRouteArgs(
             key: key,
             translation: translation,
+            profile: profile,
           ),
         );
 
@@ -599,15 +603,18 @@ class ProfileScreenRouteArgs {
   const ProfileScreenRouteArgs({
     this.key,
     required this.translation,
+    this.profile,
   });
 
   final _i25.Key? key;
 
   final Map<String, String> translation;
 
+  final _i26.Profile? profile;
+
   @override
   String toString() {
-    return 'ProfileScreenRouteArgs{key: $key, translation: $translation}';
+    return 'ProfileScreenRouteArgs{key: $key, translation: $translation, profile: $profile}';
   }
 }
 
@@ -677,7 +684,7 @@ class ArticleScreenRoute extends _i24.PageRouteInfo<ArticleScreenRouteArgs> {
   ArticleScreenRoute({
     _i25.Key? key,
     int? storyId,
-    _i26.StoryItem? preloadedStory,
+    _i27.StoryItem? preloadedStory,
     required bool isComingFromHome,
   }) : super(
           ArticleScreenRoute.name,
@@ -705,7 +712,7 @@ class ArticleScreenRouteArgs {
 
   final int? storyId;
 
-  final _i26.StoryItem? preloadedStory;
+  final _i27.StoryItem? preloadedStory;
 
   final bool isComingFromHome;
 
@@ -723,8 +730,8 @@ class ArticleListScreenRoute
     _i25.Key? key,
     required String categoryTitle,
     required String subcategoryTitle,
-    required _i27.CategoryStories storyStore,
-    required List<_i28.Story> stories,
+    required _i28.CategoryStories storyStore,
+    required List<_i29.Story> stories,
   }) : super(
           ArticleListScreenRoute.name,
           path: '/article-list-screen',
@@ -755,9 +762,9 @@ class ArticleListScreenRouteArgs {
 
   final String subcategoryTitle;
 
-  final _i27.CategoryStories storyStore;
+  final _i28.CategoryStories storyStore;
 
-  final List<_i28.Story> stories;
+  final List<_i29.Story> stories;
 
   @override
   String toString() {
@@ -771,9 +778,9 @@ class ArticlesCategoryScreenRoute
     extends _i24.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
   ArticlesCategoryScreenRoute({
     _i25.Key? key,
-    required List<_i28.Result> result,
+    required List<_i29.Result> result,
     required String categoryTitle,
-    required _i27.CategoryStories storyStore,
+    required _i28.CategoryStories storyStore,
   }) : super(
           ArticlesCategoryScreenRoute.name,
           path: '/articles-category-screen',
@@ -798,11 +805,11 @@ class ArticlesCategoryScreenRouteArgs {
 
   final _i25.Key? key;
 
-  final List<_i28.Result> result;
+  final List<_i29.Result> result;
 
   final String categoryTitle;
 
-  final _i27.CategoryStories storyStore;
+  final _i28.CategoryStories storyStore;
 
   @override
   String toString() {

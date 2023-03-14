@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/services/auth_service.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 part 'login_store.g.dart';
 
@@ -28,6 +28,9 @@ abstract class _LoginStoreBase with Store {
   @observable
   LoginStatus? result;
 
+  @observable
+  Profile? profile;
+
   @action
   void toggleLoading() {
     isLoading = !isLoading;
@@ -35,6 +38,25 @@ abstract class _LoginStoreBase with Store {
 
   @action
   Future<void> login() async {
+    result = null;
+    toggleLoading();
+
+    if (validateEmail() && validatePassword()) {
+      result = await AuthService().login(
+        email: emailController.text,
+        password: passwdController.text,
+      );
+
+      if (result == LoginStatus.SUCCESS) {
+        profile = await AuthService().getProfile();
+      }
+
+      toggleLoading();
+    }
+  }
+
+  @action
+  bool validateEmail() {
     final bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(emailController.text);
@@ -42,29 +64,22 @@ abstract class _LoginStoreBase with Store {
     if (!emailValid && emailController.text != "admin") {
       emailError = translation['invalid_email']!;
 
-      return null;
+      return false;
     } else {
       emailError = null;
+      return true;
     }
+  }
 
+  @action
+  bool validatePassword() {
     if (passwdController.text.length < 6) {
       passwordError = translation['short_pw']!;
-      return null;
+      return false;
     } else {
       passwordError = null;
+      return true;
     }
-    toggleLoading();
-
-    result = await AuthService().login(
-      email: emailController.text,
-      password: passwdController.text,
-    );
-
-    if (result == LoginStatus.SUCCESS) {
-      ///   await SPUtils.saveUser(emailController.text);
-    }
-
-    toggleLoading();
   }
 
   void dispose() {

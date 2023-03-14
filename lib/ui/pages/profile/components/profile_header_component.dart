@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/models/profile.dart';
+import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
 class ProfileHeaderComponent extends StatelessWidget {
-  const ProfileHeaderComponent({Key? key}) : super(key: key);
+  const ProfileHeaderComponent({
+    Key? key,
+    required this.profile,
+  }) : super(key: key);
+
+  final Profile profile;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +33,12 @@ class ProfileHeaderComponent extends StatelessWidget {
                             offset: Offset(0, 3), // changes position of shadow
                           ),
                         ]),
-                        child: Image.network(
-                          "https://cpworldgroup.com/wp-content/uploads/2021/01/placeholder.png",
+                        child: Container(
                           width: 100,
-                          fit: BoxFit.cover,
                           height: 100,
+                          child: CachedImageComponent(
+                            imageUrl: profile.image ?? "",
+                          ),
                         ),
                       ),
                     ),
@@ -56,25 +64,27 @@ class ProfileHeaderComponent extends StatelessWidget {
                 SizedBox(
                   width: 40,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Cristina",
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w800,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        profile.first_name,
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Petrescu",
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w800,
-                        color: Color.fromRGBO(68, 151, 223, 1),
+                      Text(
+                        profile.first_name,
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                          color: Color.fromRGBO(68, 151, 223, 1),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

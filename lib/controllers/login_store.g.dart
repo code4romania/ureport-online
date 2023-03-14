@@ -73,6 +73,22 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  late final _$profileAtom =
+      Atom(name: '_LoginStoreBase.profile', context: context);
+
+  @override
+  Profile? get profile {
+    _$profileAtom.reportRead();
+    return super.profile;
+  }
+
+  @override
+  set profile(Profile? value) {
+    _$profileAtom.reportWrite(value, super.profile, () {
+      super.profile = value;
+    });
+  }
+
   late final _$loginAsyncAction =
       AsyncAction('_LoginStoreBase.login', context: context);
 
@@ -96,12 +112,35 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
+  bool validateEmail() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.validateEmail');
+    try {
+      return super.validateEmail();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool validatePassword() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.validatePassword');
+    try {
+      return super.validatePassword();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 emailError: ${emailError},
 passwordError: ${passwordError},
 isLoading: ${isLoading},
-result: ${result}
+result: ${result},
+profile: ${profile}
     ''';
   }
 }

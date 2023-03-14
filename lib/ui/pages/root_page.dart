@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/category_stories_store.dart';
+import 'package:ureport_ecaro/services/auth_service.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -41,6 +44,13 @@ class RootPage extends StatelessWidget {
     return Future.delayed(Duration(seconds: 2));
   }
 
+  Future<void> initProfile() async {
+    if (_store.profile == null) {
+      final profile = await AuthService().getProfile();
+      _store.updateProfile(profile);
+    }
+  }
+
   @override
   Widget build(context) {
     _store = context.read<StateStore>();
@@ -73,9 +83,12 @@ class RootPage extends StatelessWidget {
           setInitialLocal();
           String? token = SPUtil().getValue(SPUtil.KEY_AUTH_TOKEN);
 
+          if (token.isNotEmpty) {}
+
           if (token.isEmpty) {
             context.router.replaceAll([OpenAppScreenRoute()]);
           } else {
+            initProfile();
             return AutoTabsScaffold(
               extendBody: true,
               homeIndex: 2,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/bookmark.dart';
+import 'package:ureport_ecaro/models/profile.dart';
 
 class ProfileInfoServices {
   late Map<String, String> header;
@@ -24,8 +25,7 @@ class ProfileInfoServices {
           "https://ureport.heroesof.tech/api/v1/userbadges/user/$userId/?org=$orgId"),
       headers: header,
     );
-    print(response.body);
-    print(response.statusCode);
+
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
       final List<BadgeMedal> medals =

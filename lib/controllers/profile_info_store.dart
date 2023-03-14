@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:ureport_ecaro/models/bookmark.dart';
+import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/services/profile_info_services.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 part 'profile_info_store.g.dart';
@@ -18,7 +21,7 @@ abstract class _ProfileInfoStoreBase with Store {
   ) {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
     httpClient = ProfileInfoServices(token: token);
-    userId = 3;
+    userId = spUtil.getInt(SPUtil.KEY_USER_ID);
 
     fetchBadges();
     fetchBookmarks();
@@ -41,6 +44,7 @@ abstract class _ProfileInfoStoreBase with Store {
     badges =
         (await httpClient.getMedals(userId: userId, orgId: 1)).asObservable();
     badgesLoading = false;
+    print(badges.first.badge_type!.image);
   }
 
   @action

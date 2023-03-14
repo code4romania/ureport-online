@@ -57,14 +57,10 @@ abstract class _ChangePasswordStoreBase with Store {
   @action
   Future<void> changePassowrd() async {
     result = null;
-    validateCurrentPassword();
-    validateNewPassword();
-    validatePasswordConfirmation();
-    validateNewWithConfirmation();
-
-    if (currentPasswordError == null &&
-        newPasswordError == null &&
-        passwordConfirmationError == null) {
+    if (validateCurrentPassword() &&
+        validateNewPassword() &&
+        validatePasswordConfirmation() &&
+        validateNewWithConfirmation()) {
       result = await httpClient.changePassword(
         currentPassword: currentPasswordController.text,
         newPassword: newPasswordController.text,
@@ -75,38 +71,46 @@ abstract class _ChangePasswordStoreBase with Store {
   }
 
   @action
-  void validateCurrentPassword() {
+  bool validateCurrentPassword() {
     if (currentPasswordController.text.isEmpty) {
       currentPasswordError = translations["empty_password"]!;
+      return false;
     } else {
       currentPasswordError = null;
+      return true;
     }
   }
 
   @action
-  void validateNewPassword() {
+  bool validateNewPassword() {
     if (newPasswordController.text.isEmpty) {
       newPasswordError = translations["empty_password"]!;
+      return false;
     } else {
       newPasswordError = null;
+      return true;
     }
   }
 
   @action
-  void validatePasswordConfirmation() {
+  bool validatePasswordConfirmation() {
     if (passwordConfirmationController.text.isEmpty) {
       passwordConfirmationError = translations["empty_password"]!;
+      return false;
     } else {
       passwordConfirmationError = null;
+      return true;
     }
   }
 
   @action
-  void validateNewWithConfirmation() {
+  bool validateNewWithConfirmation() {
     if (newPasswordController.text != passwordConfirmationController.text) {
       newPasswordError = translations["passwords_not_match"]!;
+      return false;
     } else {
       newPasswordError = null;
+      return true;
     }
   }
 }

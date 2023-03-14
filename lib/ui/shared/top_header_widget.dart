@@ -38,9 +38,10 @@ class TopHeaderWidget extends StatelessWidget implements PreferredSizeWidget {
                 Text(
                   title,
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                      fontFamily: 'Heebo'),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                    fontFamily: 'Heebo',
+                  ),
                 ),
               ],
             )

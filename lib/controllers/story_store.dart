@@ -94,7 +94,7 @@ abstract class _StoryStoreBase with Store {
 
   @action
   Future<void> fetchUserId() async {
-    userId = 3;
+    userId = spUtil.getInt(SPUtil.KEY_USER_ID);
   }
 
   // Get story details

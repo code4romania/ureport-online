@@ -7,32 +7,22 @@ part of 'profile.dart';
 // **************************************************************************
 
 _$_Profile _$$_ProfileFromJson(Map json) => _$_Profile(
-      username: json['username'] as String?,
-      email: json['email'] as String?,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      profile: json['profile'] == null
-          ? null
-          : ProfileClass.fromJson(
-              Map<String, dynamic>.from(json['profile'] as Map)),
+      id: json['id'] as int,
+      username: json['username'] as String,
+      email: json['email'] as String,
+      first_name: json['first_name'] as String,
+      last_name: json['last_name'] as String,
+      rapidpro_uuid: json['rapidpro_uuid'] as String,
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$$_ProfileToJson(_$_Profile instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'username': instance.username,
       'email': instance.email,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'profile': instance.profile?.toJson(),
-    };
-
-_$_ProfileClass _$$_ProfileClassFromJson(Map json) => _$_ProfileClass(
-      contactUuid: json['contactUuid'] as String?,
-      image: json['image'],
-    );
-
-Map<String, dynamic> _$$_ProfileClassToJson(_$_ProfileClass instance) =>
-    <String, dynamic>{
-      'contactUuid': instance.contactUuid,
+      'first_name': instance.first_name,
+      'last_name': instance.last_name,
+      'rapidpro_uuid': instance.rapidpro_uuid,
       'image': instance.image,
     };

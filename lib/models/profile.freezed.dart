@@ -20,11 +20,13 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Profile {
-  String? get username => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
-  String? get firstName => throw _privateConstructorUsedError;
-  String? get lastName => throw _privateConstructorUsedError;
-  ProfileClass? get profile => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get first_name => throw _privateConstructorUsedError;
+  String get last_name => throw _privateConstructorUsedError;
+  String get rapidpro_uuid => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,13 +39,13 @@ abstract class $ProfileCopyWith<$Res> {
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call(
-      {String? username,
-      String? email,
-      String? firstName,
-      String? lastName,
-      ProfileClass? profile});
-
-  $ProfileClassCopyWith<$Res>? get profile;
+      {int id,
+      String username,
+      String email,
+      String first_name,
+      String last_name,
+      String rapidpro_uuid,
+      String? image});
 }
 
 /// @nodoc
@@ -59,46 +61,44 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = freezed,
-    Object? email = freezed,
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-    Object? profile = freezed,
+    Object? id = null,
+    Object? username = null,
+    Object? email = null,
+    Object? first_name = null,
+    Object? last_name = null,
+    Object? rapidpro_uuid = null,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
-      username: freezed == username
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
+              as String,
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      first_name: null == first_name
+          ? _value.first_name
+          : first_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      last_name: null == last_name
+          ? _value.last_name
+          : last_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      rapidpro_uuid: null == rapidpro_uuid
+          ? _value.rapidpro_uuid
+          : rapidpro_uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: freezed == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as ProfileClass?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileClassCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileClassCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
   }
 }
 
@@ -110,14 +110,13 @@ abstract class _$$_ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? username,
-      String? email,
-      String? firstName,
-      String? lastName,
-      ProfileClass? profile});
-
-  @override
-  $ProfileClassCopyWith<$Res>? get profile;
+      {int id,
+      String username,
+      String email,
+      String first_name,
+      String last_name,
+      String rapidpro_uuid,
+      String? image});
 }
 
 /// @nodoc
@@ -130,33 +129,43 @@ class __$$_ProfileCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = freezed,
-    Object? email = freezed,
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-    Object? profile = freezed,
+    Object? id = null,
+    Object? username = null,
+    Object? email = null,
+    Object? first_name = null,
+    Object? last_name = null,
+    Object? rapidpro_uuid = null,
+    Object? image = freezed,
   }) {
     return _then(_$_Profile(
-      username: freezed == username
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
+              as String,
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      first_name: null == first_name
+          ? _value.first_name
+          : first_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      last_name: null == last_name
+          ? _value.last_name
+          : last_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      rapidpro_uuid: null == rapidpro_uuid
+          ? _value.rapidpro_uuid
+          : rapidpro_uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: freezed == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as ProfileClass?,
     ));
   }
 }
@@ -165,25 +174,35 @@ class __$$_ProfileCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Profile implements _Profile {
   const _$_Profile(
-      {this.username, this.email, this.firstName, this.lastName, this.profile});
+      {required this.id,
+      required this.username,
+      required this.email,
+      required this.first_name,
+      required this.last_name,
+      required this.rapidpro_uuid,
+      this.image});
 
   factory _$_Profile.fromJson(Map<String, dynamic> json) =>
       _$$_ProfileFromJson(json);
 
   @override
-  final String? username;
+  final int id;
   @override
-  final String? email;
+  final String username;
   @override
-  final String? firstName;
+  final String email;
   @override
-  final String? lastName;
+  final String first_name;
   @override
-  final ProfileClass? profile;
+  final String last_name;
+  @override
+  final String rapidpro_uuid;
+  @override
+  final String? image;
 
   @override
   String toString() {
-    return 'Profile(username: $username, email: $email, firstName: $firstName, lastName: $lastName, profile: $profile)';
+    return 'Profile(id: $id, username: $username, email: $email, first_name: $first_name, last_name: $last_name, rapidpro_uuid: $rapidpro_uuid, image: $image)';
   }
 
   @override
@@ -191,20 +210,23 @@ class _$_Profile implements _Profile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Profile &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.profile, profile) || other.profile == profile));
+            (identical(other.first_name, first_name) ||
+                other.first_name == first_name) &&
+            (identical(other.last_name, last_name) ||
+                other.last_name == last_name) &&
+            (identical(other.rapidpro_uuid, rapidpro_uuid) ||
+                other.rapidpro_uuid == rapidpro_uuid) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, username, email, firstName, lastName, profile);
+  int get hashCode => Object.hash(runtimeType, id, username, email, first_name,
+      last_name, rapidpro_uuid, image);
 
   @JsonKey(ignore: true)
   @override
@@ -222,181 +244,32 @@ class _$_Profile implements _Profile {
 
 abstract class _Profile implements Profile {
   const factory _Profile(
-      {final String? username,
-      final String? email,
-      final String? firstName,
-      final String? lastName,
-      final ProfileClass? profile}) = _$_Profile;
+      {required final int id,
+      required final String username,
+      required final String email,
+      required final String first_name,
+      required final String last_name,
+      required final String rapidpro_uuid,
+      final String? image}) = _$_Profile;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
 
   @override
-  String? get username;
+  int get id;
   @override
-  String? get email;
+  String get username;
   @override
-  String? get firstName;
+  String get email;
   @override
-  String? get lastName;
+  String get first_name;
   @override
-  ProfileClass? get profile;
+  String get last_name;
+  @override
+  String get rapidpro_uuid;
+  @override
+  String? get image;
   @override
   @JsonKey(ignore: true)
   _$$_ProfileCopyWith<_$_Profile> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ProfileClass _$ProfileClassFromJson(Map<String, dynamic> json) {
-  return _ProfileClass.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ProfileClass {
-  String? get contactUuid => throw _privateConstructorUsedError;
-  dynamic get image => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ProfileClassCopyWith<ProfileClass> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProfileClassCopyWith<$Res> {
-  factory $ProfileClassCopyWith(
-          ProfileClass value, $Res Function(ProfileClass) then) =
-      _$ProfileClassCopyWithImpl<$Res, ProfileClass>;
-  @useResult
-  $Res call({String? contactUuid, dynamic image});
-}
-
-/// @nodoc
-class _$ProfileClassCopyWithImpl<$Res, $Val extends ProfileClass>
-    implements $ProfileClassCopyWith<$Res> {
-  _$ProfileClassCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? contactUuid = freezed,
-    Object? image = freezed,
-  }) {
-    return _then(_value.copyWith(
-      contactUuid: freezed == contactUuid
-          ? _value.contactUuid
-          : contactUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_ProfileClassCopyWith<$Res>
-    implements $ProfileClassCopyWith<$Res> {
-  factory _$$_ProfileClassCopyWith(
-          _$_ProfileClass value, $Res Function(_$_ProfileClass) then) =
-      __$$_ProfileClassCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String? contactUuid, dynamic image});
-}
-
-/// @nodoc
-class __$$_ProfileClassCopyWithImpl<$Res>
-    extends _$ProfileClassCopyWithImpl<$Res, _$_ProfileClass>
-    implements _$$_ProfileClassCopyWith<$Res> {
-  __$$_ProfileClassCopyWithImpl(
-      _$_ProfileClass _value, $Res Function(_$_ProfileClass) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? contactUuid = freezed,
-    Object? image = freezed,
-  }) {
-    return _then(_$_ProfileClass(
-      contactUuid: freezed == contactUuid
-          ? _value.contactUuid
-          : contactUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_ProfileClass implements _ProfileClass {
-  const _$_ProfileClass({this.contactUuid, this.image});
-
-  factory _$_ProfileClass.fromJson(Map<String, dynamic> json) =>
-      _$$_ProfileClassFromJson(json);
-
-  @override
-  final String? contactUuid;
-  @override
-  final dynamic image;
-
-  @override
-  String toString() {
-    return 'ProfileClass(contactUuid: $contactUuid, image: $image)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ProfileClass &&
-            (identical(other.contactUuid, contactUuid) ||
-                other.contactUuid == contactUuid) &&
-            const DeepCollectionEquality().equals(other.image, image));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, contactUuid, const DeepCollectionEquality().hash(image));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_ProfileClassCopyWith<_$_ProfileClass> get copyWith =>
-      __$$_ProfileClassCopyWithImpl<_$_ProfileClass>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_ProfileClassToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ProfileClass implements ProfileClass {
-  const factory _ProfileClass(
-      {final String? contactUuid, final dynamic image}) = _$_ProfileClass;
-
-  factory _ProfileClass.fromJson(Map<String, dynamic> json) =
-      _$_ProfileClass.fromJson;
-
-  @override
-  String? get contactUuid;
-  @override
-  dynamic get image;
-  @override
-  @JsonKey(ignore: true)
-  _$$_ProfileClassCopyWith<_$_ProfileClass> get copyWith =>
       throw _privateConstructorUsedError;
 }

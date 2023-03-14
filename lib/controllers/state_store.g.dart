@@ -73,6 +73,22 @@ mixin _$StateStore on _StateStoreBase, Store {
     });
   }
 
+  late final _$profileAtom =
+      Atom(name: '_StateStoreBase.profile', context: context);
+
+  @override
+  Profile? get profile {
+    _$profileAtom.reportRead();
+    return super.profile;
+  }
+
+  @override
+  set profile(Profile? value) {
+    _$profileAtom.reportWrite(value, super.profile, () {
+      super.profile = value;
+    });
+  }
+
   late final _$_StateStoreBaseActionController =
       ActionController(name: '_StateStoreBase', context: context);
 
@@ -88,12 +104,24 @@ mixin _$StateStore on _StateStoreBase, Store {
   }
 
   @override
+  void updateProfile(Profile? value) {
+    final _$actionInfo = _$_StateStoreBaseActionController.startAction(
+        name: '_StateStoreBase.updateProfile');
+    try {
+      return super.updateProfile(value);
+    } finally {
+      _$_StateStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 selectedLanguage: ${selectedLanguage},
 isLoading: ${isLoading},
 newLanguage: ${newLanguage},
-loggedIn: ${loggedIn}
+loggedIn: ${loggedIn},
+profile: ${profile}
     ''';
   }
 }

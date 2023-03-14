@@ -11,24 +11,15 @@ part 'profile.g.dart';
 @freezed
 class Profile with _$Profile {
   const factory Profile({
-    String? username,
-    String? email,
-    String? firstName,
-    String? lastName,
-    ProfileClass? profile,
+    required int id,
+    required String username,
+    required String email,
+    required String first_name,
+    required String last_name,
+    required String rapidpro_uuid,
+    String? image,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
-}
-
-@freezed
-class ProfileClass with _$ProfileClass {
-  const factory ProfileClass({
-    String? contactUuid,
-    dynamic image,
-  }) = _ProfileClass;
-
-  factory ProfileClass.fromJson(Map<String, dynamic> json) =>
-      _$ProfileClassFromJson(json);
 }

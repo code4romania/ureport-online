@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 part 'state_store.g.dart';
@@ -32,4 +33,10 @@ abstract class _StateStoreBase with Store {
 
   @observable
   bool? loggedIn;
+
+  @observable
+  Profile? profile;
+
+  @action
+  void updateProfile(Profile? value) => profile = value;
 }

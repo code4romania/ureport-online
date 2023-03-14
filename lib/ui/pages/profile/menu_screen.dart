@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
@@ -29,9 +30,6 @@ class _MenuScreenState extends State<MenuScreen> {
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["menu_screen"]!;
 
-    print(_translation.length);
-    print(_translation["header"]);
-
     super.initState();
   }
 
@@ -44,7 +42,11 @@ class _MenuScreenState extends State<MenuScreen> {
         child: Column(
           children: [
             TopHeaderWidget(title: _translation["header"] ?? "Menu"),
-            ProfileHeaderComponent(),
+            Observer(builder: (context) {
+              return ProfileHeaderComponent(
+                profile: _stateStore.profile!,
+              );
+            }),
             ListView(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -67,6 +69,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       translation:
                           translations["${_stateStore.selectedLanguage}"]![
                               "profile_screen"]!,
+                      profile: _stateStore.profile!,
                     ),
                   ),
                 ), //NavUtils.push(context, ProfileScreen())),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
+import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
 class MedalWidget extends StatelessWidget {
   const MedalWidget({
@@ -12,7 +13,6 @@ class MedalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("https://ureport.heroesof.tech${medal.badge_type?.image}");
     return Container(
       margin: isLastItem
           ? EdgeInsets.only(
@@ -41,7 +41,7 @@ class MedalWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: Image.network(
-                    "https://ureport.heroesof.tech${medal.badge_type?.image}",
+                    medal.badge_type!.image.toString(),
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
                       return Container(

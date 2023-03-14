@@ -14,8 +14,6 @@ class BookmarkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(isLastItem);
-    print(bookmarkItem.story?.title);
     String creationDate = "";
     String bookmarkImageUrl = "";
 
