@@ -64,27 +64,26 @@ class ProfileHeaderComponent extends StatelessWidget {
                 SizedBox(
                   width: 40,
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        profile.first_name,
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w800,
-                        ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      profile.first_name,
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w800,
                       ),
-                      Text(
-                        profile.first_name,
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w800,
-                          color: Color.fromRGBO(68, 151, 223, 1),
-                        ),
+                    ),
+                    Text(
+                      profile.last_name,
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w800,
+                        color: Color.fromRGBO(68, 151, 223, 1),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

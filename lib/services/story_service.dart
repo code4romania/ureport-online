@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:ureport_ecaro/utils/constants.dart';
 import '../models/story_long.dart' as storyLong;
 
 class StoryService {
@@ -30,7 +31,7 @@ class StoryService {
   }) async {
     final response = await http.get(
       Uri.parse(
-          "https://ureport.heroesof.tech/api/v1/storyreads/user/$userId/?story=$storyId"),
+          "https://$baseApiUrl/api/v1/storyreads/user/$userId/?story=$storyId"),
       headers: header,
     );
     if (response.statusCode == 200) {
@@ -48,7 +49,7 @@ class StoryService {
     required int userId,
   }) async {
     final response = await http.post(
-      Uri.https("ureport.heroesof.tech", "/api/v1/storyreads/user/$userId/"),
+      Uri.https("$baseApiUrl", "/api/v1/storyreads/user/$userId/"),
       headers: header,
       body: jsonEncode({
         "story": storyId,
@@ -74,7 +75,7 @@ class StoryService {
     required int userId,
   }) async {
     final response = await http.get(Uri.parse(
-        "https://ureport.heroesof.tech/api/v1/storyratings/user/$userId/?story=$storyId"));
+        "https://$baseApiUrl/api/v1/storyratings/user/$userId/?story=$storyId"));
     if (response.statusCode == 200) {
       if (response.body == "[]") return 0;
       final rating = jsonDecode(response.body)[0]["score"];
@@ -87,8 +88,8 @@ class StoryService {
   Future<bool> showRating({
     required int storyId,
   }) async {
-    final response = await http.get(Uri.parse(
-        "https://ureport.heroesof.tech/api/v1/storysettings/story/$storyId/"));
+    final response = await http.get(
+        Uri.parse("https://$baseApiUrl/api/v1/storysettings/story/$storyId/"));
 
     if (response.statusCode == 200) {
       if (response.body == "[]") return false;
@@ -105,8 +106,7 @@ class StoryService {
     required int rating,
   }) async {
     final response = await http.post(
-        Uri.https(
-            "ureport.heroesof.tech", "/api/v1/storyratings/user/$userId/"),
+        Uri.https("$baseApiUrl", "/api/v1/storyratings/user/$userId/"),
         headers: header,
         body: jsonEncode({
           "story": storyId,
@@ -128,7 +128,7 @@ class StoryService {
   }) async {
     final response = await http.get(
       Uri.parse(
-          "https://ureport.heroesof.tech/api/v1/storybookmarks/user/$userId/?story=$storyId"),
+          "https://$baseApiUrl/api/v1/storybookmarks/user/$userId/?story=$storyId"),
       headers: header,
     );
     if (response.statusCode == 200) {
@@ -146,8 +146,7 @@ class StoryService {
     required int userId,
   }) async {
     final response = await http.post(
-      Uri.https(
-          "ureport.heroesof.tech", "/api/v1/storybookmarks/user/$userId/"),
+      Uri.https("$baseApiUrl", "/api/v1/storybookmarks/user/$userId/"),
       headers: header,
       body: jsonEncode({
         "story": storyId,
@@ -165,8 +164,7 @@ class StoryService {
     required int userId,
   }) async {
     final response = await http.delete(
-      Uri.https(
-          "ureport.heroesof.tech", "/api/v1/storybookmarks/user/$userId/"),
+      Uri.https("$baseApiUrl", "/api/v1/storybookmarks/user/$userId/"),
       headers: header,
       body: jsonEncode({
         "story": storyId.toString(),

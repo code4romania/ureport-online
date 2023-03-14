@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/category.dart';
+import 'package:ureport_ecaro/utils/constants.dart';
 import '../services/category_article_service.dart';
 import '../models/story.dart' as storyFull;
 import 'package:ureport_ecaro/models/response_opinions.dart' as opinionsarray;
@@ -33,10 +34,9 @@ abstract class _CategoryStories with Store {
   bool isStoryBookmarked = false;
 
   @action
-  Future getRecentStories() =>
-      recentStories = ObservableFuture(httpClient.getRecentStories(
-              'https://ureport.heroesof.tech/api/v1/stories/org/1?limit=2'))
-          .then((stories) => stories.asObservable());
+  Future getRecentStories() => recentStories = ObservableFuture(httpClient
+          .getRecentStories('https://$baseApiUrl/api/v1/stories/org/1?limit=2'))
+      .then((stories) => stories.asObservable());
 
   @action
   Future getRecentOpinions() =>
@@ -46,8 +46,7 @@ abstract class _CategoryStories with Store {
 
   @action
   Future fetchCategories() => categoryList = ObservableFuture(httpClient
-      .getCategories(
-          'https://ureport.heroesof.tech/api/v1/categories/org/1/?limit=60')
+      .getCategories('https://$baseApiUrl/api/v1/categories/org/1/?limit=60')
       .then((categories) => categories.asObservable()));
 
   @action

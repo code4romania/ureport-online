@@ -42,16 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
 
     reaction((p0) => _loginStore.result != null, (p0) {
-      print(_loginStore.result);
       switch (_loginStore.result) {
         case LoginStatus.SUCCESS:
           {
-            _stateStore.updateProfile(_loginStore.profile!);
             showPopup(
               context: context,
-              onPressed: () {
-                context.router.replaceAll([RootPageRoute()]);
-              },
+              onPressed: () => context.router.replaceAll([RootPageRoute()]),
               buttonText: _translation["continue"]!,
               message: _translation["succes"]!,
             );
@@ -83,12 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
           );
           break;
         default:
-          showPopup(
-            context: context,
-            message: _translation["error"]!,
-            buttonText: _translation["continue"]!,
-            onPressed: () => context.router.pop(),
-          );
           break;
       }
     });

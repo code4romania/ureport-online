@@ -44,6 +44,7 @@ abstract class _RegisterStoreBase with Store {
     if (validateName() &&
         validateEmail() &&
         validatePassword() &&
+        validatePasswordConfirm() &&
         validateMatchingPasswords()) {
       result = null;
 
@@ -90,7 +91,18 @@ abstract class _RegisterStoreBase with Store {
       return false;
     } else {
       passwordError = null;
+      return true;
+    }
+  }
+
+  @action
+  bool validatePasswordConfirm() {
+    if (confirmPwController.text.length < 6) {
+      confirmPwError = translation["short_pw"];
       return false;
+    } else {
+      confirmPwError = null;
+      return true;
     }
   }
 

@@ -38,18 +38,15 @@ abstract class _LoginStoreBase with Store {
 
   @action
   Future<void> login() async {
-    result = null;
     toggleLoading();
 
     if (validateEmail() && validatePassword()) {
+      result = null;
+
       result = await AuthService().login(
         email: emailController.text,
         password: passwdController.text,
       );
-
-      if (result == LoginStatus.SUCCESS) {
-        profile = await AuthService().getProfile();
-      }
 
       toggleLoading();
     }

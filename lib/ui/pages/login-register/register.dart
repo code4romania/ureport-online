@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
@@ -39,29 +40,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (_registerStore.result == RegisterStatus.SUCCESS) {
         showPopup(
           context: context,
-          onPressed: () {
-            SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, "############");
-
-            context.router.replace(RootPageRoute());
-          },
+          onPressed: () => context.router.replaceAll([RootPageRoute()]),
           buttonText: _translation["continue"]!,
           message: _translation["succes"]!,
         );
       } else if (_registerStore.result == RegisterStatus.EMAIL_EXISTS) {
         showPopup(
           context: context,
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => context.router.pop(),
           buttonText: _translation["continue"]!,
           message: _translation["existing_acc"]!,
         );
       } else {
         showPopup(
           context: context,
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => context.router.pop(),
           message: _translation["error"]!,
           buttonText: _translation["continue"]!,
         );
@@ -131,38 +124,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           )),
                     ],
                   )),
-              textField(
-                label: _translation["username"]!,
-                textInputAction: TextInputAction.next,
-                obscureText: false,
-                keyboardType: TextInputType.name,
-                controller: _registerStore.nameController,
-                errorText: _registerStore.nameError,
-              ),
-              textField(
-                label: _translation["email"]!,
-                textInputAction: TextInputAction.next,
-                obscureText: false,
-                keyboardType: TextInputType.emailAddress,
-                controller: _registerStore.emailController,
-                errorText: _registerStore.emailError,
-              ),
-              textField(
-                label: _translation["password"]!,
-                textInputAction: TextInputAction.next,
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                controller: _registerStore.passwdController,
-                errorText: _registerStore.passwordError,
-              ),
-              textField(
-                label: _translation["confirm_password"]!,
-                textInputAction: TextInputAction.done,
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                controller: _registerStore.confirmPwController,
-                errorText: _registerStore.confirmPwError,
-              ),
+              Observer(builder: (context) {
+                return textField(
+                  label: _translation["username"]!,
+                  textInputAction: TextInputAction.next,
+                  obscureText: false,
+                  keyboardType: TextInputType.name,
+                  controller: _registerStore.nameController,
+                  errorText: _registerStore.nameError,
+                );
+              }),
+              Observer(builder: (context) {
+                return textField(
+                  label: _translation["email"]!,
+                  textInputAction: TextInputAction.next,
+                  obscureText: false,
+                  keyboardType: TextInputType.emailAddress,
+                  controller: _registerStore.emailController,
+                  errorText: _registerStore.emailError,
+                );
+              }),
+              Observer(builder: (context) {
+                return textField(
+                  label: _translation["password"]!,
+                  textInputAction: TextInputAction.next,
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: _registerStore.passwdController,
+                  errorText: _registerStore.passwordError,
+                );
+              }),
+              Observer(builder: (context) {
+                return textField(
+                  label: _translation["confirm_password"]!,
+                  textInputAction: TextInputAction.done,
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: _registerStore.confirmPwController,
+                  errorText: _registerStore.confirmPwError,
+                );
+              }),
               _registerStore.isLoading
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),

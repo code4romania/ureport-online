@@ -23,3 +23,4 @@ final TextStyle bold16TextStyle = TextStyle(
 
 const String shareStoryUrl = "https://ureport.in/story";
 const String shareOpinionUrl = "https://ureport.in/opinion";
+const String baseApiUrl = "ureport.heroesof.tech";

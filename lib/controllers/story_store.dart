@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
 import 'package:ureport_ecaro/services/story_service.dart';
+import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 part 'story_store.g.dart';
 
@@ -113,8 +114,8 @@ abstract class _StoryStoreBase with Store {
 
   @action
   Future fetchStory(int id) async {
-    fetchedStory = await httpClient
-        .getStory("https://ureport.heroesof.tech/api/v1/stories/$id");
+    fetchedStory =
+        await httpClient.getStory("https://$baseApiUrl/api/v1/stories/$id");
     isLoading = false;
   }
 

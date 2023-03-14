@@ -153,6 +153,17 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
+  bool validatePasswordConfirm() {
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.validatePasswordConfirm');
+    try {
+      return super.validatePasswordConfirm();
+    } finally {
+      _$_RegisterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   bool validateMatchingPasswords() {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.validateMatchingPasswords');
