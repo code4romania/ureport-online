@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
 class ArticleHeaderComponent extends StatelessWidget {

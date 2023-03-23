@@ -1,17 +1,18 @@
 import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:ureport_ecaro/controllers/account_settings_store.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 import '../../shared/general_button_component.dart';
 import '../../shared/text_navigator_component.dart';
@@ -27,11 +28,8 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   late StateStore _state;
+  late AccountSettingsStore _accountSettingsStore;
   late Map<String, String> _translation;
-  String? localProfilePic;
-  String? remoteprofilePic;
-
-  final TextEditingController usernameController = TextEditingController();
 
   @override
   void initState() {
@@ -40,10 +38,22 @@ class _AccountScreenState extends State<AccountScreen> {
     _translation =
         translations["${_state.selectedLanguage}"]!["account_screen"]!;
 
+    _accountSettingsStore = AccountSettingsStore(_translation, _state.profile);
+
     super.initState();
 
-    remoteprofilePic =
-        "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg";
+    reaction((p0) => _accountSettingsStore.resultMessage != null, (p0) {
+      if (_accountSettingsStore.resultMessage != null) {
+        SnackbarController(
+          context: context,
+          message: _accountSettingsStore.resultMessage!,
+        ).show();
+        if (_accountSettingsStore.remoteprofilePic != null ||
+            _accountSettingsStore.remoteprofilePic != null) {
+          _state.updateProfile(_accountSettingsStore.profile);
+        }
+      }
+    });
   }
 
   @override
@@ -85,13 +95,15 @@ class _AccountScreenState extends State<AccountScreen> {
             SizedBox(
               height: 20,
             ),
-            textField(
-              label: _translation["username"]!,
-              controller: usernameController,
-              obscureText: false,
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.done,
-            ),
+            Observer(builder: (context) {
+              return textField(
+                label: _translation["username"]!,
+                controller: _accountSettingsStore.usernameController,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+              );
+            }),
             Container(
               padding: EdgeInsets.all(15),
               margin: EdgeInsets.only(left: 20, right: 20),
@@ -116,17 +128,23 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     height: 150,
                     width: 150,
-                    child: localProfilePic != null
-                        ? Image.file(
-                            File(localProfilePic!),
-                            fit: BoxFit.cover,
-                          )
-                        : remoteprofilePic != null
-                            ? Image.network(
-                                remoteprofilePic!,
-                                fit: BoxFit.cover,
-                              )
-                            : Container(),
+                    child: Observer(builder: (context) {
+                      if (_state.profile?.image != null) {
+                        _accountSettingsStore.remoteprofilePic =
+                            _state.profile?.image;
+                      }
+                      return _accountSettingsStore.localProfilePic != null
+                          ? Image.file(
+                              File(_accountSettingsStore.localProfilePic!),
+                              fit: BoxFit.cover,
+                            )
+                          : _accountSettingsStore.remoteprofilePic != null
+                              ? Image.network(
+                                  _accountSettingsStore.remoteprofilePic!,
+                                  fit: BoxFit.cover,
+                                )
+                              : Container();
+                    }),
                   ),
                   Container(
                     child: Text(
@@ -134,36 +152,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      try {
-                        FilePickerResult? result = await FilePicker.platform
-                            .pickFiles(
-                                type: FileType.image,
-                                allowMultiple: false,
-                                allowCompression: true);
-
-                        if (result != null) {
-                          if (result.files.single.size > 6000000) {
-                            SnackbarController(
-                                    context: context,
-                                    message:
-                                        "File size should be less than 6MB")
-                                .show();
-                            return;
-                          }
-
-                          setState(() {
-                            localProfilePic = result.files.single.path!;
-                          });
-                        } else {}
-                      } on Exception catch (e) {
-                        SnackbarController(context: context, message: "Error")
-                            .show();
-                      } catch (e) {
-                        SnackbarController(context: context, message: "Error")
-                            .show();
-                      }
-                    },
+                    onTap: () async => _accountSettingsStore.pickImage(),
                     child: Container(
                       width: 170,
                       height: 40,
@@ -193,7 +182,9 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             MainAppButtonComponent(
-                title: _translation["save"]!, onPressed: () {}),
+              title: _translation["save"]!,
+              onPressed: () => _accountSettingsStore.saveProfile(),
+            ),
             SizedBox(
               height: 20,
             ),

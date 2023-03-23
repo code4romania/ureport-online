@@ -34,6 +34,9 @@ abstract class _RegisterStoreBase with Store {
   @observable
   RegisterStatus? result;
 
+  @observable
+  String? errorMessage;
+
   @action
   void toggleIsLoading() {
     isLoading = !isLoading;
@@ -47,12 +50,20 @@ abstract class _RegisterStoreBase with Store {
         validatePasswordConfirm() &&
         validateMatchingPasswords()) {
       result = null;
+      errorMessage = null;
 
-      result = await AuthService().register(
+      final response = await AuthService().register(
         name: nameController.text,
         email: emailController.text,
         password: passwdController.text,
       );
+
+      if (response.statusCode == 200) {
+        result = RegisterStatus.SUCCESS;
+      } else {
+        result = RegisterStatus.ERROR;
+        errorMessage = response.message;
+      }
 
       toggleIsLoading();
     }

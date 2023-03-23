@@ -29,6 +29,9 @@ abstract class _LoginStoreBase with Store {
   LoginStatus? result;
 
   @observable
+  String? errorMessage;
+
+  @observable
   Profile? profile;
 
   @action
@@ -42,11 +45,18 @@ abstract class _LoginStoreBase with Store {
 
     if (validateEmail() && validatePassword()) {
       result = null;
-
-      result = await AuthService().login(
+      errorMessage = null;
+      final response = await AuthService().login(
         email: emailController.text,
         password: passwdController.text,
       );
+
+      if (response.statusCode == 200) {
+        result = LoginStatus.SUCCESS;
+      } else {
+        result = LoginStatus.ERROR;
+        errorMessage = response.message;
+      }
 
       toggleLoading();
     }

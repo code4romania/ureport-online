@@ -51,7 +51,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               );
             } else {
               return PopupComponent(
-                widget.translations["password_changed_error"]!,
+                _changePasswordStore.errorMessage.toString(),
                 Icons.block,
                 Color.fromRGBO(254, 226, 226, 1),
                 Color.fromRGBO(220, 38, 38, 1),

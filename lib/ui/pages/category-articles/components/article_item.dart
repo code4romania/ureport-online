@@ -75,7 +75,7 @@ class ArticleItemWidget extends StatelessWidget {
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(20)),
                   ),
-                  child: imageUrl != null && imageUrl.isNotEmpty
+                  child: imageUrl.isNotEmpty
                       ? CachedNetworkImage(
                           imageUrl: imageUrl,
                           fit: BoxFit.fitWidth,

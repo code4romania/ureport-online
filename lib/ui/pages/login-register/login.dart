@@ -53,27 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
             );
             break;
           }
-
-        case LoginStatus.NOT_FOUND:
-          showPopup(
-            context: context,
-            message: _translation["no_existing_acc"]!,
-            buttonText: _translation["continue"]!,
-            onPressed: () => context.router.pop(),
-          );
-          break;
-        case LoginStatus.WRONG_DETAILS:
-          showPopup(
-            context: context,
-            message: _translation["failed_login"]!,
-            buttonText: _translation["continue"]!,
-            onPressed: () => context.router.pop(),
-          );
-          break;
         case LoginStatus.ERROR:
           showPopup(
             context: context,
-            message: _translation["error"]!,
+            message: _loginStore.errorMessage.toString(),
             buttonText: _translation["continue"]!,
             onPressed: () => context.router.pop(),
           );

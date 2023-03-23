@@ -590,6 +590,7 @@ String getHtmlContent({
                 }
             };
         </script>
+        
         <div>
             <span class="dot"></span>
             <span>$category</span>

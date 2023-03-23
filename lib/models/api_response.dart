@@ -5,6 +5,9 @@ class ApiResponse<T> {
   String message;
   T data;
 
-  ApiResponse(
-      {required this.httpCode, required this.message, required this.data});
+  ApiResponse({
+    required this.httpCode,
+    required this.message,
+    required this.data,
+  });
 }

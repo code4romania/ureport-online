@@ -105,6 +105,22 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
     });
   }
 
+  late final _$errorMessageAtom =
+      Atom(name: '_RegisterStoreBase.errorMessage', context: context);
+
+  @override
+  String? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$_RegisterStoreBaseActionController =
       ActionController(name: '_RegisterStoreBase', context: context);
 
@@ -182,7 +198,8 @@ passwordError: ${passwordError},
 confirmPwError: ${confirmPwError},
 nameError: ${nameError},
 isLoading: ${isLoading},
-result: ${result}
+result: ${result},
+errorMessage: ${errorMessage}
     ''';
   }
 }

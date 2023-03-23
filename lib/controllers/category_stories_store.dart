@@ -47,7 +47,8 @@ abstract class _CategoryStories with Store {
   @action
   Future fetchCategories() => categoryList = ObservableFuture(httpClient
       .getCategories('https://$baseApiUrl/api/v1/categories/org/1/?limit=60')
-      .then((categories) => categories.asObservable()));
+      .then((categories) =>
+          categories?.asObservable() ?? <Result>[].asObservable()));
 
   @action
   void setInitialStoryList(List<Story> stories) {

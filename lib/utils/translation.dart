@@ -94,6 +94,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "opinion_body": "Vrei să-l completezi acum?",
       "opinion_yes": "Da",
       "opinion_no": "Nu",
+      "empty_stories": "Nu există articole disponibile",
       "recent_articles": "Citește cele mai noi articole",
       "recent_opinions": "Află cele mai recente opinii",
     },
@@ -101,6 +102,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "header": "Categorii",
       "title": "Categorii",
       "no_articles": "Nu există articole în această categorie",
+      "no_articles_list": "Nu există categorii disponibile!",
+      "retry": "Apasă pentru a reîncerca",
       "body":
           "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! "
     },
@@ -279,13 +282,16 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "upload": "Încarcă imagine",
       "size": "Dimensiune maximă 6MB",
       "save": "Salvează modificări",
-      "empty_username": "Numele de utilizator nu poate fi gol!",
+      "short_username": "Numele de utilizator este prea scurt!",
+      "long_username": "Numele de utilizator este prea lung!",
       "empty_profile_pic": "Imaginea de profil nu poate fi goală!",
-      "empty_profile_pic_size":
+      "username_changed": "Numele de utilizator a fost schimbat cu succes!",
+      "profile_pic_too_large":
           "Imaginea de profil nu poate fi mai mare de 6MB!",
       "empty_profile_pic_type":
           "Imaginea de profil trebuie să fie în format JPG sau PNG!",
-      "empty_profile_pic_upload": "Imaginea de profil nu a putut fi încărcată!",
+      "upload_success": "Imaginea de profil a fost încărcată cu succes!",
+      "upload_error": "Imaginea de profil nu a putut fi încărcată!",
       "change_password": "Schimbă parola",
       "change_password_body": "Schimbă parola folosind butonul de mai jos",
       "change_password_button": "Schimbă parola",

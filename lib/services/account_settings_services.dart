@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/bookmark.dart';
+import 'package:ureport_ecaro/models/response.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
 class AccountSettingsServices {
@@ -16,7 +20,7 @@ class AccountSettingsServices {
     };
   }
 
-  Future<bool> changePassword({
+  Future<Response> changePassword({
     required String currentPassword,
     required String newPassword,
     required String passwordConfirmation,
@@ -34,13 +38,56 @@ class AccountSettingsServices {
         "new_password2": passwordConfirmation
       }),
     );
-    print(response.body);
-    print(userID);
-    print(header["Authorization"]);
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+
+    return Response(
+      statusCode: response.statusCode,
+      message: jsonDecode(response.body)["detail"],
+      data: response.statusCode == 200 ? true : false,
+    );
+  }
+
+  Future<Response> updateUsername({
+    required int userID,
+    required String username,
+  }) async {
+    final response = await http.patch(
+      Uri.https(
+        baseApiUrl,
+        "/api/v1/userprofiles/user/$userID/",
+      ),
+      headers: header,
+      body: jsonEncode({
+        "full_name": username,
+      }),
+    );
+
+    return Response(
+      statusCode: response.statusCode,
+      message: jsonDecode(response.body)["detail"],
+      data: response.statusCode == 200 ? jsonDecode(response.body) : null,
+    );
+  }
+
+  Future<Response> updateProfilePicture({
+    required int userID,
+    required String path,
+  }) async {
+    var uri = Uri.parse(
+        "https://ureport.heroesof.tech/api/v1/userprofiles/user/$userID/image/");
+
+    var req = http.MultipartRequest('PUT', uri)
+      ..files.add(await http.MultipartFile.fromPath('image', path));
+    req.headers['Content-Type'] = 'multipart/form-data';
+    req.headers['accept'] = 'application/json';
+    req.headers['Authorization'] = header["Authorization"]!;
+    var response = await req.send();
+
+    final respStr = await response.stream.bytesToString();
+
+    return Response(
+      statusCode: response.statusCode,
+      message: response.reasonPhrase ?? "",
+      data: jsonDecode(respStr),
+    );
   }
 }

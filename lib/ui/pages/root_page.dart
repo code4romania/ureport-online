@@ -67,14 +67,17 @@ class RootPage extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    Image.asset(
-                      "assets/images/logo_ureport_2.png",
+                    Container(
+                      width: 200,
+                      child: Image.asset(
+                        "assets/images/logo_ureport_2.png",
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Image.asset(
-                      "assets/images/logo_ureport_3.png",
+                    Container(
+                      width: 200,
+                      child: Image.asset(
+                        "assets/images/logo_ureport_3.png",
+                      ),
                     ),
                   ]),
             ),

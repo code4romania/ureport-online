@@ -36,6 +36,9 @@ abstract class _ChangePasswordStoreBase with Store {
   @observable
   bool? result;
 
+  @observable
+  String? errorMessage;
+
   @action
   void reset() {
     currentPasswordController.clear();
@@ -45,6 +48,7 @@ abstract class _ChangePasswordStoreBase with Store {
     newPasswordError = null;
     passwordConfirmationError = null;
     result = null;
+    errorMessage = null;
   }
 
   @action
@@ -57,16 +61,23 @@ abstract class _ChangePasswordStoreBase with Store {
   @action
   Future<void> changePassowrd() async {
     result = null;
+    errorMessage = null;
     if (validateCurrentPassword() &&
         validateNewPassword() &&
         validatePasswordConfirmation() &&
         validateNewWithConfirmation()) {
-      result = await httpClient.changePassword(
+      final response = await httpClient.changePassword(
         currentPassword: currentPasswordController.text,
         newPassword: newPasswordController.text,
         passwordConfirmation: passwordConfirmationController.text,
         userID: userId,
       );
+      if (response.statusCode == 200) {
+        result = true;
+      } else {
+        result = false;
+        errorMessage = response.message;
+      }
     }
   }
 

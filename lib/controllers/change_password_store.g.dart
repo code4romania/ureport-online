@@ -76,6 +76,22 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
     });
   }
 
+  late final _$errorMessageAtom =
+      Atom(name: '_ChangePasswordStoreBase.errorMessage', context: context);
+
+  @override
+  String? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$changePassowrdAsyncAction =
       AsyncAction('_ChangePasswordStoreBase.changePassowrd', context: context);
 
@@ -159,7 +175,8 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
 currentPasswordError: ${currentPasswordError},
 newPasswordError: ${newPasswordError},
 passwordConfirmationError: ${passwordConfirmationError},
-result: ${result}
+result: ${result},
+errorMessage: ${errorMessage}
     ''';
   }
 }

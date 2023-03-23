@@ -30,6 +30,7 @@ class TopHeaderWidget extends StatelessWidget implements PreferredSizeWidget {
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: Image.asset(
                     "assets/images/vector.png",
                     fit: BoxFit.cover,

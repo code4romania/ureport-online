@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
@@ -97,7 +98,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            _translation["no_articles"]!,
+                            _translation["no_articno_articles_listles"]!,
                             style: TextStyle(color: purpleColor),
                           ),
                           SizedBox(
@@ -112,6 +113,26 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     );
                   case FutureStatus.fulfilled:
                     List<Result> categories = future.result;
+                    if (categories.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              _translation["no_articles_list"]!,
+                              style: TextStyle(color: purpleColor),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            MainAppButtonComponent(
+                              title: _translation["retry"]!,
+                              onPressed: _refresh,
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                     _storyStore.initialCategoryList = future.result;
 
                     if (_storyStore.searchCategoryKeyword != null &&

@@ -16,26 +16,33 @@ class CachedImageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return imageUrl.isEmpty || imageUrl == null
+    print(imageUrl);
+    return imageUrl.isEmpty
         ? Image.asset("assets/images/image_placeholder.jpg")
-        : CachedNetworkImage(
+        : Image.network(
+            imageUrl,
             height: height,
             width: width,
-            imageUrl: imageUrl,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                CircularProgressIndicator(
-              value: downloadProgress.progress,
-              valueColor: AlwaysStoppedAnimation<Color>(blueColor),
-            ),
-            placeholder: (context, url) => Image.asset(
-              "assets/images/image_placeholder.jpg",
-              fit: BoxFit.cover,
-            ),
-            errorWidget: (context, url, error) => Image.asset(
-              "assets/images/image_placeholder.jpg",
-              fit: BoxFit.cover,
-            ),
             fit: BoxFit.cover,
           );
+    // : CachedNetworkImage(
+    //     height: height,
+    //     width: width,
+    //     imageUrl: imageUrl,
+    //     progressIndicatorBuilder: (context, url, downloadProgress) =>
+    //         CircularProgressIndicator(
+    //       value: downloadProgress.progress,
+    //       valueColor: AlwaysStoppedAnimation<Color>(blueColor),
+    //     ),
+    //     placeholder: (context, url) => Image.asset(
+    //       "assets/images/image_placeholder.jpg",
+    //       fit: BoxFit.cover,
+    //     ),
+    //     errorWidget: (context, url, error) => Image.asset(
+    //       "assets/images/image_placeholder.jpg",
+    //       fit: BoxFit.cover,
+    //     ),
+    //     fit: BoxFit.cover,
+    //   );
   }
 }

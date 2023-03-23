@@ -23,7 +23,7 @@ class Category with _$Category {
 @freezed
 class Result with _$Result {
   const factory Result({
-    dynamic imageUrl,
+    String? imageUrl,
     String? name,
     DateTime? createdOn,
     DateTime? modifiedOn,
@@ -41,7 +41,7 @@ class Story with _$Story {
     bool? featured,
     String? summary,
     String? videoId,
-    dynamic? audioLink,
+    dynamic audioLink,
     String? tags,
     int? org,
     List<dynamic>? images,

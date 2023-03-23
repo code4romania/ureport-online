@@ -87,11 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              _translation["no_articles"]!,
+                              _translation["empty_stories"]!,
                               style: TextStyle(color: purpleColor),
-                            ),
-                            SizedBox(
-                              height: 10,
                             ),
                           ],
                         ),

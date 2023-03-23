@@ -44,18 +44,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           buttonText: _translation["continue"]!,
           message: _translation["succes"]!,
         );
-      } else if (_registerStore.result == RegisterStatus.EMAIL_EXISTS) {
-        showPopup(
-          context: context,
-          onPressed: () => context.router.pop(),
-          buttonText: _translation["continue"]!,
-          message: _translation["existing_acc"]!,
-        );
       } else {
         showPopup(
           context: context,
           onPressed: () => context.router.pop(),
-          message: _translation["error"]!,
+          message: _registerStore.errorMessage.toString(),
           buttonText: _translation["continue"]!,
         );
       }

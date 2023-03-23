@@ -73,6 +73,22 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  late final _$errorMessageAtom =
+      Atom(name: '_LoginStoreBase.errorMessage', context: context);
+
+  @override
+  String? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$profileAtom =
       Atom(name: '_LoginStoreBase.profile', context: context);
 
@@ -140,6 +156,7 @@ emailError: ${emailError},
 passwordError: ${passwordError},
 isLoading: ${isLoading},
 result: ${result},
+errorMessage: ${errorMessage},
 profile: ${profile}
     ''';
   }

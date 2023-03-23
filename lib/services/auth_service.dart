@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:ureport_ecaro/models/profile.dart';
+import 'package:ureport_ecaro/models/response.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 class AuthService {
-  Future<LoginStatus?> login({
+  Future<Response> login({
     required String email,
     required String password,
   }) async {
@@ -26,13 +27,17 @@ class AuthService {
       SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, token);
 
       await getProfile();
-      return LoginStatus.SUCCESS;
-    } else {
-      return LoginStatus.ERROR;
     }
+
+    return Response(
+      statusCode: response.statusCode,
+      message: jsonDecode(response.body)["detail"],
+      data:
+          response.statusCode == 200 ? LoginStatus.SUCCESS : LoginStatus.ERROR,
+    );
   }
 
-  Future<RegisterStatus?> register({
+  Future<Response> register({
     required String name,
     required String email,
     required String password,
@@ -50,11 +55,14 @@ class AuthService {
       SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, token);
 
       await getProfile();
-
-      return RegisterStatus.SUCCESS;
-    } else {
-      return RegisterStatus.ERROR;
     }
+    return Response(
+      statusCode: response.statusCode,
+      message: jsonDecode(response.body)["detail"],
+      data: response.statusCode == 200
+          ? RegisterStatus.SUCCESS
+          : RegisterStatus.ERROR,
+    );
   }
 
   Future<Profile?> getProfile() async {
