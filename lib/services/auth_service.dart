@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/models/response.dart';
@@ -23,10 +24,10 @@ class AuthService {
         });
 
     if (response.statusCode == 200) {
-      final String token = jsonDecode(response.body)['token'];
-      SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, token);
-
-      await getProfile();
+      await getAuthToken(
+        email: email,
+        password: password,
+      );
     }
 
     return Response(
@@ -50,11 +51,10 @@ class AuthService {
     });
 
     if (response.statusCode == 200) {
-      final String token = jsonDecode(response.body)['token'];
-
-      SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, token);
-
-      await getProfile();
+      await getAuthToken(
+        email: email,
+        password: password,
+      );
     }
     return Response(
       statusCode: response.statusCode,
@@ -63,6 +63,93 @@ class AuthService {
           ? RegisterStatus.SUCCESS
           : RegisterStatus.ERROR,
     );
+  }
+
+  Future<Response> sendCode({
+    required String email,
+  }) async {
+    final response = await http
+        .post(Uri.https(baseApiUrl, "/api/v1/userprofiles/forgot/"), body: {
+      "email": email,
+    });
+
+    print(response.body);
+
+    return Response(
+      statusCode: response.statusCode,
+      message: response.statusCode != 200
+          ? null
+          : jsonDecode(response.body)["detail"],
+      data: response.statusCode == 200
+          ? ForgotPasswordStatus.SUCCESS
+          : ForgotPasswordStatus.ERROR,
+    );
+  }
+
+  Future<Response> verifyCode({
+    required String email,
+    required String code,
+  }) async {
+    final response = await http.post(
+        Uri.https(baseApiUrl, "/api/v1/userprofiles/forgot/check/"),
+        body: {
+          "email": email,
+          "code": code,
+        });
+
+    print(response.body);
+
+    return Response(
+      statusCode: response.statusCode,
+      message: jsonDecode(response.body)["detail"],
+      data: response.statusCode == 200
+          ? ForgotPasswordStatus.SUCCESS
+          : ForgotPasswordStatus.ERROR,
+    );
+  }
+
+  Future<Response> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    final response = await http.post(
+        Uri.https(baseApiUrl, "/api/v1/userprofiles/forgot/check/"),
+        body: {
+          "email": email,
+          "code": code,
+          "new_password": newPassword,
+          "new_password2": confirmNewPassword,
+        });
+    print(response.body);
+
+    return Response(
+      statusCode: response.statusCode,
+      message: response.statusCode == 200
+          ? jsonDecode(response.body)["detail"]
+          : "OK",
+      data: response.statusCode == 200
+          ? ForgotPasswordStatus.SUCCESS
+          : ForgotPasswordStatus.ERROR,
+    );
+  }
+
+  Future<void> getAuthToken({
+    required String email,
+    required String password,
+  }) async {
+    final response = await http
+        .post(Uri.https(baseApiUrl, "/api/v1/get-auth-token/"), body: {
+      "username": email,
+      "password": password,
+    });
+    if (response.statusCode == 200) {
+      final String token = jsonDecode(response.body)['token'];
+      final int id = jsonDecode(response.body)['id'];
+      SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, token);
+      SPUtil().setInt(SPUtil.KEY_USER_ID, id);
+    }
   }
 
   Future<Profile?> getProfile() async {

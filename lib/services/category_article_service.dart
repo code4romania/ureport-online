@@ -15,6 +15,7 @@ class CategoryArticleService {
             Category.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
 
         inspect(category.results);
+
         return category.results ?? [];
       } else {
         return [];

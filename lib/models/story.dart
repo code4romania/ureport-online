@@ -28,6 +28,7 @@ class StoryItem with _$StoryItem {
     bool? featured,
     String? summary,
     String? content,
+    String? written_by,
     dynamic videoId,
     dynamic audioLink,
     dynamic tags,

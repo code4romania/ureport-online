@@ -15,6 +15,7 @@ class StoryLong with _$StoryLong {
     bool? featured,
     String? summary,
     String? content,
+    String? written_by,
     dynamic videoId,
     dynamic audioLink,
     dynamic tags,
@@ -31,7 +32,7 @@ class StoryLong with _$StoryLong {
 @freezed
 class Category with _$Category {
   const factory Category({
-    dynamic? imageUrl,
+    dynamic imageUrl,
     String? name,
   }) = _Category;
 

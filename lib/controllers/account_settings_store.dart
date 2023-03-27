@@ -47,31 +47,39 @@ abstract class _AccountSettingsStoreBase with Store {
   @action
   Future<void> saveProfile() async {
     resultMessage = null;
-    await uploadPicture();
-    await changeUsername();
+    String? resultUpload = await uploadPicture();
+    String? resultChangeUsername = await changeUsername();
+
+    if (resultUpload != null && resultChangeUsername != null) {
+      resultMessage = resultUpload + " & " + resultChangeUsername;
+    } else if (resultUpload != null) {
+      resultMessage = resultUpload;
+    } else if (resultChangeUsername != null) {
+      resultMessage = resultChangeUsername;
+    }
   }
 
   @action
-  Future<void> changeUsername() async {
+  Future<String?> changeUsername() async {
     if (usernameController.text.isEmpty ||
         ((usernameController.text ==
                 profile!.first_name + " " + profile!.last_name) ||
             (usernameController.text ==
                 profile!.last_name + " " + profile!.first_name))) {
-      return;
+      return null;
     }
 
-    resultMessage = null;
     final response = await httpClient.updateUsername(
       userID: userId,
       username: usernameController.text,
     );
 
     if (response.statusCode == 200) {
-      resultMessage = translation["username_changed"];
       profile = Profile.fromJson(response.data!);
+
+      return translation["username_changed"];
     } else {
-      resultMessage = response.message;
+      return response.message;
     }
   }
 
@@ -94,9 +102,9 @@ abstract class _AccountSettingsStoreBase with Store {
   }
 
   @action
-  Future<void> uploadPicture() async {
+  Future<String?> uploadPicture() async {
     if (localProfilePic == null) {
-      return;
+      return null;
     }
 
     final uploadResult = await httpClient.updateProfilePicture(
@@ -105,10 +113,11 @@ abstract class _AccountSettingsStoreBase with Store {
     );
 
     if (uploadResult.statusCode == 200) {
-      resultMessage = translation["upload_success"];
       profile = Profile.fromJson(uploadResult.data);
+
+      return translation["upload_success"];
     } else {
-      resultMessage = uploadResult.message;
+      return uploadResult.message;
     }
   }
 }

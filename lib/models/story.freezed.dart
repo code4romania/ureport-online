@@ -222,6 +222,7 @@ mixin _$StoryItem {
   bool? get featured => throw _privateConstructorUsedError;
   String? get summary => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
+  String? get written_by => throw _privateConstructorUsedError;
   dynamic get videoId => throw _privateConstructorUsedError;
   dynamic get audioLink => throw _privateConstructorUsedError;
   dynamic get tags => throw _privateConstructorUsedError;
@@ -247,6 +248,7 @@ abstract class $StoryItemCopyWith<$Res> {
       bool? featured,
       String? summary,
       String? content,
+      String? written_by,
       dynamic videoId,
       dynamic audioLink,
       dynamic tags,
@@ -276,6 +278,7 @@ class _$StoryItemCopyWithImpl<$Res, $Val extends StoryItem>
     Object? featured = freezed,
     Object? summary = freezed,
     Object? content = freezed,
+    Object? written_by = freezed,
     Object? videoId = freezed,
     Object? audioLink = freezed,
     Object? tags = freezed,
@@ -304,6 +307,10 @@ class _$StoryItemCopyWithImpl<$Res, $Val extends StoryItem>
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
+              as String?,
+      written_by: freezed == written_by
+          ? _value.written_by
+          : written_by // ignore: cast_nullable_to_non_nullable
               as String?,
       videoId: freezed == videoId
           ? _value.videoId
@@ -361,6 +368,7 @@ abstract class _$$_ResultCopyWith<$Res> implements $StoryItemCopyWith<$Res> {
       bool? featured,
       String? summary,
       String? content,
+      String? written_by,
       dynamic videoId,
       dynamic audioLink,
       dynamic tags,
@@ -388,6 +396,7 @@ class __$$_ResultCopyWithImpl<$Res>
     Object? featured = freezed,
     Object? summary = freezed,
     Object? content = freezed,
+    Object? written_by = freezed,
     Object? videoId = freezed,
     Object? audioLink = freezed,
     Object? tags = freezed,
@@ -416,6 +425,10 @@ class __$$_ResultCopyWithImpl<$Res>
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
+              as String?,
+      written_by: freezed == written_by
+          ? _value.written_by
+          : written_by // ignore: cast_nullable_to_non_nullable
               as String?,
       videoId: freezed == videoId
           ? _value.videoId
@@ -458,6 +471,7 @@ class _$_Result implements _Result {
       this.featured,
       this.summary,
       this.content,
+      this.written_by,
       this.videoId,
       this.audioLink,
       this.tags,
@@ -480,6 +494,8 @@ class _$_Result implements _Result {
   final String? summary;
   @override
   final String? content;
+  @override
+  final String? written_by;
   @override
   final dynamic videoId;
   @override
@@ -505,7 +521,7 @@ class _$_Result implements _Result {
 
   @override
   String toString() {
-    return 'StoryItem(id: $id, title: $title, featured: $featured, summary: $summary, content: $content, videoId: $videoId, audioLink: $audioLink, tags: $tags, org: $org, images: $images, category: $category, createdOn: $createdOn)';
+    return 'StoryItem(id: $id, title: $title, featured: $featured, summary: $summary, content: $content, written_by: $written_by, videoId: $videoId, audioLink: $audioLink, tags: $tags, org: $org, images: $images, category: $category, createdOn: $createdOn)';
   }
 
   @override
@@ -519,6 +535,8 @@ class _$_Result implements _Result {
                 other.featured == featured) &&
             (identical(other.summary, summary) || other.summary == summary) &&
             (identical(other.content, content) || other.content == content) &&
+            (identical(other.written_by, written_by) ||
+                other.written_by == written_by) &&
             const DeepCollectionEquality().equals(other.videoId, videoId) &&
             const DeepCollectionEquality().equals(other.audioLink, audioLink) &&
             const DeepCollectionEquality().equals(other.tags, tags) &&
@@ -539,6 +557,7 @@ class _$_Result implements _Result {
       featured,
       summary,
       content,
+      written_by,
       const DeepCollectionEquality().hash(videoId),
       const DeepCollectionEquality().hash(audioLink),
       const DeepCollectionEquality().hash(tags),
@@ -568,6 +587,7 @@ abstract class _Result implements StoryItem {
       final bool? featured,
       final String? summary,
       final String? content,
+      final String? written_by,
       final dynamic videoId,
       final dynamic audioLink,
       final dynamic tags,
@@ -588,6 +608,8 @@ abstract class _Result implements StoryItem {
   String? get summary;
   @override
   String? get content;
+  @override
+  String? get written_by;
   @override
   dynamic get videoId;
   @override

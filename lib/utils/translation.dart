@@ -83,6 +83,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "go_to_login": "Autentifică-te",
       "known_account": "Ți-ai amintit parola?",
       "invalid_email": "Email invalid",
+      "retry": "Reîncearcă",
       "back": "Înapoi",
       "succes": "Parolă a fost schimbată cu succes!",
       "continue": "Continuă",

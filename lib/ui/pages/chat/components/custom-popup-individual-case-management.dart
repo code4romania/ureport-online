@@ -191,8 +191,6 @@ class _CustomDropdownForthState extends State<CustomDropdownForth>
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            print(
-                                                "teh key word is ........${widget.keyword[index]}");
                                             provider
                                                 .createIndividualCaseManagement(
                                                     widget.keyword[index]);

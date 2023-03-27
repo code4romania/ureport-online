@@ -93,7 +93,6 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      print(translations[e.key]);
                                       if (translations[e.key] == null) {
                                         SnackbarController(
                                           context: context,

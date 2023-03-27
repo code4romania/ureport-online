@@ -245,7 +245,9 @@ class _ArticleScreenState extends State<ArticleScreen>
           width: double.infinity,
           child: loadLocalHTML(
             content: widget.preloadedStory!.content!,
-            title: widget.preloadedStory!.title ?? "",
+            title: widget.preloadedStory?.title ?? "",
+            author: widget.preloadedStory?.written_by ??
+                _translation["author_unicef"]!,
             date: widget.preloadedStory!.createdOn,
             category: widget.preloadedStory!.category!.name!.split('/')[1],
           ),
@@ -287,6 +289,8 @@ class _ArticleScreenState extends State<ArticleScreen>
                     content: _storyStore.fetchedStory!.content!,
                     title: _storyStore.fetchedStory!.title ?? "",
                     date: _storyStore.fetchedStory!.createdOn,
+                    author: _storyStore.fetchedStory!.written_by ??
+                        _translation["author_unicef"]!,
                     category: _storyStore.fetchedStory!.category!.name!
                         .split('/')[1]
                         .trim(),
@@ -304,6 +308,7 @@ class _ArticleScreenState extends State<ArticleScreen>
     required String content,
     required String title,
     required DateTime? date,
+    required String author,
     required String category,
   }) {
     return Container(
@@ -321,7 +326,7 @@ class _ArticleScreenState extends State<ArticleScreen>
             dateText: _translation["date"]!,
             date: date,
             authorText: _translation["author"]!,
-            author: _translation["author_unicef"]!,
+            author: author,
             category: category,
           );
         },

@@ -23,8 +23,6 @@ class CodeComponent extends StatelessWidget {
               Expanded(child: _buildCodeField(codeControllers[1], 1)),
               Expanded(child: _buildCodeField(codeControllers[2], 2)),
               Expanded(child: _buildCodeField(codeControllers[3], 3)),
-              Expanded(child: _buildCodeField(codeControllers[4], 4)),
-              Expanded(child: _buildCodeField(codeControllers[5], 5)),
             ],
           ),
         ],

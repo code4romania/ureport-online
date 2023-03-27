@@ -1,13 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
+import 'package:ureport_ecaro/controllers/forgot_password_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/code_component.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -18,46 +22,51 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _emailController = TextEditingController();
-  final _newPwController = TextEditingController();
-  final _confirmPwController = TextEditingController();
-  final _codeController = List.of([
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-  ]);
   late StateStore _stateStore;
+  late ForgotPasswordStore _forgotPasswordStore;
   late Map<String, String> _translation;
-
-  var _pwError;
-  var _confirmPwError;
-  var _emailError;
-  var _codeError;
-
-  int page = 0;
-
-  bool _isLoading = false;
 
   @override
   void initState() {
     _stateStore = context.read<StateStore>();
-
     _translation = translations["${_stateStore.selectedLanguage}"]![
         "forgot_password_screen"]!;
+    _forgotPasswordStore = ForgotPasswordStore(_translation);
+
     super.initState();
+
+    reaction((p0) => _forgotPasswordStore.errorMessage != null, (p0) {
+      showPopup(
+        context: context,
+        message: _forgotPasswordStore.errorMessage!,
+        onPressed: () => context.router.pop(),
+        buttonText: _translation["retry"]!,
+      );
+    });
+
+    reaction((p0) => _forgotPasswordStore.result != null, (p0) {
+      if (_forgotPasswordStore.result == ForgotPasswordStatus.SUCCESS) {
+        showPopup(
+          context: context,
+          message: _translation["succes_title"]!,
+          onPressed: () => context.router.pop(),
+          buttonText: _translation["continue"]!,
+        );
+      } else {
+        showPopup(
+          context: context,
+          message: _forgotPasswordStore.errorMessage!,
+          onPressed: () => context.router.pop(),
+          buttonText: _translation["retry"]!,
+        );
+        //TOOD: GOTO LOGIN SCREEN
+      }
+    });
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _newPwController.dispose();
-    _confirmPwController.dispose();
-    _codeController.forEach((element) {
-      element.dispose();
-    });
+    _forgotPasswordStore.dispose();
     super.dispose();
   }
 
@@ -77,160 +86,185 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 rightEdge: false,
                 onPressed: () => context.router.pop(),
               ),
-              page == 0
-                  ? Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 80, left: 10, right: 10),
-                          width: double.infinity,
-                          child: Text(
-                            _translation["title1"]!,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 28,
-                                fontFamily: 'Heebo'),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 30, right: 30),
-                          width: double.infinity,
-                          child: Text(
-                            _translation["body1"]!,
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        textField(
-                          label: _translation["email"]!,
-                          textInputAction: TextInputAction.done,
-                          obscureText: false,
-                          keyboardType: TextInputType.emailAddress,
-                          controller: _emailController,
-                          errorText: _emailError,
-                        ),
-                        MainAppButtonComponent(
-                          title: _translation["submit1"]!,
-                          onPressed: sendCode,
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    )
-                  : page == 1
-                      ? Column(
-                          children: [
-                            Container(
-                              margin:
-                                  EdgeInsets.only(top: 80, left: 10, right: 10),
-                              width: double.infinity,
-                              child: Text(
-                                _translation["title2"]!,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 28,
-                                    fontFamily: 'Heebo'),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 30, right: 30),
-                              width: double.infinity,
-                              child: Text(
-                                _translation["body2"]!,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            CodeComponent(
-                              codeControllers: _codeController,
-                            ),
-                            Text(
-                              _codeError ?? "",
+              Observer(builder: (context) {
+                return _forgotPasswordStore.page == 0
+                    ? Column(
+                        children: [
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: 80, left: 10, right: 10),
+                            width: double.infinity,
+                            child: Text(
+                              _translation["title1"]!,
                               style: TextStyle(
-                                color: Colors.red,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 28,
+                                  fontFamily: 'Heebo'),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 30, right: 30),
+                            width: double.infinity,
+                            child: Text(
+                              _translation["body1"]!,
+                              style: TextStyle(
                                 fontSize: 16,
                               ),
+                              textAlign: TextAlign.center,
                             ),
-                            RichText(
-                              text: TextSpan(
+                          ),
+                          textField(
+                            label: _translation["email"]!,
+                            textInputAction: TextInputAction.done,
+                            obscureText: false,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _forgotPasswordStore.emailController,
+                            errorText: _forgotPasswordStore.emailError,
+                          ),
+                          _forgotPasswordStore.isLoading
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 20),
+                                  child: CircularProgressIndicator(),
+                                )
+                              : MainAppButtonComponent(
+                                  title: _translation["submit1"]!,
+                                  onPressed: _forgotPasswordStore.sendCode,
+                                ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      )
+                    : _forgotPasswordStore.page == 1
+                        ? Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: 80, left: 10, right: 10),
+                                width: double.infinity,
+                                child: Text(
+                                  _translation["title2"]!,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 28,
+                                      fontFamily: 'Heebo'),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 30, right: 30),
+                                width: double.infinity,
+                                child: Text(
+                                  _translation["body2"]!,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              CodeComponent(
+                                codeControllers:
+                                    _forgotPasswordStore.codeController,
+                              ),
+                              Text(
+                                _forgotPasswordStore.codeError ?? "",
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.red,
                                   fontSize: 16,
                                 ),
-                                text: _translation["no_code"]! + " ",
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: _translation["resend"]!,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(159, 75, 152, 1),
-                                      )),
-                                ],
                               ),
-                            ),
-                            MainAppButtonComponent(
-                              title: _translation["submit2"]!,
-                              onPressed: verifyCode,
-                            ),
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            Container(
-                              margin:
-                                  EdgeInsets.only(top: 80, left: 10, right: 10),
-                              width: double.infinity,
-                              child: Text(
-                                _translation["title3"]!,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 28,
-                                    fontFamily: 'Heebo'),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 30, right: 30),
-                              width: double.infinity,
-                              child: Text(
-                                _translation["body3"]!,
-                                style: TextStyle(
-                                  fontSize: 16,
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  text: _translation["no_code"]! + " ",
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: _translation["resend"]!,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromRGBO(159, 75, 152, 1),
+                                        )),
+                                  ],
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            ),
-                            textField(
-                              label: "Parola nouă",
-                              textInputAction: TextInputAction.next,
-                              obscureText: false,
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _newPwController,
-                              errorText: _pwError,
-                            ),
-                            textField(
-                              label: "Confirmare parolă nouă",
-                              textInputAction: TextInputAction.next,
-                              obscureText: false,
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _confirmPwController,
-                              errorText: _confirmPwError,
-                            ),
-                            MainAppButtonComponent(
-                              title: _translation["submit3"]!,
-                              onPressed: resetPassword,
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                          ],
-                        ),
+                              _forgotPasswordStore.isLoading
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 20),
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : MainAppButtonComponent(
+                                      title: _translation["submit2"]!,
+                                      onPressed:
+                                          _forgotPasswordStore.verifyCode,
+                                    ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: 80, left: 10, right: 10),
+                                width: double.infinity,
+                                child: Text(
+                                  _translation["title3"]!,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 28,
+                                      fontFamily: 'Heebo'),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 30, right: 30),
+                                width: double.infinity,
+                                child: Text(
+                                  _translation["body3"]!,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              textField(
+                                label: "Parola nouă",
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                keyboardType: TextInputType.emailAddress,
+                                controller:
+                                    _forgotPasswordStore.newPasswordController,
+                                errorText: _forgotPasswordStore.passwordError,
+                              ),
+                              textField(
+                                label: "Confirmare parolă nouă",
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                keyboardType: TextInputType.emailAddress,
+                                controller: _forgotPasswordStore
+                                    .confirmPasswordController,
+                                errorText:
+                                    _forgotPasswordStore.confirmPasswordError,
+                              ),
+                              _forgotPasswordStore.isLoading
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 20),
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : MainAppButtonComponent(
+                                      title: _translation["submit3"]!,
+                                      onPressed:
+                                          _forgotPasswordStore.resetPassword,
+                                    ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                            ],
+                          );
+              }),
               GestureDetector(
                 onTap: () => context.router.replace(LoginScreenRoute()),
                 child: RichText(
@@ -255,94 +289,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  void toggleIsLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
-
-  Future<void> verifyCode() async {
-    if (_codeController[0].text.length == 0 ||
-        _codeController[1].text.length == 0 ||
-        _codeController[2].text.length == 0 ||
-        _codeController[3].text.length == 0 ||
-        _codeController[4].text.length == 0 ||
-        _codeController[5].text.length == 0) {
-      setState(() {
-        _codeError = "Codul introdus este invalid";
-      });
-      Future.delayed(Duration(seconds: 2), () {
-        setState(() {
-          _codeError = null;
-        });
-      });
-      return;
-    } else {
-      setState(() {
-        page = 2;
-      });
-    }
-  }
-
-  Future<void> sendCode() async {
-    final bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(_emailController.text);
-
-    if (!emailValid) {
-      setState(() {
-        _emailError = _translation["invalid_email"]!;
-      });
-      Future.delayed(Duration(seconds: 2), () {
-        setState(() {
-          _emailError = null;
-        });
-      });
-      return;
-    } else {
-      setState(() {
-        _emailError = null;
-        page = 1;
-      });
-    }
-  }
-
-  Future<void> resetPassword() async {
-    if (_newPwController.text.length < 6) {
-      setState(() {
-        _pwError = "Parola este prea scurtă";
-      });
-      return;
-    } else {
-      setState(() {
-        _pwError = null;
-      });
-    }
-    if (_newPwController.text != _confirmPwController.text) {
-      setState(() {
-        _confirmPwError = "Parolele nu se potrivesc";
-      });
-      return;
-    } else {
-      setState(() {
-        _confirmPwError = null;
-      });
-    }
-
-    toggleIsLoading();
-
-    // await FirebaseApis().resetPassword(
-    //   email: _emailController.text,
-    // );
-
-    showPopup(
-      context: context,
-      onPressed: () => context.router.replace(LoginScreenRoute()),
-      message: _translation["succes"]!,
-      buttonText: _translation["continue"]!,
     );
   }
 }

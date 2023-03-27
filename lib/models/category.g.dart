@@ -24,7 +24,7 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
     };
 
 _$_Result _$$_ResultFromJson(Map json) => _$_Result(
-      imageUrl: json['imageUrl'],
+      imageUrl: json['imageUrl'] as String?,
       name: json['name'] as String?,
       createdOn: json['createdOn'] == null
           ? null

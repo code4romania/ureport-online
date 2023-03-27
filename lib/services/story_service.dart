@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/utils/constants.dart';
 import '../models/story_long.dart' as storyLong;
@@ -20,6 +21,7 @@ class StoryService {
       if (response.statusCode == 200) {
         final story = storyLong.StoryLong.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)));
+
         return story;
       } else {
         return null;

@@ -221,7 +221,7 @@ Result _$ResultFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Result {
-  dynamic get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   DateTime? get createdOn => throw _privateConstructorUsedError;
   DateTime? get modifiedOn => throw _privateConstructorUsedError;
@@ -238,7 +238,7 @@ abstract class $ResultCopyWith<$Res> {
       _$ResultCopyWithImpl<$Res, Result>;
   @useResult
   $Res call(
-      {dynamic imageUrl,
+      {String? imageUrl,
       String? name,
       DateTime? createdOn,
       DateTime? modifiedOn,
@@ -268,7 +268,7 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -296,7 +296,7 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {dynamic imageUrl,
+      {String? imageUrl,
       String? name,
       DateTime? createdOn,
       DateTime? modifiedOn,
@@ -323,7 +323,7 @@ class __$$_ResultCopyWithImpl<$Res>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -359,7 +359,7 @@ class _$_Result implements _Result {
       _$$_ResultFromJson(json);
 
   @override
-  final dynamic imageUrl;
+  final String? imageUrl;
   @override
   final String? name;
   @override
@@ -386,7 +386,8 @@ class _$_Result implements _Result {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Result &&
-            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
@@ -397,13 +398,8 @@ class _$_Result implements _Result {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(imageUrl),
-      name,
-      createdOn,
-      modifiedOn,
-      const DeepCollectionEquality().hash(_stories));
+  int get hashCode => Object.hash(runtimeType, imageUrl, name, createdOn,
+      modifiedOn, const DeepCollectionEquality().hash(_stories));
 
   @JsonKey(ignore: true)
   @override
@@ -421,7 +417,7 @@ class _$_Result implements _Result {
 
 abstract class _Result implements Result {
   const factory _Result(
-      {final dynamic imageUrl,
+      {final String? imageUrl,
       final String? name,
       final DateTime? createdOn,
       final DateTime? modifiedOn,
@@ -430,7 +426,7 @@ abstract class _Result implements Result {
   factory _Result.fromJson(Map<String, dynamic> json) = _$_Result.fromJson;
 
   @override
-  dynamic get imageUrl;
+  String? get imageUrl;
   @override
   String? get name;
   @override
@@ -456,7 +452,7 @@ mixin _$Story {
   bool? get featured => throw _privateConstructorUsedError;
   String? get summary => throw _privateConstructorUsedError;
   String? get videoId => throw _privateConstructorUsedError;
-  dynamic? get audioLink => throw _privateConstructorUsedError;
+  dynamic get audioLink => throw _privateConstructorUsedError;
   String? get tags => throw _privateConstructorUsedError;
   int? get org => throw _privateConstructorUsedError;
   List<dynamic>? get images => throw _privateConstructorUsedError;
@@ -478,7 +474,7 @@ abstract class $StoryCopyWith<$Res> {
       bool? featured,
       String? summary,
       String? videoId,
-      dynamic? audioLink,
+      dynamic audioLink,
       String? tags,
       int? org,
       List<dynamic>? images,
@@ -533,7 +529,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
       audioLink: freezed == audioLink
           ? _value.audioLink
           : audioLink // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -566,7 +562,7 @@ abstract class _$$_StoryCopyWith<$Res> implements $StoryCopyWith<$Res> {
       bool? featured,
       String? summary,
       String? videoId,
-      dynamic? audioLink,
+      dynamic audioLink,
       String? tags,
       int? org,
       List<dynamic>? images,
@@ -617,7 +613,7 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
       audioLink: freezed == audioLink
           ? _value.audioLink
           : audioLink // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -668,7 +664,7 @@ class _$_Story implements _Story {
   @override
   final String? videoId;
   @override
-  final dynamic? audioLink;
+  final dynamic audioLink;
   @override
   final String? tags;
   @override
@@ -746,7 +742,7 @@ abstract class _Story implements Story {
       final bool? featured,
       final String? summary,
       final String? videoId,
-      final dynamic? audioLink,
+      final dynamic audioLink,
       final String? tags,
       final int? org,
       final List<dynamic>? images,
@@ -765,7 +761,7 @@ abstract class _Story implements Story {
   @override
   String? get videoId;
   @override
-  dynamic? get audioLink;
+  dynamic get audioLink;
   @override
   String? get tags;
   @override

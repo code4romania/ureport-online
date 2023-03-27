@@ -69,7 +69,7 @@ mixin _$AccountSettingsStore on _AccountSettingsStoreBase, Store {
       AsyncAction('_AccountSettingsStoreBase.changeUsername', context: context);
 
   @override
-  Future<void> changeUsername() {
+  Future<String?> changeUsername() {
     return _$changeUsernameAsyncAction.run(() => super.changeUsername());
   }
 
@@ -85,7 +85,7 @@ mixin _$AccountSettingsStore on _AccountSettingsStoreBase, Store {
       AsyncAction('_AccountSettingsStoreBase.uploadPicture', context: context);
 
   @override
-  Future<void> uploadPicture() {
+  Future<String?> uploadPicture() {
     return _$uploadPictureAsyncAction.run(() => super.uploadPicture());
   }
 

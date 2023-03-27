@@ -8,6 +8,11 @@ enum RegisterStatus {
   ERROR,
 }
 
+enum ForgotPasswordStatus {
+  SUCCESS,
+  ERROR,
+}
+
 enum ProfilePictureStatus {
   SUCCESS,
   ERROR,

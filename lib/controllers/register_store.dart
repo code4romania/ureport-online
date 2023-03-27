@@ -61,7 +61,6 @@ abstract class _RegisterStoreBase with Store {
       if (response.statusCode == 200) {
         result = RegisterStatus.SUCCESS;
       } else {
-        result = RegisterStatus.ERROR;
         errorMessage = response.message;
       }
 

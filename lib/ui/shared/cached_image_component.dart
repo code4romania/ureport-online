@@ -16,7 +16,6 @@ class CachedImageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(imageUrl);
     return imageUrl.isEmpty
         ? Image.asset("assets/images/image_placeholder.jpg")
         : Image.network(
