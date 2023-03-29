@@ -19,13 +19,11 @@ class ArticleListScreen extends StatefulWidget {
     super.key,
     required this.categoryTitle,
     required this.subcategoryTitle,
-    required this.storyStore,
     required this.stories,
   });
 
   final String categoryTitle;
   final String subcategoryTitle;
-  final CategoryStories storyStore;
   final List<Story> stories;
 
   @override
@@ -35,6 +33,7 @@ class ArticleListScreen extends StatefulWidget {
 class _ArticleListScreenState extends State<ArticleListScreen> {
   late StateStore _stateStore;
   late Map<String, String> _translation;
+  late CategoryStories _storyStore;
 
   @override
   void initState() {
@@ -43,7 +42,8 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         translations["${_stateStore.selectedLanguage}"]!["articles_screen"]!;
     super.initState();
 
-    widget.storyStore.setInitialStoryList(widget.stories);
+    _storyStore = CategoryStories();
+    _storyStore.setInitialStoryList(widget.stories);
   }
 
   @override
@@ -92,7 +92,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                 ),
               ),
               SearchBarWidget(
-                onSearchChanged: widget.storyStore.searchStory,
+                onSearchChanged: _storyStore.searchStory,
               ),
               SizedBox(
                 height: 20,
@@ -122,7 +122,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                     return ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: widget.storyStore.stories.length,
+                        itemCount: _storyStore.stories.length,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
@@ -130,13 +130,13 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
 
                               context.router.push(
                                 ArticleScreenRoute(
-                                  storyId: widget.storyStore.stories[index].id,
+                                  storyId: _storyStore.stories[index].id,
                                   isComingFromHome: false,
                                 ),
                               );
                             },
                             child: ArticleItemWidget(
-                              article: widget.storyStore.stories[index],
+                              article: _storyStore.stories[index],
                               width: MediaQuery.of(context).size.width,
                               categoryName: widget.categoryTitle,
                               subCategoryName: widget.subcategoryTitle,

@@ -3,7 +3,6 @@
 //     final profile = profileFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'profile.freezed.dart';
 part 'profile.g.dart';

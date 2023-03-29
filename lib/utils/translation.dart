@@ -115,7 +115,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_articles": "Nu există articole în această categorie",
       "retry": "Apasă pentru a reîncerca",
       "back": "Înapoi",
-      "view_more": "Vezi mai multe articole din categoria",
+      "view_more": "Vezi mai multe articole din sub-categoria",
     },
     "articles_screen": {
       "header": "Articole",

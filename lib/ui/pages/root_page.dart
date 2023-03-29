@@ -1,14 +1,9 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/services/auth_service.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
-import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../controllers/app_router.gr.dart';

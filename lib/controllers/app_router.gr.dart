@@ -13,8 +13,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
 import 'package:flutter/material.dart' as _i25;
-import 'package:ureport_ecaro/controllers/category_stories_store.dart' as _i28;
-import 'package:ureport_ecaro/models/category.dart' as _i29;
+import 'package:ureport_ecaro/controllers/category_stories_store.dart' as _i29;
+import 'package:ureport_ecaro/models/category.dart' as _i28;
 import 'package:ureport_ecaro/models/profile.dart' as _i26;
 import 'package:ureport_ecaro/models/story.dart' as _i27;
 import 'package:ureport_ecaro/ui/pages/category-articles/article_list_screen.dart'
@@ -193,7 +193,6 @@ class AppRouter extends _i24.RootStackRouter {
           key: args.key,
           categoryTitle: args.categoryTitle,
           subcategoryTitle: args.subcategoryTitle,
-          storyStore: args.storyStore,
           stories: args.stories,
         ),
         opaque: true,
@@ -730,8 +729,7 @@ class ArticleListScreenRoute
     _i25.Key? key,
     required String categoryTitle,
     required String subcategoryTitle,
-    required _i28.CategoryStories storyStore,
-    required List<_i29.Story> stories,
+    required List<_i28.Story> stories,
   }) : super(
           ArticleListScreenRoute.name,
           path: '/article-list-screen',
@@ -739,7 +737,6 @@ class ArticleListScreenRoute
             key: key,
             categoryTitle: categoryTitle,
             subcategoryTitle: subcategoryTitle,
-            storyStore: storyStore,
             stories: stories,
           ),
         );
@@ -752,7 +749,6 @@ class ArticleListScreenRouteArgs {
     this.key,
     required this.categoryTitle,
     required this.subcategoryTitle,
-    required this.storyStore,
     required this.stories,
   });
 
@@ -762,13 +758,11 @@ class ArticleListScreenRouteArgs {
 
   final String subcategoryTitle;
 
-  final _i28.CategoryStories storyStore;
-
-  final List<_i29.Story> stories;
+  final List<_i28.Story> stories;
 
   @override
   String toString() {
-    return 'ArticleListScreenRouteArgs{key: $key, categoryTitle: $categoryTitle, subcategoryTitle: $subcategoryTitle, storyStore: $storyStore, stories: $stories}';
+    return 'ArticleListScreenRouteArgs{key: $key, categoryTitle: $categoryTitle, subcategoryTitle: $subcategoryTitle, stories: $stories}';
   }
 }
 
@@ -778,9 +772,9 @@ class ArticlesCategoryScreenRoute
     extends _i24.PageRouteInfo<ArticlesCategoryScreenRouteArgs> {
   ArticlesCategoryScreenRoute({
     _i25.Key? key,
-    required List<_i29.Result> result,
+    required List<_i28.Result> result,
     required String categoryTitle,
-    required _i28.CategoryStories storyStore,
+    required _i29.CategoryStories storyStore,
   }) : super(
           ArticlesCategoryScreenRoute.name,
           path: '/articles-category-screen',
@@ -805,11 +799,11 @@ class ArticlesCategoryScreenRouteArgs {
 
   final _i25.Key? key;
 
-  final List<_i29.Result> result;
+  final List<_i28.Result> result;
 
   final String categoryTitle;
 
-  final _i28.CategoryStories storyStore;
+  final _i29.CategoryStories storyStore;
 
   @override
   String toString() {

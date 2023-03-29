@@ -1,16 +1,14 @@
 import 'dart:convert';
 
+import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:ureport_ecaro/models/opinion_search_list.dart';
 import 'package:ureport_ecaro/models/response-local-chat-parsing.dart';
 import 'package:ureport_ecaro/models/response-opinion-localdb.dart';
 
-import '../utils/database_constant.dart';
-
-import 'package:path/path.dart' as p;
 import '../models/firebase_incoming_message.dart';
-
 import '../models/response_opinions.dart' as opinionArray;
+import '../utils/database_constant.dart';
 
 class DatabaseHelper {
   static Database? _database;
@@ -92,7 +90,7 @@ class DatabaseHelper {
     var db = await this.database;
 
     list.forEach((element) async {
-      var result = await db.insert(
+      await db.insert(
           DatabaseConstant.tableNameOpinion,
           {
             DatabaseConstant.columnIDOpinion: element!.id,
@@ -169,7 +167,7 @@ class DatabaseHelper {
     var db = await this.database;
     list.forEach((element) async {
       // var result = await db.insert(DatabaseConstant.tableName, element.toJson());
-      var result = await db.insert(
+      await db.insert(
           DatabaseConstant.tableNameMessage,
           {
             DatabaseConstant.message: element.message,
@@ -217,7 +215,7 @@ class DatabaseHelper {
     var db = await this.database;
     // var result = await db.query(DatabaseConstant.tableName,where: "featured = 'true' && 'program' = 'Global'");
     await db.rawDelete(
-        "delete  FROM ${DatabaseConstant.tableNameMessage} where ${DatabaseConstant.time}='${time}'");
+        "delete  FROM ${DatabaseConstant.tableNameMessage} where ${DatabaseConstant.time}='$time'");
     return true;
   }
 
@@ -236,7 +234,7 @@ class DatabaseHelper {
     var db = await this.database;
     await db
         .rawDelete(
-            "UPDATE  ${DatabaseConstant.tableNameMessage} SET ${DatabaseConstant.quicktypest} ='${jsonEncode(data)}' where ${DatabaseConstant.time}='${time}'")
+            "UPDATE  ${DatabaseConstant.tableNameMessage} SET ${DatabaseConstant.quicktypest} ='${jsonEncode(data)}' where ${DatabaseConstant.time}='$time'")
         .then((value) {
       return true;
     });

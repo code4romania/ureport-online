@@ -4,15 +4,16 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/article_category_store.dart';
+import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
-import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_category_section_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
+
 import '../../../services/click_sound_service.dart';
 import '../../../utils/constants.dart';
 
@@ -94,135 +95,300 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                   ),
                 ),
               ),
+
               Observer(builder: (context) {
-                return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: _articleCategoryStore.mapOfItems.keys.length,
-                  itemBuilder: (context, index) {
-                    if (_articleCategoryStore.mapOfItems.values
-                                .elementAt(index)
-                                .first
-                                .stories !=
-                            null &&
-                        _articleCategoryStore.mapOfItems.values
-                            .elementAt(index)
-                            .first
-                            .stories!
-                            .isNotEmpty)
-                      return Container(
-                        margin: EdgeInsets.only(
-                          top: 20,
-                          bottom: 20,
-                        ),
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _articleCategoryStore.mapOfItems.keys
-                                  .elementAt(index),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            Stack(
-                              alignment: Alignment.centerRight,
-                              children: [
-                                Container(
-                                  height: 1,
-                                  width: 200,
-                                  color: purpleColor,
-                                ),
-                                Container(
-                                  height: 8,
-                                  width: 8,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: purpleColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 390,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        ClickSound.soundTap();
+                final widgets = <Widget>[];
 
-                                        context.router.push(
-                                          ArticleScreenRoute(
-                                            storyId: _articleCategoryStore
-                                                .mapOfItems.values
-                                                .elementAt(index)
-                                                .first
-                                                .stories!
-                                                .first
-                                                .id,
-                                            isComingFromHome: false,
-                                          ),
-                                        );
-                                      },
-                                      child: ArticleItemWidget(
-                                        article: _articleCategoryStore
-                                            .mapOfItems.values
-                                            .elementAt(index)
-                                            .first
-                                            .stories!
-                                            .first,
-                                        isExpanded: false,
-                                        categoryName: widget.categoryTitle,
-                                        subCategoryName: _articleCategoryStore
-                                            .mapOfItems.keys
-                                            .elementAt(index),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: ArticleCategorySectionComponent(
-                                      viewMore: _translation["view_more"]!,
-                                      categoryTitle: _articleCategoryStore
-                                          .mapOfItems.keys
-                                          .elementAt(index),
-                                      onTap: () {
-                                        ClickSound.soundTap();
+                _articleCategoryStore.mapOfItems.forEach((key, value) {
+                  widgets.add(SubcategoryHolder(
+                    subcategoryName: key,
+                    story: value,
+                    viewMoreText: _translation["view_more"]!,
+                  ));
+                });
 
-                                        context.router.push(
-                                          ArticleListScreenRoute(
-                                            categoryTitle: widget.categoryTitle,
-                                            subcategoryTitle:
-                                                _articleCategoryStore
-                                                    .mapOfItems.keys
-                                                    .elementAt(index),
-                                            stories: _articleCategoryStore
-                                                .mapOfItems.values
-                                                .elementAt(index)
-                                                .first
-                                                .stories!,
-                                            storyStore: widget.storyStore,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    else
-                      return Container();
-                  },
+                return Column(
+                  children: widgets,
                 );
               }),
+
+              // Observer(builder: (context) {
+              //   return ListView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemCount: _articleCategoryStore.mapOfItems.keys.length,
+              //     itemBuilder: (context, index) {
+              //       if (_articleCategoryStore.mapOfItems.values
+              //                   .elementAt(index)
+              //                   .first
+              //                   .stories !=
+              //               null &&
+              //           _articleCategoryStore.mapOfItems.values
+              //               .elementAt(index)
+              //               .first
+              //               .stories!
+              //               .isNotEmpty)
+              //         return Container(
+              //           margin: EdgeInsets.only(
+              //             top: 20,
+              //             bottom: 20,
+              //           ),
+              //           padding: const EdgeInsets.only(left: 20),
+              //           child: Column(
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Text(
+              //                 _articleCategoryStore.mapOfItems.keys
+              //                     .elementAt(index),
+              //                 style: TextStyle(
+              //                     fontSize: 20, fontWeight: FontWeight.bold),
+              //               ),
+              //               Stack(
+              //                 alignment: Alignment.centerRight,
+              //                 children: [
+              //                   Container(
+              //                     height: 1,
+              //                     width: 200,
+              //                     color: purpleColor,
+              //                   ),
+              //                   Container(
+              //                     height: 8,
+              //                     width: 8,
+              //                     decoration: BoxDecoration(
+              //                       shape: BoxShape.circle,
+              //                       color: purpleColor,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               SizedBox(
+              //                 height: 390,
+              //                 child: SingleChildScrollView(
+              //                   scrollDirection: Axis.horizontal,
+              //                   child: Row(
+              //                     children: [
+              //                       ArticleItemShortcut(
+              //                         storyId: _articleCategoryStore
+              //                             .mapOfItems.values
+              //                             .elementAt(index)
+              //                             .first
+              //                             .stories!
+              //                             .elementAt(0)
+              //                             .id!,
+              //                         categoryTitle: widget.categoryTitle,
+              //                         subcategoryTitle: _articleCategoryStore
+              //                             .mapOfItems.keys
+              //                             .elementAt(index),
+              //                       ),
+              //                       ArticleItemShortcut(
+              //                         storyId: _articleCategoryStore
+              //                             .mapOfItems.values
+              //                             .elementAt(index)
+              //                             .first
+              //                             .stories!
+              //                             .elementAt(0)
+              //                             .id!,
+              //                         categoryTitle: widget.categoryTitle,
+              //                         subcategoryTitle: _articleCategoryStore
+              //                             .mapOfItems.keys
+              //                             .elementAt(index),
+              //                       ),
+              //                       ArticleItemShortcut(
+              //                         storyId: _articleCategoryStore
+              //                             .mapOfItems.values
+              //                             .elementAt(index)
+              //                             .first
+              //                             .stories!
+              //                             .elementAt(0)
+              //                             .id!,
+              //                         categoryTitle: widget.categoryTitle,
+              //                         subcategoryTitle: _articleCategoryStore
+              //                             .mapOfItems.keys
+              //                             .elementAt(index),
+              //                       ),
+              //                       // ArticleCategorySectionComponent(
+              //                       //   viewMore: _translation["view_more"]!,
+              //                       //   categoryTitle: _articleCategoryStore
+              //                       //       .mapOfItems.keys
+              //                       //       .elementAt(index),
+              //                       //   onTap: () {
+              //                       //     ClickSound.soundTap();
+
+              //                       //     context.router.push(
+              //                       //       ArticleListScreenRoute(
+              //                       //         categoryTitle: widget.categoryTitle,
+              //                       //         subcategoryTitle:
+              //                       //             _articleCategoryStore
+              //                       //                 .mapOfItems.keys
+              //                       //                 .elementAt(index),
+              //                       //         stories: _articleCategoryStore
+              //                       //             .mapOfItems.values
+              //                       //             .elementAt(index)
+              //                       //             .first
+              //                       //             .stories!,
+              //                       //         storyStore: widget.storyStore,
+              //                       //       ),
+              //                       //     );
+              //                       //   },
+              //                       // ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //               )
+              //             ],
+              //           ),
+              //         );
+              //       else
+              //         return Container();
+              //     },
+              //   );
+              // }),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ArticleItemShortcut extends StatelessWidget {
+  const ArticleItemShortcut({
+    super.key,
+    required this.storyId,
+    this.story,
+    required this.categoryTitle,
+    required this.subcategoryTitle,
+  });
+
+  final int storyId;
+  final Story? story;
+  final String categoryTitle;
+  final String subcategoryTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        ClickSound.soundTap();
+
+        context.router.push(
+          ArticleScreenRoute(
+            storyId: storyId,
+            isComingFromHome: false,
+          ),
+        );
+      },
+      child: Container(
+        height: 390,
+        child: ArticleItemWidget(
+          article: story,
+          isExpanded: false,
+          categoryName: categoryTitle,
+          subCategoryName: subcategoryTitle,
+        ),
+      ),
+    );
+  }
+}
+
+class ArticlesListHolder extends StatelessWidget {
+  const ArticlesListHolder({
+    super.key,
+    required this.result,
+    required this.viewMoreText,
+  });
+
+  final Result result;
+  final String viewMoreText;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...result.stories
+                  ?.take(3)
+                  .map((e) => ArticleItemShortcut(
+                        storyId: e.id!,
+                        story: e,
+                        categoryTitle: result.name?.split(" / ").first ?? "",
+                        subcategoryTitle: result.name?.split(" / ").last ?? "",
+                      ))
+                  .toList() ??
+              [],
+          ArticleCategorySectionComponent(
+            viewMore: viewMoreText,
+            subCategoryTitle: result.name?.split(" / ").last ?? "",
+            onTap: () {
+              ClickSound.soundTap();
+              context.router.push(
+                ArticleListScreenRoute(
+                  categoryTitle: result.name?.split(" / ").first ?? "",
+                  subcategoryTitle: result.name?.split(" / ").last ?? "",
+                  stories: result.stories ?? [],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SubcategoryHolder extends StatelessWidget {
+  const SubcategoryHolder({
+    super.key,
+    required this.subcategoryName,
+    required this.story,
+    required this.viewMoreText,
+  });
+
+  final String subcategoryName;
+  final List<Result> story;
+  final String viewMoreText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 20,
+        bottom: 20,
+      ),
+      padding: const EdgeInsets.only(left: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            subcategoryName,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              Container(
+                height: 1,
+                width: 200,
+                color: purpleColor,
+              ),
+              Container(
+                height: 8,
+                width: 8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: purpleColor,
+                ),
+              ),
+            ],
+          ),
+          ArticlesListHolder(
+            result: story.first,
+            viewMoreText: viewMoreText,
+          ),
+        ],
       ),
     );
   }

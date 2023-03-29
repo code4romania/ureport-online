@@ -9,14 +9,14 @@ class CustomDropdownForth extends StatefulWidget {
   final Color iconColor;
   final ValueChanged<int> onChange;
 
-  const CustomDropdownForth({
+  CustomDropdownForth({
     Key? key,
     required this.keyword,
     required this.borderRadius,
     this.backgroundColor = const Color(0xFFF67C0B9),
     this.iconColor = Colors.black,
     required this.onChange,
-  })  : assert(keyword != null),
+  })  : assert(keyword.isNotEmpty),
         super(key: key);
   @override
   _CustomDropdownForthState createState() => _CustomDropdownForthState();
@@ -29,7 +29,6 @@ class _CustomDropdownForthState extends State<CustomDropdownForth>
   late Offset buttonPosition;
   late Size buttonSize;
   late OverlayEntry _overlayEntry;
-  late BorderRadius _borderRadius;
   late AnimationController _animationController;
 
   @override
@@ -38,7 +37,6 @@ class _CustomDropdownForthState extends State<CustomDropdownForth>
       vsync: this,
       duration: Duration(milliseconds: 250),
     );
-    _borderRadius = BorderRadius.circular(4);
     _key = LabeledGlobalKey("button_icon");
     super.initState();
   }

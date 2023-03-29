@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
 
 class FinishReadingComponent extends StatefulWidget {
   const FinishReadingComponent({

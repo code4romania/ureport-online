@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart' as storyFull;
+
 import '../../../../utils/hex_colors_utils.dart';
 
 class ArticleItemWidget extends StatelessWidget {

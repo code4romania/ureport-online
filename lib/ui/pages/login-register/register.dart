@@ -7,12 +7,11 @@ import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/register_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
-import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
+
 import '../../../utils/enums.dart';
 
 class RegisterScreen extends StatefulWidget {

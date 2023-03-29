@@ -9,7 +9,7 @@ class LoadDataHandling {
     String lastUpdate = sp.getValue(
         "${SPUtil.OPINION_LAST_UPDATE}_${sp.getValue(SPUtil.PROGRAMKEY)}");
 
-    if (lastUpdate == null) {
+    if (lastUpdate.isEmpty) {
       return true;
     } else {
       DateTime lastDate = DateTime.parse(lastUpdate);

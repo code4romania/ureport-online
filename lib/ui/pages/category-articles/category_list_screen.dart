@@ -4,12 +4,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
-import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/controllers/category_stories_store.dart';
+import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/title_description_widget.dart';
@@ -162,6 +161,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         for (int i = 0; i < map.keys.length; i++)
                           GestureDetector(
                             onTap: () {
+                              inspect(map.keys);
                               ClickSound.soundTap();
                               context.router.push(
                                 ArticlesCategoryScreenRoute(

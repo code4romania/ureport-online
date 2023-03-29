@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/ui/shared/dotted_line_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
+
 import '../../../controllers/app_router.gr.dart';
 import '../../../controllers/opinion_controller.dart';
 import '../../../controllers/state_store.dart';
@@ -364,7 +365,7 @@ class _OpinionSearchScreenState extends State<OpinionSearchScreen> {
   }
 
   List<TextSpan> highlightOccurrences(String source, String query) {
-    if (query == null ||
+    if (query.isEmpty ||
         query.isEmpty ||
         !source.toLowerCase().contains(query.toLowerCase())) {
       return [TextSpan(text: source)];

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class ArticleCategorySectionComponent extends StatelessWidget {
   const ArticleCategorySectionComponent({
     super.key,
-    required this.categoryTitle,
+    required this.subCategoryTitle,
     required this.onTap,
     required this.viewMore,
   });
 
-  final String categoryTitle;
+  final String subCategoryTitle;
   final Function() onTap;
   final String viewMore;
 
@@ -18,6 +18,7 @@ class ArticleCategorySectionComponent extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 180,
+        height: 350,
         margin: EdgeInsets.only(
           top: 20,
           left: 10,
@@ -44,7 +45,7 @@ class ArticleCategorySectionComponent extends StatelessWidget {
             height: 100,
           ),
           Text(
-            "$viewMore $categoryTitle",
+            "$viewMore $subCategoryTitle",
             style: TextStyle(
               color: Color.fromRGBO(159, 75, 152, 1),
             ),

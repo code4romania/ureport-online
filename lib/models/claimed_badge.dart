@@ -3,7 +3,6 @@
 //     final claimedBadge = claimedBadgeFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'claimed_badge.freezed.dart';
 part 'claimed_badge.g.dart';

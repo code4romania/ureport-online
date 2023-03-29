@@ -3,7 +3,6 @@
 //     final bookmark = bookmarkFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'bookmark.freezed.dart';
 part 'bookmark.g.dart';

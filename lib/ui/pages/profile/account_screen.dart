@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,9 +12,9 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
-import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
+
 import '../../shared/general_button_component.dart';
 import '../../shared/text_navigator_component.dart';
 

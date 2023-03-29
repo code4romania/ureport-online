@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
@@ -9,12 +10,13 @@ import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/ui/pages/chat/components/chat_avatar.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../services/database_service.dart';
+
+import '../../../controllers/chat-controller.dart';
 import '../../../locator/locator.dart';
 import '../../../models/firebase_incoming_message.dart';
 import '../../../services/click_sound_service.dart';
+import '../../../services/database_service.dart';
 import '../../../utils/constants.dart';
-import '../../../controllers/chat-controller.dart';
 
 class Chat extends StatefulWidget {
   String from;
@@ -318,10 +320,10 @@ class _ChatState extends State<Chat> {
                                                                                           recognizer: tapGestureRecognizer
                                                                                             ..onTap = () {
                                                                                               String url = provider.detectedlink[0];
-                                                                                              launch(url);
+                                                                                              launchUrl(Uri.parse(url));
                                                                                             })
                                                                                       : TextSpan(
-                                                                                          text: "${data} ",
+                                                                                          text: "$data ",
                                                                                           style: TextStyle(color: Colors.black, fontSize: 16),
                                                                                         ),
                                                                                 )
@@ -595,10 +597,10 @@ class _ChatState extends State<Chat> {
                                                                                                   recognizer: tapGestureRecognizer
                                                                                                     ..onTap = () {
                                                                                                       String url = provider.detectedlink[0];
-                                                                                                      launch(url);
+                                                                                                      launchUrl(Uri.parse(url));
                                                                                                     })
                                                                                               : TextSpan(
-                                                                                                  text: "${data} ",
+                                                                                                  text: "$data ",
                                                                                                   style: TextStyle(color: Colors.black, fontSize: 16),
                                                                                                 ),
                                                                                         )
@@ -1152,8 +1154,8 @@ class _ChatState extends State<Chat> {
                           provider.addMessage(messageModel);
                           List<String> listDefault = [];
                           List<String> listCaseManagement = [];
-                          print("listDefault ${listDefault}");
-                          print("listCaseManagement ${listCaseManagement}");
+                          print("listDefault $listDefault");
+                          print("listCaseManagement $listCaseManagement");
                           if (listDefault.contains(message)) {
                             locator<SPUtil>()
                                 .setValue(SPUtil.USER_ROLE, "regular");

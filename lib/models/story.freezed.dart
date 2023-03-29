@@ -636,7 +636,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Category {
-  dynamic? get imageUrl => throw _privateConstructorUsedError;
+  dynamic get imageUrl => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -650,7 +650,7 @@ abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call({dynamic? imageUrl, String? name});
+  $Res call({dynamic imageUrl, String? name});
 }
 
 /// @nodoc
@@ -673,7 +673,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -689,7 +689,7 @@ abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
       __$$_CategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({dynamic? imageUrl, String? name});
+  $Res call({dynamic imageUrl, String? name});
 }
 
 /// @nodoc
@@ -710,7 +710,7 @@ class __$$_CategoryCopyWithImpl<$Res>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -728,7 +728,7 @@ class _$_Category implements _Category {
       _$$_CategoryFromJson(json);
 
   @override
-  final dynamic? imageUrl;
+  final dynamic imageUrl;
   @override
   final String? name;
 
@@ -766,13 +766,13 @@ class _$_Category implements _Category {
 }
 
 abstract class _Category implements Category {
-  const factory _Category({final dynamic? imageUrl, final String? name}) =
+  const factory _Category({final dynamic imageUrl, final String? name}) =
       _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
-  dynamic? get imageUrl;
+  dynamic get imageUrl;
   @override
   String? get name;
   @override

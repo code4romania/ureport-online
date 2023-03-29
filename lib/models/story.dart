@@ -3,7 +3,6 @@
 //     final story = storyFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'story.freezed.dart';
 part 'story.g.dart';
@@ -45,7 +44,7 @@ class StoryItem with _$StoryItem {
 @freezed
 class Category with _$Category {
   const factory Category({
-    dynamic? imageUrl,
+    dynamic imageUrl,
     String? name,
   }) = _Category;
 

@@ -10,14 +10,14 @@ class CustomDropDownSecond extends StatefulWidget {
   final Color iconColor;
   final ValueChanged<int> onChange;
 
-  const CustomDropDownSecond({
+  CustomDropDownSecond({
     Key? key,
     required this.keyword,
     required this.borderRadius,
     this.backgroundColor = const Color(0xFFF67C0B9),
     this.iconColor = Colors.black,
     required this.onChange,
-  })  : assert(keyword != null),
+  })  : assert(keyword.isEmpty),
         super(key: key);
   @override
   _CustomDropDownSecondState createState() => _CustomDropDownSecondState();
@@ -30,7 +30,6 @@ class _CustomDropDownSecondState extends State<CustomDropDownSecond>
   late Offset buttonPosition;
   late Size buttonSize;
   late OverlayEntry _overlayEntry;
-  late BorderRadius _borderRadius;
   late AnimationController _animationController;
 
   List<String> listdata = ["join", "data", "quit"];
@@ -41,7 +40,6 @@ class _CustomDropDownSecondState extends State<CustomDropDownSecond>
       vsync: this,
       duration: Duration(milliseconds: 250),
     );
-    _borderRadius = BorderRadius.circular(4);
     _key = LabeledGlobalKey("button_icon");
     super.initState();
   }

@@ -1,7 +1,7 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
-import '../../locator/locator.dart';
+
 import '../../models/api_response.dart';
 
 class HttpService {
@@ -11,8 +11,6 @@ class HttpService {
   Dio _getDio() {
     if (_dio == null) {
       _dio = new Dio();
-
-      var spUtil = locator<SPUtil>();
 
       _dio.interceptors.add(
         InterceptorsWrapper(

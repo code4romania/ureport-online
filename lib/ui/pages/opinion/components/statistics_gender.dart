@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/components/custom_linear_indicator.dart';
-import 'package:ureport_ecaro/utils/sp_utils.dart';
-import '../../../../locator/locator.dart';
+
 import '../../../../models/response_opinions.dart' as questionArray;
 
 class StatisticsGender {
   static Widget getGenderStatistics(
       questionArray.Question question, Color color) {
-    var sp = locator<SPUtil>();
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),

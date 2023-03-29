@@ -1,18 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/profile_info_store.dart';
-import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
+
+import '../../shared/text_navigator_component.dart';
+import '../../shared/top_header_widget.dart';
 import 'components/history_widget.dart';
 import 'components/medal_widget.dart';
 import 'components/profile_header_component.dart';
-import '../../shared/text_navigator_component.dart';
-import '../../shared/top_header_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.translation, this.profile})

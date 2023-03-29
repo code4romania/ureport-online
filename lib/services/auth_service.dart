@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/models/response.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
-import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 class AuthService {

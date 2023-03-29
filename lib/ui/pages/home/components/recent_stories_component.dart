@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
-import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
