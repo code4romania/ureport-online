@@ -17,9 +17,9 @@ class BookmarkWidget extends StatelessWidget {
     String creationDate = "";
     String bookmarkImageUrl = "";
 
-    if (bookmarkItem.story?.createdOn != null)
+    if (bookmarkItem.story?.created_on != null)
       creationDate =
-          DateFormat("dd-MM-yyyy").format(bookmarkItem.story!.createdOn!);
+          DateFormat("dd-MM-yyyy").format(bookmarkItem.story!.created_on!);
 
     if (bookmarkItem.story?.images != null &&
         bookmarkItem.story!.images!.isNotEmpty) {

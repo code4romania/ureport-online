@@ -233,7 +233,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               textField(
                                 label: "Parola nouă",
                                 textInputAction: TextInputAction.next,
-                                obscureText: false,
+                                obscureText: true,
                                 keyboardType: TextInputType.emailAddress,
                                 controller:
                                     _forgotPasswordStore.newPasswordController,
@@ -242,7 +242,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               textField(
                                 label: "Confirmare parolă nouă",
                                 textInputAction: TextInputAction.next,
-                                obscureText: false,
+                                obscureText: true,
                                 keyboardType: TextInputType.emailAddress,
                                 controller: _forgotPasswordStore
                                     .confirmPasswordController,
@@ -256,8 +256,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     )
                                   : MainAppButtonComponent(
                                       title: _translation["submit3"]!,
-                                      onPressed:
-                                          _forgotPasswordStore.resetPassword,
+                                      onPressed: () async {
+                                        await _forgotPasswordStore
+                                            .resetPassword();
+                                        context.router
+                                            .replace(LoginScreenRoute());
+                                      },
                                     ),
                               SizedBox(
                                 height: 30,

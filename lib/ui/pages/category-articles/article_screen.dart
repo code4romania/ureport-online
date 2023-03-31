@@ -333,7 +333,7 @@ class _ArticleScreenState extends State<ArticleScreen>
             title: widget.preloadedStory?.title ?? "",
             author: widget.preloadedStory?.written_by ??
                 _translation["author_unicef"]!,
-            date: widget.preloadedStory!.createdOn,
+            date: widget.preloadedStory!.created_on,
             category: widget.preloadedStory!.category!.name!.split('/')[1],
           ),
         );
@@ -373,7 +373,7 @@ class _ArticleScreenState extends State<ArticleScreen>
                   return loadLocalHTML(
                     content: _storyStore.fetchedStory!.content!,
                     title: _storyStore.fetchedStory!.title ?? "",
-                    date: _storyStore.fetchedStory!.createdOn,
+                    date: _storyStore.fetchedStory!.created_on,
                     author: _storyStore.fetchedStory!.written_by ??
                         _translation["author_unicef"]!,
                     category: _storyStore.fetchedStory!.category!.name!

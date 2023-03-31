@@ -22,9 +22,9 @@ _$_StoryLong _$$_StoryLongFromJson(Map json) => _$_StoryLong(
           ? null
           : Category.fromJson(
               Map<String, dynamic>.from(json['category'] as Map)),
-      createdOn: json['createdOn'] == null
+      created_on: json['created_on'] == null
           ? null
-          : DateTime.parse(json['createdOn'] as String),
+          : DateTime.parse(json['created_on'] as String),
     );
 
 Map<String, dynamic> _$$_StoryLongToJson(_$_StoryLong instance) =>
@@ -41,7 +41,7 @@ Map<String, dynamic> _$$_StoryLongToJson(_$_StoryLong instance) =>
       'org': instance.org,
       'images': instance.images,
       'category': instance.category?.toJson(),
-      'createdOn': instance.createdOn?.toIso8601String(),
+      'created_on': instance.created_on?.toIso8601String(),
     };
 
 _$_Category _$$_CategoryFromJson(Map json) => _$_Category(

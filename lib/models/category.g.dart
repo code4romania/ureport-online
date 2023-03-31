@@ -26,12 +26,12 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
 _$_Result _$$_ResultFromJson(Map json) => _$_Result(
       image_url: json['image_url'] as String?,
       name: json['name'] as String?,
-      createdOn: json['createdOn'] == null
+      created_on: json['created_on'] == null
           ? null
-          : DateTime.parse(json['createdOn'] as String),
-      modifiedOn: json['modifiedOn'] == null
+          : DateTime.parse(json['created_on'] as String),
+      modified_on: json['modified_on'] == null
           ? null
-          : DateTime.parse(json['modifiedOn'] as String),
+          : DateTime.parse(json['modified_on'] as String),
       stories: (json['stories'] as List<dynamic>?)
           ?.map((e) => Story.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
@@ -40,8 +40,8 @@ _$_Result _$$_ResultFromJson(Map json) => _$_Result(
 Map<String, dynamic> _$$_ResultToJson(_$_Result instance) => <String, dynamic>{
       'image_url': instance.image_url,
       'name': instance.name,
-      'createdOn': instance.createdOn?.toIso8601String(),
-      'modifiedOn': instance.modifiedOn?.toIso8601String(),
+      'created_on': instance.created_on?.toIso8601String(),
+      'modified_on': instance.modified_on?.toIso8601String(),
       'stories': instance.stories?.map((e) => e.toJson()).toList(),
     };
 
@@ -55,9 +55,9 @@ _$_Story _$$_StoryFromJson(Map json) => _$_Story(
       tags: json['tags'] as String?,
       org: json['org'] as int?,
       images: json['images'] as List<dynamic>?,
-      createdOn: json['createdOn'] == null
+      created_on: json['created_on'] == null
           ? null
-          : DateTime.parse(json['createdOn'] as String),
+          : DateTime.parse(json['created_on'] as String),
     );
 
 Map<String, dynamic> _$$_StoryToJson(_$_Story instance) => <String, dynamic>{
@@ -70,5 +70,5 @@ Map<String, dynamic> _$$_StoryToJson(_$_Story instance) => <String, dynamic>{
       'tags': instance.tags,
       'org': instance.org,
       'images': instance.images,
-      'createdOn': instance.createdOn?.toIso8601String(),
+      'created_on': instance.created_on?.toIso8601String(),
     };

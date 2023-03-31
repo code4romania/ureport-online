@@ -31,7 +31,7 @@ class Story with _$Story {
     dynamic tags,
     int? org,
     List<String>? images,
-    DateTime? createdOn,
+    DateTime? created_on,
   }) = _Story;
 
   factory Story.fromJson(Map<String, dynamic> json) => _$StoryFromJson(json);

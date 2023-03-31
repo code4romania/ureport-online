@@ -34,7 +34,7 @@ class StoryItem with _$StoryItem {
     int? org,
     List<dynamic>? images,
     Category? category,
-    DateTime? createdOn,
+    DateTime? created_on,
   }) = _Result;
 
   factory StoryItem.fromJson(Map<String, dynamic> json) =>

@@ -32,9 +32,9 @@ _$_Story _$$_StoryFromJson(Map json) => _$_Story(
       org: json['org'] as int?,
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      createdOn: json['createdOn'] == null
+      created_on: json['created_on'] == null
           ? null
-          : DateTime.parse(json['createdOn'] as String),
+          : DateTime.parse(json['created_on'] as String),
     );
 
 Map<String, dynamic> _$$_StoryToJson(_$_Story instance) => <String, dynamic>{
@@ -47,5 +47,5 @@ Map<String, dynamic> _$$_StoryToJson(_$_Story instance) => <String, dynamic>{
       'tags': instance.tags,
       'org': instance.org,
       'images': instance.images,
-      'createdOn': instance.createdOn?.toIso8601String(),
+      'created_on': instance.created_on?.toIso8601String(),
     };

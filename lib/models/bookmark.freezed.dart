@@ -212,7 +212,7 @@ mixin _$Story {
   dynamic get tags => throw _privateConstructorUsedError;
   int? get org => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
-  DateTime? get createdOn => throw _privateConstructorUsedError;
+  DateTime? get created_on => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -234,7 +234,7 @@ abstract class $StoryCopyWith<$Res> {
       dynamic tags,
       int? org,
       List<String>? images,
-      DateTime? createdOn});
+      DateTime? created_on});
 }
 
 /// @nodoc
@@ -259,7 +259,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
     Object? tags = freezed,
     Object? org = freezed,
     Object? images = freezed,
-    Object? createdOn = freezed,
+    Object? created_on = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -298,9 +298,9 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      createdOn: freezed == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
+      created_on: freezed == created_on
+          ? _value.created_on
+          : created_on // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
@@ -322,7 +322,7 @@ abstract class _$$_StoryCopyWith<$Res> implements $StoryCopyWith<$Res> {
       dynamic tags,
       int? org,
       List<String>? images,
-      DateTime? createdOn});
+      DateTime? created_on});
 }
 
 /// @nodoc
@@ -343,7 +343,7 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
     Object? tags = freezed,
     Object? org = freezed,
     Object? images = freezed,
-    Object? createdOn = freezed,
+    Object? created_on = freezed,
   }) {
     return _then(_$_Story(
       id: freezed == id
@@ -382,9 +382,9 @@ class __$$_StoryCopyWithImpl<$Res> extends _$StoryCopyWithImpl<$Res, _$_Story>
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      createdOn: freezed == createdOn
-          ? _value.createdOn
-          : createdOn // ignore: cast_nullable_to_non_nullable
+      created_on: freezed == created_on
+          ? _value.created_on
+          : created_on // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
@@ -403,7 +403,7 @@ class _$_Story implements _Story {
       this.tags,
       this.org,
       final List<String>? images,
-      this.createdOn})
+      this.created_on})
       : _images = images;
 
   factory _$_Story.fromJson(Map<String, dynamic> json) =>
@@ -436,11 +436,11 @@ class _$_Story implements _Story {
   }
 
   @override
-  final DateTime? createdOn;
+  final DateTime? created_on;
 
   @override
   String toString() {
-    return 'Story(id: $id, title: $title, featured: $featured, summary: $summary, videoId: $videoId, audioLink: $audioLink, tags: $tags, org: $org, images: $images, createdOn: $createdOn)';
+    return 'Story(id: $id, title: $title, featured: $featured, summary: $summary, videoId: $videoId, audioLink: $audioLink, tags: $tags, org: $org, images: $images, created_on: $created_on)';
   }
 
   @override
@@ -458,8 +458,8 @@ class _$_Story implements _Story {
             const DeepCollectionEquality().equals(other.tags, tags) &&
             (identical(other.org, org) || other.org == org) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
-            (identical(other.createdOn, createdOn) ||
-                other.createdOn == createdOn));
+            (identical(other.created_on, created_on) ||
+                other.created_on == created_on));
   }
 
   @JsonKey(ignore: true)
@@ -475,7 +475,7 @@ class _$_Story implements _Story {
       const DeepCollectionEquality().hash(tags),
       org,
       const DeepCollectionEquality().hash(_images),
-      createdOn);
+      created_on);
 
   @JsonKey(ignore: true)
   @override
@@ -502,7 +502,7 @@ abstract class _Story implements Story {
       final dynamic tags,
       final int? org,
       final List<String>? images,
-      final DateTime? createdOn}) = _$_Story;
+      final DateTime? created_on}) = _$_Story;
 
   factory _Story.fromJson(Map<String, dynamic> json) = _$_Story.fromJson;
 
@@ -525,7 +525,7 @@ abstract class _Story implements Story {
   @override
   List<String>? get images;
   @override
-  DateTime? get createdOn;
+  DateTime? get created_on;
   @override
   @JsonKey(ignore: true)
   _$$_StoryCopyWith<_$_Story> get copyWith =>

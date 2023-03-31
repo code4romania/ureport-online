@@ -221,7 +221,9 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
               ),
             ),
             Expanded(
-              child: getItemTitleImage(imageUrl),
+              child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  child: getItemTitleImage(imageUrl)),
             ),
           ],
         ),

@@ -22,7 +22,7 @@ class StoryLong with _$StoryLong {
     int? org,
     List<dynamic>? images,
     Category? category,
-    DateTime? createdOn,
+    DateTime? created_on,
   }) = _StoryLong;
 
   factory StoryLong.fromJson(Map<String, dynamic> json) =>

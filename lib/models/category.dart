@@ -25,8 +25,8 @@ class Result with _$Result {
   const factory Result({
     String? image_url,
     String? name,
-    DateTime? createdOn,
-    DateTime? modifiedOn,
+    DateTime? created_on,
+    DateTime? modified_on,
     List<Story>? stories,
   }) = _Result;
 
@@ -45,7 +45,7 @@ class Story with _$Story {
     String? tags,
     int? org,
     List<dynamic>? images,
-    DateTime? createdOn,
+    DateTime? created_on,
   }) = _Story;
 
   factory Story.fromJson(Map<String, dynamic> json) => _$StoryFromJson(json);
