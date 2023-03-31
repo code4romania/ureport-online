@@ -221,7 +221,7 @@ Result _$ResultFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Result {
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get image_url => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   DateTime? get createdOn => throw _privateConstructorUsedError;
   DateTime? get modifiedOn => throw _privateConstructorUsedError;
@@ -238,7 +238,7 @@ abstract class $ResultCopyWith<$Res> {
       _$ResultCopyWithImpl<$Res, Result>;
   @useResult
   $Res call(
-      {String? imageUrl,
+      {String? image_url,
       String? name,
       DateTime? createdOn,
       DateTime? modifiedOn,
@@ -258,16 +258,16 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imageUrl = freezed,
+    Object? image_url = freezed,
     Object? name = freezed,
     Object? createdOn = freezed,
     Object? modifiedOn = freezed,
     Object? stories = freezed,
   }) {
     return _then(_value.copyWith(
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image_url: freezed == image_url
+          ? _value.image_url
+          : image_url // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -296,7 +296,7 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? imageUrl,
+      {String? image_url,
       String? name,
       DateTime? createdOn,
       DateTime? modifiedOn,
@@ -313,16 +313,16 @@ class __$$_ResultCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imageUrl = freezed,
+    Object? image_url = freezed,
     Object? name = freezed,
     Object? createdOn = freezed,
     Object? modifiedOn = freezed,
     Object? stories = freezed,
   }) {
     return _then(_$_Result(
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      image_url: freezed == image_url
+          ? _value.image_url
+          : image_url // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -348,7 +348,7 @@ class __$$_ResultCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Result implements _Result {
   const _$_Result(
-      {this.imageUrl,
+      {this.image_url,
       this.name,
       this.createdOn,
       this.modifiedOn,
@@ -359,7 +359,7 @@ class _$_Result implements _Result {
       _$$_ResultFromJson(json);
 
   @override
-  final String? imageUrl;
+  final String? image_url;
   @override
   final String? name;
   @override
@@ -378,7 +378,7 @@ class _$_Result implements _Result {
 
   @override
   String toString() {
-    return 'Result(imageUrl: $imageUrl, name: $name, createdOn: $createdOn, modifiedOn: $modifiedOn, stories: $stories)';
+    return 'Result(image_url: $image_url, name: $name, createdOn: $createdOn, modifiedOn: $modifiedOn, stories: $stories)';
   }
 
   @override
@@ -386,8 +386,8 @@ class _$_Result implements _Result {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Result &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
+            (identical(other.image_url, image_url) ||
+                other.image_url == image_url) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
@@ -398,7 +398,7 @@ class _$_Result implements _Result {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, imageUrl, name, createdOn,
+  int get hashCode => Object.hash(runtimeType, image_url, name, createdOn,
       modifiedOn, const DeepCollectionEquality().hash(_stories));
 
   @JsonKey(ignore: true)
@@ -417,7 +417,7 @@ class _$_Result implements _Result {
 
 abstract class _Result implements Result {
   const factory _Result(
-      {final String? imageUrl,
+      {final String? image_url,
       final String? name,
       final DateTime? createdOn,
       final DateTime? modifiedOn,
@@ -426,7 +426,7 @@ abstract class _Result implements Result {
   factory _Result.fromJson(Map<String, dynamic> json) = _$_Result.fromJson;
 
   @override
-  String? get imageUrl;
+  String? get image_url;
   @override
   String? get name;
   @override

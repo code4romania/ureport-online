@@ -23,7 +23,7 @@ class Category with _$Category {
 @freezed
 class Result with _$Result {
   const factory Result({
-    String? imageUrl,
+    String? image_url,
     String? name,
     DateTime? createdOn,
     DateTime? modifiedOn,

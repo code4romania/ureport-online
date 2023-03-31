@@ -71,7 +71,7 @@ abstract class _ForgotPasswordStoreBase with Store {
         isLoading = false;
       } else {
         errorMessage = response.message;
-        print(response.message);
+
         isLoading = false;
       }
     }

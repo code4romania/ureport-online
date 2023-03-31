@@ -24,7 +24,7 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
     };
 
 _$_Result _$$_ResultFromJson(Map json) => _$_Result(
-      imageUrl: json['imageUrl'] as String?,
+      image_url: json['image_url'] as String?,
       name: json['name'] as String?,
       createdOn: json['createdOn'] == null
           ? null
@@ -38,7 +38,7 @@ _$_Result _$$_ResultFromJson(Map json) => _$_Result(
     );
 
 Map<String, dynamic> _$$_ResultToJson(_$_Result instance) => <String, dynamic>{
-      'imageUrl': instance.imageUrl,
+      'image_url': instance.image_url,
       'name': instance.name,
       'createdOn': instance.createdOn?.toIso8601String(),
       'modifiedOn': instance.modifiedOn?.toIso8601String(),

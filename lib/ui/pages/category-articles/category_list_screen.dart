@@ -147,12 +147,19 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     }
 
                     final Map<String, List<Result>> map = {};
+                    final Map<String, String> imagesMap = {};
+
                     categories.forEach((element) {
-                      final String key = element.name!.split('/')[0].trim();
-                      if (map.containsKey(key)) {
-                        map[key]!.add(element);
+                      if (!element.name!.contains('/')) {
+                        imagesMap[element.name!.split('/')[0].trim()] =
+                            element.image_url!;
                       } else {
-                        map[key] = [element];
+                        final String key = element.name!.split('/')[0].trim();
+                        if (map.containsKey(key)) {
+                          map[key]!.add(element);
+                        } else {
+                          map[key] = [element];
+                        }
                       }
                     });
 
@@ -161,7 +168,6 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         for (int i = 0; i < map.keys.length; i++)
                           GestureDetector(
                             onTap: () {
-                              inspect(map.keys);
                               ClickSound.soundTap();
                               context.router.push(
                                 ArticlesCategoryScreenRoute(
@@ -172,11 +178,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                               );
                             },
                             child: categoryItem(
-                              item: categories.firstWhere(
-                                (element) =>
-                                    element.name!.split('/')[0].trim() ==
-                                    map.keys.elementAt(i),
-                              ),
+                              item: map.values.elementAt(i).first,
+                              imageUrl: imagesMap[map.keys.elementAt(i)] ?? "",
                             ),
                           ),
                         Container(
@@ -196,7 +199,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
     );
   }
 
-  Widget categoryItem({required Result item}) {
+  Widget categoryItem({required Result item, required String imageUrl}) {
     if (item.stories != null) if (item.stories!.isNotEmpty)
       return Container(
         height: 120,
@@ -217,7 +220,9 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 style: titleWhiteTextStlye,
               ),
             ),
-            Expanded(child: getItemTitleImage(item.imageUrl)),
+            Expanded(
+              child: getItemTitleImage(imageUrl),
+            ),
           ],
         ),
       );
@@ -227,30 +232,52 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
-        ? CachedNetworkImage(
+        ? Image.network(
+            imageUrl,
             fit: BoxFit.cover,
-            imageUrl: imageUrl,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    child: LoadingIndicatorComponent(),
-                  ),
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  child: LoadingIndicatorComponent(),
                 ),
-              ],
-            ),
-            errorWidget: (context, url, error) => Center(
-              child: Container(
-                height: 50,
-                width: 50,
-                child: LoadingIndicatorComponent(),
-              ),
-            ),
+              );
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Center(
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  child: SizedBox(),
+                ),
+              );
+            },
           )
+        //   fit: BoxFit.cover,
+
+        //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+        //       Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Center(
+        //         child: Container(
+        //           height: 60,
+        //           width: 60,
+        //           child: LoadingIndicatorComponent(),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        //   errorWidget: (context, url, error) => Center(
+        //     child: Container(
+        //       height: 50,
+        //       width: 50,
+        //       child: LoadingIndicatorComponent(),
+        //     ),
+        //   ),
+        // )
         : Image(
             image: AssetImage("assets/images/image_placeholder.jpg"),
             fit: BoxFit.fill,
