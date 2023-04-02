@@ -68,33 +68,29 @@ abstract class _StoryStoreBase with Store {
   ) {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
     httpClient = StoryService(token: token);
-    fetchUserId().then((value) {
-      if (fetchedStory == null) {
-        fetchStory(storyId);
+
+    if (fetchedStory == null) {
+      fetchStory(storyId);
+    }
+
+    isStoryBookmarked(storyId);
+
+    isStoryRead(storyId).then((value) {
+      print("read: $alreadyRead");
+      if (!alreadyRead) {
+        print("Timer started");
+
+        timer = Timer(const Duration(seconds: 5), () {
+          timerFinished();
+        });
       }
-
-      isStoryBookmarked(storyId)
-          .then((value) => print("is bookmarked: $isBookmarked"));
-
-      isStoryRead(storyId).then((value) {
-        print("read: $alreadyRead");
-        if (!alreadyRead) {
-          print("Timer started");
-
-          timer = Timer(const Duration(seconds: 5), () {
-            timerFinished();
-          });
-        }
-      });
-
-      showRating(storyId: storyId);
-
-      getStoryRating(storyId);
-
-      print(rating);
-
-      // getStoryRating(storyId);
     });
+
+    showRating(storyId: storyId);
+
+    getStoryRating(storyId);
+
+    // getStoryRating(storyId);
   }
 
   @action
