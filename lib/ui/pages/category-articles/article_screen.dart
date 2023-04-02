@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
@@ -46,6 +47,9 @@ class _ArticleScreenState extends State<ArticleScreen>
   late StoryStore _storyStore;
   late Map<String, String> _translation;
 
+  double topBarHeight = 0;
+  double webViewHeight = 0;
+
   @override
   void initState() {
     final spUtil = SPUtil();
@@ -69,50 +73,12 @@ class _ArticleScreenState extends State<ArticleScreen>
       );
     }
     super.initState();
-  }
 
-  void _scrollToTop() {
-    webViewController.webViewController
-        .runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
+    reaction(
+      (p0) => _storyStore.scrolledToTheBottom && _storyStore.finishedTimer,
+      (p0) => _showClaimedBadge(),
+    );
   }
-
-  void _rateArticle() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: Container(
-              height: 300,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Observer(builder: (context) {
-                return RatingComponent(
-                  ratingTitle: _translation["ratingTitle"]!,
-                  ratingBody: _translation["ratingBody"]!,
-                  submitText: _translation["submitRating"]!,
-                  initialRating: _storyStore.rating,
-                  onRate: (rating) {
-                    _storyStore.rateStory(
-                        storyId: _storyStore.storyId, rating: rating);
-                  },
-                );
-              }),
-            ),
-          );
-        });
-  }
-
-  @override
-  void dispose() {
-    _storyStore.cancelTimer();
-    super.dispose();
-  }
-
-  double topBarHeight = 0;
-  double webViewHeight = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -131,53 +97,6 @@ class _ArticleScreenState extends State<ArticleScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            // Observer(builder: (context) {
-            //   return _storyStore.scrolledToTheBottom && _storyStore.finishedTimer
-            //       ? GestureDetector(
-            //           onTap: () {
-            //             if (_storyStore.hasClaimedBadge)
-            //               showDialog(
-            //                   context: context,
-            //                   barrierDismissible: true,
-            //                   builder: (context) {
-            //                     return Column(
-            //                       children: [
-            //                         Container(
-            //                           margin: EdgeInsets.all(20),
-            //                           child: Observer(builder: (context) {
-            //                             return FinishReadingComponent(
-            //                               translation: _translation,
-            //                               translationProfile: translations[
-            //                                       "${_stateStore.selectedLanguage}"]![
-            //                                   "profile_screen"]!,
-            //                               showRating: _storyStore.canShowRating,
-            //                               initRating: 0,
-            //                               storyId: _storyStore.storyId.toString(),
-            //                               onRateArticle: (int rating) =>
-            //                                   _storyStore.rateStory(
-            //                                       storyId: _storyStore.storyId,
-            //                                       rating: rating),
-            //                             );
-            //                           }),
-            //                         ),
-            //                       ],
-            //                     );
-            //                   });
-            //           },
-            //           child: Container(
-            //             height: 40,
-            //             width: 40,
-            //             decoration: BoxDecoration(
-            //               color: blueColor,
-            //             ),
-            //             child: Icon(
-            //               Icons.check,
-            //               color: Colors.white,
-            //             ),
-            //           ),
-            //         )
-            //       : SizedBox();
-            // }),
             Observer(builder: (context) {
               return _storyStore.canShowRating
                   ? GestureDetector(
@@ -475,5 +394,69 @@ class _ArticleScreenState extends State<ArticleScreen>
     webViewController.loadUrl(Uri.dataFromString(finalContent,
             mimeType: 'text/html', encoding: Encoding.getByName("UTF-8"))
         .toString());
+  }
+
+  void _scrollToTop() {
+    webViewController.webViewController
+        .runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
+  }
+
+  void _showClaimedBadge() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Container(
+              height: 250,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(167, 45, 111, 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: FinishReadingComponent(
+                translation: _translation,
+                translationProfile: translations[
+                    "${_stateStore.selectedLanguage}"]!["profile_screen"]!,
+                storyId: _storyStore.storyId.toString(),
+                profile: _stateStore.profile!,
+              ),
+            ),
+          );
+        });
+  }
+
+  void _rateArticle() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Container(
+              height: 300,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Observer(builder: (context) {
+                return RatingComponent(
+                  ratingTitle: _translation["ratingTitle"]!,
+                  ratingBody: _translation["ratingBody"]!,
+                  submitText: _translation["submitRating"]!,
+                  initialRating: _storyStore.rating,
+                  onRate: (rating) {
+                    _storyStore.rateStory(
+                        storyId: _storyStore.storyId, rating: rating);
+                  },
+                );
+              }),
+            ),
+          );
+        });
+  }
+
+  @override
+  void dispose() {
+    _storyStore.cancelTimer();
+    super.dispose();
   }
 }

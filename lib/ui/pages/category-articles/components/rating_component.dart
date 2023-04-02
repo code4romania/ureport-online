@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
@@ -61,13 +62,16 @@ class _RatingComponentState extends State<RatingComponent> {
         ),
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.only(top: 20, bottom: 10),
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerRight,
-              child: Icon(
-                Icons.close,
-                color: Color.fromRGBO(31, 41, 55, 1),
+            GestureDetector(
+              onTap: () => context.router.pop(),
+              child: Container(
+                margin: EdgeInsets.only(top: 20, bottom: 10),
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.centerRight,
+                child: Icon(
+                  Icons.close,
+                  color: Color.fromRGBO(31, 41, 55, 1),
+                ),
               ),
             ),
             Container(

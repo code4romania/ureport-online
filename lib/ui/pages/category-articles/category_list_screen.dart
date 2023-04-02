@@ -235,32 +235,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
-        ? CachedImageComponent(
-            imageUrl: imageUrl,
-          )
-        //   fit: BoxFit.cover,
-
-        //   progressIndicatorBuilder: (context, url, downloadProgress) =>
-        //       Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: [
-        //       Center(
-        //         child: Container(
-        //           height: 60,
-        //           width: 60,
-        //           child: LoadingIndicatorComponent(),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        //   errorWidget: (context, url, error) => Center(
-        //     child: Container(
-        //       height: 50,
-        //       width: 50,
-        //       child: LoadingIndicatorComponent(),
-        //     ),
-        //   ),
-        // )
+        ? CachedImageComponent(imageUrl: imageUrl)
         : Image(
             image: AssetImage("assets/images/image_placeholder.jpg"),
             fit: BoxFit.fill,

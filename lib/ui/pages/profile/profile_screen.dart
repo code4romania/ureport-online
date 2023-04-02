@@ -113,10 +113,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () => context.router
-                              .push(ArticleScreenRoute(
+                              .push(
+                                ArticleScreenRoute(
                                   isComingFromHome: false,
                                   storyId: _profileInfoStore
-                                      .bookmarks[index].story!.id))
+                                      .bookmarks[index].story!.id,
+                                ),
+                              )
                               .then((value) =>
                                   _profileInfoStore.fetchBookmarks()),
                           child: BookmarkWidget(

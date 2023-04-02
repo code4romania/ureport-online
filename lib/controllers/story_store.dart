@@ -69,28 +69,30 @@ abstract class _StoryStoreBase with Store {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
     httpClient = StoryService(token: token);
 
-    if (fetchedStory == null) {
-      fetchStory(storyId);
-    }
+    print("##### DEBUG STORY #####");
+    print("Story id: $storyId");
 
-    isStoryBookmarked(storyId);
-
-    isStoryRead(storyId).then((value) {
-      print("read: $alreadyRead");
-      if (!alreadyRead) {
-        print("Timer started");
-
-        timer = Timer(const Duration(seconds: 5), () {
-          timerFinished();
-        });
+    fetchUserId().then((_) {
+      print("User id: $userId");
+      if (fetchedStory == null) {
+        fetchStory(storyId);
       }
+
+      isStoryBookmarked(storyId);
+
+      showRating(storyId: storyId);
+
+      isStoryRead(storyId).then((_) {
+        print("Story read: $alreadyRead");
+        if (!alreadyRead) {
+          print("Timer started");
+
+          timer = Timer(const Duration(seconds: 20), () {
+            timerFinished();
+          });
+        }
+      });
     });
-
-    showRating(storyId: storyId);
-
-    getStoryRating(storyId);
-
-    // getStoryRating(storyId);
   }
 
   @action
@@ -127,7 +129,7 @@ abstract class _StoryStoreBase with Store {
   void timerFinished() {
     print("Timer finished");
     finishedTimer = true;
-    markAsRead(storyId: storyId);
+    //  markAsRead(storyId: storyId);
   }
 
   @action
@@ -169,6 +171,11 @@ abstract class _StoryStoreBase with Store {
     isActionLoading = true;
     final show = await httpClient.showRating(storyId: storyId);
     this.canShowRating = show;
+    if (show) await getStoryRating(storyId);
+
+    print("Can show rating: $canShowRating");
+    print("Rating: $rating");
+
     isActionLoading = false;
   }
 

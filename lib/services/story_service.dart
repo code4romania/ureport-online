@@ -71,6 +71,8 @@ class StoryService {
       if (decodedResponse == null) return false;
       if (response.body.isEmpty) return false;
 
+      // claimed badge if response is not empty and not null and not empty list []
+
       return true;
     } else {
       return false;
@@ -88,7 +90,6 @@ class StoryService {
       headers: header,
     );
 
-    print(response.body);
     if (response.statusCode == 200) {
       if (response.body == "[]") return 0;
       final rating = jsonDecode(response.body)[0]["score"];
