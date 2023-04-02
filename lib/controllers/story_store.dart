@@ -89,6 +89,10 @@ abstract class _StoryStoreBase with Store {
 
       showRating(storyId: storyId);
 
+      getStoryRating(storyId);
+
+      print(rating);
+
       // getStoryRating(storyId);
     });
   }
@@ -160,6 +164,7 @@ abstract class _StoryStoreBase with Store {
     final receivedRating = await httpClient.rateStory(
         storyId: storyId, userId: userId, rating: rating);
     this.rating = receivedRating;
+
     isActionLoading = false;
   }
 

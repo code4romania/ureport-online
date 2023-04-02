@@ -81,8 +81,14 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
-    final response = await http.get(Uri.parse(
-        "https://$baseApiUrl/api/v1/storyratings/user/$userId/?story=$storyId"));
+    final response = await http.get(
+      Uri.parse(
+        "https://$baseApiUrl/api/v1/storyratings/user/$userId/?story=$storyId",
+      ),
+      headers: header,
+    );
+
+    print(response.body);
     if (response.statusCode == 200) {
       if (response.body == "[]") return 0;
       final rating = jsonDecode(response.body)[0]["score"];

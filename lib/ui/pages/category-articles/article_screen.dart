@@ -12,6 +12,7 @@ import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_header_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/finish_reading_component.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/rating_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
@@ -75,6 +76,35 @@ class _ArticleScreenState extends State<ArticleScreen>
         .runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
   }
 
+  void _rateArticle() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Container(
+              height: 300,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Observer(builder: (context) {
+                return RatingComponent(
+                  ratingTitle: _translation["ratingTitle"]!,
+                  ratingBody: _translation["ratingBody"]!,
+                  submitText: _translation["submitRating"]!,
+                  initialRating: _storyStore.rating,
+                  onRate: (rating) {
+                    _storyStore.rateStory(
+                        storyId: _storyStore.storyId, rating: rating);
+                  },
+                );
+              }),
+            ),
+          );
+        });
+  }
+
   @override
   void dispose() {
     _storyStore.cancelTimer();
@@ -94,156 +124,86 @@ class _ArticleScreenState extends State<ArticleScreen>
       webViewHeight = MediaQuery.of(context).size.height - 160;
     }
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Observer(builder: (context) {
-            return _storyStore.scrolledToTheBottom && _storyStore.finishedTimer
-                ? GestureDetector(
-                    onTap: () {
-                      if (_storyStore.hasClaimedBadge)
-                        showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) {
-                              return Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(20),
-                                    child: Observer(builder: (context) {
-                                      return FinishReadingComponent(
-                                        translation: _translation,
-                                        translationProfile: translations[
-                                                "${_stateStore.selectedLanguage}"]![
-                                            "profile_screen"]!,
-                                        showRating: _storyStore.canShowRating,
-                                        initRating: 0,
-                                        storyId: _storyStore.storyId.toString(),
-                                        onRateArticle: (int rating) =>
-                                            _storyStore.rateStory(
-                                                storyId: _storyStore.storyId,
-                                                rating: rating),
-                                      );
-                                    }),
-                                  ),
-                                ],
-                              );
-                            });
-                      else
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              int rating = 0;
-                              Map<int, bool> stars = {
-                                1: false,
-                                2: false,
-                                3: false,
-                                4: false,
-                                5: false,
-                              };
-
-                              return Column(children: [
-                                _storyStore.canShowRating
-                                    ? Container(
-                                        margin: EdgeInsets.only(
-                                            top: 20, bottom: 10),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        height: 1,
-                                        color: Colors.white,
-                                      )
-                                    : Container(),
-                                _storyStore.canShowRating
-                                    ? Container(
-                                        margin: EdgeInsets.only(bottom: 20),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        child: Text(
-                                          _translation["rating"]!,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                                _storyStore.canShowRating
-                                    ? Container(
-                                        height: 50,
-                                        margin: EdgeInsets.only(bottom: 20),
-                                        child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            shrinkWrap: true,
-                                            itemCount: 5,
-                                            itemBuilder: (context, index) {
-                                              return Container(
-                                                margin: EdgeInsets.only(
-                                                    right: 10, left: 10),
-                                                child: GestureDetector(
-                                                    onTap: () {
-                                                      rating = 0;
-                                                      setState(() {
-                                                        stars.forEach(
-                                                            (key, value) {
-                                                          if (key <=
-                                                              index + 1) {
-                                                            rating++;
-                                                            stars[key] = true;
-                                                          } else {
-                                                            stars[key] = false;
-                                                          }
-                                                        });
-                                                      });
-                                                      _storyStore.rateStory(
-                                                          storyId: _storyStore
-                                                              .storyId,
-                                                          rating: rating);
-                                                    },
-                                                    child: Icon(
-                                                      stars.values
-                                                              .elementAt(index)
-                                                          ? Icons.star
-                                                          : Icons.star_border,
-                                                      color: Colors.white,
-                                                      size: 50,
-                                                    )),
-                                              );
-                                            }),
-                                      )
-                                    : Container()
-                              ]);
-                            });
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: blueColor,
-                      ),
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                : SizedBox();
-          }),
-          GestureDetector(
-            onTap: _scrollToTop,
-            child: Container(
-              width: 50,
-              height: 50,
-              child: Image.asset(
-                "assets/images/arrow_up_rectangular.png",
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Observer(builder: (context) {
+            //   return _storyStore.scrolledToTheBottom && _storyStore.finishedTimer
+            //       ? GestureDetector(
+            //           onTap: () {
+            //             if (_storyStore.hasClaimedBadge)
+            //               showDialog(
+            //                   context: context,
+            //                   barrierDismissible: true,
+            //                   builder: (context) {
+            //                     return Column(
+            //                       children: [
+            //                         Container(
+            //                           margin: EdgeInsets.all(20),
+            //                           child: Observer(builder: (context) {
+            //                             return FinishReadingComponent(
+            //                               translation: _translation,
+            //                               translationProfile: translations[
+            //                                       "${_stateStore.selectedLanguage}"]![
+            //                                   "profile_screen"]!,
+            //                               showRating: _storyStore.canShowRating,
+            //                               initRating: 0,
+            //                               storyId: _storyStore.storyId.toString(),
+            //                               onRateArticle: (int rating) =>
+            //                                   _storyStore.rateStory(
+            //                                       storyId: _storyStore.storyId,
+            //                                       rating: rating),
+            //                             );
+            //                           }),
+            //                         ),
+            //                       ],
+            //                     );
+            //                   });
+            //           },
+            //           child: Container(
+            //             height: 40,
+            //             width: 40,
+            //             decoration: BoxDecoration(
+            //               color: blueColor,
+            //             ),
+            //             child: Icon(
+            //               Icons.check,
+            //               color: Colors.white,
+            //             ),
+            //           ),
+            //         )
+            //       : SizedBox();
+            // }),
+            Observer(builder: (context) {
+              return _storyStore.canShowRating
+                  ? GestureDetector(
+                      onTap: _rateArticle,
+                      child: Container(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset("assets/images/star_icon.png")),
+                    )
+                  : SizedBox();
+            }),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: _scrollToTop,
+              child: Container(
+                width: 50,
+                height: 50,
+                child: Image.asset(
+                  "assets/images/arrow_up_rectangular.png",
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       body: Column(
         children: [
