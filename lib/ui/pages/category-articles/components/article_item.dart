@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart' as storyFull;
+import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
 import '../../../../utils/hex_colors_utils.dart';
 
@@ -76,13 +77,8 @@ class ArticleItemWidget extends StatelessWidget {
                         BorderRadius.only(topLeft: Radius.circular(20)),
                   ),
                   child: imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
+                      ? CachedImageComponent(
                           imageUrl: imageUrl,
-                          fit: BoxFit.fitWidth,
-                          errorWidget: (context, url, error) => Image.asset(
-                            "assets/images/image_placeholder.jpg",
-                            fit: BoxFit.cover,
-                          ),
                         )
                       : Image.asset(
                           "assets/images/image_placeholder.jpg",

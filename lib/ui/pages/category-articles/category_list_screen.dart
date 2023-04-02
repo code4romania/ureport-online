@@ -12,6 +12,7 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/title_description_widget.dart';
+import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
@@ -234,28 +235,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
-        ? Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Center(
-                child: Container(
-                  height: 60,
-                  width: 60,
-                  child: LoadingIndicatorComponent(),
-                ),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return Center(
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  child: SizedBox(),
-                ),
-              );
-            },
+        ? CachedImageComponent(
+            imageUrl: imageUrl,
           )
         //   fit: BoxFit.cover,
 

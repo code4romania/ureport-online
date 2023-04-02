@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
+import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
 class MedalWidget extends StatelessWidget {
   const MedalWidget({
@@ -39,18 +40,8 @@ class MedalWidget extends StatelessWidget {
                 ]),
                 child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: Image.network(
-                    medal.badge_type!.image.toString(),
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Container(
-                        width: 100,
-                        height: 100,
-                        child: Center(
-                          child: Text("Image not found"),
-                        ),
-                      );
-                    },
+                  child: CachedImageComponent(
+                    imageUrl: medal.badge_type!.image.toString(),
                   ),
                 ),
               ),

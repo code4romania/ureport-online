@@ -11,6 +11,7 @@ import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
+import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -140,9 +141,9 @@ class _AccountScreenState extends State<AccountScreen> {
                               fit: BoxFit.cover,
                             )
                           : _accountSettingsStore.remoteprofilePic != null
-                              ? Image.network(
-                                  _accountSettingsStore.remoteprofilePic!,
-                                  fit: BoxFit.cover,
+                              ? CachedImageComponent(
+                                  imageUrl:
+                                      _accountSettingsStore.remoteprofilePic!,
                                 )
                               : Container();
                     }),

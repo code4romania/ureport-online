@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CachedImageComponent extends StatelessWidget {
@@ -16,30 +17,19 @@ class CachedImageComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return imageUrl.isEmpty
         ? Image.asset("assets/images/image_placeholder.jpg")
-        : Image.network(
-            imageUrl,
-            height: height,
-            width: width,
-            fit: BoxFit.cover,
-          );
-    // : CachedNetworkImage(
-    //     height: height,
-    //     width: width,
-    //     imageUrl: imageUrl,
-    //     progressIndicatorBuilder: (context, url, downloadProgress) =>
-    //         CircularProgressIndicator(
-    //       value: downloadProgress.progress,
-    //       valueColor: AlwaysStoppedAnimation<Color>(blueColor),
-    //     ),
-    //     placeholder: (context, url) => Image.asset(
-    //       "assets/images/image_placeholder.jpg",
-    //       fit: BoxFit.cover,
-    //     ),
-    //     errorWidget: (context, url, error) => Image.asset(
-    //       "assets/images/image_placeholder.jpg",
-    //       fit: BoxFit.cover,
-    //     ),
-    //     fit: BoxFit.cover,
-    //   );
+        : Image.network(imageUrl, height: height, width: width,
+            loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          }, errorBuilder: (context, error, stackTrace) {
+            return Image.asset("assets/images/image_placeholder.jpg");
+          });
   }
 }
