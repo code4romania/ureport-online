@@ -7,8 +7,8 @@ import 'http_service.dart';
 class RapidProService {
   var _httpService = locator<HttpService>();
 
-  static String _rapidProUrl = "rapidpro.heroesof.tech";
-  static String _channelId = "bc281b67-3193-4890-8a44-bd0dab773d0a";
+  static String _rapidProUrl = "rapidpro.unicef-staging.heroesof.tech";
+  static String _channelId = "08b720ac-e62b-4e6b-a08e-9877cd624361";
 
   Future<ApiResponse<ResponseContactCreation>> createContact(
     String urn,

@@ -26,12 +26,23 @@ class FinishReadingComponent extends StatelessWidget {
         padding: const EdgeInsets.only(
           right: 20,
           left: 20,
-          top: 20,
           bottom: 20,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            GestureDetector(
+              onTap: () => context.router.pop(),
+              child: Container(
+                margin: EdgeInsets.only(top: 20, bottom: 10),
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.centerRight,
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             Text(
               translation["claimed_badge_title"]!,
               style: TextStyle(
@@ -43,6 +54,7 @@ class FinishReadingComponent extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
+              //TODO: CHANGE STORY ID TO COUNT...
               translation["claimed_badge_body_1"]! +
                   storyId +
                   translation["claimed_badge_body_2"]!,

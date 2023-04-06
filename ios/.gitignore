@@ -27,6 +27,7 @@ ServiceDefinitions.json
 Runner/GeneratedPluginRegistrant.*
 firebase_app_id_file.json
 Runner/GoogleService-Info.plist
+GoogleService-Info.plist
 
 
 # Exceptions to above rules.

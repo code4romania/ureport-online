@@ -125,6 +125,8 @@ class _MenuScreenState extends State<MenuScreen> {
 
                   spUtil.deleteKey(SPUtil.KEY_AUTH_TOKEN);
                   spUtil.deleteKey(SPUtil.KEY_USER_LANGUAGE);
+                  spUtil.deleteKey(SPUtil.KEY_USER_ID);
+                  spUtil.deleteKey(SPUtil.PROGRAMKEY);
                   context.router.replaceAll([RootPageRoute()]);
                 }),
             SizedBox(

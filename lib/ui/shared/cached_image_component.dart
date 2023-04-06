@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
 class CachedImageComponent extends StatelessWidget {
@@ -22,27 +23,13 @@ class CachedImageComponent extends StatelessWidget {
             imageUrl: imageUrl,
             height: height,
             width: width,
+            fit: BoxFit.fill,
             placeholder: (context, url) => Center(
-                  child: CircularProgressIndicator(
-                    color: blueColor,
-                  ),
-                ),
+              child: LoadingIndicatorComponent(),
+            ),
             errorWidget: (context, url, error) => Image.asset(
-                  "assets/images/image_placeholder.jpg",
-                ));
-    // : Image.network(imageUrl, height: height, width: width,
-    //     loadingBuilder: (context, child, loadingProgress) {
-    //     if (loadingProgress == null) return child;
-    //     return Center(
-    //       child: CircularProgressIndicator(
-    //         value: loadingProgress.expectedTotalBytes != null
-    //             ? loadingProgress.cumulativeBytesLoaded /
-    //                 loadingProgress.expectedTotalBytes!
-    //             : null,
-    //       ),
-    //     );
-    //   }, errorBuilder: (context, error, stackTrace) {
-    //     return Image.asset("assets/images/image_placeholder.jpg");
-    //   });
+              "assets/images/image_placeholder.jpg",
+            ),
+          );
   }
 }

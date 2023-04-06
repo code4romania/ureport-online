@@ -226,7 +226,11 @@ class _ArticleScreenState extends State<ArticleScreen>
         switch (_storyStore.isLoading) {
           case true:
             return Center(
-              child: LoadingIndicatorComponent(),
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: LoadingIndicatorComponent(),
+              ),
             );
 
           case false:
@@ -376,7 +380,7 @@ class _ArticleScreenState extends State<ArticleScreen>
     required String author,
     required String category,
   }) {
-    final format = DateFormat('dd MMMM, yyyy');
+    final format = DateFormat('dd.MM.yyyy');
     final String formattedDate = date != null ? format.format(date) : "";
 
     content = content.replaceAll("src=\"//", "src=\"https:");

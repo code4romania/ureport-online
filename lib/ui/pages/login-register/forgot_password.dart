@@ -9,6 +9,7 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/code_component.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
@@ -125,7 +126,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           _forgotPasswordStore.isLoading
                               ? Container(
                                   margin: EdgeInsets.only(top: 20),
-                                  child: CircularProgressIndicator(),
+                                  child: LoadingIndicatorComponent(),
                                 )
                               : MainAppButtonComponent(
                                   title: _translation["submit1"]!,
@@ -195,7 +196,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               _forgotPasswordStore.isLoading
                                   ? Container(
                                       margin: EdgeInsets.only(top: 20),
-                                      child: CircularProgressIndicator(),
+                                      child: LoadingIndicatorComponent(),
                                     )
                                   : MainAppButtonComponent(
                                       title: _translation["submit2"]!,
@@ -252,7 +253,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               _forgotPasswordStore.isLoading
                                   ? Container(
                                       margin: EdgeInsets.only(top: 20),
-                                      child: CircularProgressIndicator(),
+                                      child: LoadingIndicatorComponent(),
                                     )
                                   : MainAppButtonComponent(
                                       title: _translation["submit3"]!,

@@ -258,6 +258,7 @@ class ChatController extends ConnectivityController {
 
   addMessageFromPushNotification(
       MessageModel messageModel, String program) async {
+    // OK
     _spservice.setValue(
         "${SPUtil.FIRSTMESSAGE}_${_spservice.getValue(SPUtil.PROGRAMKEY)}",
         "SENT");
@@ -282,7 +283,7 @@ class ChatController extends ConnectivityController {
   List<dynamic> quicdata(String ss) {
     List<dynamic> data = [];
 
-    if (ss != "null" && ss.isNotEmpty && ss != "" && !ss.isEmpty) {
+    if (ss != "null" && ss.isNotEmpty && ss != "" && ss.isNotEmpty) {
       data = json.decode(ss);
 
       return data;
@@ -309,17 +310,17 @@ class ChatController extends ConnectivityController {
     await getToken();
     if (_token.isNotEmpty) {
       String _urn = _spservice.getValue(SPUtil.CONTACT_URN);
-      if (_urn == null) {
-        String contact_urn = getRandomString(15);
+      if (_urn.isEmpty) {
+        String contactUrn = getRandomString(15);
         var apiResponse = await _rapidproservice
-            .createContact(contact_urn, _token, "User", onSuccess: (uuid) {
+            .createContact(contactUrn, _token, "User", onSuccess: (uuid) {
           contatct = uuid;
         }, onError: (Exception error) {
           print("ONERROR: $error");
         });
         if (apiResponse.httpCode == 200) {
           responseContactCreation = apiResponse.data;
-          _spservice.setValue(SPUtil.CONTACT_URN, contact_urn);
+          _spservice.setValue(SPUtil.CONTACT_URN, contactUrn);
           if (_spservice.getValue(
                   "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}") !=
               "true") {
@@ -330,7 +331,7 @@ class ChatController extends ConnectivityController {
                 "true");
           }
         }
-      } else if (_urn != null) {
+      } else if (_urn.isNotEmpty) {
         if (_spservice.getValue(
                 "${locator<SPUtil>().getValue(SPUtil.PROGRAMKEY)}_${SPUtil.REG_CALLED}") !=
             "true") {
@@ -349,7 +350,7 @@ class ChatController extends ConnectivityController {
     if (_token.isNotEmpty) {
       String _urn = _spservice.getValue(SPUtil.CONTACT_URN_INDIVIDUAL_CASE);
       //print("l============================== casemanegement ${_urn}");
-      if (_urn == null) {
+      if (_urn.isEmpty) {
         String contact_urn = getRandomString(15);
         // print("the new Contact urn for the individual casemanegement ${contact_urn}");
         var apiResponse = await _rapidproservice
@@ -384,7 +385,7 @@ class ChatController extends ConnectivityController {
 
           notifyListeners();
         }
-      } else if (_urn != null) {
+      } else if (_urn.isNotEmpty) {
         DateTime now = DateTime.now();
         String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
 
@@ -465,7 +466,7 @@ class ChatController extends ConnectivityController {
 
   sendMessage(String message) async {
     isMessageCome = true;
-    String urn = DateFormat('dd-MM-yyyy hh:mm:ss a').format(DateTime.now());
+    String urn = "";
     String userRole = _spservice.getValue(SPUtil.USER_ROLE);
 
     if (userRole == "regular") {

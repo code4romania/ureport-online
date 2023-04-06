@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/services/auth_service.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 part 'register_store.g.dart';
 
 class RegisterStore = _RegisterStoreBase with _$RegisterStore;
@@ -60,6 +61,7 @@ abstract class _RegisterStoreBase with Store {
 
       if (response.statusCode == 200) {
         result = RegisterStatus.SUCCESS;
+        SPUtil().setValue(SPUtil.PROGRAMKEY, "RO");
       } else {
         errorMessage = response.message;
       }

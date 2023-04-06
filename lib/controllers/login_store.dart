@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/services/auth_service.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 part 'login_store.g.dart';
 
@@ -53,6 +54,7 @@ abstract class _LoginStoreBase with Store {
 
       if (response.statusCode == 200) {
         result = LoginStatus.SUCCESS;
+        SPUtil().setValue(SPUtil.PROGRAMKEY, "RO");
       } else {
         result = LoginStatus.ERROR;
         errorMessage = response.message;

@@ -69,6 +69,8 @@ class _ChatState extends State<Chat> {
       if (from != "notification") {
         Provider.of<ChatController>(context, listen: false).createContact();
       }
+
+      print(SPUtil().getValue(SPUtil.PROGRAMKEY));
     }
   }
 
@@ -908,16 +910,10 @@ class _ChatState extends State<Chat> {
                                                                 MainAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              Image.asset(
-                                                                "assets/images/ic_delete.png",
-                                                                height: 35,
-                                                                width: 35,
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                        167,
-                                                                        45,
-                                                                        111,
-                                                                        1),
+                                                              Icon(
+                                                                Icons.delete,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ],
                                                           ),

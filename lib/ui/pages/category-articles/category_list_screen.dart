@@ -90,7 +90,10 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 switch (future.status) {
                   case FutureStatus.pending:
                     return Center(
-                      child: LoadingIndicatorComponent(),
+                      child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: LoadingIndicatorComponent()),
                     );
                   case FutureStatus.rejected:
                     return Center(
@@ -221,10 +224,15 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 style: titleWhiteTextStlye,
               ),
             ),
-            Expanded(
+            Flexible(
               child: Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: getItemTitleImage(imageUrl)),
+                margin: EdgeInsets.only(
+                  right: 20,
+                  top: 10,
+                  bottom: 10,
+                ),
+                child: getItemTitleImage(imageUrl),
+              ),
             ),
           ],
         ),
@@ -235,10 +243,14 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
-        ? CachedImageComponent(imageUrl: imageUrl)
+        ? CachedImageComponent(
+            width: 120,
+            height: 120,
+            imageUrl: imageUrl,
+          )
         : Image(
             image: AssetImage("assets/images/image_placeholder.jpg"),
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           );
   }
 }

@@ -82,16 +82,16 @@ abstract class _StoryStoreBase with Store {
 
       showRating(storyId: storyId);
 
-      isStoryRead(storyId).then((_) {
-        print("Story read: $alreadyRead");
-        if (!alreadyRead) {
-          print("Timer started");
+      // isStoryRead(storyId).then((_) {
+      //   print("Story read: $alreadyRead");
+      //   if (!alreadyRead) {
+      print("Timer started");
 
-          timer = Timer(const Duration(seconds: 20), () {
-            timerFinished();
-          });
-        }
+      timer = Timer(const Duration(seconds: 10), () {
+        timerFinished();
       });
+      //   }
+      // });
     });
   }
 

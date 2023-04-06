@@ -72,8 +72,6 @@ class AuthService {
       "email": email,
     });
 
-    print(response.body);
-
     return Response(
       statusCode: response.statusCode,
       message: response.statusCode != 200
@@ -95,8 +93,6 @@ class AuthService {
           "email": email,
           "code": code,
         });
-
-    print(response.body);
 
     return Response(
       statusCode: response.statusCode,
