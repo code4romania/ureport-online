@@ -56,6 +56,9 @@ class AccountSettingsServices {
       }),
     );
 
+    print(header);
+    print(response.body);
+
     return Response(
       statusCode: response.statusCode,
       message: jsonDecode(response.body)["detail"],
@@ -67,8 +70,7 @@ class AccountSettingsServices {
     required int userID,
     required String path,
   }) async {
-    var uri = Uri.parse(
-        "https://ureport.heroesof.tech/api/v1/userprofiles/user/$userID/image/");
+    var uri = Uri.https(baseApiUrl, "api/v1/userprofiles/user/$userID/image/");
 
     var req = http.MultipartRequest('PUT', uri)
       ..files.add(await http.MultipartFile.fromPath('image', path));
@@ -78,6 +80,9 @@ class AccountSettingsServices {
     var response = await req.send();
 
     final respStr = await response.stream.bytesToString();
+
+    print(header);
+    print(respStr);
 
     return Response(
       statusCode: response.statusCode,

@@ -25,6 +25,10 @@ abstract class _AccountSettingsStoreBase with Store {
 
     if (profile != null) {
       usernameController.text = profile!.first_name + " " + profile!.last_name;
+      if (profile?.image == null) {
+        remoteprofilePic =
+            "https://images.squarespace-cdn.com/content/v1/5a41ce1129f187de5f70506d/1515104526219-CTC9ND914ZD62K9D3ZSW/placeholder-person.jpg";
+      }
     }
   }
 

@@ -97,15 +97,13 @@ class _AccountScreenState extends State<AccountScreen> {
             SizedBox(
               height: 20,
             ),
-            Observer(builder: (context) {
-              return textField(
-                label: _translation["username"]!,
-                controller: _accountSettingsStore.usernameController,
-                obscureText: false,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-              );
-            }),
+            textField(
+              label: _translation["username"]!,
+              controller: _accountSettingsStore.usernameController,
+              obscureText: false,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.done,
+            ),
             Container(
               padding: EdgeInsets.all(15),
               margin: EdgeInsets.only(left: 20, right: 20),
