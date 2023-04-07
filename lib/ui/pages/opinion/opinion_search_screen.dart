@@ -54,7 +54,7 @@ class _OpinionSearchScreenState extends State<OpinionSearchScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<OpinionController>(context, listen: false)
-        .getCategories(sp.getValue(SPUtil.PROGRAMKEY));
+        .getCategories("U-REPORT STAGING");
 
     return Consumer<OpinionController>(builder: (context, provider, snapshot) {
       return Scaffold(
@@ -98,14 +98,12 @@ class _OpinionSearchScreenState extends State<OpinionSearchScreen> {
                   ),
                   Container(
                       margin: EdgeInsets.only(left: 11, right: 12, top: 80),
-                      child: searchBarUI(
-                          provider, sp.getValue(SPUtil.PROGRAMKEY))),
+                      child: searchBarUI(provider, "U-REPORT STAGING")),
                   Container(
                     margin: EdgeInsets.only(top: 136),
                     padding: EdgeInsets.only(left: 20, right: 20),
                     child: FutureBuilder<List<OpinionSearchList>>(
-                        future: provider
-                            .getCategories(sp.getValue(SPUtil.PROGRAMKEY)),
+                        future: provider.getCategories("U-REPORT STAGING"),
                         builder: (context, snapshot) {
                           if (snapshot.hasData && isLoaded) {
                             filteredCategoryList = snapshot.data!;
@@ -299,8 +297,7 @@ class _OpinionSearchScreenState extends State<OpinionSearchScreen> {
     final dateTime = DateTime.parse(item.date);
     final format = DateFormat('dd MMMM, yyyy');
     final titleDate = format.format(dateTime);
-    String latest_opinion_id =
-        sp.getValue("${sp.getValue(SPUtil.PROGRAMKEY)}_latest_opinion");
+    String latest_opinion_id = sp.getValue("ro_latest_opinion");
 
     return Container(
         child: GestureDetector(

@@ -8,7 +8,7 @@ class RapidProService {
   var _httpService = locator<HttpService>();
 
   static String _rapidProUrl = "rapidpro.unicef-staging.heroesof.tech";
-  static String _channelId = "08b720ac-e62b-4e6b-a08e-9877cd624361";
+  static String _channelId = "8c56dbeb-b225-4bf2-99bf-04a0e7bdc08d";
 
   Future<ApiResponse<ResponseContactCreation>> createContact(
     String urn,

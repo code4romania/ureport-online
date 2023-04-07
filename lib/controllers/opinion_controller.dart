@@ -79,8 +79,7 @@ class OpinionController extends ConnectivityController {
         await _opinionrepository.getOpinions(url + "?limit=1");
     if (apiresponsedata.httpCode == 200) {
       items.addAll(apiresponsedata.data.results);
-      sp.setValue("${sp.getValue(SPUtil.PROGRAMKEY)}_latest_opinion",
-          items[0].id.toString());
+      sp.setValue("ro_latest_opinion", items[0].id.toString());
       await _databaseHelper.insertOpinion(items, program);
       isLoading = false;
       isSyncing = true;
@@ -96,8 +95,8 @@ class OpinionController extends ConnectivityController {
       ClickSound.soundShare();
       await _databaseHelper.insertOpinion(
           apiresponsedata.data.results, program);
-      sp.setValue("${sp.getValue(SPUtil.PROGRAMKEY)}_latest_opinion",
-          apiresponsedata.data.results[0].id.toString());
+      sp.setValue(
+          "ro_latest_opinion", apiresponsedata.data.results[0].id.toString());
       LoadDataHandling.storeOpinionLastUpdate();
       isLoading = false;
       isSyncing = false;

@@ -31,6 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
     _loginStore.dispose();
     super.dispose();
   }
+  // ***** GOOGLE LOGIN *****
+  // open webview with url
+  // receive token from google login
+  // call endpoint to login with received token
+  // if success, save token in shared preferences
 
   @override
   void initState() {
@@ -156,51 +161,51 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 30,
             ),
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: 100,
-                      child: Divider(
-                        color: Colors.black,
-                      )),
-                  Text(_translation['separator_text']!),
-                  Container(
-                    width: 100,
-                    child: Divider(
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 40,
-              margin: EdgeInsets.only(right: 30, left: 30, top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: submitButton(
-                        type: 'google',
-                        onPressed: () {
-                          print("google");
-                        }),
-                  ),
-                  Expanded(
-                    child: submitButton(
-                        type: 'facebook',
-                        onPressed: () {
-                          print("facebook");
-                        }),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   margin: EdgeInsets.only(top: 30),
+            //   width: double.infinity,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Container(
+            //           width: 100,
+            //           child: Divider(
+            //             color: Colors.black,
+            //           )),
+            //       Text(_translation['separator_text']!),
+            //       Container(
+            //         width: 100,
+            //         child: Divider(
+            //           color: Colors.black,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   width: double.infinity,
+            //   height: 40,
+            //   margin: EdgeInsets.only(right: 30, left: 30, top: 20),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: [
+            //       Expanded(
+            //         child: submitButton(
+            //             type: 'google',
+            //             onPressed: () {
+            //               print("google");
+            //             }),
+            //       ),
+            //       Expanded(
+            //         child: submitButton(
+            //             type: 'facebook',
+            //             onPressed: () {
+            //               print("facebook");
+            //             }),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 30,
             ),

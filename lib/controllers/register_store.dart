@@ -61,7 +61,7 @@ abstract class _RegisterStoreBase with Store {
 
       if (response.statusCode == 200) {
         result = RegisterStatus.SUCCESS;
-        SPUtil().setValue(SPUtil.PROGRAMKEY, "RO");
+        SPUtil().setValue(SPUtil.KEY_USER_EMAIL, emailController.text);
       } else {
         errorMessage = response.message;
       }

@@ -47,7 +47,10 @@ class AuthService {
       "full_name": name,
       "email": email,
       "password": password,
+      "rapidpro_uuid": "",
     });
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       await getAuthToken(

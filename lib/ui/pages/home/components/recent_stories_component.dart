@@ -18,82 +18,92 @@ class RecentStoriesComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          translation["recent_articles"]!,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        Stack(
-          alignment: Alignment.centerRight,
-          children: [
-            Container(
-              height: 1,
-              width: 300,
-              color: purpleColor,
-            ),
-            Container(
-              height: 8,
-              width: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: purpleColor,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 390,
-          child: Row(
+    return recentStories.isEmpty
+        ? SizedBox()
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    ClickSound.soundTap();
+              Text(
+                translation["recent_articles"]!,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  Container(
+                    height: 1,
+                    width: 300,
+                    color: purpleColor,
+                  ),
+                  Container(
+                    height: 8,
+                    width: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: purpleColor,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 390,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          ClickSound.soundTap();
 
-                    context.router.push(
-                      ArticleScreenRoute(
-                        preloadedStory: recentStories[0],
-                        isComingFromHome: true,
+                          context.router.push(
+                            ArticleScreenRoute(
+                              preloadedStory: recentStories[0],
+                              isComingFromHome: true,
+                            ),
+                          );
+                        },
+                        child: ArticleItemWidget(
+                          articleFull: recentStories[0],
+                          categoryName: recentStories[0].category!.name!,
+                          subCategoryName: recentStories[0]
+                              .category!
+                              .name!
+                              .split("/")[1]
+                              .trim(),
+                          isExpanded: false,
+                        ),
                       ),
-                    );
-                  },
-                  child: ArticleItemWidget(
-                    articleFull: recentStories[0],
-                    categoryName: recentStories[0].category!.name!,
-                    subCategoryName:
-                        recentStories[0].category!.name!.split("/")[1].trim(),
-                    isExpanded: false,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    ClickSound.soundTap();
+                    ),
+                    recentStories.length >= 2
+                        ? Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                ClickSound.soundTap();
 
-                    context.router.push(
-                      ArticleScreenRoute(
-                          preloadedStory: recentStories[1],
-                          isComingFromHome: true),
-                    );
-                  },
-                  child: ArticleItemWidget(
-                    articleFull: recentStories[1],
-                    categoryName: recentStories[1].category!.name!,
-                    subCategoryName:
-                        recentStories[1].category!.name!.split("/")[1].trim(),
-                    isExpanded: false,
-                  ),
+                                context.router.push(
+                                  ArticleScreenRoute(
+                                      preloadedStory: recentStories[1],
+                                      isComingFromHome: true),
+                                );
+                              },
+                              child: ArticleItemWidget(
+                                articleFull: recentStories[1],
+                                categoryName: recentStories[1].category!.name!,
+                                subCategoryName: recentStories[1]
+                                    .category!
+                                    .name!
+                                    .split("/")[1]
+                                    .trim(),
+                                isExpanded: false,
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
                 ),
-              ),
+              )
             ],
-          ),
-        )
-      ],
-    );
+          );
   }
 }

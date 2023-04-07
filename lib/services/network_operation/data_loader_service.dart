@@ -6,8 +6,7 @@ import '../../locator/locator.dart';
 class LoadDataHandling {
   static bool checkOpinionLoadAvailability() {
     var sp = locator<SPUtil>();
-    String lastUpdate = sp.getValue(
-        "${SPUtil.OPINION_LAST_UPDATE}_${sp.getValue(SPUtil.PROGRAMKEY)}");
+    String lastUpdate = sp.getValue("${SPUtil.OPINION_LAST_UPDATE}_ro");
 
     if (lastUpdate.isEmpty) {
       return true;
@@ -32,8 +31,6 @@ class LoadDataHandling {
 
   static storeOpinionLastUpdate() {
     var sp = locator<SPUtil>();
-    sp.setValue(
-        "${SPUtil.OPINION_LAST_UPDATE}_${sp.getValue(SPUtil.PROGRAMKEY)}",
-        getCurrentDate().toString());
+    sp.setValue("${SPUtil.OPINION_LAST_UPDATE}_}", getCurrentDate().toString());
   }
 }

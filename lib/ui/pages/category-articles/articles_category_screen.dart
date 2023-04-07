@@ -173,6 +173,7 @@ class ArticlesListHolder extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ...result.stories
                   ?.take(3)
@@ -218,44 +219,47 @@ class SubcategoryHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        top: 20,
-        bottom: 20,
-      ),
-      padding: const EdgeInsets.only(left: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            subcategoryName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              Container(
-                height: 1,
-                width: 200,
-                color: purpleColor,
-              ),
-              Container(
-                height: 8,
-                width: 8,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: purpleColor,
+    return story.isNotEmpty
+        ? Container(
+            margin: EdgeInsets.only(
+              top: 20,
+              bottom: 20,
+            ),
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.only(left: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  subcategoryName,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-              ),
-            ],
-          ),
-          ArticlesListHolder(
-            result: story.first,
-            viewMoreText: viewMoreText,
-          ),
-        ],
-      ),
-    );
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    Container(
+                      height: 1,
+                      width: 200,
+                      color: purpleColor,
+                    ),
+                    Container(
+                      height: 8,
+                      width: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: purpleColor,
+                      ),
+                    ),
+                  ],
+                ),
+                ArticlesListHolder(
+                  result: story.first,
+                  viewMoreText: viewMoreText,
+                ),
+              ],
+            ),
+          )
+        : SizedBox();
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/models/category.dart';
@@ -32,13 +34,14 @@ class ArticleItemWidget extends StatelessWidget {
     String title = "";
 
     title = article?.title ?? articleFull?.title ?? "";
+
     if (articleFull != null) {
-      if (article?.images != null) {
-        imageUrl = article!.images!.first;
-      }
-    } else {
       if (articleFull?.images != null) {
         imageUrl = articleFull!.images!.first;
+      }
+    } else {
+      if (article?.images != null) {
+        imageUrl = article!.images!.first;
       }
     }
 
@@ -61,7 +64,7 @@ class ArticleItemWidget extends StatelessWidget {
               ),
             ]),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ClipRRect(
@@ -69,21 +72,19 @@ class ArticleItemWidget extends StatelessWidget {
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               ),
-              child: Container(
-                  width: widgetWidth,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(20)),
-                  ),
-                  child: imageUrl.isNotEmpty
-                      ? CachedImageComponent(
-                          imageUrl: imageUrl,
-                        )
-                      : Image.asset(
-                          "assets/images/image_placeholder.jpg",
-                          fit: BoxFit.cover,
-                        )),
+              child: imageUrl.isNotEmpty
+                  ? CachedImageComponent(
+                      width: widgetWidth,
+                      height: isExpanded ? 230 : 172,
+                      // 4/3 aici
+                      // 16/9 landscape
+
+                      imageUrl: imageUrl,
+                    )
+                  : Image.asset(
+                      "assets/images/image_placeholder.jpg",
+                      fit: BoxFit.cover,
+                    ),
             ),
             Container(
               height: 50,

@@ -13,7 +13,7 @@ class FirebaseNotificationService {
   }
 
   static void display(RemoteMessage remoteMessage) async {
-    final id = DateTime.now().microsecondsSinceEpoch ~/ 100;
+    final id = DateTime.now().microsecondsSinceEpoch;
 
     final NotificationDetails notificationDetails = NotificationDetails(
       android: AndroidNotificationDetails("noor", "u report chanel",

@@ -71,8 +71,7 @@ class StatisticsHeader {
       }
     }
 
-    String latest_opinion_id =
-        sp.getValue("${sp.getValue(SPUtil.PROGRAMKEY)}_latest_opinion");
+    String latest_opinion_id = sp.getValue("ro_latest_opinion");
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

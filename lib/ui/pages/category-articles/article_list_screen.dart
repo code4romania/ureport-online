@@ -135,12 +135,18 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                                 ),
                               );
                             },
-                            child: ArticleItemWidget(
-                              article: _storyStore.stories[index],
-                              width: MediaQuery.of(context).size.width,
-                              categoryName: widget.categoryTitle,
-                              subCategoryName: widget.subcategoryTitle,
-                              isExpanded: true,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                right: 20,
+                                left: 10,
+                              ),
+                              child: ArticleItemWidget(
+                                article: _storyStore.stories[index],
+                                width: MediaQuery.of(context).size.width,
+                                categoryName: widget.categoryTitle,
+                                subCategoryName: widget.subcategoryTitle,
+                                isExpanded: true,
+                              ),
                             ),
                           );
                         });

@@ -55,13 +55,12 @@ class _OpinionState extends State<Opinion> {
     if (Provider.of<OpinionController>(context, listen: false).isLoaded) {
       Provider.of<OpinionController>(context, listen: false).checkOpinion(
           "https://ureport.in/api/v1/polls/org/13/featured/",
-          sp.getValue(SPUtil.PROGRAMKEY));
+          "U-REPORT STAGING");
       Provider.of<OpinionController>(context, listen: false).isLoaded = false;
     }
 
     return Consumer<OpinionController>(builder: (context, provider, child) {
-      var _futureOpinion =
-          provider.getOpinionsFromLocal(sp.getValue(SPUtil.PROGRAMKEY), 0);
+      var _futureOpinion = provider.getOpinionsFromLocal("U-REPORT STAGING", 0);
       return Scaffold(
           body: SafeArea(
         child: Container(
@@ -158,8 +157,7 @@ class _OpinionState extends State<Opinion> {
                                                   questionList.first,
                                                   opinions![0],
                                                   provider,
-                                                  sp.getValue(
-                                                      SPUtil.PROGRAMKEY),
+                                                  "U-REPORT STAGING",
                                                   context,
                                                   _translation,
                                                 )
@@ -226,7 +224,7 @@ class _OpinionState extends State<Opinion> {
       Provider.of<OpinionController>(context, listen: false).isLoading = false;
       return Provider.of<OpinionController>(context, listen: false)
           .checkOpinion("https://ureport.in/api/v1/polls/org/13/featured/",
-              sp.getValue(SPUtil.PROGRAMKEY));
+              "U-REPORT STAGING");
     } else {
       return SnackBar(content: Text(_translation["no_internet"]!));
     }

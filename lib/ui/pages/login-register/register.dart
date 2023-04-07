@@ -73,49 +73,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontFamily: 'Heebo'),
                     textAlign: TextAlign.center,
                   )),
-              Container(
-                width: double.infinity,
-                height: 40,
-                margin: EdgeInsets.only(right: 30, left: 30, top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: submitButton(
-                          type: 'google',
-                          onPressed: () {
-                            print("google");
-                          }),
-                    ),
-                    Expanded(
-                      child: submitButton(
-                          type: 'facebook',
-                          onPressed: () {
-                            print("facebook");
-                          }),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: 30),
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: 100,
-                          child: Divider(
-                            color: Colors.black,
-                          )),
-                      Text(_translation["separator_text"]!),
-                      Container(
-                          width: 100,
-                          child: Divider(
-                            color: Colors.black,
-                          )),
-                    ],
-                  )),
+              // Container(
+              //   width: double.infinity,
+              //   height: 40,
+              //   margin: EdgeInsets.only(right: 30, left: 30, top: 20),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: [
+              //       Expanded(
+              //         child: submitButton(
+              //             type: 'google',
+              //             onPressed: () {
+              //               print("google");
+              //             }),
+              //       ),
+              //       Expanded(
+              //         child: submitButton(
+              //             type: 'facebook',
+              //             onPressed: () {
+              //               print("facebook");
+              //             }),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // Container(
+              //     margin: EdgeInsets.only(top: 30),
+              //     width: double.infinity,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Container(
+              //             width: 100,
+              //             child: Divider(
+              //               color: Colors.black,
+              //             )),
+              //         Text(_translation["separator_text"]!),
+              //         Container(
+              //             width: 100,
+              //             child: Divider(
+              //               color: Colors.black,
+              //             )),
+              //       ],
+              //     )),
               Observer(builder: (context) {
                 return textField(
                   label: _translation["username"]!,

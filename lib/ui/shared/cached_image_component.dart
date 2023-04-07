@@ -23,7 +23,7 @@ class CachedImageComponent extends StatelessWidget {
             imageUrl: imageUrl,
             height: height,
             width: width,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
             placeholder: (context, url) => Center(
               child: LoadingIndicatorComponent(),
             ),

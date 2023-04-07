@@ -69,8 +69,6 @@ class _ChatState extends State<Chat> {
       if (from != "notification") {
         Provider.of<ChatController>(context, listen: false).createContact();
       }
-
-      print(SPUtil().getValue(SPUtil.PROGRAMKEY));
     }
   }
 
@@ -695,7 +693,7 @@ class _ChatState extends State<Chat> {
                                                                                   provider.sendMessage(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString());
                                                                                   List<MessageModel> datalist = [];
                                                                                   datalist.add(messageModel);
-                                                                                  await _databaseHelper.insertConversation(datalist, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+                                                                                  await _databaseHelper.insertConversation(datalist, "U-REPORT STAGING");
                                                                                 } else if (listCaseManagement.contains(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString())) {
                                                                                   locator<SPUtil>().setValue(SPUtil.USER_ROLE, "caseManagement");
                                                                                   provider.createIndividualCaseManagement(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString());
@@ -703,7 +701,7 @@ class _ChatState extends State<Chat> {
                                                                                   provider.sendMessage(provider.quicdata(provider.localmessage[index].quicktypest.toString())[j].toString());
                                                                                   List<MessageModel> datalist = [];
                                                                                   datalist.add(messageModel);
-                                                                                  await _databaseHelper.insertConversation(datalist, locator<SPUtil>().getValue(SPUtil.PROGRAMKEY));
+                                                                                  await _databaseHelper.insertConversation(datalist, "U-REPORT STAGING");
                                                                                 }
 
                                                                                 messageModel.status = provider.messagestatus;

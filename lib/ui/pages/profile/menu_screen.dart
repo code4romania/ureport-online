@@ -126,7 +126,6 @@ class _MenuScreenState extends State<MenuScreen> {
                   spUtil.deleteKey(SPUtil.KEY_AUTH_TOKEN);
                   spUtil.deleteKey(SPUtil.KEY_USER_LANGUAGE);
                   spUtil.deleteKey(SPUtil.KEY_USER_ID);
-                  spUtil.deleteKey(SPUtil.PROGRAMKEY);
                   context.router.replaceAll([RootPageRoute()]);
                 }),
             SizedBox(
@@ -138,25 +137,6 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  /*
-     region != null && region!.toLowerCase().startsWith('ro')
-                    ? GestureDetector(
-                        onTap: () {
-                          var spset = locator<SPUtil>();
-
-                          ClickSound.soundClick();
-
-                          FirebaseAuth.instance.signOut();
-                          spset.deleteKey(SPUtil.PROGRAMKEY);
-                          spset.deleteKey(SPConstant.SELECTED_LANGUAGE);
-                          NavUtils.pushAndRemoveUntil(
-                              context, LanguageChooser());
-                        },
-                        child: getItem(
-                            "Ieși din cont", "assets/images/v2_ic_program.png"),
-                      )
-                    : SizedBox(),
-  */
   Widget menuItem(BuildContext context, String title, VoidCallback onTap) {
     return GestureDetector(
       onTap: () {

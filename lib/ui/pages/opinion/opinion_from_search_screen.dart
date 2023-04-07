@@ -57,13 +57,13 @@ class _OpinionFromSearchScreenState extends State<OpinionFromSearchScreen> {
     if (Provider.of<OpinionController>(context, listen: false).isLoaded) {
       Provider.of<OpinionController>(context, listen: false).checkOpinion(
           "https://ureport.in/api/v1/polls/org/13/featured/",
-          sp.getValue(SPUtil.PROGRAMKEY));
+          "U-REPORT STAGING");
       Provider.of<OpinionController>(context, listen: false).isLoaded = false;
     }
 
     return Consumer<OpinionController>(builder: (context, provider, child) {
-      var _futureOpinion = provider.getOpinionsFromLocal(
-          sp.getValue(SPUtil.PROGRAMKEY), provider.opinionID);
+      var _futureOpinion =
+          provider.getOpinionsFromLocal("U-REPORT STAGING", provider.opinionID);
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -202,8 +202,7 @@ class _OpinionFromSearchScreenState extends State<OpinionFromSearchScreen> {
                                                       questionList[0],
                                                       opinions![0],
                                                       provider,
-                                                      sp.getValue(
-                                                          SPUtil.PROGRAMKEY),
+                                                      "U-REPORT STAGING",
                                                       context,
                                                       _translation,
                                                     )
@@ -275,7 +274,7 @@ class _OpinionFromSearchScreenState extends State<OpinionFromSearchScreen> {
       Provider.of<OpinionController>(context, listen: false).isLoading = false;
       return Provider.of<OpinionController>(context, listen: false)
           .checkOpinion("https://ureport.in/api/v1/polls/org/13/featured/",
-              sp.getValue(SPUtil.PROGRAMKEY));
+              "U-REPORT STAGING");
     } else {
       return SnackBar(content: Text(_translation["no_internet"]!));
     }

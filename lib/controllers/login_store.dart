@@ -54,7 +54,7 @@ abstract class _LoginStoreBase with Store {
 
       if (response.statusCode == 200) {
         result = LoginStatus.SUCCESS;
-        SPUtil().setValue(SPUtil.PROGRAMKEY, "RO");
+        SPUtil().setValue(SPUtil.KEY_USER_EMAIL, emailController.text);
       } else {
         result = LoginStatus.ERROR;
         errorMessage = response.message;

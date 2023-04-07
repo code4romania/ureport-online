@@ -101,7 +101,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            _translation["no_articno_articles_listles"]!,
+                            _translation["no_articles_list"]!,
                             style: TextStyle(color: purpleColor),
                           ),
                           SizedBox(
@@ -156,7 +156,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     categories.forEach((element) {
                       if (!element.name!.contains('/')) {
                         imagesMap[element.name!.split('/')[0].trim()] =
-                            element.image_url!;
+                            element.image_url ?? "";
                       } else {
                         final String key = element.name!.split('/')[0].trim();
                         if (map.containsKey(key)) {
@@ -204,39 +204,38 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   }
 
   Widget categoryItem({required Result item, required String imageUrl}) {
-    if (item.stories != null) if (item.stories!.isNotEmpty)
-      return Container(
-        height: 120,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Color.fromRGBO(28, 171, 226, 0.5),
-        ),
-        margin: EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              width: 200,
-              margin: EdgeInsets.only(left: 20),
-              child: Text(
-                item.name!.split('/')[0].toString(),
-                style: titleWhiteTextStlye,
-              ),
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Color.fromRGBO(28, 171, 226, 0.5),
+      ),
+      margin: EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            width: 200,
+            margin: EdgeInsets.only(left: 20),
+            child: Text(
+              item.name!.split('/')[0].toString(),
+              style: titleWhiteTextStlye,
             ),
-            Flexible(
-              child: Container(
-                margin: EdgeInsets.only(
-                  right: 20,
-                  top: 10,
-                  bottom: 10,
-                ),
-                child: getItemTitleImage(imageUrl),
+          ),
+          Flexible(
+            child: Container(
+              margin: EdgeInsets.only(
+                right: 20,
+                top: 10,
+                bottom: 10,
               ),
+              child: getItemTitleImage(imageUrl),
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
 
     return Container();
   }

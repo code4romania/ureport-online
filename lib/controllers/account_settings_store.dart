@@ -86,7 +86,7 @@ abstract class _AccountSettingsStoreBase with Store {
           type: FileType.image, allowMultiple: false, allowCompression: true);
 
       if (result != null) {
-        if (result.files.single.size > 6000000) {
+        if (result.files.single.size > 2000000) {
           resultMessage = translation["profile_pic_too_large"];
         }
         localProfilePic = result.files.single.path!;
