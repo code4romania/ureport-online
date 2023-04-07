@@ -176,7 +176,7 @@ class RootPage extends StatelessWidget {
             );
           }
         }
-        return Container();
+        return SizedBox();
       },
     );
   }

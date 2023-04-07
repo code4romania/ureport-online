@@ -259,7 +259,7 @@ class _ChatState extends State<Chat> {
                                                         ? ChatAvatar(
                                                             "assets/images/ic_ureport_box.png",
                                                             false)
-                                                        : Container(),
+                                                        : SizedBox(),
                                                     SizedBox(
                                                       width: 5,
                                                     ),
@@ -465,7 +465,7 @@ class _ChatState extends State<Chat> {
                                                                           .toString())
                                                                       .length,
                                                                 )
-                                                              : Container(),
+                                                              : SizedBox(),
                                                           SizedBox(
                                                             height: 10,
                                                           )
@@ -475,7 +475,7 @@ class _ChatState extends State<Chat> {
                                                     provider.localmessage[index]
                                                                 .sender ==
                                                             "server"
-                                                        ? Container()
+                                                        ? SizedBox()
                                                         : ChatAvatar(
                                                             "assets/images/ic_user_box.png",
                                                             true),
@@ -731,7 +731,7 @@ class _ChatState extends State<Chat> {
                                                                               .toString())
                                                                           .length,
                                                                     )
-                                                                  : Container(),
+                                                                  : SizedBox(),
                                                               SizedBox(
                                                                 height: 10,
                                                               )
@@ -859,7 +859,7 @@ class _ChatState extends State<Chat> {
                                     ],
                                   ),
                                 )
-                              : Container(),
+                              : SizedBox(),
                           Container(
                             width: double.infinity,
                             height: 64,
@@ -1108,7 +1108,7 @@ class _ChatState extends State<Chat> {
                               ),
                             ),
                           )
-                        : Container() /*:SizedBox()*/,
+                        : SizedBox() /*:SizedBox()*/,
                 Expanded(
                   child: Container(
                     width: double.infinity,

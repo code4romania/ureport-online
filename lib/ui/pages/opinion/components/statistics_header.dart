@@ -84,7 +84,7 @@ class StatisticsHeader {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               )
-            : Container(),
+            : SizedBox(),
         Container(
           child: Text(
             title,
@@ -335,10 +335,10 @@ class StatisticsHeader {
         //                ],
         //            ),
         //      )
-        //   : Container(),
+        //   : SizedBox(),
         // ],
         // )
-        //  : Container(),
+        //  : SizedBox(),
         // SizedBox(
         //   height: question.resultsByGender.length != 0 ? 15 : 0,
         // ),

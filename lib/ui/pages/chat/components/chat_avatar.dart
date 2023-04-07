@@ -30,7 +30,7 @@ class ChatAvatar extends StatelessWidget {
                         color: purpleColor),
                   ),
                 )
-              : Container(),
+              : SizedBox(),
         ],
       ),
     );

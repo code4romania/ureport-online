@@ -86,7 +86,7 @@ class _OpinionState extends State<Opinion> {
                         color: blueColor,
                       ),
                     )
-                  : Container(),
+                  : SizedBox(),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: GestureDetector(

@@ -267,7 +267,7 @@ class _ArticleScreenState extends State<ArticleScreen>
               ],
             );
         }
-        return Container();
+        return SizedBox();
       },
     );
   }

@@ -280,7 +280,7 @@ class _OpinionItemState extends State<OpinionItem> {
                   )
                 : question.results.categories.length > 0
                     ? WordCloud.getWordCloud(context, question)
-                    : Container()
+                    : SizedBox()
           ],
         ),
       ),

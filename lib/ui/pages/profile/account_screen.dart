@@ -143,7 +143,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   imageUrl:
                                       _accountSettingsStore.remoteprofilePic!,
                                 )
-                              : Container();
+                              : SizedBox();
                     }),
                   ),
                   Container(

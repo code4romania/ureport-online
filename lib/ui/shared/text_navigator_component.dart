@@ -28,7 +28,7 @@ class TextNavigatorComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            rightEdge ? const Spacer() : Container(),
+            rightEdge ? const Spacer() : SizedBox(),
             if (!rightEdge)
               Container(
                 height: 30,

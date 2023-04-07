@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -99,11 +101,13 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                 final widgets = <Widget>[];
 
                 _articleCategoryStore.mapOfItems.forEach((key, value) {
-                  widgets.add(SubcategoryHolder(
-                    subcategoryName: key,
-                    story: value,
-                    viewMoreText: _translation["view_more"]!,
-                  ));
+                    
+                    widgets.add(SubcategoryHolder(
+                      subcategoryName: key,
+                      stories: value,
+                      viewMoreText: _translation["view_more"]!,
+                    ));
+                  
                 });
 
                 return Column(
@@ -209,18 +213,18 @@ class SubcategoryHolder extends StatelessWidget {
   const SubcategoryHolder({
     super.key,
     required this.subcategoryName,
-    required this.story,
+    required this.stories,
     required this.viewMoreText,
   });
 
   final String subcategoryName;
-  final List<Result> story;
+  final List<Result> stories;
   final String viewMoreText;
 
   @override
   Widget build(BuildContext context) {
-    return story.isNotEmpty
-        ? Container(
+    
+    return  Container(
             margin: EdgeInsets.only(
               top: 20,
               bottom: 20,
@@ -254,12 +258,12 @@ class SubcategoryHolder extends StatelessWidget {
                   ],
                 ),
                 ArticlesListHolder(
-                  result: story.first,
+                  result: stories.first,
                   viewMoreText: viewMoreText,
                 ),
               ],
             ),
           )
-        : SizedBox();
+        
   }
 }

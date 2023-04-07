@@ -230,7 +230,7 @@ class _OpinionSearchScreenState extends State<OpinionSearchScreen> {
                     : SizedBox()
               ],
               builder: (context, transition) {
-                return Container();
+                return SizedBox();
               },
             );
           }),

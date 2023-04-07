@@ -237,7 +237,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       ),
     );
 
-    return Container();
+    return SizedBox();
   }
 
   Widget getItemTitleImage(String? imageUrl) {
