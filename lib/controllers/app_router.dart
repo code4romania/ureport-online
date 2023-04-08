@@ -27,15 +27,17 @@ import '../ui/pages/login-register/forgot_password.dart';
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
     // Root
-    AdaptiveRoute(page: RootPage, initial: true, children: [
-      AdaptiveRoute(page: MenuScreen),
-      AdaptiveRoute(
-        page: Chat,
-      ),
-      AdaptiveRoute(page: CategoryListScreen),
-      AdaptiveRoute(page: HomeScreen),
-      AdaptiveRoute(page: Opinion),
-    ]),
+    AdaptiveRoute(
+      page: RootPage,
+      initial: true,
+      children: [
+        AdaptiveRoute(page: MenuScreen),
+        AdaptiveRoute(page: Chat),
+        AdaptiveRoute(page: CategoryListScreen),
+        AdaptiveRoute(page: HomeScreen),
+        AdaptiveRoute(page: Opinion),
+      ],
+    ),
 
     // More
     AdaptiveRoute(page: AboutScreen),

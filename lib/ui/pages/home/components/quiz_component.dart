@@ -94,7 +94,11 @@ class QuizComponent extends StatelessWidget {
                 height: 80,
                 child: MainAppButtonComponent(
                   title: translation["yes"]!,
-                  onPressed: () {},
+                  onPressed: () {
+                    //navigated to nested page quiz
+                    print("navigate to quiz");
+                    context.tabsRouter.navigate(ChatRoute(from: "home"));
+                  },
                 ),
               ),
               SizedBox(width: 20),
