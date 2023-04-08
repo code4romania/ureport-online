@@ -1,10 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
 class QuizComponent extends StatelessWidget {
-  const QuizComponent({super.key});
+  const QuizComponent({super.key, required this.translation});
+
+  final Map<String, String> translation;
 
   @override
   Widget build(BuildContext context) {
@@ -65,13 +69,13 @@ class QuizComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Sondaj nou disponibil!",
+                    translation["new_quiz"]!,
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    "Vrei sa-l completezi acum?",
+                    translation["complete_now"]!,
                     style: TextStyle(
                       fontSize: 15,
                       color: Colors.grey[600],
@@ -86,9 +90,13 @@ class QuizComponent extends StatelessWidget {
             children: [
               SizedBox(width: 60),
               SizedBox(
-                  width: 70,
-                  height: 80,
-                  child: MainAppButtonComponent(title: "Da", onPressed: () {})),
+                width: 70,
+                height: 80,
+                child: MainAppButtonComponent(
+                  title: translation["yes"]!,
+                  onPressed: () {},
+                ),
+              ),
               SizedBox(width: 20),
               SizedBox(
                 width: 100,
@@ -97,7 +105,7 @@ class QuizComponent extends StatelessWidget {
                   color: Colors.white,
                   textStyle: TextStyle(color: Colors.grey[600]),
                   border: Border.all(color: Colors.grey[600]!),
-                  title: "Nu acum",
+                  title: translation["snooze"]!,
                   onPressed: () {},
                 ),
               ),

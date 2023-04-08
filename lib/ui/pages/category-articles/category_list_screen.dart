@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -236,8 +233,6 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
         ],
       ),
     );
-
-    return SizedBox();
   }
 
   Widget getItemTitleImage(String? imageUrl) {

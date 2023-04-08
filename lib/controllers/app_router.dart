@@ -29,7 +29,9 @@ import '../ui/pages/login-register/forgot_password.dart';
     // Root
     AdaptiveRoute(page: RootPage, initial: true, children: [
       AdaptiveRoute(page: MenuScreen),
-      AdaptiveRoute(page: Chat),
+      AdaptiveRoute(
+        page: Chat,
+      ),
       AdaptiveRoute(page: CategoryListScreen),
       AdaptiveRoute(page: HomeScreen),
       AdaptiveRoute(page: Opinion),

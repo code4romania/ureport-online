@@ -7,9 +7,8 @@ import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
-import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
-import '../../shared/general_button_component.dart';
+
 import '../../shared/text_navigator_component.dart';
 
 class LanguageScreen extends StatelessWidget {

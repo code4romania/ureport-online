@@ -4,7 +4,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "choose_language": "Selectează limba",
       "header": "Intro",
       "welcome_text":
-          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+          "Bun venit la U-Report, aplicația care îți oferă puterea de a face o diferență în comunitatea ta! Cu U-Report, poți să îți împărtășești opinia, să raportezi probleme și să primești actualizări privind problemele care contează cel mai mult pentru tine. \n\nHai să începem!",
       "continue": "Continuă",
       "skip": "Sari peste intro",
       "next": "Înainte",
@@ -98,6 +98,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "empty_stories": "Nu există articole disponibile",
       "recent_articles": "Citește cele mai noi articole",
       "recent_opinions": "Află cele mai recente opinii",
+      "new_quiz": "Sondaj nou disponibil!",
+      "complete_now": "Vrei sa-l completezi acum?",
+      "snooze": "Nu acum",
+      "yes": "Da",
     },
     "category_screen": {
       "header": "Categorii",

@@ -51,6 +51,8 @@ class AuthService {
     });
 
     print(response.body);
+    print(response.reasonPhrase);
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       await getAuthToken(

@@ -1,22 +1,22 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:math';
+
+import 'package:crypto/crypto.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/connectivity_controller.dart';
 import 'package:ureport_ecaro/models/message_handler.dart';
 import 'package:ureport_ecaro/models/response_contact_creation.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
-import '../services/database_service.dart';
+
 import '../locator/locator.dart';
 import '../models/firebase_incoming_message.dart';
-import '../services/network_operation/rapidpro_service.dart';
-import '../services/click_sound_service.dart';
 import '../models/response-local-chat-parsing.dart';
+import '../services/click_sound_service.dart';
+import '../services/database_service.dart';
+import '../services/network_operation/rapidpro_service.dart';
 import '../services/notification-service.dart';
-import 'package:crypto/crypto.dart';
 
 class ChatController extends ConnectivityController {
   List<String> quicktype = [];
@@ -39,7 +39,6 @@ class ChatController extends ConnectivityController {
   String messagestatus = "sending";
 
   late ResponseContactCreation responseContactCreation;
-  var _urn = "";
   String _token = "";
 
   bool isLoaded = true;
@@ -155,12 +154,12 @@ class ChatController extends ConnectivityController {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
 
-    MessageModel messageModel = MessageModel(
-        message: "",
-        sender: "self",
-        status: "Received",
-        quicktypest: data,
-        time: formattedDate);
+    // MessageModel messageModel = MessageModel(
+    //     message: "",
+    //     sender: "self",
+    //     status: "Received",
+    //     quicktypest: data,
+    //     time: formattedDate);
     MessageModelLocal messageModelLocal = MessageModelLocal(
         message: "",
         sender: "self",
@@ -182,12 +181,12 @@ class ChatController extends ConnectivityController {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss a').format(now);
 
-    MessageModel messageModel = MessageModel(
-        message: "",
-        sender: "self",
-        status: "Received",
-        quicktypest: data,
-        time: formattedDate);
+    // MessageModel messageModel = MessageModel(
+    //     message: "",
+    //     sender: "self",
+    //     status: "Received",
+    //     quicktypest: data,
+    //     time: formattedDate);
     MessageModelLocal messageModelLocal = MessageModelLocal(
         message: "",
         sender: "self",
@@ -435,9 +434,9 @@ class ChatController extends ConnectivityController {
   List<String> getLinkClickable(String singleMessage) {
     List<String> stringlist = singleMessage.split(" ");
 
-    List<String> dummy = [];
+    //List<String> dummy = [];
 
-    TapGestureRecognizer tapGestureRecognizer = TapGestureRecognizer();
+    // TapGestureRecognizer tapGestureRecognizer = TapGestureRecognizer();
 
     RegExp exp =
         new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
@@ -577,16 +576,16 @@ class ChatController extends ConnectivityController {
           quicktypest = [""];
         }
         //print("the notification message is ${remotemessage.notification!.body}");
-        var notificationmessage_terminatestate = MessageModel(
+        var notificationMessageTerminatedState = MessageModel(
             sender: 'server',
             message: remotemessage.notification!.body,
             status: "received",
             quicktypest: quicktypest,
             time: formattedDate);
-        addMessage(notificationmessage_terminatestate);
+        addMessage(notificationMessageTerminatedState);
         FirebaseNotificationService.display(remotemessage);
       } else {
-        print("remoteMessage->: ${remotemessage}");
+        print("remoteMessage->: $remotemessage");
       }
     });
   }

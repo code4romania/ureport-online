@@ -28,7 +28,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  String from;
+  String from = "home";
 
   _ChatState(this.from);
 

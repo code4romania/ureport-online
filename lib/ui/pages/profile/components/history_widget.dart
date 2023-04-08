@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:ureport_ecaro/models/bookmark.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
@@ -14,12 +13,12 @@ class BookmarkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String creationDate = "";
+    // String creationDate = "";
     String bookmarkImageUrl = "";
 
     if (bookmarkItem.story?.created_on != null)
-      creationDate =
-          DateFormat("dd-MM-yyyy").format(bookmarkItem.story!.created_on!);
+    // creationDate =
+    //     DateFormat("dd-MM-yyyy").format(bookmarkItem.story!.created_on!);
 
     if (bookmarkItem.story?.images != null &&
         bookmarkItem.story!.images!.isNotEmpty) {

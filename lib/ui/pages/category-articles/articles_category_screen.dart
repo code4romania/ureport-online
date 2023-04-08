@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -101,13 +99,11 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                 final widgets = <Widget>[];
 
                 _articleCategoryStore.mapOfItems.forEach((key, value) {
-                    
-                    widgets.add(SubcategoryHolder(
-                      subcategoryName: key,
-                      stories: value,
-                      viewMoreText: _translation["view_more"]!,
-                    ));
-                  
+                  widgets.add(SubcategoryHolder(
+                    subcategoryName: key,
+                    stories: value,
+                    viewMoreText: _translation["view_more"]!,
+                  ));
                 });
 
                 return Column(
@@ -223,47 +219,50 @@ class SubcategoryHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    return  Container(
-            margin: EdgeInsets.only(
-              top: 20,
-              bottom: 20,
-            ),
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  subcategoryName,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return stories.isNotEmpty
+        ? stories.first.stories!.isEmpty
+            ? SizedBox()
+            : Container(
+                margin: EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
                 ),
-                Stack(
-                  alignment: Alignment.centerRight,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.only(left: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 1,
-                      width: 200,
-                      color: purpleColor,
+                    Text(
+                      subcategoryName,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      height: 8,
-                      width: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: purpleColor,
-                      ),
+                    Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        Container(
+                          height: 1,
+                          width: 200,
+                          color: purpleColor,
+                        ),
+                        Container(
+                          height: 8,
+                          width: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: purpleColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ArticlesListHolder(
+                      result: stories.first,
+                      viewMoreText: viewMoreText,
                     ),
                   ],
                 ),
-                ArticlesListHolder(
-                  result: stories.first,
-                  viewMoreText: viewMoreText,
-                ),
-              ],
-            ),
-          )
-        
+              )
+        : SizedBox();
   }
 }

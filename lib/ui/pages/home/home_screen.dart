@@ -54,12 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 40),
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
-              child: Text(
-                _translation["title"]! + "Nume" + " !",
-                style: titleBlackTextStlye,
-              ),
+              child: Observer(builder: (context) {
+                return Text(
+                  _translation["title"]! +
+                      "${_stateStore.profile?.first_name} !",
+                  style: titleBlackTextStlye,
+                );
+              }),
             ),
-            QuizComponent(),
+            QuizComponent(translation: _translation),
             SizedBox(height: 20),
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),

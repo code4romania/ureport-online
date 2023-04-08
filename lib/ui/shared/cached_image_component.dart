@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
 
 class CachedImageComponent extends StatelessWidget {
   const CachedImageComponent({
