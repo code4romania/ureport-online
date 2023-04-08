@@ -11,9 +11,9 @@ part 'claimed_badge.g.dart';
 class ClaimedBadge with _$ClaimedBadge {
   const factory ClaimedBadge({
     int? id,
-    BadgeType? badgeType,
+    BadgeType? badge_type,
     int? user,
-    DateTime? offeredOn,
+    DateTime? offered_on,
   }) = _ClaimedBadge;
 
   factory ClaimedBadge.fromJson(Map<String, dynamic> json) =>

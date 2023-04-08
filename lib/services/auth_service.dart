@@ -50,6 +50,11 @@ class AuthService {
       "rapidpro_uuid": "",
     });
 
+    print(name);
+    print(email);
+    print(password);
+    print(Uri.https(baseApiUrl, "/api/v1/userprofiles/signup/"));
+
     print(response.body);
     print(response.reasonPhrase);
     print(response.statusCode);

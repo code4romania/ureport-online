@@ -3,6 +3,7 @@
 //     final badgeMedal = badgeMedalFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'dart:convert';
 
 part 'badge_medal.freezed.dart';
 part 'badge_medal.g.dart';
@@ -11,26 +12,14 @@ part 'badge_medal.g.dart';
 class BadgeMedal with _$BadgeMedal {
   const factory BadgeMedal({
     int? id,
-    BadgeType? badge_type,
-    int? user,
-    DateTime? offered_on,
-  }) = _BadgeMedal;
-
-  factory BadgeMedal.fromJson(Map<String, dynamic> json) =>
-      _$BadgeMedalFromJson(json);
-}
-
-@freezed
-class BadgeType with _$BadgeType {
-  const factory BadgeType({
-    int? id,
     int? org,
     String? title,
     String? image,
     String? description,
-    dynamic item_category,
-  }) = _BadgeType;
+    int? validationCategory,
+    bool? owned,
+  }) = _BadgeMedal;
 
-  factory BadgeType.fromJson(Map<String, dynamic> json) =>
-      _$BadgeTypeFromJson(json);
+  factory BadgeMedal.fromJson(Map<String, dynamic> json) =>
+      _$BadgeMedalFromJson(json);
 }

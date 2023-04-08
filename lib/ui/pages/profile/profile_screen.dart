@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:share/share.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/profile_info_store.dart';
 import 'package:ureport_ecaro/models/profile.dart';
@@ -124,6 +125,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   _profileInfoStore.fetchBookmarks()),
                           child: BookmarkWidget(
                             bookmarkItem: _profileInfoStore.bookmarks[index],
+                            onPressedShare: () {
+                              Share.share(
+                                  subject:
+                                      widget.translation["shareBookmarkTitle"]!,
+                                  widget.translation["shareBookmarkBody"]!);
+                            },
                             isLastItem:
                                 index == _profileInfoStore.bookmarks.length - 1,
                           ),
@@ -144,6 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                       padding: const EdgeInsets.all(0),
                       itemCount: _profileInfoStore.badges.length,
                       itemBuilder: (context, index) => MedalWidget(
+                        onPressedShare: () {
+                          Share.share(
+                              subject: widget.translation["shareMedalTitle"]!,
+                              widget.translation["shareMedalBody"]!);
+                        },
                         medal: _profileInfoStore.badges[index],
                         isLastItem:
                             index == _profileInfoStore.badges.length - 1,

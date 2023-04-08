@@ -73,12 +73,12 @@ mixin _$ProfileInfoStore on _ProfileInfoStoreBase, Store {
     });
   }
 
-  late final _$fetchBadgesAsyncAction =
-      AsyncAction('_ProfileInfoStoreBase.fetchBadges', context: context);
+  late final _$getBadgesAsyncAction =
+      AsyncAction('_ProfileInfoStoreBase.getBadges', context: context);
 
   @override
-  Future<void> fetchBadges() {
-    return _$fetchBadgesAsyncAction.run(() => super.fetchBadges());
+  Future<void> getBadges() {
+    return _$getBadgesAsyncAction.run(() => super.getBadges());
   }
 
   late final _$fetchBookmarksAsyncAction =

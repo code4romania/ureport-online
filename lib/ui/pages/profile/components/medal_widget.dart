@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
@@ -7,9 +8,12 @@ class MedalWidget extends StatelessWidget {
     Key? key,
     required this.medal,
     required this.isLastItem,
+    required this.onPressedShare,
   }) : super(key: key);
+
   final BadgeMedal medal;
   final bool isLastItem;
+  final VoidCallback onPressedShare;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +42,9 @@ class MedalWidget extends StatelessWidget {
                     color: Color.fromRGBO(0, 0, 0, 0.25),
                   )
                 ]),
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: CachedImageComponent(
-                    imageUrl: medal.badge_type!.image.toString(),
-                  ),
+                child: CachedImageComponent(
+                  imageUrl: medal.image ?? "",
+                  blockedImage: medal.owned == true ? null : true,
                 ),
               ),
               Column(
@@ -53,7 +55,7 @@ class MedalWidget extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: Text(
-                      medal.badge_type?.title ?? "",
+                      medal.title ?? "",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -63,14 +65,14 @@ class MedalWidget extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: Text(
-                      medal.badge_type?.description ?? "",
+                      medal.description ?? "",
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: onPressedShare,
                       child: Text(
                         "SHARE",
                         style: TextStyle(

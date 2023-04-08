@@ -40,6 +40,10 @@ abstract class _LoginStoreBase with Store {
     isLoading = !isLoading;
   }
 
+  Future<Profile?> getProfile() async {
+    return await AuthService().getProfile();
+  }
+
   @action
   Future<void> login() async {
     toggleLoading();

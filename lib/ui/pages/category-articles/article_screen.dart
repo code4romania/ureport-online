@@ -76,7 +76,7 @@ class _ArticleScreenState extends State<ArticleScreen>
 
     reaction(
       (p0) => _storyStore.scrolledToTheBottom && _storyStore.finishedTimer,
-      (p0) => _showClaimedBadge(),
+      (p0) => _finishReadingPopUp(),
     );
   }
 
@@ -150,10 +150,12 @@ class _ArticleScreenState extends State<ArticleScreen>
                     onShare: () {
                       ClickSound.soundShare();
                       Share.share(
-                          shareStoryUrl +
-                              "/" +
-                              widget.preloadedStory!.id.toString(),
-                          subject: widget.preloadedStory!.title.toString());
+                        subject: widget.preloadedStory!.title.toString(),
+                        _translation["shareArticleBody"]! +
+                            shareStoryUrl +
+                            "/" +
+                            widget.preloadedStory!.id.toString(),
+                      );
                     },
                     onBookmark: () {
                       ClickSound.soundClick();
@@ -405,7 +407,7 @@ class _ArticleScreenState extends State<ArticleScreen>
         .runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
   }
 
-  void _showClaimedBadge() {
+  void _finishReadingPopUp() {
     showDialog(
         context: context,
         builder: (context) {
@@ -419,6 +421,7 @@ class _ArticleScreenState extends State<ArticleScreen>
               ),
               child: FinishReadingComponent(
                 translation: _translation,
+                hasClaimedBadge: _storyStore.hasClaimedBadge,
                 translationProfile: translations[
                     "${_stateStore.selectedLanguage}"]!["profile_screen"]!,
                 storyId: _storyStore.storyId.toString(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/services/auth_service.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
@@ -43,6 +44,10 @@ abstract class _RegisterStoreBase with Store {
     isLoading = !isLoading;
   }
 
+  Future<Profile?> getProfile() async {
+    return await AuthService().getProfile();
+  }
+
   Future<void> register() async {
     toggleIsLoading();
     if (validateName() &&
@@ -72,13 +77,19 @@ abstract class _RegisterStoreBase with Store {
 
   @action
   bool validateName() {
+    final RegExp regExp = RegExp(r"[\w-._]+");
+    final Iterable matches = regExp.allMatches(nameController.text);
+
     if (nameController.text.isEmpty || nameController.text.length < 3) {
       nameError = translation["short_username"];
       return false;
-    } else {
-      nameError = null;
-      return true;
     }
+    if (matches.length < 2) {
+      nameError = translation["invalid_username"];
+      return false;
+    }
+    nameError = null;
+    return true;
   }
 
   @action

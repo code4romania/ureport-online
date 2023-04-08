@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/bookmark.dart';
+import 'package:ureport_ecaro/models/claimed_badge.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
 class ProfileInfoServices {
@@ -16,13 +17,33 @@ class ProfileInfoServices {
     };
   }
 
-  Future<List<BadgeMedal>> getMedals({
+  Future<List<ClaimedBadge>> getClaimedMedals({
     required int userId,
     required int orgId,
   }) async {
     final response = await http.get(
       Uri.parse(
           "https://$baseApiUrl/api/v1/userbadges/user/$userId/?org=$orgId"),
+      headers: header,
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
+      final List<ClaimedBadge> medals =
+          body.map((dynamic item) => ClaimedBadge.fromJson(item)).toList();
+      return medals;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<BadgeMedal>> getAllMedals({
+    required int userId,
+    required int orgId,
+  }) async {
+    final response = await http.get(
+      Uri.parse(
+          "https://$baseApiUrl/api/v1/userbadges/user/$userId/all/?org=$orgId"),
       headers: header,
     );
 

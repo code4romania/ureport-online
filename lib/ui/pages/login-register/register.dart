@@ -37,12 +37,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     reaction((p0) => _registerStore.result != null, (p0) {
       if (_registerStore.result == RegisterStatus.SUCCESS) {
-        showPopup(
-          context: context,
-          onPressed: () => context.router.replaceAll([RootPageRoute()]),
-          buttonText: _translation["continue"]!,
-          message: _translation["succes"]!,
-        );
+        _registerStore.getProfile().then((value) {
+          _stateStore.updateProfile(value);
+          showPopup(
+            context: context,
+            onPressed: () => context.router.replaceAll([RootPageRoute()]),
+            buttonText: _translation["continue"]!,
+            message: _translation["succes"]!,
+          );
+        });
       } else {
         showPopup(
           context: context,

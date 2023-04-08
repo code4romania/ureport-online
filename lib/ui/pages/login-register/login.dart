@@ -50,12 +50,16 @@ class _LoginScreenState extends State<LoginScreen> {
       switch (_loginStore.result) {
         case LoginStatus.SUCCESS:
           {
-            showPopup(
-              context: context,
-              onPressed: () => context.router.replaceAll([RootPageRoute()]),
-              buttonText: _translation["continue"]!,
-              message: _translation["succes"]!,
-            );
+            _loginStore.getProfile().then((value) {
+              _stateStore.updateProfile(value);
+              showPopup(
+                context: context,
+                onPressed: () => context.router.replaceAll([RootPageRoute()]),
+                buttonText: _translation["continue"]!,
+                message: _translation["succes"]!,
+              );
+            });
+
             break;
           }
         case LoginStatus.ERROR:

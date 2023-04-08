@@ -8,22 +8,22 @@ part of 'claimed_badge.dart';
 
 _$_ClaimedBadge _$$_ClaimedBadgeFromJson(Map json) => _$_ClaimedBadge(
       id: json['id'] as int?,
-      badgeType: json['badgeType'] == null
+      badge_type: json['badge_type'] == null
           ? null
           : BadgeType.fromJson(
-              Map<String, dynamic>.from(json['badgeType'] as Map)),
+              Map<String, dynamic>.from(json['badge_type'] as Map)),
       user: json['user'] as int?,
-      offeredOn: json['offeredOn'] == null
+      offered_on: json['offered_on'] == null
           ? null
-          : DateTime.parse(json['offeredOn'] as String),
+          : DateTime.parse(json['offered_on'] as String),
     );
 
 Map<String, dynamic> _$$_ClaimedBadgeToJson(_$_ClaimedBadge instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'badgeType': instance.badgeType?.toJson(),
+      'badge_type': instance.badge_type?.toJson(),
       'user': instance.user,
-      'offeredOn': instance.offeredOn?.toIso8601String(),
+      'offered_on': instance.offered_on?.toIso8601String(),
     };
 
 _$_BadgeType _$$_BadgeTypeFromJson(Map json) => _$_BadgeType(

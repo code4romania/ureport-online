@@ -91,9 +91,9 @@ class RootPage extends StatelessWidget {
               extendBody: true,
               homeIndex: 2,
               routes: [
-                CategoryListScreenRoute(),
-                ChatRoute(from: "home"),
                 HomeScreenRoute(),
+                ChatRoute(from: "home"),
+                CategoryListScreenRoute(),
                 OpinionRoute(),
                 MenuScreenRoute(),
               ],
@@ -119,7 +119,7 @@ class RootPage extends StatelessWidget {
                     items: [
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(
-                          "assets/images/icon_article.svg",
+                          "assets/images/icon_home.svg",
                           colorFilter: ColorFilter.mode(
                             tabsRouter.activeIndex == 0
                                 ? Color.fromRGBO(159, 75, 152, 1)
@@ -127,7 +127,7 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                         ),
-                        label: 'Articole',
+                        label: 'Home',
                       ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(
@@ -143,7 +143,7 @@ class RootPage extends StatelessWidget {
                       ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(
-                          "assets/images/icon_home.svg",
+                          "assets/images/icon_article.svg",
                           colorFilter: ColorFilter.mode(
                             tabsRouter.activeIndex == 2
                                 ? Color.fromRGBO(159, 75, 152, 1)
@@ -151,7 +151,7 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                         ),
-                        label: 'Home',
+                        label: 'Articole',
                       ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(

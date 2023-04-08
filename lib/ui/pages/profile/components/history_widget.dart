@@ -7,8 +7,11 @@ class BookmarkWidget extends StatelessWidget {
     Key? key,
     required this.bookmarkItem,
     required this.isLastItem,
+    required this.onPressedShare,
   }) : super(key: key);
+
   final Bookmark bookmarkItem;
+  final VoidCallback onPressedShare;
   final bool isLastItem;
 
   @override
@@ -60,15 +63,15 @@ class BookmarkWidget extends StatelessWidget {
                 imageUrl: bookmarkImageUrl,
               ),
             ),
-            Expanded(
-                child: Text(
-              "Category",
-            )),
+            // Expanded(
+            //     child: Text(
+            //  bookmarkItem.,
+            // )),
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(top: 10),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: onPressedShare,
                   child: Text(
                     "SHARE",
                     style: TextStyle(

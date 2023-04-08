@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:ureport_ecaro/models/bookmark.dart';
@@ -20,7 +22,7 @@ abstract class _ProfileInfoStoreBase with Store {
     httpClient = ProfileInfoServices(token: token);
     userId = spUtil.getInt(SPUtil.KEY_USER_ID);
 
-    fetchBadges();
+    getBadges();
     fetchBookmarks();
   }
 
@@ -37,9 +39,30 @@ abstract class _ProfileInfoStoreBase with Store {
   ObservableList<Bookmark> bookmarks = <Bookmark>[].asObservable();
 
   @action
-  Future<void> fetchBadges() async {
-    badges =
-        (await httpClient.getMedals(userId: userId, orgId: 1)).asObservable();
+  Future<void> getBadges() async {
+    final claimedBadges =
+        (await httpClient.getClaimedMedals(userId: userId, orgId: 1))
+            .asObservable();
+
+    final allBadges = (await httpClient.getAllMedals(userId: userId, orgId: 1))
+        .asObservable();
+
+    // Filter out the claimed badges from all badges adding owned = true to the claimed ones
+    allBadges.forEach((element) {
+      if (claimedBadges.any((badge) => badge.badge_type?.id == element.id)) {
+        badges.add(element.copyWith(owned: true));
+      } else {
+        badges.add(element.copyWith(owned: false));
+      }
+    });
+
+    //Sort badges by owned, owned being first
+    badges.sort((a, b) {
+      if (a.owned! && !b.owned!) return -1;
+      if (!a.owned! && b.owned!) return 1;
+      return 0;
+    });
+
     badgesLoading = false;
   }
 

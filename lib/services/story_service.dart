@@ -63,6 +63,8 @@ class StoryService {
       }),
     );
 
+    print(response.body);
+
     if (response.statusCode == 201 || response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
 

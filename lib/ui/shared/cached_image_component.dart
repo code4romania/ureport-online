@@ -8,11 +8,13 @@ class CachedImageComponent extends StatelessWidget {
     required this.imageUrl,
     this.width,
     this.height,
+    this.blockedImage,
   });
 
   final String imageUrl;
   final double? width;
   final double? height;
+  final bool? blockedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class CachedImageComponent extends StatelessWidget {
             imageUrl: imageUrl,
             height: height,
             width: width,
+            color: blockedImage != null ? Colors.grey : null,
+            colorBlendMode: blockedImage != null ? BlendMode.color : null,
             fit: BoxFit.cover,
             placeholder: (context, url) => Center(
               child: LoadingIndicatorComponent(),

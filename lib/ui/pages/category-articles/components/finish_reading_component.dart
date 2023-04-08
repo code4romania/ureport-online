@@ -11,11 +11,13 @@ class FinishReadingComponent extends StatelessWidget {
     required this.translationProfile,
     required this.storyId,
     required this.profile,
+    required this.hasClaimedBadge,
   });
 
   final Map<String, String> translation;
   final Map<String, String> translationProfile;
   final Profile profile;
+  final bool hasClaimedBadge;
   final String storyId;
 
   @override
@@ -73,11 +75,19 @@ class FinishReadingComponent extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 fontSize: 16,
               ),
-              title: translation["claim_badge_button"]!,
-              onPressed: () => context.router.replace(ProfileScreenRoute(
-                translation: translationProfile,
-                profile: profile,
-              )),
+              title: hasClaimedBadge
+                  ? translation["claim_badge_button"]!
+                  : translation["continue"]!,
+              onPressed: () {
+                if (hasClaimedBadge) {
+                  context.router.replace(ProfileScreenRoute(
+                    translation: translationProfile,
+                    profile: profile,
+                  ));
+                } else {
+                  context.router.pop();
+                }
+              },
             ),
           ],
         ),

@@ -87,7 +87,7 @@ abstract class _StoryStoreBase with Store {
         if (!alreadyRead) {
           print("Timer started");
 
-          timer = Timer(const Duration(minutes: 2), () {
+          timer = Timer(const Duration(seconds: 10), () {
             timerFinished();
           });
         }
