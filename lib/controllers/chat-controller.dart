@@ -313,7 +313,8 @@ class ChatController extends ConnectivityController {
     if (_token.isNotEmpty) {
       String _urn = _spservice.getValue(SPUtil.CONTACT_URN);
       if (_urn.isEmpty) {
-        String contactUrn = generateMd5(SPUtil.KEY_USER_EMAIL);
+        String email = _spservice.getValue(SPUtil.KEY_USER_EMAIL);
+        String contactUrn = generateMd5(email);
         var apiResponse = await _rapidproservice
             .createContact(contactUrn, _token, "-", onSuccess: (uuid) {
           contatct = uuid;
@@ -351,7 +352,7 @@ class ChatController extends ConnectivityController {
       String _urn = _spservice.getValue(SPUtil.CONTACT_URN_INDIVIDUAL_CASE);
       //print("l============================== casemanegement ${_urn}");
       if (_urn.isEmpty) {
-        String contactUrn = generateMd5(SPUtil.KEY_USER_EMAIL);
+        String contactUrn = generateMd5(_spservice.getValue(SPUtil.KEY_USER_EMAIL));
         // print("the new Contact urn for the individual casemanegement ${contact_urn}");
         var apiResponse = await _rapidproservice
             .createContact(contactUrn, _token, "Unknown", onSuccess: (uuid) {

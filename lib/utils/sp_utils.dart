@@ -5,7 +5,7 @@ class SPUtil {
 
   static String KEY_AUTH_TOKEN = "KEY_AUTH_TOKEN";
   static String KEY_USER_ID = "KEY_USER_ID";
-  static String KEY_USER_EMAIL = "KEY_USER_ROLE";
+  static String KEY_USER_EMAIL = "KEY_USER_EMAIL";
   static String KEY_USER_ROLE = "KEY_USER_ROLE";
 
   static String KEY_USER_LANGUAGE = "KEY_USER_LANGUAGE";
