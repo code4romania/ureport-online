@@ -138,7 +138,7 @@ class ArticleItemWidget extends StatelessWidget {
               child: Text(
                 "CITEȘTE MAI MULT",
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w700,
                   color: HexColor("#A72D6F"),
                 ),
