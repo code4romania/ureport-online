@@ -22,14 +22,23 @@ abstract class _ArticleCategoryStoreBase with Store {
   }
 
   @action
-  void search(String searchKeywork) {
-    if (searchKeywork.isNotEmpty) {
+  void search(String searchKeyword) {
+    if (searchKeyword.isNotEmpty) {
       // Search inside map by key. If key starts with searchkeyword, add it to the map
       mapOfItems.clear();
+
       initMap.forEach((key, value) {
-        if (key.toLowerCase().startsWith(searchKeywork.toLowerCase())) {
+        if (key.toLowerCase().contains(searchKeyword.toLowerCase())) {
           mapOfItems[key] = value;
         }
+        value.forEach((element) {
+          element.stories?.forEach((story) {
+            if (story.title!
+                .toLowerCase()
+                .contains(searchKeyword.toLowerCase()))
+              mapOfItems[key] = value;
+          });
+        });
       });
     } else {
       mapOfItems.clear();

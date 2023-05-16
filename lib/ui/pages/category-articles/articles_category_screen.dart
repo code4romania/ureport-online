@@ -105,6 +105,14 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
                     viewMoreText: _translation["view_more"]!,
                   ));
                 });
+                if (widgets.isEmpty) {
+                  return Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        _translation["no_articles"]!,
+                        style: TextStyle(color: Colors.black),
+                      ));
+                }
 
                 return Column(
                   children: widgets,
