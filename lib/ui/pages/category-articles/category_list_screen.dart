@@ -149,6 +149,13 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
                     final Map<String, List<Result>> map = {};
                     final Map<String, String> imagesMap = {};
+                    if (categories.isEmpty)
+                      {
+                        return Text(
+                          _translation["no_articles"]!,
+                          style: TextStyle(color: Colors.black),
+                        );
+                      }
 
                     categories.forEach((element) {
                       if (!element.name!.contains('/')) {

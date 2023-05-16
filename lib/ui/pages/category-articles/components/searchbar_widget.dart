@@ -19,7 +19,6 @@ class SearchBarWidget extends StatelessWidget {
             .copyWith(colorScheme: ColorScheme.light(primary: Colors.black)),
         child: TextField(
           onChanged: onSearchChanged,
-          onEditingComplete: () {},
           decoration: InputDecoration(
             hintStyle: TextStyle(fontSize: 16, color: Colors.black),
             filled: true,
