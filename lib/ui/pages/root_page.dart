@@ -89,7 +89,7 @@ class RootPage extends StatelessWidget {
             initProfile();
             return AutoTabsScaffold(
               extendBody: true,
-              homeIndex: 2,
+              homeIndex: 0,
               routes: [
                 HomeScreenRoute(),
                 ChatRoute(from: "home"),
