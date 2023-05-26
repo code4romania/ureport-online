@@ -34,6 +34,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   late StateStore _stateStore;
   late Map<String, String> _translation;
   late CategoryStories _storyStore;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -47,112 +48,127 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              TopHeaderWidget(title: _translation["header"]!),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(bottom: 20),
-                color: Color.fromRGBO(28, 171, 226, 1),
-                height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextNavigatorComponent(
-                      rightEdge: false,
-                      darkMode: true,
-                      title: _translation["back"]!,
-                      onPressed: () => context.router.pop(),
-                    ),
-                    Expanded(
-                      child: Text(
-                        widget.categoryTitle,
-                        style: titleWhiteTextStlye,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (notification) {
+            if (notification is ScrollStartNotification) {
+              _focusNode.unfocus();
+            }
+            return true;
+          },
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                TopHeaderWidget(title: _translation["header"]!),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(bottom: 20),
+                  color: Color.fromRGBO(28, 171, 226, 1),
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextNavigatorComponent(
+                        rightEdge: false,
+                        darkMode: true,
+                        title: _translation["back"]!,
+                        onPressed: () => context.router.pop(),
                       ),
+                      Expanded(
+                        child: Text(
+                          widget.categoryTitle,
+                          style: titleWhiteTextStlye,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                  child: Text(
+                    widget.subcategoryTitle,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 28,
+                      color: Colors.black,
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                child: Text(
-                  widget.subcategoryTitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 28,
-                    color: Colors.black,
                   ),
                 ),
-              ),
-              SearchBarWidget(
-                onSearchChanged: _storyStore.searchStory,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  _translation["body"]! +
-                      " " +
-                      widget.subcategoryTitle +
-                      " " +
-                      _translation["body2"]! +
-                      " " +
-                      widget.categoryTitle,
-                  style: TextStyle(
-                    fontSize: 16,
+                SearchBarWidget(
+                  onSearchChanged: _storyStore.searchStory,
+                  focusNode: _focusNode,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  child: Text(
+                    _translation["body"]! +
+                        " " +
+                        widget.subcategoryTitle +
+                        " " +
+                        _translation["body2"]! +
+                        " " +
+                        widget.categoryTitle,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(
-                children: <Widget>[
-                  Observer(builder: (context) {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: _storyStore.stories.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              ClickSound.soundTap();
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  children: <Widget>[
+                    Observer(builder: (context) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _storyStore.stories.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                ClickSound.soundTap();
 
-                              context.router.push(
-                                ArticleScreenRoute(
-                                  storyId: _storyStore.stories[index].id,
-                                  isComingFromHome: false,
+                                context.router.push(
+                                  ArticleScreenRoute(
+                                    storyId: _storyStore.stories[index].id,
+                                    isComingFromHome: false,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  right: 20,
+                                  left: 10,
                                 ),
-                              );
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                right: 20,
-                                left: 10,
+                                child: ArticleItemWidget(
+                                  article: _storyStore.stories[index],
+                                  width: MediaQuery.of(context).size.width,
+                                  categoryName: widget.categoryTitle,
+                                  subCategoryName: widget.subcategoryTitle,
+                                  isExpanded: true,
+                                ),
                               ),
-                              child: ArticleItemWidget(
-                                article: _storyStore.stories[index],
-                                width: MediaQuery.of(context).size.width,
-                                categoryName: widget.categoryTitle,
-                                subCategoryName: widget.subcategoryTitle,
-                                isExpanded: true,
-                              ),
-                            ),
-                          );
-                        });
-                  }),
-                ],
-              )
-            ],
+                            );
+                          });
+                    }),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

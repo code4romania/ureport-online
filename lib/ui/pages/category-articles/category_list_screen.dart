@@ -29,6 +29,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   late StateStore _stateStore;
   late CategoryStories _storyStore;
   late Map<String, String> _translation;
+  FocusNode _focusNode = FocusNode();
 
   Future _refresh() {
     return _storyStore.fetchCategories();
@@ -47,73 +48,67 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final future = _storyStore.categoryList;
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TopHeaderWidget(title: _translation["header"]!),
-            Container(
-              child: Divider(
-                height: 1,
-                color: Colors.grey[600],
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          if (notification is ScrollStartNotification) {
+            _focusNode.unfocus();
+          }
+          return true;
+        },
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TopHeaderWidget(title: _translation["header"]!),
+              Container(
+                child: Divider(
+                  height: 1,
+                  color: Colors.grey[600],
+                ),
               ),
-            ),
-            SearchBarWidget(
+              SearchBarWidget(
                 onSearchChanged: (value) =>
-                    _storyStore.searchCategoryKeyword = value),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TitleDescriptionWidget(
-              title: _translation["title"]!,
-              description: _translation["body"]!,
-            ),
-            Observer(
-              builder: (context) {
-                if (future == null) {
-                  return Text(
-                    _translation["no_articles"]!,
-                    style: TextStyle(color: Colors.black),
-                  );
-                }
-                switch (future.status) {
-                  case FutureStatus.pending:
-                    return Center(
-                      child: SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: LoadingIndicatorComponent()),
+                    _storyStore.searchCategoryKeyword = value,
+                focusNode: _focusNode,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TitleDescriptionWidget(
+                title: _translation["title"]!,
+                description: _translation["body"]!,
+              ),
+              Observer(
+                builder: (context) {
+                  if (future == null) {
+                    return Text(
+                      _translation["no_articles"]!,
+                      style: TextStyle(color: Colors.black),
                     );
-                  case FutureStatus.rejected:
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            _translation["no_articles_list"]!,
-                            style: TextStyle(color: purpleColor),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          MainAppButtonComponent(
-                            title: _translation["retry"]!,
-                            onPressed: _refresh,
-                          )
-                        ],
-                      ),
-                    );
-                  case FutureStatus.fulfilled:
-                    List<Result> categories = future.result;
-                    if (categories.isEmpty) {
+                  }
+                  switch (future.status) {
+                    case FutureStatus.pending:
+                      return Center(
+                        child: SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: LoadingIndicatorComponent()),
+                      );
+                    case FutureStatus.rejected:
                       return Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -128,80 +123,102 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                             MainAppButtonComponent(
                               title: _translation["retry"]!,
                               onPressed: _refresh,
-                            ),
+                            )
                           ],
                         ),
                       );
-                    }
-                    _storyStore.initialCategoryList = future.result;
+                    case FutureStatus.fulfilled:
+                      List<Result> categories = future.result;
+                      if (categories.isEmpty) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                _translation["no_articles_list"]!,
+                                style: TextStyle(color: purpleColor),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              MainAppButtonComponent(
+                                title: _translation["retry"]!,
+                                onPressed: _refresh,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      _storyStore.initialCategoryList = future.result;
 
-                    if (_storyStore.searchCategoryKeyword != null &&
-                        _storyStore.searchCategoryKeyword!.isNotEmpty) {
-                      categories = _storyStore.initialCategoryList!
-                          .where((element) => element.name!
-                              .toLowerCase()
-                              .startsWith(_storyStore.searchCategoryKeyword!
-                                  .toLowerCase()))
-                          .toList();
-                    } else {
-                      categories = _storyStore.initialCategoryList!;
-                    }
+                      if (_storyStore.searchCategoryKeyword != null &&
+                          _storyStore.searchCategoryKeyword!.isNotEmpty) {
+                        categories = _storyStore.initialCategoryList!
+                            .where((element) => element.name!
+                                .toLowerCase()
+                                .startsWith(_storyStore.searchCategoryKeyword!
+                                    .toLowerCase()))
+                            .toList();
+                      } else {
+                        categories = _storyStore.initialCategoryList!;
+                      }
 
-                    final Map<String, List<Result>> map = {};
-                    final Map<String, String> imagesMap = {};
-                    if (categories.isEmpty)
-                      {
+                      final Map<String, List<Result>> map = {};
+                      final Map<String, String> imagesMap = {};
+                      if (categories.isEmpty) {
                         return Text(
                           _translation["no_articles"]!,
                           style: TextStyle(color: Colors.black),
                         );
                       }
 
-                    categories.forEach((element) {
-                      if (!element.name!.contains('/')) {
-                        imagesMap[element.name!.split('/')[0].trim()] =
-                            element.image_url ?? "";
-                      } else {
-                        final String key = element.name!.split('/')[0].trim();
-                        if (map.containsKey(key)) {
-                          map[key]!.add(element);
+                      categories.forEach((element) {
+                        if (!element.name!.contains('/')) {
+                          imagesMap[element.name!.split('/')[0].trim()] =
+                              element.image_url ?? "";
                         } else {
-                          map[key] = [element];
+                          final String key = element.name!.split('/')[0].trim();
+                          if (map.containsKey(key)) {
+                            map[key]!.add(element);
+                          } else {
+                            map[key] = [element];
+                          }
                         }
-                      }
-                    });
+                      });
 
-                    return Column(
-                      children: [
-                        for (int i = 0; i < map.keys.length; i++)
-                          GestureDetector(
-                            onTap: () {
-                              ClickSound.soundTap();
-                              context.router.push(
-                                ArticlesCategoryScreenRoute(
-                                  categoryTitle: map.keys.elementAt(i),
-                                  result: map.values.elementAt(i),
-                                  storyStore: _storyStore,
-                                ),
-                              );
-                            },
-                            child: categoryItem(
-                              item: map.values.elementAt(i).first,
-                              imageUrl: imagesMap[map.keys.elementAt(i)] ?? "",
+                      return Column(
+                        children: [
+                          for (int i = 0; i < map.keys.length; i++)
+                            GestureDetector(
+                              onTap: () {
+                                ClickSound.soundTap();
+                                context.router.push(
+                                  ArticlesCategoryScreenRoute(
+                                    categoryTitle: map.keys.elementAt(i),
+                                    result: map.values.elementAt(i),
+                                    storyStore: _storyStore,
+                                  ),
+                                );
+                              },
+                              child: categoryItem(
+                                item: map.values.elementAt(i).first,
+                                imageUrl:
+                                    imagesMap[map.keys.elementAt(i)] ?? "",
+                              ),
                             ),
+                          Container(
+                            height: 60,
                           ),
-                        Container(
-                          height: 60,
-                        ),
-                      ],
-                    );
-                }
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
+                        ],
+                      );
+                  }
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

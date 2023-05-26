@@ -37,6 +37,7 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
   late StateStore _stateStore;
   late ArticleCategoryStore _articleCategoryStore;
   late Map<String, String> _translation;
+  FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -49,76 +50,93 @@ class _ArticlesCategoryScreenState extends State<ArticlesCategoryScreen> {
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              TopHeaderWidget(title: _translation["header"]!),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(bottom: 20),
-                color: Color.fromRGBO(28, 171, 226, 1),
-                height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextNavigatorComponent(
-                      rightEdge: false,
-                      darkMode: true,
-                      title: _translation["back"]!,
-                      onPressed: () => context.router.pop(),
-                    ),
-                    Text(
-                      _translation["title"]!,
-                      style: titleWhiteTextStlye,
-                    ),
-                    SizedBox(
-                      width: 100,
-                    ),
-                  ],
-                ),
-              ),
-              SearchBarWidget(onSearchChanged: _articleCategoryStore.search),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  _translation["body"]! + " " + widget.categoryTitle,
-                  style: TextStyle(
-                    fontSize: 16,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (notification) {
+            if (notification is ScrollStartNotification) {
+              _focusNode.unfocus();
+            }
+            return true;
+          },
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                TopHeaderWidget(title: _translation["header"]!),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(bottom: 20),
+                  color: Color.fromRGBO(28, 171, 226, 1),
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextNavigatorComponent(
+                        rightEdge: false,
+                        darkMode: true,
+                        title: _translation["back"]!,
+                        onPressed: () => context.router.pop(),
+                      ),
+                      Text(
+                        _translation["title"]!,
+                        style: titleWhiteTextStlye,
+                      ),
+                      SizedBox(
+                        width: 100,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Observer(builder: (context) {
-                final widgets = <Widget>[];
+                SearchBarWidget(
+                  onSearchChanged: _articleCategoryStore.search,
+                  focusNode: _focusNode,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  child: Text(
+                    _translation["body"]! + " " + widget.categoryTitle,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                Observer(builder: (context) {
+                  final widgets = <Widget>[];
 
-                _articleCategoryStore.mapOfItems.forEach((key, value) {
-                  widgets.add(SubcategoryHolder(
-                    subcategoryName: key,
-                    stories: value,
-                    viewMoreText: _translation["view_more"]!,
-                  ));
-                });
-                if (widgets.isEmpty) {
-                  return Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: Text(
-                        _translation["no_articles"]!,
-                        style: TextStyle(color: Colors.black),
-                      ));
-                }
+                  _articleCategoryStore.mapOfItems.forEach((key, value) {
+                    widgets.add(SubcategoryHolder(
+                      subcategoryName: key,
+                      stories: value,
+                      viewMoreText: _translation["view_more"]!,
+                    ));
+                  });
+                  if (widgets.isEmpty) {
+                    return Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: Text(
+                          _translation["no_articles"]!,
+                          style: TextStyle(color: Colors.black),
+                        ));
+                  }
 
-                return Column(
-                  children: widgets,
-                );
-              }),
-            ],
+                  return Column(
+                    children: widgets,
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),
