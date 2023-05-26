@@ -43,8 +43,13 @@ abstract class _AccountSettingsStoreBase with Store {
   @observable
   String? resultMessage;
 
+  @observable
+  bool isLoading = false;
+
   @action
   Future<void> saveProfile() async {
+    isLoading = true;
+    await Future.delayed(const Duration(seconds: 3));
     resultMessage = null;
     String? resultUpload = await uploadPicture();
     String? resultChangeUsername = await changeUsername();
@@ -56,6 +61,7 @@ abstract class _AccountSettingsStoreBase with Store {
     } else if (resultChangeUsername != null) {
       resultMessage = resultChangeUsername;
     }
+    isLoading = false;
   }
 
   @action

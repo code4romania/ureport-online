@@ -12,6 +12,7 @@ import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
@@ -80,266 +81,288 @@ class _AccountScreenState extends State<AccountScreen> {
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: Text(
-                _translation["body"]!,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.justify,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            textField(
-              label: _translation["username"]!,
-              controller: _accountSettingsStore.usernameController,
-              obscureText: false,
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.done,
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    width: double.infinity,
-                    child: Text(
-                      _translation["profile_pic"]!,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10,
-                      bottom: 20,
-                    ),
-                    height: 150,
-                    width: 150,
-                    child: Observer(builder: (context) {
-                      if (_state.profile?.image != null) {
-                        _accountSettingsStore.remoteprofilePic =
-                            _state.profile?.image;
-                      }
-                      return _accountSettingsStore.localProfilePic != null
-                          ? Image.file(
-                              File(_accountSettingsStore.localProfilePic!),
-                              fit: BoxFit.cover,
-                            )
-                          : _accountSettingsStore.remoteprofilePic != null
-                              ? CachedImageComponent(
-                                  imageUrl:
-                                      _accountSettingsStore.remoteprofilePic!,
-                                )
-                              : SizedBox();
-                    }),
-                  ),
-                  Container(
-                    child: Text(
-                      _translation["size"]!,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () async => _accountSettingsStore.pickImage(),
-                    child: Container(
-                      width: 170,
-                      height: 40,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      margin: EdgeInsets.only(
-                        top: 10,
-                      ),
-                      child: Row(children: [
-                        Icon(Icons.upload),
+            Observer(builder: (context) {
+              return _accountSettingsStore.isLoading
+                  ? Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: LoadingIndicatorComponent(),
+                    )
+                  : Column(
+                      children: [
                         SizedBox(
-                          width: 10,
+                          height: 20,
                         ),
-                        Text(
-                          _translation["upload"]!,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                        Container(
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: Text(
+                            _translation["body"]!,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.justify,
                           ),
                         ),
-                      ]),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            MainAppButtonComponent(
-              title: _translation["save"]!,
-              onPressed: () => _accountSettingsStore.saveProfile(),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  child: Text(
-                    _translation["change_password"]!,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  child: Text(
-                    _translation["change_password_body"]!,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                GestureDetector(
-                  onTap: () => context.router.push(
-                    ChangePasswordScreenRoute(
-                      translations: translations["${_state.selectedLanguage}"]![
-                          "change_password_screen"]!,
-                    ),
-                  ),
-                  child: Container(
-                    width: 170,
-                    height: 40,
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(children: [
-                      Icon(Icons.key),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        _translation["change_password_button"]!,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ]),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  child: Text(
-                    _translation["delete_account"]!,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  child: Text(
-                    _translation["delete_account_body"]!,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => PopupComponent(
-                        _translation["delete_account_confirmation_title"]!,
-                        Icons.warning,
-                        Color.fromRGBO(254, 226, 226, 1),
-                        Color.fromRGBO(220, 38, 38, 1),
-                        _translation["delete_account_confirmation_body"]!,
-                        _translation["delete_account_confirmation_button"]!,
-                        () => context.router.pop(),
-                        _translation["back"]!,
-                        () => context.router.pop(),
-                      ),
+                        textField(
+                          label: _translation["username"]!,
+                          controller: _accountSettingsStore.usernameController,
+                          obscureText: false,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 5),
+                                width: double.infinity,
+                                child: Text(
+                                  _translation["profile_pic"]!,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: 10,
+                                  bottom: 20,
+                                ),
+                                height: 150,
+                                width: 150,
+                                child: Observer(builder: (context) {
+                                  if (_state.profile?.image != null) {
+                                    _accountSettingsStore.remoteprofilePic =
+                                        _state.profile?.image;
+                                  }
+                                  return _accountSettingsStore
+                                              .localProfilePic !=
+                                          null
+                                      ? Image.file(
+                                          File(_accountSettingsStore
+                                              .localProfilePic!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : _accountSettingsStore
+                                                  .remoteprofilePic !=
+                                              null
+                                          ? CachedImageComponent(
+                                              imageUrl: _accountSettingsStore
+                                                  .remoteprofilePic!,
+                                            )
+                                          : SizedBox();
+                                }),
+                              ),
+                              Container(
+                                child: Text(
+                                  _translation["size"]!,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async =>
+                                    _accountSettingsStore.pickImage(),
+                                child: Container(
+                                  width: 170,
+                                  height: 40,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  margin: EdgeInsets.only(
+                                    top: 10,
+                                  ),
+                                  child: Row(children: [
+                                    Icon(Icons.upload),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      _translation["upload"]!,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        MainAppButtonComponent(
+                          title: _translation["save"]!,
+                          onPressed: () => _accountSettingsStore.saveProfile(),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: Text(
+                                _translation["change_password"]!,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: Text(
+                                _translation["change_password_body"]!,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            GestureDetector(
+                              onTap: () => context.router.push(
+                                ChangePasswordScreenRoute(
+                                  translations: translations[
+                                          "${_state.selectedLanguage}"]![
+                                      "change_password_screen"]!,
+                                ),
+                              ),
+                              child: Container(
+                                width: 170,
+                                height: 40,
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Row(children: [
+                                  Icon(Icons.key),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    _translation["change_password_button"]!,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: Text(
+                                _translation["delete_account"]!,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: Text(
+                                _translation["delete_account_body"]!,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => PopupComponent(
+                                    _translation[
+                                        "delete_account_confirmation_title"]!,
+                                    Icons.warning,
+                                    Color.fromRGBO(254, 226, 226, 1),
+                                    Color.fromRGBO(220, 38, 38, 1),
+                                    _translation[
+                                        "delete_account_confirmation_body"]!,
+                                    _translation[
+                                        "delete_account_confirmation_button"]!,
+                                    () => context.router.pop(),
+                                    _translation["back"]!,
+                                    () => context.router.pop(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: 170,
+                                height: 40,
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.red.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Row(children: [
+                                  Icon(Icons.delete_outline_sharp,
+                                      color: Colors.red),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    _translation["delete_account_button"]!,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: SvgPicture.asset(
+                            "assets/images/unicef_about.svg",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
                     );
-                  },
-                  child: Container(
-                    width: 170,
-                    height: 40,
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(children: [
-                      Icon(Icons.delete_outline_sharp, color: Colors.red),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        _translation["delete_account_button"]!,
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ]),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: SvgPicture.asset(
-                "assets/images/unicef_about.svg",
-                fit: BoxFit.fill,
-              ),
-            ),
+            }),
           ],
         ),
       ),

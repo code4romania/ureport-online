@@ -13,11 +13,11 @@ mixin _$ArticleCategoryStore on _ArticleCategoryStoreBase, Store {
       ActionController(name: '_ArticleCategoryStoreBase', context: context);
 
   @override
-  void search(String searchKeywork) {
+  void search(String searchKeyword) {
     final _$actionInfo = _$_ArticleCategoryStoreBaseActionController
         .startAction(name: '_ArticleCategoryStoreBase.search');
     try {
-      return super.search(searchKeywork);
+      return super.search(searchKeyword);
     } finally {
       _$_ArticleCategoryStoreBaseActionController.endAction(_$actionInfo);
     }
