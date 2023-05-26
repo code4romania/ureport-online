@@ -42,23 +42,25 @@ class ProfileHeaderComponent extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Icon(Icons.star),
-                    )
+                    // Leave the code for future uses
+
+                    // Container(
+                    //   height: 30,
+                    //   width: 30,
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.grey.withOpacity(0.5),
+                    //         spreadRadius: 1,
+                    //         blurRadius: 7,
+                    //         offset: Offset(0, 3), // changes position of shadow
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   child: Icon(Icons.star),
+                    // )
                   ],
                 ),
                 SizedBox(
