@@ -52,3 +52,9 @@ android/key.properties
 android/app/upload-keystore.jks
 android/app/google-services.json
 android/app/google-services.json
+
+# VS Code settings
+.vscode/*
+
+# Flutter version manager ( FVM ) related
+.fvm/*

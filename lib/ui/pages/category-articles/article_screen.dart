@@ -94,7 +94,7 @@ class _ArticleScreenState extends State<ArticleScreen>
       floatingActionButton: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Observer(builder: (context) {
