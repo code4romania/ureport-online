@@ -69,12 +69,11 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
                       title: _translation["back"]!,
                       onPressed: () => context.router.pop(),
                     ),
-                    Text(
-                      widget.categoryTitle,
-                      style: titleWhiteTextStlye,
-                    ),
-                    SizedBox(
-                      width: 100,
+                    Expanded(
+                      child: Text(
+                        widget.categoryTitle,
+                        style: titleWhiteTextStlye,
+                      ),
                     ),
                   ],
                 ),
