@@ -52,12 +52,13 @@ class _LoginScreenState extends State<LoginScreen> {
           {
             _loginStore.getProfile().then((value) {
               _stateStore.updateProfile(value);
-              showPopup(
-                context: context,
-                onPressed: () => context.router.replaceAll([RootPageRoute()]),
-                buttonText: _translation["continue"]!,
-                message: _translation["succes"]!,
-              );
+              context.router.replaceAll([RootPageRoute()]);
+              // showPopup(
+              //   context: context,
+              //   onPressed: () => context.router.replaceAll([RootPageRoute()]),
+              //   buttonText: _translation["continue"]!,
+              //   message: _translation["succes"]!,
+              // );
             });
 
             break;
