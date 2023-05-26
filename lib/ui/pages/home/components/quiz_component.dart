@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/home_store.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
-import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
 
 class QuizComponent extends StatelessWidget {
