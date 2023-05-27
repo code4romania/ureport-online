@@ -46,7 +46,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             message: _translation["succes"]!,
           );
         });
-      } else {
+        // Check if message is !null
+        // Sometimes if response == 400 it showed a dialog with null message
+      } else if (_registerStore.errorMessage != null) {
         showPopup(
           context: context,
           onPressed: () => context.router.pop(),
