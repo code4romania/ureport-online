@@ -63,9 +63,8 @@ abstract class _LoginStoreBase with Store {
         result = LoginStatus.ERROR;
         errorMessage = response.message;
       }
-
-      toggleLoading();
     }
+    toggleLoading();
   }
 
   @action

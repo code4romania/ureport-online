@@ -78,8 +78,8 @@ abstract class _RegisterStoreBase with Store {
       // For some reason the tree rebuild triggers twice
       // And if error message is not null the showDialog displays twice
       errorMessage = null;
-      toggleIsLoading();
     }
+    toggleIsLoading();
   }
 
   @action
