@@ -75,7 +75,10 @@ class _ArticleScreenState extends State<ArticleScreen>
     super.initState();
 
     reaction(
-      (p0) => _storyStore.scrolledToTheBottom && _storyStore.finishedTimer,
+      (p0) =>
+          _storyStore.scrolledToTheBottom &&
+          _storyStore.finishedTimer &&
+          _storyStore.badgeTitle.isNotEmpty,
       (p0) => _finishReadingPopUp(),
     );
   }
@@ -426,6 +429,7 @@ class _ArticleScreenState extends State<ArticleScreen>
                     "${_stateStore.selectedLanguage}"]!["profile_screen"]!,
                 storyId: _storyStore.storyId.toString(),
                 profile: _stateStore.profile!,
+                badgeTitle: _storyStore.badgeTitle,
               ),
             ),
           );
