@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:logger/logger.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/models/story_long.dart';
 import 'package:ureport_ecaro/services/story_service.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 part 'story_store.g.dart';
 
@@ -72,7 +72,7 @@ abstract class _StoryStoreBase with Store {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
     httpClient = StoryService(token: token);
 
-    print("##### DEBUG STORY #####");
+    print("#####  DEBUG STORY #####");
     print("Story id: $storyId");
 
     fetchUserId().then((_) {
@@ -119,8 +119,11 @@ abstract class _StoryStoreBase with Store {
 
   @action
   Future fetchStory(int id) async {
+    final String baseApiUrl = spUtil.getValue(SPUtil.API_BASE_URL);
     fetchedStory =
         await httpClient.getStory("https://$baseApiUrl/api/v1/stories/$id");
+    Logger log = Logger();
+    log.d('fetch story from: https://$baseApiUrl/api/v1/stories/$id');
     isLoading = false;
   }
 

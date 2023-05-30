@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/response.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 class AccountSettingsServices {
   late Map<String, String> header;
@@ -21,6 +21,7 @@ class AccountSettingsServices {
     required String passwordConfirmation,
     required int userID,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
       Uri.https(
         baseApiUrl,
@@ -45,6 +46,7 @@ class AccountSettingsServices {
     required int userID,
     required String username,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.patch(
       Uri.https(
         baseApiUrl,
@@ -70,6 +72,7 @@ class AccountSettingsServices {
     required int userID,
     required String path,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     var uri = Uri.https(baseApiUrl, "api/v1/userprofiles/user/$userID/image/");
 
     var req = http.MultipartRequest('PUT', uri)

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 import '../models/story_long.dart' as storyLong;
 
@@ -33,6 +34,7 @@ class StoryService {
   }
 
   Future<int> getStoryReadCount({required int userId}) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse('https://$baseApiUrl/api/v1/storyreads/user/$userId/'),
       headers: header,
@@ -51,6 +53,7 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse(
           "https://$baseApiUrl/api/v1/storyreads/user/$userId/?story=$storyId"),
@@ -70,6 +73,7 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
       Uri.https("$baseApiUrl", "/api/v1/storyreads/user/$userId/"),
       headers: header,
@@ -98,6 +102,7 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse(
         "https://$baseApiUrl/api/v1/storyratings/user/$userId/?story=$storyId",
@@ -117,6 +122,7 @@ class StoryService {
   Future<bool> showRating({
     required int storyId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
         Uri.parse("https://$baseApiUrl/api/v1/storysettings/story/$storyId/"));
 
@@ -134,6 +140,7 @@ class StoryService {
     required int userId,
     required int rating,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
         Uri.https("$baseApiUrl", "/api/v1/storyratings/user/$userId/"),
         headers: header,
@@ -155,6 +162,7 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse(
           "https://$baseApiUrl/api/v1/storybookmarks/user/$userId/?story=$storyId"),
@@ -174,6 +182,7 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
       Uri.https("$baseApiUrl", "/api/v1/storybookmarks/user/$userId/"),
       headers: header,
@@ -193,6 +202,7 @@ class StoryService {
     required int storyId,
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.delete(
       Uri.https("$baseApiUrl", "/api/v1/storybookmarks/user/$userId/"),
       headers: header,

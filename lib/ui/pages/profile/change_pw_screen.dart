@@ -6,6 +6,7 @@ import 'package:ureport_ecaro/controllers/change_password_store.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
+import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import '../../shared/top_header_widget.dart';
 
@@ -84,6 +85,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Navigator.of(context).pop();
               },
             ),
+            //FIXME: https: //romania.ureport.in/story/527/
             Container(
               margin: EdgeInsets.only(top: 20, left: 20, right: 20),
               width: MediaQuery.of(context).size.width,
@@ -142,11 +144,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 errorText: _changePasswordStore.passwordConfirmationError,
               );
             }),
-            MainAppButtonComponent(
-              title: widget.translations["save"]!,
-              onPressed: () async =>
-                  await _changePasswordStore.changePassowrd(),
-            ),
+            Observer(builder: (context) {
+              return _changePasswordStore.isLoading
+                  ? Center(
+                      child: LoadingIndicatorComponent(),
+                    )
+                  : MainAppButtonComponent(
+                      title: widget.translations["save"]!,
+                      onPressed: () async =>
+                          await _changePasswordStore.changePassowrd(),
+                    );
+            })
           ],
         ),
       ),

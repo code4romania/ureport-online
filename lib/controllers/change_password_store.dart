@@ -39,6 +39,9 @@ abstract class _ChangePasswordStoreBase with Store {
   @observable
   String? errorMessage;
 
+  @observable
+  bool isLoading = false;
+
   @action
   void reset() {
     currentPasswordController.clear();
@@ -60,6 +63,7 @@ abstract class _ChangePasswordStoreBase with Store {
 
   @action
   Future<void> changePassowrd() async {
+    isLoading = true;
     result = null;
     errorMessage = null;
     if (validateCurrentPassword() &&
@@ -79,6 +83,7 @@ abstract class _ChangePasswordStoreBase with Store {
         errorMessage = response.message;
       }
     }
+    isLoading = false;
   }
 
   @action

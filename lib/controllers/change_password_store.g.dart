@@ -92,6 +92,22 @@ mixin _$ChangePasswordStore on _ChangePasswordStoreBase, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: '_ChangePasswordStoreBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
   late final _$changePassowrdAsyncAction =
       AsyncAction('_ChangePasswordStoreBase.changePassowrd', context: context);
 
@@ -176,7 +192,8 @@ currentPasswordError: ${currentPasswordError},
 newPasswordError: ${newPasswordError},
 passwordConfirmationError: ${passwordConfirmationError},
 result: ${result},
-errorMessage: ${errorMessage}
+errorMessage: ${errorMessage},
+isLoading: ${isLoading}
     ''';
   }
 }

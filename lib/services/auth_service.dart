@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/models/response.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
 import 'package:ureport_ecaro/utils/enums.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 
@@ -12,6 +12,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
         Uri.https(
           baseApiUrl,
@@ -21,7 +22,8 @@ class AuthService {
           "username": email,
           "password": password,
         });
-
+    Logger log = Logger();
+    log.d(response.request);
     if (response.statusCode == 200) {
       await getAuthToken(
         email: email,
@@ -42,6 +44,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http
         .post(Uri.https(baseApiUrl, "/api/v1/userprofiles/signup/"), body: {
       "full_name": name,
@@ -76,6 +79,7 @@ class AuthService {
   Future<Response> sendCode({
     required String email,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http
         .post(Uri.https(baseApiUrl, "/api/v1/userprofiles/forgot/"), body: {
       "email": email,
@@ -96,6 +100,7 @@ class AuthService {
     required String email,
     required String code,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
         Uri.https(baseApiUrl, "/api/v1/userprofiles/forgot/check/"),
         body: {
@@ -118,6 +123,7 @@ class AuthService {
     required String newPassword,
     required String confirmNewPassword,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.post(
         Uri.https(baseApiUrl, "/api/v1/userprofiles/forgot/check/"),
         body: {
@@ -143,6 +149,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http
         .post(Uri.https(baseApiUrl, "/api/v1/get-auth-token/"), body: {
       "username": email,
@@ -158,7 +165,7 @@ class AuthService {
 
   Future<Profile?> getProfile() async {
     final token = SPUtil().getValue(SPUtil.KEY_AUTH_TOKEN);
-
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.https(baseApiUrl, "/api/v1/userprofiles/user/@me/"),
       headers: {
