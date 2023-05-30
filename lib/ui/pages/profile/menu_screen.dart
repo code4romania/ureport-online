@@ -70,6 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           translations["${_stateStore.selectedLanguage}"]![
                               "profile_screen"]!,
                       profile: _stateStore.profile!,
+                      initialIndex: 0,
                     ),
                   ),
                 ), //NavUtils.push(context, ProfileScreen())),

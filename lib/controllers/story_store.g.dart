@@ -217,6 +217,22 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
+  late final _$badgeTitleAtom =
+      Atom(name: '_StoryStoreBase.badgeTitle', context: context);
+
+  @override
+  String get badgeTitle {
+    _$badgeTitleAtom.reportRead();
+    return super.badgeTitle;
+  }
+
+  @override
+  set badgeTitle(String value) {
+    _$badgeTitleAtom.reportWrite(value, super.badgeTitle, () {
+      super.badgeTitle = value;
+    });
+  }
+
   late final _$fetchUserIdAsyncAction =
       AsyncAction('_StoryStoreBase.fetchUserId', context: context);
 
@@ -323,7 +339,8 @@ alreadyRead: ${alreadyRead},
 readArticle: ${readArticle},
 finishedTimer: ${finishedTimer},
 scrolledToTheBottom: ${scrolledToTheBottom},
-hasClaimedBadge: ${hasClaimedBadge}
+hasClaimedBadge: ${hasClaimedBadge},
+badgeTitle: ${badgeTitle}
     ''';
   }
 }

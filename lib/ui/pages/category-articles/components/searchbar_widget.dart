@@ -4,7 +4,10 @@ class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
     Key? key,
     required this.onSearchChanged,
+    required this.focusNode,
   }) : super(key: key);
+
+  final FocusNode focusNode;
 
   final Function(String value)? onSearchChanged;
 
@@ -18,6 +21,7 @@ class SearchBarWidget extends StatelessWidget {
         data: Theme.of(context)
             .copyWith(colorScheme: ColorScheme.light(primary: Colors.black)),
         child: TextField(
+          focusNode: focusNode,
           onChanged: onSearchChanged,
           decoration: InputDecoration(
             hintStyle: TextStyle(fontSize: 16, color: Colors.black),

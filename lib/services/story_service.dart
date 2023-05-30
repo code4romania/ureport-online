@@ -32,6 +32,21 @@ class StoryService {
     }
   }
 
+  Future<int> getStoryReadCount({required int userId}) async {
+    final response = await http.get(
+      Uri.parse('https://$baseApiUrl/api/v1/storyreads/user/$userId/'),
+      headers: header,
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final List<dynamic> storyes = jsonResponse;
+
+      return storyes.length;
+    } else {
+      return 0;
+    }
+  }
+
   Future<bool> getStoryReadStatus({
     required int storyId,
     required int userId,
@@ -51,7 +66,7 @@ class StoryService {
     }
   }
 
-  Future<bool> markAsRead({
+  Future<String> markAsRead({
     required int storyId,
     required int userId,
   }) async {
@@ -64,20 +79,18 @@ class StoryService {
     );
 
     print(response.body);
-
     if (response.statusCode == 201 || response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
-
-      if (response.body == "[]") return false;
-      if (decodedResponse == "[]") return false;
-      if (decodedResponse == null) return false;
-      if (response.body.isEmpty) return false;
+      if (response.body == "[]") return '';
+      if (decodedResponse == "[]") return '';
+      if (decodedResponse == null) return '';
+      if (response.body.isEmpty) return '';
 
       // claimed badge if response is not empty and not null and not empty list []
-
-      return true;
+      String badgeTitle = decodedResponse[0]['badge_type']['title'];
+      return badgeTitle;
     } else {
-      return false;
+      return '';
     }
   }
 

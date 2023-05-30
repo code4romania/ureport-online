@@ -55,6 +55,9 @@ abstract class _StoryStoreBase with Store {
   @observable
   bool hasClaimedBadge = false;
 
+  @observable
+  String badgeTitle = '';
+
   Timer? timer;
 
   void cancelTimer() {
@@ -134,9 +137,8 @@ abstract class _StoryStoreBase with Store {
 
   @action
   Future<void> markAsRead({required int storyId}) async {
-    hasClaimedBadge =
-        await httpClient.markAsRead(storyId: storyId, userId: userId);
-
+    badgeTitle = await httpClient.markAsRead(storyId: storyId, userId: userId);
+    hasClaimedBadge = badgeTitle.isNotEmpty;
     readArticle = true;
   }
 

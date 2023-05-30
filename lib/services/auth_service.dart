@@ -65,12 +65,11 @@ class AuthService {
         password: password,
       );
     }
+
     return Response(
       statusCode: response.statusCode,
       message: jsonDecode(response.body)["detail"],
-      data: response.statusCode == 200
-          ? RegisterStatus.SUCCESS
-          : RegisterStatus.ERROR,
+      data: RegisterStatus.ERROR,
     );
   }
 

@@ -64,15 +64,22 @@ abstract class _RegisterStoreBase with Store {
         password: passwdController.text,
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 400) {
+        errorMessage = translation["existing_acc"];
+        result = RegisterStatus.ERROR;
+      } else if (response.statusCode == 200) {
         result = RegisterStatus.SUCCESS;
         SPUtil().setValue(SPUtil.KEY_USER_EMAIL, emailController.text);
       } else {
         errorMessage = response.message;
+        result = RegisterStatus.ERROR;
       }
 
-      toggleIsLoading();
+      // For some reason the tree rebuild triggers twice
+      // And if error message is not null the showDialog displays twice
+      errorMessage = null;
     }
+    toggleIsLoading();
   }
 
   @action

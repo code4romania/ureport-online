@@ -15,10 +15,15 @@ import 'components/medal_widget.dart';
 import 'components/profile_header_component.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key, required this.translation, this.profile})
+  const ProfileScreen(
+      {Key? key,
+      required this.translation,
+      this.profile,
+      required this.initialIndex})
       : super(key: key);
   final Map<String, String> translation;
   final Profile? profile;
+  final initialIndex;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -37,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     _profileInfoStore = ProfileInfoStore(spUtil);
 
     _controller = TabController(
-      initialIndex: 0,
+      initialIndex: widget.initialIndex,
       length: 2,
       vsync: this,
     );

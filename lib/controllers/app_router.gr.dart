@@ -133,6 +133,7 @@ class AppRouter extends _i24.RootStackRouter {
           key: args.key,
           translation: args.translation,
           profile: args.profile,
+          initialIndex: args.initialIndex,
         ),
         opaque: true,
       );
@@ -585,6 +586,7 @@ class ProfileScreenRoute extends _i24.PageRouteInfo<ProfileScreenRouteArgs> {
     _i25.Key? key,
     required Map<String, String> translation,
     _i26.Profile? profile,
+    required dynamic initialIndex,
   }) : super(
           ProfileScreenRoute.name,
           path: '/profile-screen',
@@ -592,6 +594,7 @@ class ProfileScreenRoute extends _i24.PageRouteInfo<ProfileScreenRouteArgs> {
             key: key,
             translation: translation,
             profile: profile,
+            initialIndex: initialIndex,
           ),
         );
 
@@ -603,6 +606,7 @@ class ProfileScreenRouteArgs {
     this.key,
     required this.translation,
     this.profile,
+    required this.initialIndex,
   });
 
   final _i25.Key? key;
@@ -611,9 +615,11 @@ class ProfileScreenRouteArgs {
 
   final _i26.Profile? profile;
 
+  final dynamic initialIndex;
+
   @override
   String toString() {
-    return 'ProfileScreenRouteArgs{key: $key, translation: $translation, profile: $profile}';
+    return 'ProfileScreenRouteArgs{key: $key, translation: $translation, profile: $profile, initialIndex: $initialIndex}';
   }
 }
 

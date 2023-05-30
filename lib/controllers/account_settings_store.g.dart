@@ -57,6 +57,22 @@ mixin _$AccountSettingsStore on _AccountSettingsStoreBase, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: '_AccountSettingsStoreBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
   late final _$saveProfileAsyncAction =
       AsyncAction('_AccountSettingsStoreBase.saveProfile', context: context);
 
@@ -94,7 +110,8 @@ mixin _$AccountSettingsStore on _AccountSettingsStoreBase, Store {
     return '''
 localProfilePic: ${localProfilePic},
 remoteprofilePic: ${remoteprofilePic},
-resultMessage: ${resultMessage}
+resultMessage: ${resultMessage},
+isLoading: ${isLoading}
     ''';
   }
 }

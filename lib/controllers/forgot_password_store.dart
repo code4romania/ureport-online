@@ -21,6 +21,8 @@ abstract class _ForgotPasswordStoreBase with Store {
     TextEditingController(),
     TextEditingController(),
     TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
   ]);
 
   @observable
@@ -85,12 +87,17 @@ abstract class _ForgotPasswordStoreBase with Store {
     if (codeController[0].text.length == 0 ||
         codeController[1].text.length == 0 ||
         codeController[2].text.length == 0 ||
-        codeController[3].text.length == 0) {
+        codeController[3].text.length == 0 ||
+        codeController[4].text.length == 0 ||
+        codeController[5].text.length == 0) {
       codeError = "Codul introdus este invalid";
-
+      // Tested if the user didn't fill all the fields
+      // the submit button doesn't show anymore and the user can't continue
+      isLoading = false;
       Future.delayed(Duration(seconds: 2), () {
         codeError = null;
       });
+
       return;
     } else {
       codeError = null;
@@ -100,7 +107,9 @@ abstract class _ForgotPasswordStoreBase with Store {
           code: codeController[0].text +
               codeController[1].text +
               codeController[2].text +
-              codeController[3].text);
+              codeController[3].text +
+              codeController[4].text +
+              codeController[5].text);
 
       if (response.statusCode == 200) {
         page = 2;
@@ -136,7 +145,9 @@ abstract class _ForgotPasswordStoreBase with Store {
           code: codeController[0].text +
               codeController[1].text +
               codeController[2].text +
-              codeController[3].text,
+              codeController[3].text +
+              codeController[4].text +
+              codeController[5].text,
           newPassword: newPasswordController.text,
           confirmNewPassword: confirmPasswordController.text);
 
