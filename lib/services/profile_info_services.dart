@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:ureport_ecaro/models/bookmark.dart';
 import 'package:ureport_ecaro/models/claimed_badge.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 
 class ProfileInfoServices {
   late Map<String, String> header;
@@ -21,6 +22,7 @@ class ProfileInfoServices {
     required int userId,
     required int orgId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse(
           "https://$baseApiUrl/api/v1/userbadges/user/$userId/?org=$orgId"),
@@ -41,6 +43,7 @@ class ProfileInfoServices {
     required int userId,
     required int orgId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse(
           "https://$baseApiUrl/api/v1/userbadges/user/$userId/all/?org=$orgId"),
@@ -60,6 +63,7 @@ class ProfileInfoServices {
   Future<List<Bookmark>> getBookmarks({
     required int userId,
   }) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
     final response = await http.get(
       Uri.parse("https://$baseApiUrl/api/v1/storybookmarks/user/$userId/"),
       headers: header,

@@ -155,7 +155,7 @@ class _ArticleScreenState extends State<ArticleScreen>
                       Share.share(
                         subject: widget.preloadedStory!.title.toString(),
                         _translation["shareArticleBody"]! +
-                            shareStoryUrl +
+                            SPUtil().getValue(SPUtil.SHARE_STORY_URL) +
                             "/" +
                             widget.preloadedStory!.id.toString(),
                       );
@@ -181,7 +181,7 @@ class _ArticleScreenState extends State<ArticleScreen>
                     onShare: () {
                       ClickSound.soundShare();
                       Share.share(
-                          shareStoryUrl +
+                          SPUtil().getValue(SPUtil.SHARE_STORY_URL) +
                               "/" +
                               _storyStore.fetchedStory!.id.toString(),
                           subject: _storyStore.fetchedStory!.title.toString());

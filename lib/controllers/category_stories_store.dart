@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/category.dart';
-import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import '../services/category_article_service.dart';
 import '../models/story.dart' as storyFull;
 import 'package:ureport_ecaro/models/response_opinions.dart' as opinionsarray;
@@ -34,9 +34,13 @@ abstract class _CategoryStories with Store {
   bool isStoryBookmarked = false;
 
   @action
-  Future getRecentStories() => recentStories = ObservableFuture(httpClient
-          .getRecentStories('https://$baseApiUrl/api/v1/stories/org/1?limit=2'))
-      .then((stories) => stories.asObservable());
+  Future getRecentStories() {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    return recentStories = ObservableFuture(
+      httpClient
+          .getRecentStories('https://$baseApiUrl/api/v1/stories/org/1?limit=2'),
+    ).then((stories) => stories.asObservable());
+  }
 
   @action
   Future getRecentOpinions() =>
@@ -45,10 +49,16 @@ abstract class _CategoryStories with Store {
           .then((opinions) => opinions.asObservable());
 
   @action
-  Future fetchCategories() => categoryList = ObservableFuture(httpClient
-      .getCategories('https://$baseApiUrl/api/v1/categories/org/1/?limit=100')
-      .then((categories) =>
-          categories?.asObservable() ?? <Result>[].asObservable()));
+  Future fetchCategories() {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    return categoryList = ObservableFuture(
+      httpClient
+          .getCategories(
+              'https://$baseApiUrl/api/v1/categories/org/1/?limit=100')
+          .then((categories) =>
+              categories?.asObservable() ?? <Result>[].asObservable()),
+    );
+  }
 
   @action
   void setInitialStoryList(List<Story> stories) {

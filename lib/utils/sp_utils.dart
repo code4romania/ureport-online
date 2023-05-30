@@ -31,6 +31,10 @@ class SPUtil {
   static String STORY_NEXT = "story_next";
   static String STORY_COUNT = "story_count";
 
+  static String API_BASE_URL = "API_BASE_URL";
+  static String SHARE_OPINION_URL = 'SHARE_OPINION_URL';
+  static String SHARE_STORY_URL = 'SHARE_STORY_URL';
+
   setValue(String key, String value) async {
     GetStorage().write(key, value);
   }
