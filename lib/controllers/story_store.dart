@@ -72,7 +72,7 @@ abstract class _StoryStoreBase with Store {
     token = spUtil.getValue(SPUtil.KEY_AUTH_TOKEN);
     httpClient = StoryService(token: token);
 
-    print("#####                                         #####");
+    print("#####  DEBUG STORY #####");
     print("Story id: $storyId");
 
     fetchUserId().then((_) {
