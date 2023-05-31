@@ -1,4 +1,4 @@
-package org.unicef.ureportromania
+package ro.code4.ureportromania
 
 import io.flutter.embedding.android.FlutterActivity
 
