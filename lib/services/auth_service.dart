@@ -13,6 +13,8 @@ class AuthService {
     required String password,
   }) async {
     final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    Logger log = Logger();
+    log.d(baseApiUrl);
     final response = await http.post(
         Uri.https(
           baseApiUrl,
@@ -22,7 +24,6 @@ class AuthService {
           "username": email,
           "password": password,
         });
-    Logger log = Logger();
     log.d(response.request);
     if (response.statusCode == 200) {
       await getAuthToken(

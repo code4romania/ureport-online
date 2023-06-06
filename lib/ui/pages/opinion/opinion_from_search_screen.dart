@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:ureport_ecaro/models/response-opinion-localdb.dart';
 import 'package:ureport_ecaro/ui/pages/opinion/components/statistics_header.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
