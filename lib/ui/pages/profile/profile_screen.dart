@@ -1,18 +1,21 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/profile_info_store.dart';
 import 'package:ureport_ecaro/models/profile.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
-
+import 'package:http/http.dart' as http;
 import '../../shared/text_navigator_component.dart';
 import '../../shared/top_header_widget.dart';
 import 'components/history_widget.dart';
 import 'components/medal_widget.dart';
 import 'components/profile_header_component.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen(
@@ -130,11 +133,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   _profileInfoStore.fetchBookmarks()),
                           child: BookmarkWidget(
                             bookmarkItem: _profileInfoStore.bookmarks[index],
-                            onPressedShare: () {
-                              Share.share(
-                                  subject:
-                                      widget.translation["shareBookmarkTitle"]!,
-                                  widget.translation["shareBookmarkBody"]!);
+                            onPressedShare: () async {
+                              final text =
+                                  '${widget.translation["shareBookmarkTitle"]!}\n${widget.translation["shareBookmarkBody"]!}\nhttps://ro.ureport.unicef-staging.heroesof.tech/story/${_profileInfoStore.bookmarks[index].id}';
+                              Share.share(text);
                             },
                             isLastItem:
                                 index == _profileInfoStore.bookmarks.length - 1,
@@ -156,10 +158,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                       padding: const EdgeInsets.all(0),
                       itemCount: _profileInfoStore.badges.length,
                       itemBuilder: (context, index) => MedalWidget(
-                        onPressedShare: () {
-                          Share.share(
-                              subject: widget.translation["shareMedalTitle"]!,
-                              widget.translation["shareMedalBody"]!);
+                        onPressedShare: () async {
+                          var response = await http.get(Uri.parse(
+                              _profileInfoStore.badges[index].image!));
+                          final directory = await getTemporaryDirectory();
+                          final imagePath = '${directory.path}/image.jpg';
+
+                          // Save the image to a temporary file
+                          File imageFile = File(imagePath);
+                          await imageFile.writeAsBytes(response.bodyBytes);
+
+                          final text =
+                              '${widget.translation["shareMedalTitle"]!}\n${widget.translation["shareMedalBody"]!}';
+                          Share.shareXFiles([XFile(imagePath)], text: text);
                         },
                         medal: _profileInfoStore.badges[index],
                         isLastItem:

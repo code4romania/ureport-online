@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 

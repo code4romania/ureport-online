@@ -1,4 +1,5 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 
 class SPUtil {
   static String KEY_SUB_DOMAIN = "KEY_SUB_DOMAIN";
@@ -49,7 +50,7 @@ class SPUtil {
 
   String getValue(String key) {
     var result = GetStorage().read(key);
-    return result == null ? "" : GetStorage().read(key);
+    return result ?? '';
   }
 
   int getInt(String key) {
