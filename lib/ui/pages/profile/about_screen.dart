@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
   AboutScreen({Key? key, required this.translations}) : super(key: key);
@@ -31,6 +33,7 @@ class AboutScreen extends StatelessWidget {
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextNavigatorComponent(
               title: translations["back"]!,
@@ -64,8 +67,8 @@ class AboutScreen extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              child: SvgPicture.asset(
-                "assets/images/unicef_about.svg",
+              child: Image.asset(
+                "assets/images/unicef_about.png",
                 fit: BoxFit.fill,
               ),
             ),
@@ -76,10 +79,18 @@ class AboutScreen extends StatelessWidget {
               margin: EdgeInsets.only(left: 20, right: 20),
               child: Text(
                 translations["text2"]!,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: Text(
+                translations["text2.1"]!,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -106,6 +117,72 @@ class AboutScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.justify,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                "assets/images/unicef_about.png",
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              width: MediaQuery.of(context).size.width,
+              child: Text(
+                translations["text5"]!,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              width: MediaQuery.of(context).size.width / 2,
+              child: Image.asset(
+                "assets/images/c4r_logo.png",
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              width: MediaQuery.of(context).size.width,
+              child: RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: translations["text6"],
+                    ),
+                    TextSpan(
+                      text: "Icons8",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          launchUrl(Uri.parse("https://icons8.com/"));
+                        },
+                    ),
+                    TextSpan(
+                      text: '.',
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(

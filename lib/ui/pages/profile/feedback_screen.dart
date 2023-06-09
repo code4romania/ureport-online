@@ -117,8 +117,8 @@ class FeedbackScreen extends StatelessWidget {
               Spacer(),
               Container(
                   width: MediaQuery.of(context).size.width,
-                  child: SvgPicture.asset(
-                    "assets/images/unicef_about.svg",
+                  child: Image.asset(
+                    "assets/images/unicef_about.png",
                     fit: BoxFit.fill,
                   ))
             ],
