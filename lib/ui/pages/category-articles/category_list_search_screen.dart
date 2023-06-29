@@ -1,35 +1,33 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:logger/logger.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
-import 'package:ureport_ecaro/ui/pages/category-articles/category_list_search_screen.dart';
-import 'package:ureport_ecaro/ui/pages/category-articles/components/badges_component.dart';
-import 'package:ureport_ecaro/ui/pages/category-articles/components/bookmark_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/title_description_widget.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
+import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../services/click_sound_service.dart';
 import '../../../utils/constants.dart';
 
-class CategoryListScreen extends StatefulWidget {
+class CategoryListSearchScreen extends StatefulWidget {
   //This screen is only for Romania region
 
   @override
-  _CategoryListScreenState createState() => _CategoryListScreenState();
+  _CategoryListSearchScreenState createState() =>
+      _CategoryListSearchScreenState();
 }
 
-class _CategoryListScreenState extends State<CategoryListScreen> {
+class _CategoryListSearchScreenState extends State<CategoryListSearchScreen> {
   late StateStore _stateStore;
   late CategoryStories _storyStore;
   late Map<String, String> _translation;
@@ -47,10 +45,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
     _translation =
         translations["${_stateStore.selectedLanguage}"]!["category_screen"]!;
     super.initState();
-    _storyStore.getBadges();
+
     _storyStore.fetchCategories();
-    _storyStore.xGetBookmarks();
-    _storyStore.filterBookmarks(0, "Toate");
   }
 
   @override
@@ -70,33 +66,58 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           }
           return true;
         },
-        child: CustomScrollView(
+        child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-              child: TopHeaderWidget(title: _translation["header"]!),
-            ),
-            SliverToBoxAdapter(
-              child: BadgesComponent(
-                categoryStories: _storyStore,
-                translation: _translation,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TopHeaderWidget(title: _translation["header"]!),
+              Container(
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
-                child: Text(
-                  _translation['title']!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 28,
+                margin: EdgeInsets.only(bottom: 20),
+                color: Color.fromRGBO(28, 171, 226, 1),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextNavigatorComponent(
+                      rightEdge: false,
+                      darkMode: true,
+                      title: _translation["back"]!,
+                      onPressed: () => context.router.pop(),
+                    ),
+                    Expanded(
+                      child: Text(
+                        _translation["title"]!,
+                        style: titleWhiteTextStlye,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SearchBarWidget(
+                onSearchChanged: (value) =>
+                    _storyStore.searchCategoryKeyword = value,
+                focusNode: _focusNode,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(21.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    _translation["body"]!,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Observer(
+              Observer(
                 builder: (context) {
                   if (future == null) {
                     return Text(
@@ -189,124 +210,40 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                           }
                         }
                       });
-                      _storyStore.setCategories(map);
-                      return Container(
-                        height: 200,
-                        margin: EdgeInsets.only(left: 10),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
+
+                      return Column(
+                        children: [
+                          for (int i = 0; i < map.keys.length; i++)
+                            GestureDetector(
                               onTap: () {
                                 ClickSound.soundTap();
-                                context.router
-                                    .push(
+                                context.router.push(
                                   ArticlesCategoryScreenRoute(
-                                    categoryTitle: map.keys.elementAt(index),
-                                    result: map.values.elementAt(index),
+                                    categoryTitle: map.keys.elementAt(i),
+                                    result: map.values.elementAt(i),
                                     storyStore: _storyStore,
                                   ),
-                                )
-                                    .then((value) {
-                                  _storyStore.xGetBookmarks();
-                                  _storyStore.filterBookmarks(0, "Toate");
-                                });
+                                );
                               },
                               child: categoryItem(
-                                item: map.values.elementAt(index).first,
+                                item: map.values.elementAt(i).first,
                                 imageUrl:
-                                    imagesMap[map.keys.elementAt(index)] ?? "",
+                                    imagesMap[map.keys.elementAt(i)] ?? "",
                               ),
-                            );
-                          },
-                          itemCount: map.keys.length - 1,
-                        ),
+                            ),
+                          Container(
+                            height: 60,
+                          ),
+                        ],
                       );
                   }
                 },
               ),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.only(right: 10.0, top: 10.0),
-              sliver: SliverToBoxAdapter(
-                child: GestureDetector(
-                  onTap: () {
-                    ClickSound.soundTap();
-                    context.router
-                        .push(CategoryListSearchScreenRoute())
-                        .then((value) {
-                      _storyStore.xGetBookmarks();
-                      _storyStore.filterBookmarks(0, "Toate");
-                    });
-                  },
-                  child: Text(
-                    "Vezi toate",
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 159, 75, 152),
-                      // fontWeight: FontWeight.,
-                      fontSize: 14,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                ),
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(left: 10, bottom: 5, top: 15),
-                child: Text(
-                  _translation['title_bookmarks']!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 28,
-                  ),
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 50,
-                margin: EdgeInsets.only(left: 10),
-                child: Observer(
-                  builder: (context) => ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(left: 5.0),
-                        child: Observer(
-                          builder: (context) => ChoiceChip(
-                            selectedColor: Colors.pink,
-                            label: Text(
-                                _storyStore.categories!.keys.elementAt(index)),
-                            selected: _storyStore.selectedCategory == index,
-                            onSelected: (selected) {
-                              if (selected) {
-                                _storyStore.filterBookmarks(
-                                  index,
-                                  _storyStore.categories!.keys.elementAt(index),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: _storyStore.categories?.length ?? 0,
-                  ),
-                ),
-              ),
-            ),
-            BookmarkComponent(
-              categoryStories: _storyStore,
-              translation: _translation,
-              categories: _storyStore.categories,
-            ),
-            SliverPadding(padding: EdgeInsets.only(top: 15.0)),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -315,24 +252,32 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget categoryItem({required Result item, required String imageUrl}) {
     return Container(
       height: 120,
-      width: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: Color.fromRGBO(28, 171, 226, 0.5),
       ),
-      margin: EdgeInsets.all(5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      margin: EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Flexible(
-            child: getItemTitleImage(imageUrl),
+          Container(
+            width: 200,
+            margin: EdgeInsets.only(left: 20),
+            child: Text(
+              item.name!.split('/')[0].toString(),
+              style: titleWhiteTextStlye,
+            ),
           ),
-          Text(
-            item.name!.split('/')[0].toString(),
-            textAlign: TextAlign.center,
-            style: titleWhiteTextStlye,
+          Flexible(
+            child: Container(
+              margin: EdgeInsets.only(
+                right: 20,
+                top: 10,
+                bottom: 10,
+              ),
+              child: getItemTitleImage(imageUrl),
+            ),
           ),
         ],
       ),

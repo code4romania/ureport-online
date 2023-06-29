@@ -63,19 +63,6 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
                 menuItem(
                   context,
-                  _translation["profile"]!,
-                  () => context.router.push(
-                    ProfileScreenRoute(
-                      translation:
-                          translations["${_stateStore.selectedLanguage}"]![
-                              "profile_screen"]!,
-                      profile: _stateStore.profile!,
-                      initialIndex: 0,
-                    ),
-                  ),
-                ), //NavUtils.push(context, ProfileScreen())),
-                menuItem(
-                  context,
                   _translation["feedback"]!,
                   () => context.router.push(
                     FeedbackScreenRoute(

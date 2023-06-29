@@ -146,11 +146,6 @@ class _OpenAppScreenState extends State<OpenAppScreen> {
                   "continue"]!,
               onPressed: () {
                 if (_controller.page == 1) {
-                  Logger log = Logger();
-                  log.d(SPUtil().getValue(SPUtil.API_BASE_URL));
-                  if (SPUtil().getValue(SPUtil.API_BASE_URL) == '') {
-                    _state.changeLanguage('ro');
-                  }
                   context.router.push(OnboardingScreenRoute());
                 } else {
                   _controller.nextPage(

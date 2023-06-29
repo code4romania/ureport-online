@@ -105,13 +105,25 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "yes": "Da",
     },
     "category_screen": {
-      "header": "Categorii",
-      "title": "Categorii",
+      "header": "Articole",
+      "title": "Descoperă articole",
+      "title_bookmarks": "Articolele mele",
       "no_articles": "Nu există articole în această categorie",
       "no_articles_list": "Nu există categorii disponibile!",
       "retry": "Apasă pentru a reîncerca",
       "body":
-          "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! "
+          "Navighează prin categoriile de mai jos, alege ce te pasionează și câștigă puncte pentru a deveni cel mai bun! ",
+      "my_articols": "Articolele mele",
+      "no_badges": "Nu ai nicio medalie încă!",
+      "shareBookmarkTitle": "U-Report",
+      "shareBookmarkBody": "Tocmai am adaugat un nou bookmark in U-Report!",
+      "no_bookmarks": "Nu ai niciun bookmark încă!",
+      "badges_title": "Medalii",
+      "back": "Înapoi",
+      "share": "Distribuie",
+      "shareMedalTitle": "U-Report",
+      "shareMedalBody": "Tocmai am obtinut o medalie noua in U-Report!",
+      "no_bookmarks_filtered": "Nu ai niciun bookmark din categoria ",
     },
     "articles_category_screen": {
       "header": "Articole",

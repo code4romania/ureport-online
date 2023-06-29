@@ -10,6 +10,7 @@ class StateStore = _StateStoreBase with _$StateStore;
 abstract class _StateStoreBase with Store {
   _StateStoreBase() {
     selectedLanguage = "ro";
+    changeLanguage('ro');
   }
 
   Logger _log = Logger();
