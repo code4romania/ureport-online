@@ -272,22 +272,22 @@ mixin _$CategoryStories on _CategoryStories, Store {
       ActionController(name: '_CategoryStories', context: context);
 
   @override
-  void filterBookmarks(int index, String filter) {
+  void filterBookmarks(int index, String filter, String allText) {
     final _$actionInfo = _$_CategoryStoriesActionController.startAction(
         name: '_CategoryStories.filterBookmarks');
     try {
-      return super.filterBookmarks(index, filter);
+      return super.filterBookmarks(index, filter, allText);
     } finally {
       _$_CategoryStoriesActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setCategories(Map<String, List<Result>>? map) {
+  void setCategories(Map<String, List<Result>>? map, String allText) {
     final _$actionInfo = _$_CategoryStoriesActionController.startAction(
         name: '_CategoryStories.setCategories');
     try {
-      return super.setCategories(map);
+      return super.setCategories(map, allText);
     } finally {
       _$_CategoryStoriesActionController.endAction(_$actionInfo);
     }

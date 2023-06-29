@@ -77,7 +77,7 @@ class BadgesComponent extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Vezi toate', // TODO : XX
+                    translation["see_all"]!, // TODO : XX
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.white,

@@ -50,7 +50,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
     _storyStore.getBadges();
     _storyStore.fetchCategories();
     _storyStore.xGetBookmarks();
-    _storyStore.filterBookmarks(0, "Toate");
+    _storyStore.filterBookmarks(0, _translation["all"]!, _translation["all"]!);
   }
 
   @override
@@ -189,7 +189,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                           }
                         }
                       });
-                      _storyStore.setCategories(map);
+                      _storyStore.setCategories(map, _translation["all"]!);
                       return Container(
                         height: 200,
                         margin: EdgeInsets.only(left: 10),
@@ -210,7 +210,10 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                                 )
                                     .then((value) {
                                   _storyStore.xGetBookmarks();
-                                  _storyStore.filterBookmarks(0, "Toate");
+                                  _storyStore.filterBookmarks(
+                                      0,
+                                      _translation["all"]!,
+                                      _translation["all"]!);
                                 });
                               },
                               child: categoryItem(
@@ -237,11 +240,12 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         .push(CategoryListSearchScreenRoute())
                         .then((value) {
                       _storyStore.xGetBookmarks();
-                      _storyStore.filterBookmarks(0, "Toate");
+                      _storyStore.filterBookmarks(
+                          0, _translation["all"]!, _translation["all"]!);
                     });
                   },
                   child: Text(
-                    "Vezi toate",
+                    _translation["see_all"]!,
                     textAlign: TextAlign.end,
                     style: TextStyle(
                       color: Color.fromARGB(255, 159, 75, 152),
@@ -288,6 +292,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                                 _storyStore.filterBookmarks(
                                   index,
                                   _storyStore.categories!.keys.elementAt(index),
+                                  _translation["all"]!,
                                 );
                               }
                             },

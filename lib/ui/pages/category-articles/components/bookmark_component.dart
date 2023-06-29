@@ -1,11 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:logger/logger.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/category_stories_store.dart';
-import 'package:ureport_ecaro/models/bookmark.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
@@ -65,8 +62,9 @@ class BookmarkComponent extends StatelessWidget {
               child: Card(
                 elevation: 5.0,
                 color: Color(0xFFF6F6F6),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -107,10 +105,12 @@ class BookmarkComponent extends StatelessWidget {
                   )
                       .then((value) {
                     categoryStories.xGetBookmarks();
-                    categoryStories.filterBookmarks(0, 'Toate');
+                    categoryStories.filterBookmarks(
+                        0, translation["all"]!, translation["all"]!);
                   }),
                   child: _BookmarkWidget(
                     story: categoryStories.bookMarks[index],
+                    textReadMore: translation["read_more"]!,
                     onTap: () async {
                       context.router.push(
                         ArticleScreenRoute(
@@ -140,6 +140,7 @@ class BookmarkComponent extends StatelessWidget {
                     .then((value) => categoryStories.xGetBookmarks()),
                 child: _BookmarkWidget(
                   story: categoryStories.bookmarksFiltered[index],
+                  textReadMore: translation["read_more"]!,
                   onTap: () async {
                     context.router.push(
                       ArticleScreenRoute(
@@ -163,10 +164,12 @@ class _BookmarkWidget extends StatelessWidget {
     Key? key,
     required this.story,
     required this.onTap,
+    required this.textReadMore,
   }) : super(key: key);
 
   final StoryItem story;
   final VoidCallback onTap;
+  final String textReadMore;
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +209,7 @@ class _BookmarkWidget extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: onTap, child: Text('CITESTE MAI MULT')),
+            TextButton(onPressed: onTap, child: Text(textReadMore)),
             SizedBox(
               height: 40,
             ),

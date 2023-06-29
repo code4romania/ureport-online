@@ -85,10 +85,10 @@ abstract class _CategoryStories with Store {
   }
 
   @action
-  void filterBookmarks(int index, String filter) {
+  void filterBookmarks(int index, String filter, String allText) {
     _selectedCategory = index;
     hasFilter = false;
-    if (filter == "Toate") {
+    if (filter == allText) {
       bookmarksFiltered = bookMarks;
       return;
     }
@@ -100,9 +100,9 @@ abstract class _CategoryStories with Store {
   }
 
   @action
-  void setCategories(Map<String, List<Result>>? map) {
+  void setCategories(Map<String, List<Result>>? map, String allText) {
     categories = map;
-    categories!.addAll({"Toate": []});
+    categories!.addAll({allText: []});
     final reverseM =
         LinkedHashMap.fromEntries(categories!.entries.toList().reversed);
     categories = reverseM;
