@@ -1,4 +1,8 @@
+import 'dart:collection';
+
 import 'package:mobx/mobx.dart';
+import 'package:ureport_ecaro/models/badge_medal.dart';
+import 'package:ureport_ecaro/models/bookmark.dart' as bookmark;
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 import '../services/category_article_service.dart';
@@ -11,12 +15,25 @@ class CategoryStories = _CategoryStories with _$CategoryStories;
 
 abstract class _CategoryStories with Store {
   final CategoryArticleService httpClient = CategoryArticleService();
+  late int userId;
+  _CategoryStories() {
+    userId = SPUtil().getInt(SPUtil.KEY_USER_ID);
+  }
 
   List<Story>? _initialStoryList;
   List<Result>? initialCategoryList;
 
   @observable
   ObservableFuture<ObservableList<Result>>? categoryList;
+
+  @observable
+  Map<String, List<Result>>? categories;
+
+  @observable
+  int _selectedCategory = 0;
+
+  @computed
+  int get selectedCategory => _selectedCategory;
 
   @observable
   ObservableList<Story> stories = ObservableList<Story>();
@@ -33,6 +50,64 @@ abstract class _CategoryStories with Store {
   @observable
   bool isStoryBookmarked = false;
 
+  @observable
+  ObservableList<BadgeMedal> badges = <BadgeMedal>[].asObservable();
+
+  @observable
+  bool badgesLoading = true;
+
+  @observable
+  bool bookmarksLoading = true;
+
+  @observable
+  bool hasFilter = false;
+
+  @observable
+  List<storyFull.StoryItem> bookMarks = <storyFull.StoryItem>[].asObservable();
+  @observable
+  List<storyFull.StoryItem> bookmarksFiltered =
+      <storyFull.StoryItem>[].asObservable();
+
+  @action
+  Future xGetBookmarks() async {
+    bookmarksLoading = true;
+    bookMarks.removeWhere((element) => true);
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    var list = await fetchBookmarks();
+    for (bookmark.Bookmark element in list) {
+      var story = await httpClient
+          .xgetStory("https://$baseApiUrl/api/v1/stories/${element.story!.id}");
+      if (story != null) {
+        bookMarks.add(story);
+      }
+    }
+    bookmarksLoading = false;
+  }
+
+  @action
+  void filterBookmarks(int index, String filter, String allText) {
+    _selectedCategory = index;
+    hasFilter = false;
+    if (filter == allText) {
+      bookmarksFiltered = bookMarks;
+      return;
+    }
+    bookmarksFiltered = bookMarks.where((element) {
+      var category = element.category?.name ?? "";
+      return category.toLowerCase().contains(filter.toLowerCase());
+    }).toList();
+    hasFilter = true;
+  }
+
+  @action
+  void setCategories(Map<String, List<Result>>? map, String allText) {
+    categories = map;
+    categories!.addAll({allText: []});
+    final reverseM =
+        LinkedHashMap.fromEntries(categories!.entries.toList().reversed);
+    categories = reverseM;
+  }
+
   @action
   Future getRecentStories() {
     final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
@@ -40,6 +115,34 @@ abstract class _CategoryStories with Store {
       httpClient
           .getRecentStories('https://$baseApiUrl/api/v1/stories/org/1?limit=2'),
     ).then((stories) => stories.asObservable());
+  }
+
+  @action
+  Future<void> getBadges() async {
+    final claimedBadges =
+        (await httpClient.getClaimedMedals(userId: userId, orgId: 1))
+            .asObservable();
+
+    final allBadges = (await httpClient.getAllMedals(userId: userId, orgId: 1))
+        .asObservable();
+
+    // Filter out the claimed badges from all badges adding owned = true to the claimed ones
+    allBadges.forEach((element) {
+      if (claimedBadges.any((badge) => badge.badge_type?.id == element.id)) {
+        badges.add(element.copyWith(owned: true));
+      } else {
+        badges.add(element.copyWith(owned: false));
+      }
+    });
+
+    //Sort badges by owned, owned being first
+    badges.sort((a, b) {
+      if (a.owned! && !b.owned!) return -1;
+      if (!a.owned! && b.owned!) return 1;
+      return 0;
+    });
+
+    badgesLoading = false;
   }
 
   @action
@@ -78,5 +181,10 @@ abstract class _CategoryStories with Store {
           .toList()
           .asObservable();
     }
+  }
+
+  @action
+  Future<List<bookmark.Bookmark>> fetchBookmarks() async {
+    return await httpClient.getBookmarks(userId: userId).asObservable();
   }
 }

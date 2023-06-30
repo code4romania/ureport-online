@@ -80,11 +80,7 @@ class FinishReadingComponent extends StatelessWidget {
                   : translation["continue"]!,
               onPressed: () {
                 if (hasClaimedBadge) {
-                  context.router.replace(ProfileScreenRoute(
-                    translation: translationProfile,
-                    profile: profile,
-                    initialIndex: 1,
-                  ));
+                  context.router.popUntilRouteWithName(RootPageRoute.name);
                 } else {
                   context.router.pop();
                 }

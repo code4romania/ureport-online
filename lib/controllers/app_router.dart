@@ -2,7 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/article_list_screen.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/article_screen.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/articles_category_screen.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/badges_screen.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/category_list_screen.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/category_list_search_screen.dart';
 import 'package:ureport_ecaro/ui/pages/chat/chat_screen.dart';
 import 'package:ureport_ecaro/ui/pages/home/home_screen.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/login.dart';
@@ -19,7 +21,6 @@ import 'package:ureport_ecaro/ui/pages/profile/feedback_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/language_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/menu_screen.dart';
 import 'package:ureport_ecaro/ui/pages/profile/notification_screen.dart';
-import 'package:ureport_ecaro/ui/pages/profile/profile_screen.dart';
 import 'package:ureport_ecaro/ui/pages/root_page.dart';
 
 import '../ui/pages/login-register/forgot_password.dart';
@@ -46,7 +47,6 @@ import '../ui/pages/login-register/forgot_password.dart';
     AdaptiveRoute(page: AccountScreen),
     AdaptiveRoute(page: LanguageScreen),
     AdaptiveRoute(page: FeedbackScreen),
-    AdaptiveRoute(page: ProfileScreen),
 
     // Profile
     AdaptiveRoute(page: RegisterScreen),
@@ -59,6 +59,8 @@ import '../ui/pages/login-register/forgot_password.dart';
     AdaptiveRoute(page: ArticleScreen),
     AdaptiveRoute(page: ArticleListScreen),
     AdaptiveRoute(page: ArticlesCategoryScreen),
+    AdaptiveRoute(page: BadgesScreen),
+    AdaptiveRoute(page: CategoryListSearchScreen),
 
     // Opinions
     AdaptiveRoute(page: OpinionSearchScreen),
