@@ -212,6 +212,22 @@ mixin _$CategoryStories on _CategoryStories, Store {
     });
   }
 
+  late final _$storyReadCountAtom =
+      Atom(name: '_CategoryStories.storyReadCount', context: context);
+
+  @override
+  int get storyReadCount {
+    _$storyReadCountAtom.reportRead();
+    return super.storyReadCount;
+  }
+
+  @override
+  set storyReadCount(int value) {
+    _$storyReadCountAtom.reportWrite(value, super.storyReadCount, () {
+      super.storyReadCount = value;
+    });
+  }
+
   late final _$bookMarksAtom =
       Atom(name: '_CategoryStories.bookMarks', context: context);
 
@@ -250,6 +266,14 @@ mixin _$CategoryStories on _CategoryStories, Store {
   @override
   Future<dynamic> xGetBookmarks() {
     return _$xGetBookmarksAsyncAction.run(() => super.xGetBookmarks());
+  }
+
+  late final _$getStoryReadCountAsyncAction =
+      AsyncAction('_CategoryStories.getStoryReadCount', context: context);
+
+  @override
+  Future<int> getStoryReadCount() {
+    return _$getStoryReadCountAsyncAction.run(() => super.getStoryReadCount());
   }
 
   late final _$getBadgesAsyncAction =
@@ -362,6 +386,7 @@ badges: ${badges},
 badgesLoading: ${badgesLoading},
 bookmarksLoading: ${bookmarksLoading},
 hasFilter: ${hasFilter},
+storyReadCount: ${storyReadCount},
 bookMarks: ${bookMarks},
 bookmarksFiltered: ${bookmarksFiltered},
 selectedCategory: ${selectedCategory}

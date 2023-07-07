@@ -9,6 +9,7 @@ import 'package:ureport_ecaro/controllers/category_stories_store.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/category_list_search_screen.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/article_item.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/badges_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/bookmark_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/searchbar_widget.dart';
@@ -17,6 +18,7 @@ import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 import 'package:ureport_ecaro/ui/shared/general_button_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
+import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../../services/click_sound_service.dart';
@@ -89,8 +91,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 child: Text(
                   _translation['title']!,
                   style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -191,7 +193,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                       });
                       _storyStore.setCategories(map, _translation["all"]!);
                       return Container(
-                        height: 200,
+                        height: 89,
                         margin: EdgeInsets.only(left: 10),
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -249,7 +251,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     textAlign: TextAlign.end,
                     style: TextStyle(
                       color: Color.fromARGB(255, 159, 75, 152),
-                      // fontWeight: FontWeight.,
+                      fontWeight: FontWeight.w700,
                       fontSize: 14,
                       fontFamily: 'Inter',
                     ),
@@ -264,8 +266,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 child: Text(
                   _translation['title_bookmarks']!,
                   style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -283,9 +285,20 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                         padding: EdgeInsets.only(left: 5.0),
                         child: Observer(
                           builder: (context) => ChoiceChip(
-                            selectedColor: Colors.pink,
+                            selectedColor: HexColor("#FBE3F9"),
                             label: Text(
-                                _storyStore.categories!.keys.elementAt(index)),
+                              _storyStore.categories!.keys.elementAt(index),
+                              style: TextStyle(
+                                  fontWeight:
+                                      _storyStore.selectedCategory == index
+                                          ? FontWeight.w700
+                                          : FontWeight.w500,
+                                  color: _storyStore.selectedCategory == index
+                                      ? HexColor('#9F4B98')
+                                      : HexColor('#1E3A8A'),
+                                  fontSize: 14.0,
+                                  fontFamily: 'inter'),
+                            ),
                             selected: _storyStore.selectedCategory == index,
                             onSelected: (selected) {
                               if (selected) {
@@ -310,7 +323,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
               translation: _translation,
               categories: _storyStore.categories,
             ),
-            SliverPadding(padding: EdgeInsets.only(top: 15.0)),
+            SliverPadding(padding: EdgeInsets.only(top: 30.0)),
           ],
         ),
       ),
@@ -319,8 +332,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   Widget categoryItem({required Result item, required String imageUrl}) {
     return Container(
-      height: 120,
-      width: 200,
+      height: 87,
+      width: 89,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: Color.fromRGBO(28, 171, 226, 0.5),
@@ -337,7 +350,11 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           Text(
             item.name!.split('/')[0].toString(),
             textAlign: TextAlign.center,
-            style: titleWhiteTextStlye,
+            style: TextStyle(
+                fontSize: 10.12,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                fontFamily: 'inter'),
           ),
         ],
       ),
@@ -347,8 +364,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
         ? CachedImageComponent(
-            width: 120,
-            height: 120,
+            width: 63,
+            height: 47,
             imageUrl: imageUrl,
           )
         : Image(

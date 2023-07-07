@@ -15,6 +15,7 @@ import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/constants.dart';
+import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 class BadgesScreen extends StatefulWidget {
@@ -139,8 +140,8 @@ class _MedalWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 100,
-            height: 100,
+            width: 145,
+            height: 145,
             child: CachedImageComponent(
               imageUrl: medal.image ?? "",
               blockedImage: medal.owned == true ? null : true,
@@ -152,10 +153,9 @@ class _MedalWidget extends StatelessWidget {
               medal.title ?? "",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
-                fontFamily: 'Inter',
-              ),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  fontFamily: 'Inter'),
             ),
           ),
           Container(
@@ -163,16 +163,26 @@ class _MedalWidget extends StatelessWidget {
             child: Text(
               medal.description ?? "",
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
                 fontFamily: 'Inter',
               ),
             ),
           ),
           TextButton.icon(
             onPressed: onPressedShare,
-            icon: Icon(Icons.share),
+            icon: Icon(
+              Icons.share,
+              color: HexColor('#9F4B98'),
+            ),
             label: Text(
               shareText,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w700,
+                fontSize: 14.0,
+                color: HexColor('#9F4B98'),
+              ),
             ),
           ),
         ],

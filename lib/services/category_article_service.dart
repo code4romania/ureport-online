@@ -127,6 +127,22 @@ class CategoryArticleService {
     }
   }
 
+  Future<int> getStoryReadCount({required int userId}) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    final response = await http.get(
+      Uri.parse('https://$baseApiUrl/api/v1/storyreads/user/$userId/'),
+      headers: header,
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final List<dynamic> storyes = jsonResponse;
+
+      return storyes.length;
+    } else {
+      return 0;
+    }
+  }
+
   Future<storyFull.StoryItem?> xgetStory(String url) async {
     try {
       final response = await http.get(Uri.parse(url));

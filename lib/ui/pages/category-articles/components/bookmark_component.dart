@@ -7,6 +7,7 @@ import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
+import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
 
 class BookmarkComponent extends StatelessWidget {
   final CategoryStories categoryStories;
@@ -119,6 +120,8 @@ class BookmarkComponent extends StatelessWidget {
                         ),
                       );
                     },
+                    isExpanded: true,
+                    width: MediaQuery.of(context).size.width,
                   ),
                 ),
               );
@@ -149,6 +152,8 @@ class BookmarkComponent extends StatelessWidget {
                       ),
                     );
                   },
+                  isExpanded: true,
+                  width: MediaQuery.of(context).size.width,
                 ),
               ),
             );
@@ -165,57 +170,131 @@ class _BookmarkWidget extends StatelessWidget {
     required this.story,
     required this.onTap,
     required this.textReadMore,
+    required this.width,
+    required this.isExpanded,
   }) : super(key: key);
 
   final StoryItem story;
   final VoidCallback onTap;
   final String textReadMore;
+  final double? width;
+  final bool isExpanded;
 
   @override
   Widget build(BuildContext context) {
-    String bookmarkImageUrl = "";
+    double widgetWidth = width ?? 190;
 
-    if (story.images != null && story.images!.isNotEmpty) {
-      bookmarkImageUrl = story.images![0];
+    String imageUrl = "";
+    String title = "";
+
+    title = story.title ?? '';
+    if (story.images != null) {
+      imageUrl = story.images!.first;
     }
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Container(
+        width: widgetWidth,
+        margin: EdgeInsets.only(
+          top: 20,
+          left: 10,
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(8, 8),
+                spreadRadius: 2,
+                blurRadius: 5,
+                color: Color.fromRGBO(0, 0, 0, 0.25),
+              ),
+            ]),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CachedImageComponent(
-              imageUrl: bookmarkImageUrl,
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              child: imageUrl.isNotEmpty
+                  ? CachedImageComponent(
+                      width: widgetWidth,
+                      height: isExpanded ? 230 : 172,
+                      // 4/3 aici
+                      // 16/9 landscape
+
+                      imageUrl: imageUrl,
+                    )
+                  : Image.asset(
+                      "assets/images/image_placeholder.jpg",
+                      fit: BoxFit.cover,
+                    ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: 10.0),
-              child: Text(
-                story.category?.name ?? "",
-                style: TextStyle(fontSize: 16),
+              height: 50,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CircleAvatar(
+                    radius: 4,
+                    backgroundColor: Color.fromRGBO(155, 13, 132, 1),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    width: widgetWidth - 80,
+                    child: Text(
+                      story.category?.name ?? '',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 10,
             ),
             Container(
-              width: MediaQuery.of(context).size.width,
+              width: widgetWidth,
+              margin: EdgeInsets.only(
+                left: 15,
+                top: 10,
+                right: 5,
+              ),
               child: Text(
-                story.title ?? "",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: isExpanded ? 2 : 3,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            TextButton(onPressed: onTap, child: Text(textReadMore)),
-            SizedBox(
-              height: 40,
+            Container(
+              height: 20,
+              width: widgetWidth,
+              margin: EdgeInsets.only(
+                top: 10,
+                left: 20,
+                right: 20,
+                bottom: 10,
+              ),
+              child: Text(
+                textReadMore,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: HexColor("#A72D6F"),
+                ),
+              ),
             ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
