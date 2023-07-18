@@ -251,7 +251,7 @@ class _CategoryListSearchScreenState extends State<CategoryListSearchScreen> {
 
   Widget categoryItem({required Result item, required String imageUrl}) {
     return Container(
-      height: 120,
+      height: 72,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: Color.fromRGBO(28, 171, 226, 0.5),
@@ -266,7 +266,11 @@ class _CategoryListSearchScreenState extends State<CategoryListSearchScreen> {
             margin: EdgeInsets.only(left: 20),
             child: Text(
               item.name!.split('/')[0].toString(),
-              style: titleWhiteTextStlye,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
           Flexible(
@@ -287,8 +291,8 @@ class _CategoryListSearchScreenState extends State<CategoryListSearchScreen> {
   Widget getItemTitleImage(String? imageUrl) {
     return imageUrl != null
         ? CachedImageComponent(
-            width: 120,
-            height: 120,
+            width: 50,
+            height: 60,
             imageUrl: imageUrl,
           )
         : Image(

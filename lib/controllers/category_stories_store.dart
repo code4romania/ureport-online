@@ -18,6 +18,7 @@ abstract class _CategoryStories with Store {
   late int userId;
   _CategoryStories() {
     userId = SPUtil().getInt(SPUtil.KEY_USER_ID);
+    getStoryReadCount();
   }
 
   List<Story>? _initialStoryList;
@@ -63,6 +64,9 @@ abstract class _CategoryStories with Store {
   bool hasFilter = false;
 
   @observable
+  int storyReadCount = 0;
+
+  @observable
   List<storyFull.StoryItem> bookMarks = <storyFull.StoryItem>[].asObservable();
   @observable
   List<storyFull.StoryItem> bookmarksFiltered =
@@ -82,6 +86,11 @@ abstract class _CategoryStories with Store {
       }
     }
     bookmarksLoading = false;
+  }
+
+  @action
+  Future<int> getStoryReadCount() async {
+    return storyReadCount = await httpClient.getStoryReadCount(userId: userId);
   }
 
   @action
