@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/category_stories_store.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 import 'package:ureport_ecaro/models/badge_medal.dart';
 import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
@@ -46,8 +41,12 @@ class BadgesComponent extends StatelessWidget {
           children: [
             Text(
               getBadgesCount() != 0
-                  ? 'Felicitări, ai obținut ${getBadgesCount()} medalii!'
-                  : 'Citește articole și obține medalii!',
+                  ? translation["badges_obtained_text1"]! +
+                      " " +
+                      getBadgesCount().toString() +
+                      " " +
+                      translation['badges_obtained_tet2']!
+                  : " " + translation["read_articles_obtain_badges"]!,
               style: TextStyle(
                   fontFamily: 'inter',
                   fontSize: 16.0,
@@ -55,7 +54,7 @@ class BadgesComponent extends StatelessWidget {
                   fontWeight: FontWeight.w600),
             ),
             Text(
-              '${categoryStories.storyReadCount} articole citite',
+              '${categoryStories.storyReadCount} ${translation["article_read"]}',
               style: TextStyle(
                   fontFamily: 'inter',
                   fontSize: 12.0,
