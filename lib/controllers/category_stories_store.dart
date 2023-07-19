@@ -120,9 +120,15 @@ abstract class _CategoryStories with Store {
   @action
   Future getRecentStories() {
     final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    final String local = SPUtil().getValue(SPUtil.KEY_USER_LANGUAGE);
+    String org= '1';
+    if (local == 'uk')
+      {
+       org = '2';
+      }
     return recentStories = ObservableFuture(
       httpClient
-          .getRecentStories('https://$baseApiUrl/api/v1/stories/org/1?limit=2'),
+          .getRecentStories('https://$baseApiUrl/api/v1/stories/org/$org?limit=2'),
     ).then((stories) => stories.asObservable());
   }
 
@@ -163,10 +169,16 @@ abstract class _CategoryStories with Store {
   @action
   Future fetchCategories() {
     final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    final String local = SPUtil().getValue(SPUtil.KEY_USER_LANGUAGE);
+    String org= '1';
+    if (local == 'uk')
+    {
+      org = '2';
+    }
     return categoryList = ObservableFuture(
       httpClient
           .getCategories(
-              'https://$baseApiUrl/api/v1/categories/org/1/?limit=100')
+              'https://$baseApiUrl/api/v1/categories/org/$org/?limit=100')
           .then((categories) =>
               categories?.asObservable() ?? <Result>[].asObservable()),
     );

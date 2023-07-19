@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/models/category.dart';
 import 'package:ureport_ecaro/models/story.dart' as storyFull;
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 
+import '../../../../controllers/state_store.dart';
 import '../../../../utils/hex_colors_utils.dart';
+import '../../../../utils/translation.dart';
 
 class ArticleItemWidget extends StatelessWidget {
   ArticleItemWidget({
@@ -22,6 +25,9 @@ class ArticleItemWidget extends StatelessWidget {
   final String subCategoryName;
   final bool isExpanded;
   final double? width;
+  late Map<String, String> _translation;
+  late StateStore _stateStore;
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,9 @@ class ArticleItemWidget extends StatelessWidget {
 
     String imageUrl = "";
     String title = "";
+    _stateStore = context.read<StateStore>();
+    _translation = translations["${_stateStore.selectedLanguage}"]![
+    "category_screen"]!;
 
     title = article?.title ?? articleFull?.title ?? "";
 
@@ -136,7 +145,7 @@ class ArticleItemWidget extends StatelessWidget {
                 bottom: 10,
               ),
               child: Text(
-                "CITEȘTE MAI MULT",
+                _translation['read_more']!,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,

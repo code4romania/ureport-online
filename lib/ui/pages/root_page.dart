@@ -13,11 +13,16 @@ import '../../utils/sp_utils.dart';
 class RootPage extends StatelessWidget {
   RootPage({super.key});
   late StateStore _store;
+  late Map<String, String> _translation;
+
 
   void setInitialLocal() {
     String? localeLanguage = SPUtil().getValue(SPUtil.KEY_USER_LANGUAGE);
 
+
     print(localeLanguage);
+    _translation = translations["${_store.selectedLanguage}"]!["navbar"]!;
+
 
     if (localeLanguage == "ro" || localeLanguage.isEmpty) {
       print("Nu exista limba aleasa, continuam cu Romana");
@@ -127,7 +132,7 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                         ),
-                        label: 'Home',
+                        label: _translation['home']!,
                       ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(
@@ -139,7 +144,7 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                         ),
-                        label: 'Chat',
+                        label: _translation['chat']!,
                       ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(
@@ -151,7 +156,7 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                         ),
-                        label: 'Articole',
+                        label: _translation['articles']!,
                       ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(
@@ -163,11 +168,11 @@ class RootPage extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                         ),
-                        label: 'Opinii',
+                        label: _translation['reviews']!,
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.menu_outlined),
-                        label: 'Mai multe',
+                        label: _translation['more']!,
                       ),
                     ],
                   ),

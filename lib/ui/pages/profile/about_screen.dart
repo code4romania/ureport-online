@@ -43,7 +43,7 @@ class AboutScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 20, left: 20, right: 20),
               width: MediaQuery.of(context).size.width,
               child: Text(
-                "Despre proiect",
+                  translations["title"]!,
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
               ),
             ),

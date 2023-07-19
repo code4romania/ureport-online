@@ -1,5 +1,12 @@
 final Map<String, Map<String, Map<String, String>>> translations = {
   "ro": {
+    "navbar":{
+      'home':'Acasa',
+      'chat':'Chat',
+      'articles':'Articole',
+      'reviews': 'Opinii',
+      'more': "Mai mult",
+    },
     "open_app_screen": {
       "choose_language": "Selectează limba",
       "header": "Intro",
@@ -269,6 +276,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
           "În acest moment folosești aplicația uReport în limba română. Selectează de mai jos ce limbă vrei să utilizezi din cele disponibile. ",
       "romanian": "Limbaa română",
       "ukrainian": "Limba ucraineană",
+      'uk':'true',
       "reset_required": "Atenție! Schimbarea limbii va reseta aplicația!",
     },
     "change_password_screen": {
@@ -344,6 +352,13 @@ final Map<String, Map<String, Map<String, String>>> translations = {
     },
   },
   "uk": {
+    "navbar":{
+      'home':'Головна',
+      'chat':'Чат',
+      'articles':'Пости',
+      'reviews': 'Відгуки',
+      'more': "Більше",
+    },
     "open_app_screen": {
       "choose_language": "Оберіть мову",
       "header": "вступ",
@@ -614,6 +629,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
           "Зараз ви використовуєте програму uReport українською мовою. Нижче виберіть мову, яку ви хочете використовувати з доступних.",
       "romanian": "Румунська мова",
       "ukrainian": "українська",
+      'ro':'true',
       "reset_required":
           "Звернути увагу! Зміна пароля призведе до скидання програми!",
     },
