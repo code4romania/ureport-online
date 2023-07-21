@@ -54,7 +54,8 @@ abstract class _RegisterStoreBase with Store {
         validateEmail() &&
         validatePassword() &&
         validatePasswordConfirm() &&
-        validateMatchingPasswords()) {
+        validateMatchingPasswords() &&
+        validateRegexPassword()) {
       result = null;
       errorMessage = null;
 
@@ -143,6 +144,20 @@ abstract class _RegisterStoreBase with Store {
       return false;
     } else {
       confirmPwError = null;
+      return true;
+    }
+  }
+
+  @action
+  bool validateRegexPassword() {
+    RegExp passwordRegex = RegExp(
+      r'^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>])(?=.*[a-z])(?=.*[0-9]).+$',
+    );
+    if (!passwordRegex.hasMatch(passwdController.text)) {
+      passwordError = translation["weak_password"];
+      return false;
+    } else {
+      passwordError = null;
       return true;
     }
   }

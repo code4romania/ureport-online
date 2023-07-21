@@ -191,6 +191,17 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
+  bool validateRegexPassword() {
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.validateRegexPassword');
+    try {
+      return super.validateRegexPassword();
+    } finally {
+      _$_RegisterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 emailError: ${emailError},
