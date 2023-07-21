@@ -45,6 +45,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "short_pw": "Parola este prea scurta",
       "no_matching_pw": "Parolele nu se potrivesc",
       "existing_acc": "Există deja un cont cu acest email!",
+      "weak_password":
+          "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
           'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios! ',
     },
@@ -397,6 +399,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "short_pw": "Пароль занадто короткий",
       "no_matching_pw": "Паролі не збігаються",
       "existing_acc": "Уже існує обліковий запис із цією електронною адресою!",
+      "weak_password":
+          "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
           'Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний uReporter! ',
     },
