@@ -9,8 +9,13 @@ class StateStore = _StateStoreBase with _$StateStore;
 
 abstract class _StateStoreBase with Store {
   _StateStoreBase() {
-    selectedLanguage = "ro";
-    changeLanguage('ro');
+    String savedLanguage = SPUtil().getValue(SPUtil.KEY_USER_LANGUAGE);
+    if (savedLanguage.isEmpty) {
+      selectedLanguage = "ro";
+    } else {
+      selectedLanguage = savedLanguage;
+    }
+    changeLanguage(selectedLanguage ?? 'ro');
   }
 
   Logger _log = Logger();
