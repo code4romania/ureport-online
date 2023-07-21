@@ -161,15 +161,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   errorText: _registerStore.confirmPwError,
                 );
               }),
-              _registerStore.isLoading
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: LoadingIndicatorComponent(),
-                    )
-                  : MainAppButtonComponent(
-                      title: _translation["submit"]!,
-                      onPressed: () async => _registerStore.register(),
-                    ),
+              Observer(
+                builder: (context) => _registerStore.isLoading
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LoadingIndicatorComponent(),
+                      )
+                    : MainAppButtonComponent(
+                        title: _translation["submit"]!,
+                        onPressed: () async => _registerStore.register(),
+                      ),
+              ),
+
               SizedBox(
                 height: 30,
               ),
