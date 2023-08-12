@@ -30,7 +30,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "succes_title": "Succes!",
       "submit": "Creează cont",
       "succes_message":
-          "Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios!",
+          "Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un U-Reporter conștiincios!",
       "error": "S-a produs o eroare",
       "short_username": "Numele și prenumele sunt prea scurte",
       "invalid_username": "Trebuie să introduci numele și prenumele",
@@ -41,7 +41,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "weak_password":
           "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
-          'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios! ',
+          'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un U-Reporter conștiincios! ',
     },
     "login_screen": {
       "header": "Autentificare",
@@ -376,7 +376,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "succes_title": "Успішно!",
       "submit": "Створити акаунт",
       "succes_message":
-          "Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний uReporter! ",
+          "Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний U-Reporter! ",
       "error": "S-a produs o eroare",
       "short_username": "Ім'я та ім'я занадто короткі",
       "invalid_username": "Ви повинні ввести своє ім'я та прізвище",
@@ -387,7 +387,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "weak_password":
           "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
-          'Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний uReporter! ',
+          'Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний U-Reporter! ',
     },
     "login_screen": {
       "header": "Логін",
