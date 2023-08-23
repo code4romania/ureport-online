@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/profile.dart';
+import 'package:ureport_ecaro/models/response.dart';
 import 'package:ureport_ecaro/services/account_settings_services.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 part 'account_settings_store.g.dart';
@@ -123,6 +124,17 @@ abstract class _AccountSettingsStoreBase with Store {
       return translation["upload_success"];
     } else {
       return uploadResult.message;
+    }
+  }
+
+  @action
+  Future<String?> deleteAccount() async {
+    var result = await httpClient.deleteAccount(userId: userId);
+
+    if (result.statusCode == 200) {
+      return resultMessage = translation["delete_account_success_body"];
+    } else {
+      return resultMessage = result.message;
     }
   }
 }

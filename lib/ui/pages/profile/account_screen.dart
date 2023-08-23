@@ -9,12 +9,14 @@ import 'package:provider/provider.dart';
 import 'package:ureport_ecaro/controllers/account_settings_store.dart';
 import 'package:ureport_ecaro/controllers/app_router.gr.dart';
 import 'package:ureport_ecaro/controllers/state_store.dart';
+import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/pages/login-register/components/login_register_widgets.dart';
 import 'package:ureport_ecaro/ui/pages/profile/components/popup_component.dart';
 import 'package:ureport_ecaro/ui/shared/cached_image_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
 import 'package:ureport_ecaro/utils/snackbar_controller.dart';
+import 'package:ureport_ecaro/utils/sp_utils.dart';
 import 'package:ureport_ecaro/utils/translation.dart';
 
 import '../../shared/general_button_component.dart';
@@ -46,6 +48,17 @@ class _AccountScreenState extends State<AccountScreen> {
     super.initState();
 
     reaction((p0) => _accountSettingsStore.resultMessage != null, (p0) {
+      if (_accountSettingsStore.resultMessage ==
+          _translation["delete_account_success_body"]!) {
+        var spUtil = SPUtil();
+
+        ClickSound.soundClick();
+
+        spUtil.deleteKey(SPUtil.KEY_AUTH_TOKEN);
+        spUtil.deleteKey(SPUtil.KEY_USER_LANGUAGE);
+        spUtil.deleteKey(SPUtil.KEY_USER_ID);
+        context.router.replaceAll([RootPageRoute()]);
+      }
       if (_accountSettingsStore.resultMessage != null) {
         SnackbarController(
           context: context,
@@ -303,49 +316,55 @@ class _AccountScreenState extends State<AccountScreen> {
                             SizedBox(
                               height: 5,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => PopupComponent(
-                                    _translation[
-                                        "delete_account_confirmation_title"]!,
-                                    Icons.warning,
-                                    Color.fromRGBO(254, 226, 226, 1),
-                                    Color.fromRGBO(220, 38, 38, 1),
-                                    _translation[
-                                        "delete_account_confirmation_body"]!,
-                                    _translation[
-                                        "delete_account_confirmation_button"]!,
-                                    () => context.router.pop(),
-                                    _translation["back"]!,
-                                    () => context.router.pop(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: 170,
-                                height: 40,
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.red.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Row(children: [
-                                  Icon(Icons.delete_outline_sharp,
-                                      color: Colors.red),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    _translation["delete_account_button"]!,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w700,
+                            Observer(
+                              builder: (context) => GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => PopupComponent(
+                                      _translation[
+                                          "delete_account_confirmation_title"]!,
+                                      Icons.warning,
+                                      Color.fromRGBO(254, 226, 226, 1),
+                                      Color.fromRGBO(220, 38, 38, 1),
+                                      _translation[
+                                          "delete_account_confirmation_body"]!,
+                                      _translation[
+                                          "delete_account_confirmation_button"]!,
+                                      () async {
+                                        await _accountSettingsStore
+                                            .deleteAccount();
+                                        context.router.pop();
+                                      },
+                                      _translation["back"]!,
+                                      () => context.router.pop(),
                                     ),
+                                  );
+                                },
+                                child: Container(
+                                  width: 170,
+                                  height: 40,
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                ]),
+                                  child: Row(children: [
+                                    Icon(Icons.delete_outline_sharp,
+                                        color: Colors.red),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      _translation["delete_account_button"]!,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ]),
+                                ),
                               ),
                             ),
                           ],

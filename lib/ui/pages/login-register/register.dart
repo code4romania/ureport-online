@@ -123,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               //     )),
               Observer(builder: (context) {
                 return textField(
-                  label: _translation["username"]!,
+                  label: _translation["name"]!,
                   textInputAction: TextInputAction.next,
                   obscureText: false,
                   keyboardType: TextInputType.name,
@@ -131,6 +131,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   errorText: _registerStore.nameError,
                 );
               }),
+              Observer(builder: (context) {
+                return textField(
+                  label: _translation["surname"]!,
+                  textInputAction: TextInputAction.next,
+                  obscureText: false,
+                  keyboardType: TextInputType.name,
+                  controller: _registerStore.surnameController,
+                  errorText: _registerStore.surnameError,
+                );
+              }),
+
               Observer(builder: (context) {
                 return textField(
                   label: _translation["email"]!,

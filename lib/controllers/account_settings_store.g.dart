@@ -105,6 +105,14 @@ mixin _$AccountSettingsStore on _AccountSettingsStoreBase, Store {
     return _$uploadPictureAsyncAction.run(() => super.uploadPicture());
   }
 
+  late final _$deleteAccountAsyncAction =
+      AsyncAction('_AccountSettingsStoreBase.deleteAccount', context: context);
+
+  @override
+  Future<String?> deleteAccount() {
+    return _$deleteAccountAsyncAction.run(() => super.deleteAccount());
+  }
+
   @override
   String toString() {
     return '''

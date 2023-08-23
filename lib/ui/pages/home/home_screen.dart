@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Observer(builder: (context) {
                 return Text(
                   _translation["title"]! +
-                      "${_stateStore.profile?.first_name} !",
+                      "${_stateStore.profile?.last_name} !",
                   style: titleBlackTextStlye,
                 );
               }),

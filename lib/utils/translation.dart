@@ -27,6 +27,12 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "already_have_account": "Ai deja un cont?",
       "go_to_login": "Autentifică-te",
       "username": "Nume și prenume",
+      "name": "Nume",
+      "surname": "Prenume",
+      "invalid_name": "Trebuie sa introduci numele",
+      "short_name": "Numele este prea scurt",
+      "invalid_surname": "Trebuie sa introduci prenumele",
+      "short_surname": "Prenumele este prea scurt",
       "succes_title": "Succes!",
       "submit": "Creează cont",
       "succes_message":
@@ -161,6 +167,9 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_articles": "Nu s-a găsit acest articol.",
       "ratingTitle": "Oferă un rating acestui articol.",
       "ratingBody": "Apasă pe o stea ca să acorzi rating.",
+      "rating_sent_title": "Mulțumim pentru rating !",
+      "rating_sent_body":
+          "Rating-ul tău a fost salvat. Mulțumim pentru feedback. ",
       "submitRating": "Trimite rating",
       "claimed_badge_title": "Felicitări!",
       "claimed_badge_body_1": "Ai terminat de citit cel de-al ",
@@ -343,6 +352,9 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "delete_account_confirmation_body":
           "Ești sigur că vrei să îți ștergi contul? Atenție! Ștergerea contului duce la ștergerea tuturor informațiilor și progresului aferente contului și nu vor putea fi recuperate",
       "delete_account_confirmation_button": "Șterge cont",
+      "delete_account_success_title": "Success",
+      "delete_account_success_body": "Contul a fost sters cu success",
+      "delete_account_success_confirm": "Ok",
     },
   },
   "uk": {

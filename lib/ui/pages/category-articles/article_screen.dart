@@ -14,6 +14,7 @@ import 'package:ureport_ecaro/services/click_sound_service.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/article_header_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/finish_reading_component.dart';
 import 'package:ureport_ecaro/ui/pages/category-articles/components/rating_component.dart';
+import 'package:ureport_ecaro/ui/pages/category-articles/components/rating_sent_component.dart';
 import 'package:ureport_ecaro/ui/shared/loading_indicator_component.dart';
 import 'package:ureport_ecaro/ui/shared/text_navigator_component.dart';
 import 'package:ureport_ecaro/ui/shared/top_header_widget.dart';
@@ -80,6 +81,15 @@ class _ArticleScreenState extends State<ArticleScreen>
           _storyStore.finishedTimer &&
           _storyStore.badgeTitle.isNotEmpty,
       (p0) => _finishReadingPopUp(),
+    );
+
+    reaction(
+      (p0) => _storyStore.ratingSent,
+      (p0) {
+        if (_storyStore.ratingSent) {
+          _ratingSent();
+        }
+      },
     );
   }
 
@@ -434,6 +444,30 @@ class _ArticleScreenState extends State<ArticleScreen>
             ),
           );
         });
+  }
+
+  void _ratingSent() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Observer(
+          builder: (context) => Center(
+            child: Container(
+              height: 250,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: RatingSentComponent(
+                translation: _translation,
+                onClose: () => _storyStore.toggleRatingSent(),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _rateArticle() {
