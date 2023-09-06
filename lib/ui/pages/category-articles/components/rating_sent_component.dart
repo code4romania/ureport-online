@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:ureport_ecaro/utils/hex_colors_utils.dart';
 
 class RatingSentComponent extends StatelessWidget {
   const RatingSentComponent({

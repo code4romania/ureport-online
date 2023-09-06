@@ -40,7 +40,7 @@ class StoryService {
       headers: header,
     );
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       final List<dynamic> storyes = jsonResponse;
 
       return storyes.length;
@@ -60,7 +60,7 @@ class StoryService {
       headers: header,
     );
     if (response.statusCode == 200) {
-      if (response.body == "[]")
+      if (utf8.decode(response.bodyBytes) == "[]")
         return false;
       else
         return true;
@@ -82,13 +82,13 @@ class StoryService {
       }),
     );
 
-    print(response.body);
+    print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 201 || response.statusCode == 200) {
-      final decodedResponse = jsonDecode(response.body);
-      if (response.body == "[]") return '';
+      final decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      if (utf8.decode(response.bodyBytes) == "[]") return '';
       if (decodedResponse == "[]") return '';
       if (decodedResponse == null) return '';
-      if (response.body.isEmpty) return '';
+      if (utf8.decode(response.bodyBytes).isEmpty) return '';
 
       // claimed badge if response is not empty and not null and not empty list []
       String badgeTitle = decodedResponse[0]['badge_type']['title'];
@@ -111,8 +111,8 @@ class StoryService {
     );
 
     if (response.statusCode == 200) {
-      if (response.body == "[]") return 0;
-      final rating = jsonDecode(response.body)[0]["score"];
+      if (utf8.decode(response.bodyBytes) == "[]") return 0;
+      final rating = jsonDecode(utf8.decode(response.bodyBytes))[0]["score"];
       return rating;
     } else {
       return 0;
@@ -127,8 +127,9 @@ class StoryService {
         Uri.parse("https://$baseApiUrl/api/v1/storysettings/story/$storyId/"));
 
     if (response.statusCode == 200) {
-      if (response.body == "[]") return false;
-      final show = jsonDecode(response.body)["display_rating"] == true;
+      if (utf8.decode(response.bodyBytes) == "[]") return false;
+      final show =
+          jsonDecode(utf8.decode(response.bodyBytes))["display_rating"] == true;
       return show;
     } else {
       return false;
@@ -169,7 +170,7 @@ class StoryService {
       headers: header,
     );
     if (response.statusCode == 200) {
-      if (response.body == "[]")
+      if (utf8.decode(response.bodyBytes) == "[]")
         return false;
       else
         return true;

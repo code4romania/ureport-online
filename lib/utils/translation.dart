@@ -29,9 +29,9 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "username": "Nume și prenume",
       "name": "Nume",
       "surname": "Prenume",
-      "invalid_name": "Trebuie sa introduci numele",
+      "invalid_name": "Scrie aici numele tău",
       "short_name": "Numele este prea scurt",
-      "invalid_surname": "Trebuie sa introduci prenumele",
+      "invalid_surname": "Scrie aici prenumele tău",
       "short_surname": "Prenumele este prea scurt",
       "succes_title": "Succes!",
       "submit": "Creează cont",
@@ -352,8 +352,9 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "delete_account_confirmation_body":
           "Ești sigur că vrei să îți ștergi contul? Atenție! Ștergerea contului duce la ștergerea tuturor informațiilor și progresului aferente contului și nu vor putea fi recuperate",
       "delete_account_confirmation_button": "Șterge cont",
-      "delete_account_success_title": "Success",
-      "delete_account_success_body": "Contul a fost sters cu success",
+      "delete_account_success_title": "Contul tău a fost șters",
+      "delete_account_success_body":
+          "Contul tău a fost șters cu succes. Dacă dorești să revii pe platformă, va trebui să îți creezi un cont nou.",
       "delete_account_success_confirm": "Ok",
     },
   },
@@ -400,6 +401,12 @@ final Map<String, Map<String, Map<String, String>>> translations = {
           "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
           'Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний U-Reporter! ',
+      "name": "Прізвище",
+      "surname": "Ім'я",
+      "invalid_name": "Напишіть своє ім'я",
+      "short_name": "Прізвище занадто коротке",
+      "invalid_surname": "Напиши своє прізвище",
+      "short_surname": "Ім'я занадто коротке",
     },
     "login_screen": {
       "header": "Логін",
@@ -520,6 +527,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_articles": "Ця стаття не знайдена",
       "ratingTitle": "Оцініть цю статтю",
       "ratingBody": "Натисніть на зірочки, щоб оцінити статтю",
+      "rating_sent_title": "Дякуємо за оцінку!",
+      "rating_sent_body": "Вашу оцінку збережено. Дякуємо за відгук!",
       "submitRating": "Надіслати оцінку",
       "claimed_badge_title": "Вітаю!",
       "claimed_badge_body_1": "Ви закінчили читати ",
@@ -702,6 +711,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "delete_account_confirmation_body":
           "Ви впевнені, що хочете видалити свій обліковий запис? УВАГА! Видалення вашого облікового запису призведе до видалення всієї інформації облікового запису та прогресу, і їх неможливо відновити.",
       "delete_account_confirmation_button": "Видалити аккаунт",
+      "delete_account_success_title": "Ваш обліковий запис видалено",
+      "delete_account_success_body":
+          "Ваш обліковий запис успішно видалено. Якщо ви хочете повернутися на платформу, вам потрібно буде створити новий обліковий запис.",
+      "delete_account_success_confirm": "Ok",
     },
   },
 };

@@ -134,7 +134,7 @@ class CategoryArticleService {
       headers: header,
     );
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       final List<dynamic> storyes = jsonResponse;
 
       return storyes.length;

@@ -38,7 +38,7 @@ class AccountSettingsServices {
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
       data: response.statusCode == 200 ? true : false,
     );
   }
@@ -60,12 +60,14 @@ class AccountSettingsServices {
     );
 
     print(header);
-    print(response.body);
+    print(utf8.decode(response.bodyBytes));
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
-      data: response.statusCode == 200 ? jsonDecode(response.body) : null,
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
+      data: response.statusCode == 200
+          ? jsonDecode(utf8.decode(response.bodyBytes))
+          : null,
     );
   }
 
