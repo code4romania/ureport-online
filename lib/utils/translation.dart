@@ -327,6 +327,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "body":
           "Editează-ți numele de utilizator sau imaginea de profil de aici. ",
       "username": "Nume de utilizator",
+      "name": "Nume",
+      "surname": "Prenume",
       "profile_pic": "Imagine de profil",
       "upload": "Încarcă imagine",
       "size": "Dimensiune maximă 6MB",
@@ -686,6 +688,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "title": "Налаштування аккаунта",
       "body": "Відредагуйте своє ім’я користувача або зображення профілю тут.",
       "username": "Ім'я користувача",
+      "name": "Прізвище",
+      "surname": "Ім'я",
       "profile_pic": "Зображення профілю",
       "upload": "Завантажити зображення",
       "size": "Максимальний розмір 6 Мб.",

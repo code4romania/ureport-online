@@ -25,7 +25,8 @@ abstract class _AccountSettingsStoreBase with Store {
     httpClient = AccountSettingsServices(token: token);
 
     if (profile != null) {
-      usernameController.text = profile!.first_name + " " + profile!.last_name;
+      nameController.text = profile!.first_name;
+      surnameController.text = profile!.last_name;
       if (profile?.image == null) {
         remoteprofilePic =
             "https://images.squarespace-cdn.com/content/v1/5a41ce1129f187de5f70506d/1515104526219-CTC9ND914ZD62K9D3ZSW/placeholder-person.jpg";
@@ -33,7 +34,9 @@ abstract class _AccountSettingsStoreBase with Store {
     }
   }
 
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController surnameController = TextEditingController();
 
   @observable
   String? localProfilePic;
@@ -67,17 +70,22 @@ abstract class _AccountSettingsStoreBase with Store {
 
   @action
   Future<String?> changeUsername() async {
-    if (usernameController.text.isEmpty ||
-        ((usernameController.text ==
-                profile!.first_name + " " + profile!.last_name) ||
-            (usernameController.text ==
-                profile!.last_name + " " + profile!.first_name))) {
+    if (nameController.text.isEmpty || surnameController.text.isEmpty) {
+      return null;
+    }
+    if (nameController.text + surnameController.text ==
+        profile!.first_name + profile!.last_name) {
+      return null;
+    }
+
+    if (nameController.text + surnameController.text ==
+        profile!.last_name + profile!.first_name) {
       return null;
     }
 
     final response = await httpClient.updateUsername(
       userID: userId,
-      username: usernameController.text,
+      username: nameController.text + " " + surnameController.text,
     );
 
     if (response.statusCode == 200) {

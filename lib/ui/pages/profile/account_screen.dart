@@ -120,8 +120,15 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: 20,
                         ),
                         textField(
-                          label: _translation["username"]!,
-                          controller: _accountSettingsStore.usernameController,
+                          label: _translation["name"]!,
+                          controller: _accountSettingsStore.surnameController,
+                          obscureText: false,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        textField(
+                          label: _translation["surname"]!,
+                          controller: _accountSettingsStore.nameController,
                           obscureText: false,
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.done,
