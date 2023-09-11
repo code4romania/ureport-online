@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mobx/mobx.dart';
 import 'package:ureport_ecaro/models/story.dart';
@@ -39,6 +40,9 @@ abstract class _StoryStoreBase with Store {
 
   @observable
   bool canShowRating = false;
+
+  @observable
+  bool ratingSent = false;
 
   @observable
   bool alreadyRead = false;
@@ -167,8 +171,15 @@ abstract class _StoryStoreBase with Store {
     final receivedRating = await httpClient.rateStory(
         storyId: storyId, userId: userId, rating: rating);
     this.rating = receivedRating;
-
+    toggleRatingSent();
     isActionLoading = false;
+  }
+
+  @action
+  void toggleRatingSent() {
+    ratingSent = !ratingSent;
+
+    debugPrint(ratingSent.toString());
   }
 
   @action

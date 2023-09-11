@@ -51,7 +51,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
     super.initState();
     _storyStore.getBadges();
     _storyStore.fetchCategories();
-    _storyStore.xGetBookmarks();
+    _storyStore.getBookmarks();
     _storyStore.filterBookmarks(0, _translation["all"]!, _translation["all"]!);
   }
 
@@ -211,7 +211,9 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                                   ),
                                 )
                                     .then((value) {
-                                  _storyStore.xGetBookmarks();
+                                  _storyStore.getBookmarks();
+                                  _storyStore.getStoryReadCount();
+                                  _storyStore.getBadges();
                                   _storyStore.filterBookmarks(
                                       0,
                                       _translation["all"]!,
@@ -241,7 +243,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     context.router
                         .push(CategoryListSearchScreenRoute())
                         .then((value) {
-                      _storyStore.xGetBookmarks();
+                      _storyStore.getBookmarks();
                       _storyStore.filterBookmarks(
                           0, _translation["all"]!, _translation["all"]!);
                     });

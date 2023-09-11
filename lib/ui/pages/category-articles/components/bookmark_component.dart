@@ -105,7 +105,7 @@ class BookmarkComponent extends StatelessWidget {
                     ),
                   )
                       .then((value) {
-                    categoryStories.xGetBookmarks();
+                    categoryStories.getBookmarks();
                     categoryStories.filterBookmarks(
                         0, translation["all"]!, translation["all"]!);
                   }),
@@ -140,7 +140,7 @@ class BookmarkComponent extends StatelessWidget {
                         storyId: categoryStories.bookmarksFiltered[index].id,
                       ),
                     )
-                    .then((value) => categoryStories.xGetBookmarks()),
+                    .then((value) => categoryStories.getBookmarks()),
                 child: _BookmarkWidget(
                   story: categoryStories.bookmarksFiltered[index],
                   textReadMore: translation["read_more"]!,

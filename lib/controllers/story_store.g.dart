@@ -137,6 +137,22 @@ mixin _$StoryStore on _StoryStoreBase, Store {
     });
   }
 
+  late final _$ratingSentAtom =
+      Atom(name: '_StoryStoreBase.ratingSent', context: context);
+
+  @override
+  bool get ratingSent {
+    _$ratingSentAtom.reportRead();
+    return super.ratingSent;
+  }
+
+  @override
+  set ratingSent(bool value) {
+    _$ratingSentAtom.reportWrite(value, super.ratingSent, () {
+      super.ratingSent = value;
+    });
+  }
+
   late final _$alreadyReadAtom =
       Atom(name: '_StoryStoreBase.alreadyRead', context: context);
 
@@ -325,6 +341,17 @@ mixin _$StoryStore on _StoryStoreBase, Store {
   }
 
   @override
+  void toggleRatingSent() {
+    final _$actionInfo = _$_StoryStoreBaseActionController.startAction(
+        name: '_StoryStoreBase.toggleRatingSent');
+    try {
+      return super.toggleRatingSent();
+    } finally {
+      _$_StoryStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
@@ -335,6 +362,7 @@ storyId: ${storyId},
 isBookmarked: ${isBookmarked},
 rating: ${rating},
 canShowRating: ${canShowRating},
+ratingSent: ${ratingSent},
 alreadyRead: ${alreadyRead},
 readArticle: ${readArticle},
 finishedTimer: ${finishedTimer},

@@ -73,6 +73,38 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
     });
   }
 
+  late final _$surnameErrorAtom =
+      Atom(name: '_RegisterStoreBase.surnameError', context: context);
+
+  @override
+  String? get surnameError {
+    _$surnameErrorAtom.reportRead();
+    return super.surnameError;
+  }
+
+  @override
+  set surnameError(String? value) {
+    _$surnameErrorAtom.reportWrite(value, super.surnameError, () {
+      super.surnameError = value;
+    });
+  }
+
+  late final _$nameAndSurnameErrorAtom =
+      Atom(name: '_RegisterStoreBase.nameAndSurnameError', context: context);
+
+  @override
+  String? get nameAndSurnameError {
+    _$nameAndSurnameErrorAtom.reportRead();
+    return super.nameAndSurnameError;
+  }
+
+  @override
+  set nameAndSurnameError(String? value) {
+    _$nameAndSurnameErrorAtom.reportWrite(value, super.nameAndSurnameError, () {
+      super.nameAndSurnameError = value;
+    });
+  }
+
   late final _$isLoadingAtom =
       Atom(name: '_RegisterStoreBase.isLoading', context: context);
 
@@ -147,6 +179,28 @@ mixin _$RegisterStore on _RegisterStoreBase, Store {
   }
 
   @override
+  bool validateSurname() {
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.validateSurname');
+    try {
+      return super.validateSurname();
+    } finally {
+      _$_RegisterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool validateNameAndSurname() {
+    final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
+        name: '_RegisterStoreBase.validateNameAndSurname');
+    try {
+      return super.validateNameAndSurname();
+    } finally {
+      _$_RegisterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   bool validateEmail() {
     final _$actionInfo = _$_RegisterStoreBaseActionController.startAction(
         name: '_RegisterStoreBase.validateEmail');
@@ -208,6 +262,8 @@ emailError: ${emailError},
 passwordError: ${passwordError},
 confirmPwError: ${confirmPwError},
 nameError: ${nameError},
+surnameError: ${surnameError},
+nameAndSurnameError: ${nameAndSurnameError},
 isLoading: ${isLoading},
 result: ${result},
 errorMessage: ${errorMessage}

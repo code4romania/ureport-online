@@ -13,8 +13,6 @@ class AuthService {
     required String password,
   }) async {
     final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
-    Logger log = Logger();
-    log.d(baseApiUrl);
     final response = await http.post(
         Uri.https(
           baseApiUrl,
@@ -24,7 +22,6 @@ class AuthService {
           "username": email,
           "password": password,
         });
-    log.d(response.request);
     if (response.statusCode == 200) {
       await getAuthToken(
         email: email,
@@ -34,7 +31,7 @@ class AuthService {
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
       data:
           response.statusCode == 200 ? LoginStatus.SUCCESS : LoginStatus.ERROR,
     );
@@ -59,7 +56,7 @@ class AuthService {
     print(password);
     print(Uri.https(baseApiUrl, "/api/v1/userprofiles/signup/"));
 
-    print(response.body);
+    print(utf8.decode(response.bodyBytes));
     print(response.reasonPhrase);
     print(response.statusCode);
 
@@ -72,7 +69,7 @@ class AuthService {
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
       data: RegisterStatus.ERROR,
     );
   }
@@ -90,7 +87,7 @@ class AuthService {
       statusCode: response.statusCode,
       message: response.statusCode != 200
           ? null
-          : jsonDecode(response.body)["detail"],
+          : jsonDecode(utf8.decode(response.bodyBytes))["detail"],
       data: response.statusCode == 200
           ? ForgotPasswordStatus.SUCCESS
           : ForgotPasswordStatus.ERROR,
@@ -111,7 +108,7 @@ class AuthService {
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
       data: response.statusCode == 200
           ? ForgotPasswordStatus.SUCCESS
           : ForgotPasswordStatus.ERROR,
@@ -133,12 +130,12 @@ class AuthService {
           "new_password": newPassword,
           "new_password2": confirmNewPassword,
         });
-    print(response.body);
+    print(utf8.decode(response.bodyBytes));
 
     return Response(
       statusCode: response.statusCode,
       message: response.statusCode == 200
-          ? jsonDecode(response.body)["detail"]
+          ? jsonDecode(utf8.decode(response.bodyBytes))["detail"]
           : "OK",
       data: response.statusCode == 200
           ? ForgotPasswordStatus.SUCCESS
@@ -157,8 +154,8 @@ class AuthService {
       "password": password,
     });
     if (response.statusCode == 200) {
-      final String token = jsonDecode(response.body)['token'];
-      final int id = jsonDecode(response.body)['id'];
+      final String token = jsonDecode(utf8.decode(response.bodyBytes))['token'];
+      final int id = jsonDecode(utf8.decode(response.bodyBytes))['id'];
       SPUtil().setValue(SPUtil.KEY_AUTH_TOKEN, token);
       SPUtil().setInt(SPUtil.KEY_USER_ID, id);
     }
@@ -177,7 +174,8 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      final profile = Profile.fromJson(jsonDecode(response.body));
+      final profile =
+          Profile.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
       SPUtil().setInt(SPUtil.KEY_USER_ID, profile.id);
       return profile;
     } else {

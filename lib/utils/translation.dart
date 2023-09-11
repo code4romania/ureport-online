@@ -34,10 +34,16 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "already_have_account": "Ai deja un cont?",
       "go_to_login": "Autentifică-te",
       "username": "Nume și prenume",
+      "name": "Nume",
+      "surname": "Prenume",
+      "invalid_name": "Scrie aici numele tău",
+      "short_name": "Numele este prea scurt",
+      "invalid_surname": "Scrie aici prenumele tău",
+      "short_surname": "Prenumele este prea scurt",
       "succes_title": "Succes!",
       "submit": "Creează cont",
       "succes_message":
-          "Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios!",
+          "Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un U-Reporter conștiincios!",
       "error": "S-a produs o eroare",
       "short_username": "Numele și prenumele sunt prea scurte",
       "invalid_username": "Trebuie să introduci numele și prenumele",
@@ -48,7 +54,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "weak_password":
           "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
-          'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un uReporter conștiincios! ',
+          'Contul tău a fost creat cu succes. De acum poți avea acces la toate articolele din aplicație și poți câștiga puncte dacă ești un U-Reporter conștiincios! ',
     },
     "login_screen": {
       "header": "Autentificare",
@@ -168,6 +174,9 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_articles": "Nu s-a găsit acest articol.",
       "ratingTitle": "Oferă un rating acestui articol.",
       "ratingBody": "Apasă pe o stea ca să acorzi rating.",
+      "rating_sent_title": "Mulțumim pentru rating !",
+      "rating_sent_body":
+          "Rating-ul tău a fost salvat. Mulțumim pentru feedback. ",
       "submitRating": "Trimite rating",
       "claimed_badge_title": "Felicitări!",
       "claimed_badge_body_1": "Ai terminat de citit cel de-al ",
@@ -326,6 +335,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "body":
           "Editează-ți numele de utilizator sau imaginea de profil de aici. ",
       "username": "Nume de utilizator",
+      "name": "Nume",
+      "surname": "Prenume",
       "profile_pic": "Imagine de profil",
       "upload": "Încarcă imagine",
       "size": "Dimensiune maximă 6MB",
@@ -351,6 +362,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "delete_account_confirmation_body":
           "Ești sigur că vrei să îți ștergi contul? Atenție! Ștergerea contului duce la ștergerea tuturor informațiilor și progresului aferente contului și nu vor putea fi recuperate",
       "delete_account_confirmation_button": "Șterge cont",
+      "delete_account_success_title": "Contul tău a fost șters",
+      "delete_account_success_body":
+          "Contul tău a fost șters cu succes. Dacă dorești să revii pe platformă, va trebui să îți creezi un cont nou.",
+      "delete_account_success_confirm": "Ok",
     },
   },
   "uk": {
@@ -391,7 +406,7 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "succes_title": "Успішно!",
       "submit": "Створити акаунт",
       "succes_message":
-          "Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний uReporter! ",
+          "Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний U-Reporter! ",
       "error": "S-a produs o eroare",
       "short_username": "Ім'я та ім'я занадто короткі",
       "invalid_username": "Ви повинні ввести своє ім'я та прізвище",
@@ -402,7 +417,13 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "weak_password":
           "Parola nu conține cel puțin un număr,\nun caracter de punctuație,\no literă mare și o literă mică",
       "succes":
-          'Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний uReporter! ',
+          'Ваш обліковий запис успішно створено. Тепер ви можете переглядати всі статті в додатку та заробляти бали, якщо ви сумлінний U-Reporter! ',
+      "name": "Прізвище",
+      "surname": "Ім'я",
+      "invalid_name": "Напишіть своє ім'я",
+      "short_name": "Прізвище занадто коротке",
+      "invalid_surname": "Напиши своє прізвище",
+      "short_surname": "Ім'я занадто коротке",
     },
     "login_screen": {
       "header": "Логін",
@@ -523,6 +544,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "no_articles": "Ця стаття не знайдена",
       "ratingTitle": "Оцініть цю статтю",
       "ratingBody": "Натисніть на зірочки, щоб оцінити статтю",
+      "rating_sent_title": "Дякуємо за оцінку!",
+      "rating_sent_body": "Вашу оцінку збережено. Дякуємо за відгук!",
       "submitRating": "Надіслати оцінку",
       "claimed_badge_title": "Вітаю!",
       "claimed_badge_body_1": "Ви закінчили читати ",
@@ -681,6 +704,8 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "title": "Налаштування аккаунта",
       "body": "Відредагуйте своє ім’я користувача або зображення профілю тут.",
       "username": "Ім'я користувача",
+      "name": "Прізвище",
+      "surname": "Ім'я",
       "profile_pic": "Зображення профілю",
       "upload": "Завантажити зображення",
       "size": "Максимальний розмір 6 Мб.",
@@ -706,6 +731,10 @@ final Map<String, Map<String, Map<String, String>>> translations = {
       "delete_account_confirmation_body":
           "Ви впевнені, що хочете видалити свій обліковий запис? УВАГА! Видалення вашого облікового запису призведе до видалення всієї інформації облікового запису та прогресу, і їх неможливо відновити.",
       "delete_account_confirmation_button": "Видалити аккаунт",
+      "delete_account_success_title": "Ваш обліковий запис видалено",
+      "delete_account_success_body":
+          "Ваш обліковий запис успішно видалено. Якщо ви хочете повернутися на платформу, вам потрібно буде створити новий обліковий запис.",
+      "delete_account_success_confirm": "Ok",
     },
   },
 };

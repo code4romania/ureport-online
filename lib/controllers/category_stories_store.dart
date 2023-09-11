@@ -73,7 +73,7 @@ abstract class _CategoryStories with Store {
       <storyFull.StoryItem>[].asObservable();
 
   @action
-  Future xGetBookmarks() async {
+  Future getBookmarks() async {
     bookmarksLoading = true;
     bookMarks.removeWhere((element) => true);
     final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);

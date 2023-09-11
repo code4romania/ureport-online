@@ -15,6 +15,7 @@ abstract class _RegisterStoreBase with Store {
 
   final emailController = TextEditingController();
   final nameController = TextEditingController();
+  final surnameController = TextEditingController();
   final passwdController = TextEditingController();
   final confirmPwController = TextEditingController();
 
@@ -29,6 +30,12 @@ abstract class _RegisterStoreBase with Store {
 
   @observable
   String? nameError;
+
+  @observable
+  String? surnameError;
+
+  @observable
+  String? nameAndSurnameError;
 
   @observable
   bool isLoading = false;
@@ -50,8 +57,7 @@ abstract class _RegisterStoreBase with Store {
 
   Future<void> register() async {
     toggleIsLoading();
-    if (validateName() &&
-        validateEmail() &&
+    if (validateNameAndSurname() &&
         validatePassword() &&
         validatePasswordConfirm() &&
         validateMatchingPasswords() &&
@@ -60,7 +66,7 @@ abstract class _RegisterStoreBase with Store {
       errorMessage = null;
 
       final response = await AuthService().register(
-        name: nameController.text,
+        name: '${nameController.text} ${surnameController.text}',
         email: emailController.text,
         password: passwdController.text,
       );
@@ -86,17 +92,40 @@ abstract class _RegisterStoreBase with Store {
   @action
   bool validateName() {
     final RegExp regExp = RegExp(r"[\w-._]+");
-    final Iterable matches = regExp.allMatches(nameController.text);
+    if (nameController.text.isEmpty || !regExp.hasMatch(nameController.text)) {
+      nameError = translation["invalid_name"];
+      return false;
+    }
+    if (nameController.text.length < 2) {
+      nameError = translation["short_name"];
+      return false;
+    }
 
-    if (nameController.text.isEmpty || nameController.text.length < 3) {
-      nameError = translation["short_username"];
-      return false;
-    }
-    if (matches.length < 2) {
-      nameError = translation["invalid_username"];
-      return false;
-    }
     nameError = null;
+    return true;
+  }
+
+  @action
+  bool validateSurname() {
+    final RegExp regExp = RegExp(r"[\w-._]+");
+    if (surnameController.text.isEmpty ||
+        !regExp.hasMatch(surnameController.text)) {
+      surnameError = translation["invalid_surname"];
+      return false;
+    }
+    if (surnameController.text.length < 2) {
+      surnameError = translation["short_surname"];
+      return false;
+    }
+    surnameError = null;
+    return true;
+  }
+
+  @action
+  bool validateNameAndSurname() {
+    if (!validateName() || !validateSurname()) {
+      return false;
+    }
     return true;
   }
 

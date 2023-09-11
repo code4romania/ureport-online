@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:ureport_ecaro/models/response.dart';
 import 'package:ureport_ecaro/utils/sp_utils.dart';
 
@@ -37,7 +38,7 @@ class AccountSettingsServices {
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
       data: response.statusCode == 200 ? true : false,
     );
   }
@@ -59,12 +60,14 @@ class AccountSettingsServices {
     );
 
     print(header);
-    print(response.body);
+    print(utf8.decode(response.bodyBytes));
 
     return Response(
       statusCode: response.statusCode,
-      message: jsonDecode(response.body)["detail"],
-      data: response.statusCode == 200 ? jsonDecode(response.body) : null,
+      message: jsonDecode(utf8.decode(response.bodyBytes))["detail"],
+      data: response.statusCode == 200
+          ? jsonDecode(utf8.decode(response.bodyBytes))
+          : null,
     );
   }
 
@@ -91,6 +94,18 @@ class AccountSettingsServices {
       statusCode: response.statusCode,
       message: response.reasonPhrase ?? "",
       data: jsonDecode(respStr),
+    );
+  }
+
+  Future<Response> deleteAccount({required int userId}) async {
+    final String baseApiUrl = SPUtil().getValue(SPUtil.API_BASE_URL);
+    var uri = Uri.https(baseApiUrl, "/api/v1/userprofiles/user/$userId/");
+    var response = await http.delete(uri, headers: header);
+    Logger log = Logger();
+    log.d(response.statusCode);
+    return Response(
+      statusCode: response.statusCode,
+      message: response.reasonPhrase ?? "",
     );
   }
 }

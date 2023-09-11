@@ -260,12 +260,12 @@ mixin _$CategoryStories on _CategoryStories, Store {
     });
   }
 
-  late final _$xGetBookmarksAsyncAction =
-      AsyncAction('_CategoryStories.xGetBookmarks', context: context);
+  late final _$getBookmarksAsyncAction =
+      AsyncAction('_CategoryStories.getBookmarks', context: context);
 
   @override
-  Future<dynamic> xGetBookmarks() {
-    return _$xGetBookmarksAsyncAction.run(() => super.xGetBookmarks());
+  Future<dynamic> getBookmarks() {
+    return _$getBookmarksAsyncAction.run(() => super.getBookmarks());
   }
 
   late final _$getStoryReadCountAsyncAction =
